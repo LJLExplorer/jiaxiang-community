@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: jiahe-community
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      username: 'nacos'
+      password: 'nacos'
+      discovery:
+        namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
+        group: jiahe_group
+      config:
+        refresh-enabled: true
+        namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
+        group: jiahe_group
+        file-extension: yaml
+  config:
+    import:
+      - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}?refreshEnabled=true
+# 设置日志文件的路径
+logging:
+  file:
+    path: ./logs  # 日志文件夹位置
+  level:
+    root: INFO
