@@ -1,6 +1,6 @@
 package com.jiaxiang.common.exception;
 
-import com.jiaxiang.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 
 public class CustomException extends RuntimeException{
 

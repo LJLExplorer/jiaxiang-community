@@ -1,4 +1,4 @@
-package com.jiaxiang.common.enums;
+package com.jiaxiang.model.common.enums;
 
 public enum AppHttpCodeEnum {
 

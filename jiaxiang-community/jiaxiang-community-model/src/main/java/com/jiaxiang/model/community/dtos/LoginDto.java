@@ -1,4 +1,4 @@
-package com.jiaxiang.community.dtos;
+package com.jiaxiang.model.community.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.jiaxiang.community.vos;
+package com.jiaxiang.model.community.vos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

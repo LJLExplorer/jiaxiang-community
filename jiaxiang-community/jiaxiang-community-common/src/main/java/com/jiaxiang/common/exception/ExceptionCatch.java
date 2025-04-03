@@ -1,8 +1,8 @@
 package com.jiaxiang.common.exception;
 
 
-import com.jiaxiang.common.dtos.ResponseResult;
-import com.jiaxiang.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
