@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>证明出具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex; /* 使用flex布局来排列sidebar和内容区 */
+            background-color: #f8f8f8; /* 添加背景颜色 */
+        }
+        .sidebar {
+            width: 200px;
+            background-color: rgb(2, 148, 75); /* 修改为新的颜色 */
+            height: 100vh; /* 设置为视口高度 */
+            padding-top: 20px;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #0000ff;
+        }
+        .content {
+            flex-grow: 1; /* 让内容区占据剩余空间 */
+            margin-left: 20px; /* 与sidebar保持一定间距 */
+            background-color: #fff; /* 容器背景颜色 */
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+            border-radius: 8px; /* 添加圆角 */
+        }
+        .title {
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 70px; /* 增大标题和成员框之间的间距 */
+            text-align: center; /* 标题居中 */
+            background-color: rgb(2, 148, 75); /* 修改为新的颜色 */
+            color: white; /* 修改标题文字颜色 */
+            width: 100%;
+            position: relative;
+            padding: 10px;
+            border-radius: 8px; /* 添加圆角 */
+        }
+        .proofs-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 60px; /* 调整行间距 */
+            gap: 20px; /* 调整证明框之间的间距 */
+        }
+        .proof-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgb(2, 148, 75); /* 修改左边框颜色 */
+            padding: 10px;
+            width: 20%;
+            height: 250px;
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 添加阴影 */
+            border-radius: 8px; /* 添加圆角 */
+            cursor: pointer; /* 添加鼠标悬停效果 */
+            margin: 0 100px;
+        }
+        .proof-name {
+            padding-top: 27px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 150px; /* 调整名字与按钮之间的间距 */
+        }
+        .proof-btn {
+            background-color: rgb(2, 148, 75);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 30px; /* 增加下方空间 */
+        }
+        .pagination .page-info {
+            font-size: 14px;
+            color: #666;
+        }
+        .pagination .arrow {
+            cursor: pointer;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+        .pagination .arrow.enabled {
+            color: #007bff; /* 蓝色，表示可以点击 */
+        }
+        .pagination .arrow.disabled {
+            color: #ccc; /* 灰色，表示不可点击 */
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="#" onclick="changeModule('main')">首页</a>
+        <a href="#" onclick="changeModule('sqrry')">社区</a>
+        <a href="#" onclick="changeModule('wm')">网格管理</a>
+        <a href="#" onclick="changeModule('lzqd')">两委成员</a>
+        <a href="#" onclick="changeModule('wm')">为民服务</a>
+        <a href="#" onclick="changeModule('事项清单')">事项清单</a>
+        <a href="#" onclick="changeModule('证明')">证明出具</a>
+    </div>
+    <script>
+        function changeModule(moduleFlag) {
+            var urls = {
+                'main': 'jianjie.html', // 修改这里为首页的路径
+                'sqrry': '',
+                'sqry': '',
+                'wm': '',
+                'lzqd': 'liangwei.html',
+                'wmfw': '',
+                '事项清单': '',
+                '证明': 'proof.html'
+            };
+            window.location.href = urls[moduleFlag];
+        }
+    </script>
+    <div class="content">
+        <div class="title">证明出具</div>
+        <div id="proofs-container">
+            <!-- 动态加载证明信息 -->
+        </div>
+        <div class="pagination">
+            <span class="arrow" id="prev-arrow" onclick="prevPage()">&#8592;</span>
+            <div class="page-info">
+                <span class="page-number" id="current-page">1</span> / <span id="total-pages">1</span>
+                共 <span id="total-items">0</span> 条
+            </div>
+            <span class="arrow" id="next-arrow" onclick="nextPage()">&#8594;</span>
+        </div>
+    </div>
+
+    <script>
+        const proofs = [
+            { name: "证明一" },
+            { name: "证明二" },
+            { name: "证明三" },
+            { name: "证明四" },
+            { name: "证明五" },
+            { name: "证明六" },
+            { name: "证明七" }
+        ];
+
+        const itemsPerPage = 6;
+
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        let currentPage = parseInt(getParameterByName('page')) || 1;
+
+        function renderProofs() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageProofs = proofs.slice(start, end);
+
+            const container = document.getElementById("proofs-container");
+            container.innerHTML = "";
+
+            for (let i = 0; i < pageProofs.length; i += 3) {
+                const row = document.createElement("div");
+                row.className = "proofs-row";
+
+                for (let j = 0; j < 3 && i + j < pageProofs.length; j++) {
+                    const proofBox = document.createElement("div");
+                    proofBox.className = "proof-box";
+                    renderProofBox(proofBox, pageProofs[i + j]);
+                    row.appendChild(proofBox);
+                }
+
+                container.appendChild(row);
+            }
+
+            document.getElementById("total-items").textContent = proofs.length;
+            document.getElementById("current-page").textContent = currentPage;
+            document.getElementById("total-pages").textContent = Math.ceil(proofs.length / itemsPerPage);
+        }
+
+        function renderProofBox(proofBox, proof) {
+            const proofName = document.createElement("div");
+            proofName.className = "proof-name";
+            proofName.textContent = proof.name;
+
+            const proofBtn = document.createElement("button");
+            proofBtn.className = "proof-btn";
+            proofBtn.textContent = "点击进入";
+
+            proofBox.appendChild(proofName);
+            proofBox.appendChild(proofBtn);
+
+            // 添加点击事件，跳转到证明详细信息页面，并传递当前页码
+            proofBox.addEventListener("click", function() {
+                window.location.href = `proof_detail.html?name=${proof.name}&page=${currentPage}`;
+            });
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(proofs.length / itemsPerPage);
+            const prevArrow = document.getElementById("prev-arrow");
+            const nextArrow = document.getElementById("next-arrow");
+
+            // 更新箭头的状态
+            prevArrow.classList.toggle("enabled", currentPage > 1);
+            prevArrow.classList.toggle("disabled", currentPage === 1);
+
+            nextArrow.classList.toggle("enabled", currentPage < totalPages);
+            nextArrow.classList.toggle("disabled", currentPage === totalPages);
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderProofs();
+                updatePagination();
+            }
+        }
+
+        function nextPage() {
+            const totalPages = Math.ceil(proofs.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderProofs();
+                updatePagination();
+            }
+        }
+
+        renderProofs();
+        updatePagination();
+    </script>
+</body>
+</html>
