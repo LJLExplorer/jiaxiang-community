@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嘉和社区</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: url('img/主页背景图片.png') no-repeat center center fixed;
+            background-size: cover;
+            color: rgb(255, 255, 255);
+            min-height: 100vh;
+        }
+
+        .header {
+            width: 100%;
+            font-size: 36px;
+            background-color: #ffffff00;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .search-bar {
+            margin-top: 0px;
+            display: flex;
+            justify-content: flex-end;
+            /* 调整为左对齐 */
+            gap: 10px;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 12px;
+            width: 80%;
+            max-width: 400px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+
+        .search-bar button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #45a049;
+        }
+
+        .activity-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .activity-content {
+            flex: 1 1 30%;
+            background-color: white;
+            color: #000000;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 15px;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            flex: 0 0 calc(33.33% - 10px);
+            text-align: center;
+        }
+
+        .carousel-item img {
+            width: 90.5%;
+            /* 设置宽度为父容器的100% */
+            height: 250px;
+            /* 设置固定高度 */
+            object-fit: cover;
+            /* 保证图片填充并不变形 */
+            border-radius: 8px;
+        }
+
+
+        .caption {
+            margin-top: 10px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-controls button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .carousel-controls button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .sidebar-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .sidebar-buttons button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 150px;
+            padding: 15px 20px;
+            font-size: 16px;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .button-service {
+            background-color: #4CAF50;
+            /* 绿色 */
+        }
+
+        .button-service:hover {
+            background-color: #45a049;
+        }
+
+        .button-affair {
+            background-color: #FF9800;
+            /* 橙色 */
+        }
+
+        .button-affair:hover {
+            background-color: #fb8c00;
+        }
+
+        .button-list {
+            background-color: #2196F3;
+            /* 蓝色 */
+        }
+
+        .button-list:hover {
+            background-color: #1976D2;
+        }
+
+        .sidebar-buttons button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .community-info {
+            background-color: white;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1700px;
+            margin-left: 0;
+            /* 修改为 0，确保模块左对齐 */
+            margin-right: auto;
+            /* 移除这一行，确保左对齐 */
+        }
+
+        .community-info h2 {
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .community-info p {
+            color: #000000;
+            line-height: 1.6;
+        }
+
+        .community-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .community-buttons button {
+            padding: 12px 20px;
+            font-size: 16px;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .community-buttons button:first-child {
+            background-color: #007BFF;
+            /* 蓝色 */
+        }
+
+        .community-buttons button:first-child:hover {
+            background-color: #0056b3;
+        }
+
+        .community-buttons button:last-child {
+            background-color: #28a745;
+            /* 绿色 */
+        }
+
+        .community-buttons button:last-child:hover {
+            background-color: #218838;
+        }
+
+        .edit-button {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .edit-button:hover {
+            background-color: #e68900;
+        }
+
+        .carousel-item {
+            cursor: pointer;
+            /* 如果已经是 flex 布局可以忽略以下属性 */
+            display: inline-block;
+            width: 25%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>嘉和社区</h1>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="请输入搜索关键词...">
+            <button onclick="searchFunction()">搜索</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="activity-container">
+            <div class="activity-content">
+                <!-- <h2>社区活动</h2> -->
+                <h2>社区活动</h2>
+                <div class="carousel">
+                    <div class="carousel-track">
+                        <div class="carousel-item" data-id="1001">
+                            <img src="img/image1.png" alt="活动1">
+                        </div>
+                        <div class="carousel-item" data-id="1002">
+                            <img src="img/image1.png" alt="活动2">
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <button id="prev">❮</button>
+                        <button id="next">❯</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-buttons">
+                <button class="button-service"><img src="img/service-icon.png" alt="为民服务"> 为民服务</button>
+                <button class="button-affair"><img src="img/affair-icon.png" alt="为民办事"> 为民办事</button>
+                <button class="button-list"><img src="img/list-icon.png" alt="履职清单"> 履职清单</button>
+            </div>
+        </div>
+        <!-- 社区信息 -->
+        <div class="community-info">
+            <h2>社区简介 <button class="edit-button" onclick="editActivity()">编辑</button></h2>
+            <p>
+                嘉和社区是一个充满温暖与活力的居住区域，致力于为居民提供舒适、安全、便捷的生活环境。
+                社区定期举办各类活动，包括健康讲座、体育赛事、环保行动等，以增强邻里关系，促进社区文化建设。
+                我们的目标是打造一个和谐美好的社区，提升居民的幸福感，提供各种便民服务，创造更加美好的生活体验。
+                嘉和社区坚持“党建为核、治理为基、服务为本”，积极整合社区资源、搭建治理平台、凝聚社会力量，打造
+                了“幸福嘉 和邻里”的社区品牌，引导各方力量共同参与社区治理，不断提升居民在社区生活的获得感、幸福感。
+            </p>
+            <!-- 按钮 -->
+            <div class="community-buttons">
+                <button onclick="location.href='jianjie.html'">
+                    <img src="img/icon_search.png" alt="查看详细"> 查看详细
+                </button>
+                <button onclick="location.href='honor.html'">
+                    <img src="img/sqry_icon.png" alt="社区荣誉"> 社区荣誉
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.carousel-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const activityId = item.dataset.id;
+
+                    // 检查数据是否存在
+                    const activities = JSON.parse(localStorage.getItem('activities')) || {};
+                    if (!activities[activityId]) {
+                        alert('该活动不存在');
+                        return;
+                    }
+
+                    // 跳转到详情页
+                    window.location.href = `detail.html?id=${activityId}`;
+                });
+            });
+        });
+        // const track = document.querySelector(".carousel-track");
+        // const items = document.querySelectorAll(".carousel-item");
+        // const prevButton = document.getElementById("prev");
+        // const nextButton = document.getElementById("next");
+        // let currentIndex = 0;
+        // const totalItems = items.length;
+        // const visibleItems = 3;
+        // const itemWidth = items[0].clientWidth + 15;
+
+        // function updateCarousel() {
+        //     track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+        // }
+
+        // function nextImage() {
+        //     if (currentIndex < totalItems - visibleItems) {
+        //         currentIndex++;
+        //     } else {
+        //         currentIndex = 0;
+        //     }
+        //     updateCarousel();
+        // }
+
+        // function prevImage() {
+        //     if (currentIndex > 0) {
+        //         currentIndex--;
+        //     } else {
+        //         currentIndex = totalItems - visibleItems;
+        //     }
+        //     updateCarousel();
+        // }
+
+        // nextButton.addEventListener("click", nextImage);
+        // prevButton.addEventListener("click", prevImage);
+
+        // 搜索按钮绑定的功能
+        function searchFunction() {
+            const query = document.getElementById("search-input").value.toLowerCase();
+            const captions = document.querySelectorAll(".caption");
+            captions.forEach(caption => {
+                const text = caption.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    caption.parentElement.style.display = "block";
+                } else {
+                    caption.parentElement.style.display = "none";
+                }
+            });
+        }
+        // 编辑社区简介页面
+        function editActivity() {
+            const communityInfo = document.querySelector(".community-info p");
+            const editButton = document.querySelector(".community-info .edit-button");
+
+            if (editButton.textContent === "编辑") {
+                // 变为可编辑状态
+                const textArea = document.createElement("textarea");
+                textArea.value = communityInfo.textContent;
+                textArea.style.width = "100%";
+                textArea.style.height = "150px";
+                textArea.style.padding = "10px";
+                textArea.style.fontSize = "16px";
+                textArea.style.border = "1px solid #ccc";
+                textArea.style.borderRadius = "5px";
+
+                communityInfo.replaceWith(textArea);
+                editButton.textContent = "保存";
+            } else {
+                // 保存修改
+                const textArea = document.querySelector(".community-info textarea");
+                const newParagraph = document.createElement("p");
+                newParagraph.textContent = textArea.value;
+
+                textArea.replaceWith(newParagraph);
+                editButton.textContent = "编辑";
+            }
+        }
+        // 点击事件处理
+        document.querySelectorAll('.carousel-item[data-type="edit"]').forEach(item => {
+            item.addEventListener('click', async () => {
+                // 获取活动ID
+                const activityId = item.dataset.id;
+                // 跳转到带参数的编辑页
+                window.location.href = `/main.html?id=${activityId}`;
+            });
+        });
+        function editActivityContent() {
+            const activityDesc = document.getElementById("activity-description");
+            const editButton = document.querySelector(".activity-content .edit-button");
+
+            if (editButton.textContent === "编辑") {
+                // 创建可编辑输入框
+                const textArea = document.createElement("textarea");
+                textArea.value = activityDesc.textContent;
+                textArea.style.width = "100%";
+                textArea.style.height = "100px";
+                textArea.style.fontSize = "16px";
+                textArea.style.padding = "10px";
+                textArea.style.border = "1px solid #ccc";
+                textArea.style.borderRadius = "5px";
+
+                activityDesc.replaceWith(textArea);
+                editButton.textContent = "保存";
+            } else {
+                // 保存修改
+                const textArea = document.querySelector(".activity-content textarea");
+                const newParagraph = document.createElement("p");
+                newParagraph.id = "activity-description";
+                newParagraph.textContent = textArea.value;
+
+                textArea.replaceWith(newParagraph);
+                editButton.textContent = "编辑";
+            }
+        } 
+    </script>
+</body>
+
+</html>

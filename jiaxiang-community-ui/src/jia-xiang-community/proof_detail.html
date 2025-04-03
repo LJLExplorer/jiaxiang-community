@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>证明内容</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f8f8f8;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: rgb(2, 148, 75);
+            height: 100vh;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #0000ff;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .title {
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            background-color: rgb(2, 148, 75);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            position: relative;
+        }
+        .return-arrow {
+            position: absolute;
+            top: 25px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 1000px;
+            margin-top: 40px;
+            border: 2px solid rgb(2, 148, 75);
+            overflow-y: auto; /* 添加滚动条 */
+            height: 650px; /* 设置固定高度 */
+        }
+        .proof-name {
+            font-size: 30px; /* 放大名字 */
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000; /* 添加分隔线 */
+            padding-top: 15px;
+            padding-bottom: 20px; /* 增加分隔线与内容的间距 */
+            text-align: center; /* 使文字居中 */
+        }
+        .proof-content {
+            font-size: 20px;
+            line-height: 1.5;
+            color: #333;
+            margin-top: 20px; /* 增加内容与分隔线的间距 */
+        }
+
+        /* 自定义滚动条样式 */
+        .container::-webkit-scrollbar {
+            width: 12px; /* 滚动条的宽度 */
+        }
+        .container::-webkit-scrollbar-track {
+            background: #f1f1f1; /* 滚动条轨道的颜色 */
+            border-radius: 10px; /* 滚动条轨道的圆角 */
+        }
+        .container::-webkit-scrollbar-thumb {
+            background: rgb(2, 148, 75); /* 滚动条的颜色 */
+            border-radius: 10px; /* 滚动条的圆角 */
+        }
+        .container::-webkit-scrollbar-thumb:hover {
+            background: #555; /* 滚动条鼠标悬停时的颜色 */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="#" onclick="changeModule('main')">首页</a>
+        <a href="#" onclick="changeModule('sqrry')">社区</a>
+        <a href="#" onclick="changeModule('wm')">网格管理</a>
+        <a href="#" onclick="changeModule('lzqd')">两委成员</a>
+        <a href="#" onclick="changeModule('wm')">为民服务</a>
+        <a href="#" onclick="changeModule('事项清单')">事项清单</a>
+        <a href="#" onclick="changeModule('证明')">证明出具</a>
+    </div>
+    <div class="content">
+        <div class="title">证明出具
+            <span class="return-arrow" onclick="goBack()">&#8592;</span>
+        </div>
+        <div class="container" id="proof-container">
+            <!-- 动态加载证明内容 -->
+        </div>
+    </div>
+    <script>
+        function changeModule(moduleFlag) {
+            var urls = {
+                'main': 'jianjie.html',
+                'sqrry': '',
+                'sqry': '',
+                'wm': '',
+                'lzqd': 'liangwei.html',
+                'wmfw': '',
+                '事项清单': '',
+                '证明': 'proof.html'
+            };
+            window.location.href = urls[moduleFlag];
+        }
+
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        function goBack() {
+            const page = getParameterByName('page');
+            if (page) {
+                window.location.href = `proof.html?page=${page}`;
+            } else {
+                window.history.back();
+            }
+        }
+
+        window.onload = function() {
+            const proofName = getParameterByName('name');
+            const proofs = [
+                {
+                    name: "证明一",
+                    content: `
+                        <h3>一、事项名称、内容及用途</h3>
+                        <p>亲属关系证明（仅限公证）。在无法通过公安、民政、卫生健康等部门信息共享方式核对当事人亲属关系，且当事人居民户口簿、结婚证、《出生医学证明》、历史户籍档案等均不能够反映当事人亲属关系的情况下，司法行政部门办理涉及当事人有关公证事项时，村（社区）对属于自身职责范围内且能够核实的事项，依法据实出具证明当事人亲属关系的材料。</p>
+
+                        <h3>二、开具单位</h3>
+                        <p>村（社区）。</p>
+
+                        <h3>三、法律政策依据</h3>
+                        <p>《中华人民共和国公证法》第十一条根据自然人、法人或者其他组织的申请，公证机构办理下列公证事项：（一）合同；（二）继承；（三）委托、声明、赠与、遗嘱；（四）财产分割；（五）招标投标、拍卖；（六）婚姻状况、亲属关系、收养关系；（七）出生、生存、死亡、身份、经历、学历、学位、职务、职称、有无违法犯罪记录；（八）公司章程；（九）保全证据；（十）文书上的签名、印鉴、日期，文书的副本、影印本与原本相符；（十一）自然人、法人或者其他组织自愿申请办理的其他公证事项。法律、行政法规规定应当公证的事项，有关自然人、法人或者其他组织应当向公证机构申请办理公证。《遗赠扶养协议公证细则》第八条 申办遗赠扶养协议公证，当事人应向公证处提交以下证件和材料：（一）当事人遗赠扶养协议公证申请表；（二）当事人的居民身份证或其他身份证明；（三）扶养人为组织的，应提交资格证明、法定代表人身份证明，代理人应提交授权委托书；（四）村民委员会、居民委员会或所在单位出具的遗赠人的家庭成员情况证明；（五）遗赠财产清单和所有权证明；（六）村民委员会、居民委员会或所在单位出具的扶养人的经济情况和家庭成员情况证明；（七）扶养人有配偶的，应提交其配偶同意订立遗赠扶养协议的书面意见；（八）遗赠扶养协议；（九）公证人员认为应当提交的其他材料。《民政部国家发展改革委公安部司法部人力资源社会保障部国家卫生健康委关于改进和规范基层群众性自治组织出具证明工作的指导意见》（民发〔2020〕20号）附件第1项例外规定。</p>
+
+                        <h3>四、办理（申请）条件、材料及流程</h3>
+                        <p>（一）办理（申请）条件</p>
+                        <p>当事人到户籍所在地或原户籍所在地村（社区）提出申请，并按要求提供相关材料。</p>
+                        <p>（二）办理（申请）材料</p>
+                        <ul>
+                            <li>当事人身份证</li>
+                            <li>当事人户口本</li>
+                        </ul>
+                        <p>（三）办理（申请）流程</p>
+                        <ol>
+                            <li>办理（申请）。当事人到户籍所在地或原户籍所在地村（社区）提出申请，并按要求提供相关材料。</li>
+                            <li>受理。村（社区）经审查，当事人一方户籍或原户籍在本村（社区）且提交材料齐全的，予以受理，双方当事人户籍或原户籍均不在本村（社区）的，不予受理。受理后，对当事人与相关人员是否存在亲属关系的事实进行调查核实。</li>
+                            <li>出具。经调查核实，出具对当事人与相关人员存在亲属关系的事实予以证明的材料。</li>
+                        </ol>
+
+                        <h3>五、办理时限</h3>
+                        <p>5个工作日。</p>
+
+                        <h3>六、要求开具单位</h3>
+                        <p>司法行政部门。</p>
+
+                        <h3>七、证明式样</h3>
+                        <p>亲属关系证明式样（仅限公证）</p>
+                    `
+                },
+                { name: "证明二", content: "这是证明二的具体内容。" },
+                { name: "证明三", content: "这是证明三的具体内容。" },
+                { name: "证明四", content: "这是证明四的具体内容。" },
+                { name: "证明五", content: "这是证明五的具体内容。" },
+                { name: "证明六", content: "这是证明六的具体内容。" },
+                { name: "证明七", content: "这是证明七的具体内容。" }
+            ];
+
+            const proof = proofs.find(p => p.name === proofName);
+
+            if (proof) {
+                const container = document.getElementById('proof-container');
+                container.innerHTML = `
+                    <div class="proof-name">${proof.name}</div>
+                    <div class="proof-content">${proof.content}</div>
+                `;
+            } else {
+                alert('证明信息未找到');
+            }
+        };
+    </script>
+</body>
+</html>
