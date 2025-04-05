@@ -7,13 +7,13 @@ import { ease } from "./timing-function/ease.js";
 import { linearFunction } from "./timing-function/linearFunction.js";
 import { steps } from "./timing-function/steps.js";
 class TimingFunction {
+    static linear = linear;
+    static bezierCurve = bezierCurve;
+    static ease = ease;
+    static easeIn = easeIn;
+    static easeInOut = easeInOut;
+    static easeOut = easeOut;
+    static linearFunction = linearFunction;
+    static steps = steps;
 }
-TimingFunction.linear = linear;
-TimingFunction.bezierCurve = bezierCurve;
-TimingFunction.ease = ease;
-TimingFunction.easeIn = easeIn;
-TimingFunction.easeInOut = easeInOut;
-TimingFunction.easeOut = easeOut;
-TimingFunction.linearFunction = linearFunction;
-TimingFunction.steps = steps;
 export { TimingFunction };

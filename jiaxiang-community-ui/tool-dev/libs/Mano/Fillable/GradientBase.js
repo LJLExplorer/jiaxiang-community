@@ -1,7 +1,5 @@
 class GradientBase {
-    constructor() {
-        this.colorStops = [];
-    }
+    colorStops = [];
     addColorStop(offset, color) {
         this.colorStops.push({ offset, color });
     }

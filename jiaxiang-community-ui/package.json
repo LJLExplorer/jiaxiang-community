@@ -2,9 +2,10 @@
   "name": "jiaxiang-community",
   "version": "1.0.0",
   "description": "研究生横向项目1：社区网站",
-  "main": "index.js",
+  "main": "static-server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon static-server.js",
+    "run": "node static-server.js"
   },
   "author": "Syannpe",
   "license": "ISC",

@@ -1,4 +1,5 @@
 class ColorBase {
+    type;
     toString() {
         return null;
     }

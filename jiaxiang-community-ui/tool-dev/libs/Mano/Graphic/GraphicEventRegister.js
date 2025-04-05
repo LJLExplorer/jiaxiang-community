@@ -5,6 +5,8 @@ import { GraphicBase } from "./GraphicBase.js";
  * 继承自 HTMLElement，提供额外的事件管理功能，包括对鼠标事件的特殊处理。
  */
 class GraphicEventRegister extends HTMLElement {
+    // 存储注册的鼠标事件
+    mouseEvents = [];
     /**
      * 添加事件监听器。
      * 对于特定类型的事件（以"mano"开头或eventType为"other"的事件），会直接使用super.addEventListener进行添加。
@@ -18,7 +20,7 @@ class GraphicEventRegister extends HTMLElement {
         if (type.startsWith("mano")) {
             super.addEventListener(type, listener, options);
         }
-        else if ((options === null || options === void 0 ? void 0 : options.eventType) === "other") {
+        else if (options?.eventType === "other") {
             super.addEventListener(type, listener, options);
         }
         else {
@@ -38,7 +40,7 @@ class GraphicEventRegister extends HTMLElement {
         if (type.startsWith("mano")) {
             super.removeEventListener(type, listener, options);
         }
-        else if ((options === null || options === void 0 ? void 0 : options.eventType) === "other") {
+        else if (options?.eventType === "other") {
             super.removeEventListener(type, listener, options);
         }
         else {
@@ -61,8 +63,6 @@ class GraphicEventRegister extends HTMLElement {
      */
     constructor() {
         super();
-        // 存储注册的鼠标事件
-        this.mouseEvents = [];
         let that = this;
         let registEvOnParent = super.addEventListener.bind(this);
         let removeEvOnParent = super.removeEventListener.bind(this);
