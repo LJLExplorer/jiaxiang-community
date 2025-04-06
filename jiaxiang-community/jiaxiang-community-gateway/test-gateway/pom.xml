@@ -5,17 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.jiaxiang</groupId>
-        <artifactId>jiaxiang-community-service</artifactId>
+        <artifactId>jiaxiang-community-gateway</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jiahe-community</artifactId>
-    <description>嘉和社区特有的服务</description>
+    <artifactId>test-gateway</artifactId>
+    <description>测试的网关</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
 </project>

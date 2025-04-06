@@ -25,6 +25,7 @@
         <module>jiaxiang-community-gateway</module>
         <module>jiaxiang-community-service</module>
         <module>jiaxiang-community-basic</module>
+        <module>jiaxiang-community-test</module>
     </modules>
 
     <properties>
@@ -39,12 +40,25 @@
         <mysql.version>8.3.0</mysql.version>
         <mybatis.version>3.0.4</mybatis.version>
         <bootstrap.version>3.1.5</bootstrap.version>
+        <spring-gateway.version>4.1.1</spring-gateway.version>
     </properties>
 
     <repositories>
         <repository>
             <id>spring-cloud-alibaba</id>
             <url>https://maven.aliyun.com/repository/spring-cloud-alibaba</url>
+        </repository>
+        <repository>
+            <id>aliyun</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/release</url>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <url>https://repo.spring.io/milestone</url>
         </repository>
     </repositories>
     <!-- 引入包 -->
@@ -107,7 +121,11 @@
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-gateway</artifactId>
+                <version>${spring-gateway.version}</version> <!-- 可省略但建议写明 -->
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

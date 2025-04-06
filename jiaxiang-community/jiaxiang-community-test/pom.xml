@@ -9,13 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jiaxiang-community-service</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>jiahe-community</module>
-        <module>jiaxiang-community-admin</module>
-        <module>jiaxiang-community-article</module>
-    </modules>
+    <artifactId>jiaxiang-community-test</artifactId>
+    <description>测试各种组件</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -52,6 +47,17 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency>
+        <!--    sentinel nacos数据源    -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
+        <!-- Sentinel数据源之 Nacos -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
+
         <!-- nacos服务的注册发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
