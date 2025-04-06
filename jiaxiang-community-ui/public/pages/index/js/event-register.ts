@@ -1,3 +1,5 @@
+import router from "../../../common-component/router.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     const detailsBtn = document.querySelector("#community-details") as HTMLElement;
     const honorBtn = document.querySelector("#community-honor") as HTMLElement;
@@ -7,11 +9,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     detailsBtn.addEventListener("click", function () {
         // @ts-ignore
-        location = "./community-details.html";
+        location = router["community-details"];
     });
     honorBtn.addEventListener("click", function () {
         // @ts-ignore
-        location = "./community-honor.html";
+        location = router["community-honor"];
     });
     editBtn.addEventListener("click", function () {
         const communityInfo = document.querySelector(".community-info p") as HTMLElement;

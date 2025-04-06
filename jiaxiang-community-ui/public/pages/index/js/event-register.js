@@ -1,4 +1,4 @@
-"use strict";
+import router from "../../../common-component/router.js";
 document.addEventListener("DOMContentLoaded", function () {
     const detailsBtn = document.querySelector("#community-details");
     const honorBtn = document.querySelector("#community-honor");
@@ -7,11 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchBtn = document.querySelector("#search-button");
     detailsBtn.addEventListener("click", function () {
         // @ts-ignore
-        location = "./community-details.html";
+        location = router["community-details"];
     });
     honorBtn.addEventListener("click", function () {
         // @ts-ignore
-        location = "./community-honor.html";
+        location = router["community-honor"];
     });
     editBtn.addEventListener("click", function () {
         const communityInfo = document.querySelector(".community-info p");
