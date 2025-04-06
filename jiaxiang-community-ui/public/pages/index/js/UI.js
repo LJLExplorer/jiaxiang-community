@@ -57,7 +57,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    window.onselectstart = function (ev) {
-        ev.preventDefault();
-    }
 })

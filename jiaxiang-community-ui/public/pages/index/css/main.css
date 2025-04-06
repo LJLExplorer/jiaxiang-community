@@ -1,3 +1,7 @@
+.cantSelect{
+    user-select: none;
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -75,22 +79,22 @@ main {
 .page {
     grid-row: 1 / span 1;
     grid-column: 1 / span 1;
-    position: fixed;
+    position: relative;
     transition: var(--transition-duration);
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
 
     /*text-align: center;*/
 }
 
 .main-pre-page {
-    transform: translateY(-100%);
+    top: -100%;
 }
 
 .main-cur-page {
-    transform: translateY(0);
+    top: 0;
 }
 
 .main-next-page {
-    transform: translateY(100%);
+    top: 100%;
 }
