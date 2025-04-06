@@ -1,0 +1,87 @@
+section.page:nth-of-type(3) .community-info {
+    box-sizing: border-box;
+
+    background-color: white;
+    padding: 20px;
+    margin-top: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1700px;
+    margin-left: 0;
+    /* 修改为 0，确保模块左对齐 */
+    margin-right: auto;
+    /* 移除这一行，确保左对齐 */
+
+
+}
+
+section.page:nth-of-type(3) .community-info h2 {
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+section.page:nth-of-type(3) .community-info p {
+    height: 100%;
+    width: calc(100% - 20px * 2);
+    color: #000000;
+    line-height: 1.6;/*
+    white-space: pre;
+    text-align: center;*/
+}
+
+section.page:nth-of-type(3) .community-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+section.page:nth-of-type(3) .community-buttons button {
+    padding: 12px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+section.page:nth-of-type(3) .community-buttons button:first-child {
+    background-color: #007BFF;
+    /* 蓝色 */
+}
+
+section.page:nth-of-type(3) .community-buttons button:first-child:hover {
+    background-color: #0056b3;
+}
+
+section.page:nth-of-type(3) .community-buttons button:last-child {
+    background-color: #28a745;
+    /* 绿色 */
+}
+
+section.page:nth-of-type(3) .community-buttons button:last-child:hover {
+    background-color: #218838;
+}
+
+section.page:nth-of-type(3) .edit-button {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+section.page:nth-of-type(3) .edit-button:hover {
+    background-color: #e68900;
+}
+
+section.page:nth-of-type(3) .carousel-item {
+    cursor: pointer;
+    /* 如果已经是 flex 布局可以忽略以下属性 */
+    display: inline-block;
+    width: 25%;
+}

@@ -2,14 +2,15 @@
 * 图片轮播标准插件
 * */
 class SlideShow extends Object {
-    image = null;
+    image;
     hrefs = [];
     debug = false;
     index = 0;
-    constructor(hrefs) {
+    constructor(hrefs, container = document.body) {
         super();
-        this.image = document.createElement("img");
         this.hrefs = hrefs;
+        this.image = container;
+        this.syncPictureIndex();
     }
     print(...msg) {
         if (!this.debug)
@@ -24,11 +25,10 @@ class SlideShow extends Object {
             this.resetIndex();
         }
         this.print(this.hrefs[this.index]);
-        this.image.src = this.hrefs[this.index];
+        this.updateCallback(this.hrefs[this.index]);
+        // this.image.style.backgroundImage = `url(${this.hrefs[this.index]})`;
     }
-    init(container = document.body) {
-        container.appendChild(this.image);
-        this.syncPictureIndex();
+    updateCallback(src) {
     }
     next() {
         this.index++;

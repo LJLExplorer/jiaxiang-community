@@ -42,7 +42,14 @@ document.addEventListener("DOMContentLoaded", function () {
         changeToPage(currentPage + 1);
     };
 
+    //防止用户快速翻页
+    let frequentOperation = false;
     window.addEventListener("wheel", function (ev) {
+        if (frequentOperation) return;
+
+        frequentOperation = true;
+        setTimeout(() => frequentOperation = false, 300);
+
         if (ev.deltaY > 0) {
             changeToPage(currentPage + 1);
         } else if (ev.deltaY < 0) {

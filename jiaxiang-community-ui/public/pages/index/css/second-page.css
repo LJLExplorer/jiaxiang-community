@@ -1,0 +1,132 @@
+section.page:nth-of-type(2) {
+    --primary-color: #ffffff;
+    --secondary-color: #f5f5f5;
+    --text-color: #333;
+    --button-bg: rgba(255, 255, 255, 0.4);
+    --button-hover-bg: rgba(255, 255, 255, 0.7);
+    --button-border: #ccc;
+    --shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 整个 section 使用网格布局，叠放内容 */
+section.page:nth-of-type(2) {
+    display: grid;
+    grid-template-areas:
+    "stack";
+    position: relative;
+}
+
+/* 轮播容器，作为背景底层 */
+#slide-show-container {
+    grid-area: stack;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    /* 三个背景层：
+       第一层：左侧渐变，从白色到透明（从左向右）
+       第二层：右侧渐变，从白色到透明（从右向左）
+       第三层：实际的背景图片 */
+    background-image:
+    linear-gradient(to left, white, transparent 30%),
+    url('../image/主页背景图片.png');
+
+    /* 背景属性设置： */
+    background-position: right, right, right;
+    background-size: 75% 100%, 25% 100%, 75% 100%;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+
+    /* background-blend-mode: multiply; */
+}
+
+/* 标题样式，重叠在 slide 上 */
+h2 {
+    grid-area: stack;
+    font-size: 2rem;
+    color: var(--text-color);
+    margin: 1rem;
+    z-index: 1;
+    align-self: start;
+    justify-self: center;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+}
+
+/* 按钮容器，使用 flex 对齐到底部右侧 */
+.sidebar-buttons {
+    box-sizing: border-box;
+
+    height: 100%;
+    width: 100%;
+
+    grid-area: stack;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 3rem;
+    z-index: 1;
+}
+
+/* 按钮样式 */
+.sidebar-buttons button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: 1px solid var(--button-border);
+    padding: 1rem 2.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(4px);
+}
+
+.sidebar-buttons button:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-2px);
+}
+
+.sidebar-buttons button img {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.slideshow-button {
+    grid-area: stack;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: 1px solid var(--button-border);
+    padding: 5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(4px);
+}
+
+#slideshow-previous{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+#slideshow-next{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
