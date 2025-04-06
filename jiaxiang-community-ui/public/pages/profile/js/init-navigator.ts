@@ -6,7 +6,7 @@ import itemCommissioner from "../../../common-component/navigator-regist/item-co
 import itemServePeople from "../../../common-component/navigator-regist/item-serve-people.js";
 import itemMatterList from "../../../common-component/navigator-regist/item-matter-list.js";
 import itemProof from "../../../common-component/navigator-regist/item-proof.js";
-import NavigatorAdapterIndex from "./navigator-adapter-index.js";
+import NavigatorAdapterIndex from "../../../common-component/navigator-adapter-index.js";
 
 //用于让浏览器加载完成后执行
 // @ts-ignore

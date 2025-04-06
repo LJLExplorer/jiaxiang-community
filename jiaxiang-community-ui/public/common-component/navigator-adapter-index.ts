@@ -1,6 +1,6 @@
-import NavigatorAdapter from "../../../Navigator/NavigatorAdapter.js";
-import NavigatorLoader from "../../../Navigator/NavigatorLoader.js";
-import NavigatorCell from "../../../Navigator/NavigatorCell.js";
+import NavigatorAdapter from "../Navigator/NavigatorAdapter.js";
+import NavigatorLoader from "../Navigator/NavigatorLoader.js";
+import NavigatorCell from "../Navigator/NavigatorCell.js";
 
 class NavigatorAdapterIndex implements NavigatorAdapter {
     public container: HTMLElement;

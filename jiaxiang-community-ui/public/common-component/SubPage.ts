@@ -3,7 +3,7 @@
 * */
 
 interface SubPage {
-    render();
+    render(): void;
 }
 
 export default SubPage;

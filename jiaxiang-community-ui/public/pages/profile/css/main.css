@@ -1,157 +1,41 @@
-body {
-    padding: 0;
-    margin: 0;
+.content {
+    padding: 20px;
 }
-
-/* 定义全局 CSS 变量，便于统一管理颜色和过渡效果 */
-:root {
-    --header-height: 4em;
-    --transition-duration: 0.3s;
-    --nav-bg: #444; /* 导航栏背景色 */
-    --nav-hover-bg: rgba(0, 0, 0, 0.5); /* 导航项鼠标悬停背景色 */
-    --nav-text-color: #fff; /* 导航项文字颜色 */
-    --subnav-bg: #555; /* 子导航背景色 */
-    --subnav-hover-bg: rgba(0, 0, 0, 0.5); /* 子导航项鼠标悬停背景色 */
-}
-
-/* header 作为导航栏的容器 */
-header {
-    width: 100vw;
+.header {
     background-color: var(--nav-bg);
-    display: flex;
-    flex-wrap: wrap; /* 当空间不足时允许换行 */
-    align-items: center;
-    justify-content: flex-end; /* 从右向左排列（也可根据实际需求调整） */
-    padding: 0 1em;
-    box-sizing: border-box;
-
-}
-
-/* header 内所有 nav 元素（单级导航） */
-header > nav {
-    padding: 0 1.2em;
-    color: var(--nav-text-color);
+    color: white;
+    padding: 10px;
     text-align: center;
+    font-size: 24px;
+}
+.header img {
+    width: 30px;
+    vertical-align: middle;
+}
+.main {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    height: var(--header-height);
-    cursor: pointer;
-    transition: var(--transition-duration);
-    white-space: nowrap; /* 防止文本意外换行 */
+    align-items: flex-start;
+    background-color: white;
+    padding: 10px;
+    margin-top: 20px;
 }
-
-/* 鼠标悬停时的效果 */
-header nav:hover {
-    background-color: var(--nav-hover-bg);
+.main img {
+    max-width: 50%;
+    height: 700px;
+    margin-right: 20px;
 }
-
-/* 针对多级导航项，假设在 nav 上添加了 .multi-level 类 */
-header nav.multi-level {
-    position: relative; /* 为子导航定位做准备 */
+.text {
+    max-width: 50%;
+    padding: 20px;
+    overflow-y: auto; /* 允许垂直滚动 */
+    font-size: 20px;
 }
-
-/* 隐藏子导航，采用网格布局或者 Flex 布局来排列子项 */
-header nav.multi-level > div {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: none; /* 默认隐藏子菜单 */
-    flex-direction: column; /* 垂直排列子菜单项 */
-    background-color: var(--subnav-bg);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+.text h1 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 28px;
 }
-
-/* 当鼠标悬停在多级导航项上时显示子菜单 */
-header nav.multi-level:hover > div {
-    display: flex;
-
-    position: absolute; /* 利用相对定位父元素定位子菜单 */
-    top: 0; /* 紧贴在导航项下方 */
-    left: 100%;
-    min-width: 100%;
-    z-index: 10;
-}
-
-/* 子菜单中每个列表项的样式 */
-header nav.multi-level > div > nav {
-    padding: 1em 2em;
-    color: var(--nav-text-color);
-    cursor: pointer;
-    transition: background-color var(--transition-duration);
-    white-space: nowrap;
-}
-
-/* 子菜单项鼠标悬停时效果 */
-header nav.multi-level > div > nav:hover {
-    background-color: var(--subnav-hover-bg);
-}
-
-
-main {
-    height: calc(100vh - var(--header-height));
-    /*border:red solid 4px;*/
-    width: 100vw;
-    overflow: hidden;
-    transition: var(--transition-duration);
-    display: grid;
-}
-
-#to-next-page {
-    position: fixed;
-    transition: var(--transition-duration);
-    top: 90%;
-    left: calc(50%);
-    font-size: 4em;
-    color: rgba(200, 200, 200, .3);
-    transform: rotateZ(90deg) scale(1, 3);
-    cursor: pointer;
-    z-index: 1;
-}
-
-#to-next-page:hover {
-    text-shadow: 0 0 10px rgb(2, 126, 160);
-}
-
-#to-pre-page {
-    position: fixed;
-    transition: var(--transition-duration);
-    top: 10%;
-    left: calc(50% - 0.58em);
-    font-size: 4em;
-    color: rgba(200, 200, 200, .3);
-    transform: rotateZ(-90deg) scale(1, 3);
-    cursor: pointer;
-    z-index: 1;
-}
-
-#to-pre-page:hover {
-    text-shadow: 0 0 10px rgb(2, 126, 160);
-}
-
-.page {
-    grid-row: 1 / span 1;
-    grid-column: 1 / span 1;
-    position: relative;
-    transition: var(--transition-duration);
-    width: 100%;
-    height: 100%;
-
-    /*text-align: center;*/
-}
-
-.main-pre-page {
-    top: -100%;
-}
-
-.main-cur-page {
-    top: 0;
-}
-
-.main-next-page {
-    top: 100%;
-}
-
-.cantSelect {
-    user-select: none;
+.text p {
+    text-indent: 2em;
+    font-size: 19px;
 }
