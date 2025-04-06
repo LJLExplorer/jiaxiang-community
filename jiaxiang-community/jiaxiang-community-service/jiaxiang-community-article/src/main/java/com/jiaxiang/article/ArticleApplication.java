@@ -1,17 +1,15 @@
-package com.jiaxiang.jiahe;
+package com.jiaxiang.article;
 
-import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@Slf4j
-@MapperScan("com.jiaxiang.jiahe.mapper")
-@SpringBootApplication
+@MapperScan("com.jiaxiang.article.mapper")
 @EnableDiscoveryClient
-public class CommunityApplication {
+@SpringBootApplication
+public class ArticleApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CommunityApplication.class, args);
+        SpringApplication.run(ArticleApplication.class, args);
     }
 }

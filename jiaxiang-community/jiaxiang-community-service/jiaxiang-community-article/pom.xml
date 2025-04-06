@@ -9,8 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jiahe-community</artifactId>
-    <description>嘉和社区特有的服务</description>
+    <artifactId>jiaxiang-community-article</artifactId>
+    <description>发活动通知 添加人物简介等各种添加活动通知微服务，多个社区公用</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

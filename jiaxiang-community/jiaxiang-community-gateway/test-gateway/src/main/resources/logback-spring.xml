@@ -2,7 +2,7 @@
 <configuration>
 
     <!-- 设置日志文件目录 -->
-    <property name="LOG_HOME" value="./logs/jiahe-community/"/>
+    <property name="LOG_HOME" value="./logs/jiaxiang-community-jiahe-gateway/"/>
 
     <!-- 定义 ConsoleAppender（控制台输出） -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
