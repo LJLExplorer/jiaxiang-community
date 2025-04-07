@@ -10,7 +10,11 @@
     </parent>
 
     <artifactId>jiaxiang-community-test</artifactId>
+    <packaging>pom</packaging>
     <description>测试各种组件</description>
+    <modules>
+        <module>sentinel-test</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

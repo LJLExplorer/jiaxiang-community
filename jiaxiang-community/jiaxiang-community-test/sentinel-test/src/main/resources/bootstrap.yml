@@ -1,6 +1,6 @@
 spring:
   application:
-    name: test-service
+    name: sentinel-test-service
   profiles:
     active: dev
   cloud:

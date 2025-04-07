@@ -3,14 +3,26 @@ package com.jiaxiang.common.exception;
 
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @ControllerAdvice  //控制器增强类
+@AutoConfiguration
 public class ExceptionCatch {
+
+    public ExceptionCatch(){
+        log.info("ExceptionCatch 已加载到 Spring 容器中");
+    }
+
+    @PostConstruct
+    public void init() {
+        log.info("ExceptionCatch @PostConstruct 初始化完成");
+    }
 
     /**
      * 处理不可控异常
