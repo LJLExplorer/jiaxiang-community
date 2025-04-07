@@ -1,4 +1,3 @@
-"use strict";
 //转移到files文件夹
 const members = [
     { name: "于燕", role: "社区党委书记 居委会主任", duty: "管理社区所有小区", image: "img/liangwei-photo/yuyan.png" },

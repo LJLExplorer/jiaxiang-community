@@ -9,4 +9,5 @@ class CommissionerEvent {
 
     }
 }
+
 export default CommissionerEvent;

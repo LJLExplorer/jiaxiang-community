@@ -1,8 +1,9 @@
 import navigatorLoader from "./main-loader.js";
 import NavigatorCell from "../../Navigator/NavigatorCell.js";
+import router from "../router.js";
 
 const cell = new NavigatorCell("网格管理", function (ev) {
-    console.log("点击网格管理");
+    location.href = router["grid-management"];
 });
 
 navigatorLoader.appendCell(cell);

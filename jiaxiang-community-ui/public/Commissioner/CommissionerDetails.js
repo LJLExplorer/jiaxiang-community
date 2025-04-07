@@ -1,5 +1,6 @@
 class CommissionerDetails {
     commissioner;
-    render() { }
+    render() {
+    }
 }
 export {};
