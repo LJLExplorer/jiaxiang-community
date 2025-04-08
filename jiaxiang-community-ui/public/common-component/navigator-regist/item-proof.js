@@ -1,7 +1,8 @@
 import navigatorLoader from "./main-loader.js";
 import NavigatorCell from "../../Navigator/NavigatorCell.js";
+import router from "../router.js";
 const cell = new NavigatorCell("证据出具", function (ev) {
-    console.log("点击证据出具");
+    location.href = router["proof"];
 });
 navigatorLoader.appendCell(cell);
 export default cell;
