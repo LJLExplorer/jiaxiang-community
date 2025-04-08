@@ -26,6 +26,7 @@
         <module>jiaxiang-community-service</module>
         <module>jiaxiang-community-basic</module>
         <module>jiaxiang-community-test</module>
+        <module>jiaxiang-community-basic/jiaxiang-file-starter</module>
     </modules>
 
     <properties>
@@ -41,6 +42,7 @@
         <mybatis.version>3.0.4</mybatis.version>
         <bootstrap.version>3.1.5</bootstrap.version>
         <spring-gateway.version>4.1.1</spring-gateway.version>
+        <minio.version>8.2.2</minio.version>
     </properties>
 
     <repositories>
@@ -125,6 +127,11 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-gateway</artifactId>
                 <version>${spring-gateway.version}</version> <!-- 可省略但建议写明 -->
+            </dependency>
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
