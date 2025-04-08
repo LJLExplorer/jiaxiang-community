@@ -1,0 +1,272 @@
+<!--两委成员页面，正常是由jianjie.html页面或者是gridManagement.html页面中的超链接跳转至此页面
+但是超链接没写-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>两委成员</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex; /* 使用flex布局来排列sidebar和内容区 */
+            background-color: #f8f8f8; /* 添加背景颜色 */
+        }
+        .sidebar {
+            width: 200px;
+            background-color: rgb(2, 148, 75); /* 修改为新的颜色 */
+            height: 100vh; /* 设置为视口高度 */
+            padding-top: 20px;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #0000ff;
+        }
+        .content {
+            flex-grow: 1; /* 让内容区占据剩余空间 */
+            margin-left: 20px; /* 与sidebar保持一定间距 */
+            background-color: #fff; /* 容器背景颜色 */
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+            border-radius: 8px; /* 添加圆角 */
+        }
+        .title {
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 70px; /* 增大标题和成员框之间的间距 */
+            text-align: center; /* 标题居中 */
+            background-color: rgb(2, 148, 75); /* 修改为新的颜色 */
+            color: white; /* 修改标题文字颜色 */
+            width: 100%;
+            position: relative;
+            padding: 10px;
+            border-radius: 8px; /* 添加圆角 */
+        }
+        .members-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px; /* 调整行间距 */
+        }
+        .member-box {
+            display: flex;
+            border: 1px solid rgb(2, 148, 75); /* 修改左边框颜色 */
+            padding: 10px;
+            width: 48%;
+            height: 250px;
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 添加阴影 */
+            border-radius: 8px; /* 添加圆角 */
+            cursor: pointer; /* 添加鼠标悬停效果 */
+        }
+        .member-box img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 10px;
+            border-radius: 50%; /* 图片圆角 */
+        }
+        .member-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* 让内容靠上对齐 */
+            flex-grow: 1;
+        }
+        .member-name-role {
+            font-weight: bold;
+            margin-bottom: 5px; /* 调整名字职务与职责之间的间距 */
+        }
+        .member-duty {
+            color: #666;
+            margin-top: 0; /* 确保顶部没有多余间距 */
+        }
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 30px; /* 增加下方空间 */
+        }
+        .pagination .page-info {
+            font-size: 14px;
+            color: #666;
+        }
+        .pagination .arrow {
+            cursor: pointer;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+        .pagination .arrow.enabled {
+            color: #007bff; /* 蓝色，表示可以点击 */
+        }
+        .pagination .arrow.disabled {
+            color: #ccc; /* 灰色，表示不可点击 */
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="#" onclick="changeModule('main')">首页</a>
+        <a href="#" onclick="changeModule('sqrry')">社区</a>
+        <a href="#" onclick="changeModule('wm')">网格管理</a>
+        <a href="#" onclick="changeModule('lzqd')">两委成员</a>
+        <a href="#" onclick="changeModule('wm')">为民服务</a>
+        <a href="#" onclick="changeModule('事项清单')">事项清单</a>
+        <a href="#" onclick="changeModule('证明')">证明出具</a>
+    </div>
+    <script>
+        function changeModule(moduleFlag) {
+            var urls = {
+                'main': 'jianjie.html', // 修改这里为首页的路径
+                'sqrry': 'jianjie.html',
+                'sqry': 'gridManagement.html',
+                'wm': '',
+                'lzqd': 'liangwei.html',
+                'wmfw': '',
+                '事项清单': 'listMatters.html',
+                '证明': 'proof.html'
+            };
+            window.location.href = urls[moduleFlag];
+        }
+    </script>
+    <div class="content">
+        <div class="title">两委成员</div>
+        <div id="members-container">
+            <!-- 动态加载成员信息 -->
+        </div>
+        <div class="pagination">
+            <span class="arrow" id="prev-arrow" onclick="prevPage()">&#8592;</span>
+            <div class="page-info">
+                <span class="page-number" id="current-page">1</span> / <span id="total-pages">1</span>
+                共 <span id="total-items">0</span> 条
+            </div>
+            <span class="arrow" id="next-arrow" onclick="nextPage()">&#8594;</span>
+        </div>
+    </div>
+
+    <script>
+        const members = [
+            { name: "于燕", role: "社区党委书记 居委会主任", duty: "管理社区所有小区", image: "img/liangwei-photo/yuyan.png" },
+            { name: "郭亚芳", role: "社区书记助理 社区两委成员", duty: "管理红旗花园小区", image: "img/liangwei-photo/guoyafang.png" },
+            { name: "郭振南", role: "一般社区工作人员", duty: "管理祥曾园小区", image: "img/liangwei-photo/guozhennan.png" },
+            { name: "黄威", role: "一般社区工作人员", duty: "管理嘉和苑西区", image: "img/liangwei-photo/huangwei.png" },
+            { name: "江婷婷", role: "一般社区工作人员", duty: "管理财苑小区、碧城华园小区", image: "img/liangwei-photo/jiangtingting.png" },
+            { name: "蒋彦臣", role: "一般社区工作人员", duty: "管理金都花苑小区", image: "img/liangwei-photo/jiangyanchen.png" },
+            { name: "孟如", role: "一般社区工作人员", duty: "管理国际商贸城小区", image: "img/liangwei-photo/mengru.png" },
+            { name: "张传祥", role: "一般社区工作人员", duty: "管理红旗花园小区", image: "img/liangwei-photo/zhangchuanxiang.png" },
+            { name: "赵劲松", role: "一般社区工作人员", duty: "管理博悦城小区", image: "img/liangwei-photo/zhaojinsong.png" },
+        ];
+
+        const itemsPerPage = 4;
+
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        let currentPage = parseInt(getParameterByName('page')) || 1;
+
+        function renderMembers() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageMembers = members.slice(start, end);
+
+            const container = document.getElementById("members-container");
+            container.innerHTML = "";
+
+            for (let i = 0; i < pageMembers.length; i += 2) {
+                const row = document.createElement("div");
+                row.className = "members-row";
+
+                const memberBox1 = document.createElement("div");
+                memberBox1.className = "member-box";
+                renderMemberBox(memberBox1, pageMembers[i]);
+                row.appendChild(memberBox1);
+
+                if (i + 1 < pageMembers.length) {
+                    const memberBox2 = document.createElement("div");
+                    memberBox2.className = "member-box";
+                    renderMemberBox(memberBox2, pageMembers[i + 1]);
+                    row.appendChild(memberBox2);
+                }
+
+                container.appendChild(row);
+            }
+
+            document.getElementById("total-items").textContent = members.length;
+            document.getElementById("current-page").textContent = currentPage;
+            document.getElementById("total-pages").textContent = Math.ceil(members.length / itemsPerPage);
+        }
+
+        function renderMemberBox(memberBox, member) {
+            const img = document.createElement("img");
+            img.src = member.image;
+
+            const memberInfo = document.createElement("div");
+            memberInfo.className = "member-info";
+
+            const nameRole = document.createElement("div");
+            nameRole.className = "member-name-role";
+            nameRole.textContent = `${member.name} - ${member.role}`;
+
+            const duty = document.createElement("div");
+            duty.className = "member-duty";
+            duty.textContent = member.duty;
+
+            memberInfo.appendChild(nameRole);
+            memberInfo.appendChild(duty);
+            memberBox.appendChild(img);
+            memberBox.appendChild(memberInfo);
+
+            // 添加点击事件，跳转到成员详细信息页面
+            memberBox.addEventListener("click", function() {
+                window.location.href = `liangwei_detail.html?id=${member.name}`;
+            });
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(members.length / itemsPerPage);
+            const prevArrow = document.getElementById("prev-arrow");
+            const nextArrow = document.getElementById("next-arrow");
+
+            // 更新箭头的状态
+            prevArrow.classList.toggle("enabled", currentPage > 1);
+            prevArrow.classList.toggle("disabled", currentPage === 1);
+
+            nextArrow.classList.toggle("enabled", currentPage < totalPages);
+            nextArrow.classList.toggle("disabled", currentPage === totalPages);
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderMembers();
+                updatePagination();
+            }
+        }
+
+        function nextPage() {
+            const totalPages = Math.ceil(members.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderMembers();
+                updatePagination();
+            }
+        }
+
+        renderMembers();
+        updatePagination();
+    </script>
+</body>
+</html>

@@ -1,11 +1,5 @@
 import { GradientBase } from "./GradientBase.js";
 class RadialGradient extends GradientBase {
-    cx0;
-    cy0;
-    cr0;
-    cx1;
-    cy1;
-    cr1;
     constructor(cx0, cy0, cr0, cx1, cy1, cr1) {
         super();
         this.cx0 = cx0;

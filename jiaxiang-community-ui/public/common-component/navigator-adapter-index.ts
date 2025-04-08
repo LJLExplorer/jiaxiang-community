@@ -6,6 +6,9 @@ class NavigatorAdapterIndex implements NavigatorAdapter {
     public container: HTMLElement;
     public navigatorLoader: NavigatorLoader;
 
+    public clear(): void {
+        this.container.innerHTML = "";
+    }
     public display(): void {
         const that = this;
 

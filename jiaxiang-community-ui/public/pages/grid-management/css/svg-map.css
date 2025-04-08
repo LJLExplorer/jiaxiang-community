@@ -18,5 +18,5 @@
 }
 
 #svg-container > svg > g:has(>g:nth-of-type(2)):hover {
-    transform: scale(1.04);
+    transform: scale(1.02);
 }

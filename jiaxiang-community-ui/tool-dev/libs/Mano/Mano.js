@@ -27,30 +27,6 @@ import { TimingFunction } from "./Animation/TimingFunction.js";
  * 它提供了一个容器，可容纳一个Canvas实例和一个Graphic实例。
  */
 class Mano extends HTMLElement {
-    // 静态属性用于存储各种图形、动画和颜色等相关类的构造函数。
-    static Canvas = Canvas;
-    static GraphicBase = GraphicBase;
-    static Graphic = Graphic;
-    static Parttern = Parttern;
-    static Border = Border;
-    static FILL_TYPE = FILL_TYPE;
-    static Font = Font;
-    static Shadow = Shadow;
-    static TextFormat = TextFormat;
-    static Animation = Animation;
-    static KeyframeEffect = KeyframeEffect;
-    static GraphicKeyframeEffect = GraphicKeyframeEffect;
-    static LinearInterpolation = LinearInterpolation;
-    static TimingFunction = TimingFunction;
-    static Color = Color;
-    static ColorBase = ColorBase;
-    static COLOR_NAME = COLOR_NAME;
-    static Gradient = Gradient;
-    static GradientBase = GradientBase;
-    static ImageData = ImageData;
-    // 实例属性用于存储Canvas和Graphic的实例。
-    canvas;
-    graphic;
     /**
      * 添加子节点到当前元素。
      * @param node 要添加的节点，可以是Canvas或Graphic实例。
@@ -58,6 +34,7 @@ class Mano extends HTMLElement {
      * @throws 如果尝试添加多个Canvas或Graphic实例，将抛出MultipleInstancesError错误。
      */
     appendChild(node) {
+        var _a;
         // 处理添加Canvas实例的情况。
         if (node instanceof Canvas)
             if (!this.canvas) {
@@ -90,7 +67,7 @@ class Mano extends HTMLElement {
             cancelable: true,
         });
         ev.source = "mano";
-        this.canvas?.dispatchEvent(ev);
+        (_a = this.canvas) === null || _a === void 0 ? void 0 : _a.dispatchEvent(ev);
         // 调用父类的appendChild方法。
         super.appendChild(node);
         return node;
@@ -101,6 +78,7 @@ class Mano extends HTMLElement {
      * @returns 返回被移除的节点。
      */
     removeChild(child) {
+        var _a;
         // 如果移除的节点是Canvas实例，设置canvas为null。
         if (child instanceof Canvas)
             this.canvas = null;
@@ -114,7 +92,7 @@ class Mano extends HTMLElement {
             bubbles: true,
             cancelable: true,
         });
-        this.canvas?.dispatchEvent(ev);
+        (_a = this.canvas) === null || _a === void 0 ? void 0 : _a.dispatchEvent(ev);
         // 调用父类的removeChild方法。
         super.removeChild(child);
         return child;
@@ -125,6 +103,27 @@ class Mano extends HTMLElement {
         this.style.display = 'block';
     }
 }
+// 静态属性用于存储各种图形、动画和颜色等相关类的构造函数。
+Mano.Canvas = Canvas;
+Mano.GraphicBase = GraphicBase;
+Mano.Graphic = Graphic;
+Mano.Parttern = Parttern;
+Mano.Border = Border;
+Mano.FILL_TYPE = FILL_TYPE;
+Mano.Font = Font;
+Mano.Shadow = Shadow;
+Mano.TextFormat = TextFormat;
+Mano.Animation = Animation;
+Mano.KeyframeEffect = KeyframeEffect;
+Mano.GraphicKeyframeEffect = GraphicKeyframeEffect;
+Mano.LinearInterpolation = LinearInterpolation;
+Mano.TimingFunction = TimingFunction;
+Mano.Color = Color;
+Mano.ColorBase = ColorBase;
+Mano.COLOR_NAME = COLOR_NAME;
+Mano.Gradient = Gradient;
+Mano.GradientBase = GradientBase;
+Mano.ImageData = ImageData;
 // 定义自定义元素"mano-main"。
 customElements.define("mano-main", Mano);
 export { Mano };

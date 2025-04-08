@@ -1,3 +1,4 @@
+/*人员数据模型类*/
 class CommissionerDAO {
     public name: string;
     public role: string;

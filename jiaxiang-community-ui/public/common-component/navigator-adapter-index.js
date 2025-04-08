@@ -1,6 +1,9 @@
 class NavigatorAdapterIndex {
     container;
     navigatorLoader;
+    clear() {
+        this.container.innerHTML = "";
+    }
     display() {
         const that = this;
         this.navigatorLoader.forEach(function cb(cell) {

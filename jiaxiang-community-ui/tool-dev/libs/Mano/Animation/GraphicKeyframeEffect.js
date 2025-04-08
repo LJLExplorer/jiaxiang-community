@@ -1,3 +1,15 @@
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var _GraphicKeyframeEffect_frames;
 import { GraphicEffect } from "./GraphicEffect.js";
 /*
 * endTime 表示效果从开始到结束的时间（毫秒）。这等于activeDuration加上delay和endDelay。
@@ -12,21 +24,19 @@ import { GraphicEffect } from "./GraphicEffect.js";
 *   当progress为null时，始终返回null。
 * */
 class GraphicKeyframeEffect extends GraphicEffect {
-    target;
-    #frames;
-    options;
     getKeyframes() {
-        return this.#frames;
+        return __classPrivateFieldGet(this, _GraphicKeyframeEffect_frames, "f");
     }
     setKeyframes(frames = []) {
-        this.#frames = frames;
+        __classPrivateFieldSet(this, _GraphicKeyframeEffect_frames, frames, "f");
     }
-    composite;
     constructor(target, frames = [], options) {
         super();
+        _GraphicKeyframeEffect_frames.set(this, void 0);
         this.target = target;
-        this.#frames = frames;
+        __classPrivateFieldSet(this, _GraphicKeyframeEffect_frames, frames, "f");
         this.options = options;
     }
 }
+_GraphicKeyframeEffect_frames = new WeakMap();
 export { GraphicKeyframeEffect };

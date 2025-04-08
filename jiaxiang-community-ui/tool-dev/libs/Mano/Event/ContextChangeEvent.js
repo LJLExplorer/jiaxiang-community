@@ -1,5 +1,7 @@
 class ContextChangeEvent extends Event {
-    source;
-    clearOptions = "both";
+    constructor() {
+        super(...arguments);
+        this.clearOptions = "both";
+    }
 }
 export { ContextChangeEvent };

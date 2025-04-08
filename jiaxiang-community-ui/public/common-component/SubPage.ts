@@ -3,7 +3,9 @@
 * */
 
 interface SubPage {
-    render(): void;
+    template: HTMLTemplateElement;
+
+    render(): DocumentFragment;
 }
 
 export default SubPage;

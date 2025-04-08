@@ -7,14 +7,6 @@ import { OKLABA } from "./ColorFormat/OKLABA.js";
 import { OKLCHA } from "./ColorFormat/OKLCHA.js";
 import { COLOR_NAME } from "./COLOR_NAME.js";
 class Color extends COLOR_NAME {
-    name;
-    static RGBA = RGBA;
-    static HSLA = HSLA;
-    static HWBA = HWBA;
-    static LABA = LABA;
-    static LCHA = LCHA;
-    static OKLABA = OKLABA;
-    static OKLCHA = OKLCHA;
     static HSLAToRGBA(color) {
         let h = color.H;
         let s = color.S;
@@ -332,4 +324,11 @@ class Color extends COLOR_NAME {
     }
     ;
 }
+Color.RGBA = RGBA;
+Color.HSLA = HSLA;
+Color.HWBA = HWBA;
+Color.LABA = LABA;
+Color.LCHA = LCHA;
+Color.OKLABA = OKLABA;
+Color.OKLCHA = OKLCHA;
 export { Color };
