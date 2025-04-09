@@ -18,6 +18,7 @@
     <name>jiaxiang-community</name>
     <description>嘉祥社区</description>
     <modules>
+        <module>jiaxiang-community-auth</module>
         <module>jiaxiang-community-common</module>
         <module>jiaxiang-community-feign-api</module>
         <module>jiaxiang-community-model</module>
@@ -26,7 +27,6 @@
         <module>jiaxiang-community-service</module>
         <module>jiaxiang-community-basic</module>
         <module>jiaxiang-community-test</module>
-        <module>jiaxiang-community-basic/jiaxiang-file-starter</module>
     </modules>
 
     <properties>
