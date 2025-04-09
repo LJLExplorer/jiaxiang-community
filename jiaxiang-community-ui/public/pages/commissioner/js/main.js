@@ -1,10 +1,11 @@
 import commissionerInformation from "../../../files/commissioner_information.js";
 import CommissionerDetails from "../Commissioner/CommissionerDetails.js";
 import CommissionerList from "../Commissioner/CommissionerList.js";
-import CommissionerEvent from "../Commissioner/CommissionerEvent.js";
+import EventRegister from "../../../common-component/multiple-pages/EventRegister.js";
 import navigatorLoader from "../../../common-component/navigator-regist/main-loader.js";
 import NavigatorCell from "../../../Navigator/NavigatorCell.js";
 import mainLoader from "../../../common-component/navigator-regist/main-loader.js";
+import DataInitializer from "../../../common-component/multiple-pages/DataInitializer.js";
 document.addEventListener("DOMContentLoaded", function () {
     const pageContainer = document.querySelector("#page-container");
     const commissionerDetailsTemplate = document.querySelector("#commissioner-details-template");
@@ -12,13 +13,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let itemInAPage = 4;
     let currentPage = 1;
     let cell;
-    const cEvent = new CommissionerEvent();
+    const cEvent = new EventRegister();
     commissionerInformation.forEach((commissioner, index) => {
-        cEvent.regist(commissioner, "click", (e) => {
+        cEvent.regist("#" + commissioner.name, "click", (e) => {
             const detailsFragment = new CommissionerDetails(commissioner, commissionerDetailsTemplate);
             pageContainer.show(detailsFragment);
             cell = new NavigatorCell("返回上一级", function (ev) {
-                changeToPage1();
+                pageContainer.show(new CommissionerList(commissionerInformation, commissionerSummaryTemplate, itemInAPage, currentPage, cEvent, cInitializer));
                 navigatorLoader.removeCell(cell);
                 mainLoader.adapter.clear();
                 mainLoader.adapter.display();
@@ -28,35 +29,38 @@ document.addEventListener("DOMContentLoaded", function () {
             mainLoader.adapter.display();
         });
     });
-    let changeToPage1 = async function () {
-        await pageContainer.show(new CommissionerList(commissionerInformation, commissionerSummaryTemplate, itemInAPage, currentPage, cEvent));
-        const prevArrow = pageContainer.querySelector("#prev-arrow");
-        const nextArrow = pageContainer.querySelector("#next-arrow");
-        const pageNumber = pageContainer.querySelector("#current-page");
-        const totalPage = pageContainer.querySelector("#total-pages");
-        const totalItems = pageContainer.querySelector("#total-items");
+    cEvent.regist("#prev-arrow", "click", function () {
+        if (currentPage <= 1) {
+            return;
+        }
+        currentPage--;
+        pageContainer.show(new CommissionerList(commissionerInformation, commissionerSummaryTemplate, itemInAPage, currentPage, cEvent, cInitializer));
+    });
+    cEvent.regist("#next-arrow", "click", function () {
+        if (currentPage >= Math.ceil(commissionerInformation.length / itemInAPage)) {
+            return;
+        }
+        currentPage++;
+        pageContainer.show(new CommissionerList(commissionerInformation, commissionerSummaryTemplate, itemInAPage, currentPage, cEvent, cInitializer));
+    });
+    const cInitializer = new DataInitializer();
+    cInitializer.regist("#prev-arrow", function (ele) {
+        ele.classList.toggle("enabled", currentPage > 1);
+        ele.classList.toggle("disabled", currentPage === 1);
+    });
+    cInitializer.regist("#next-arrow", function (ele) {
         const totalPages = Math.ceil(commissionerInformation.length / itemInAPage);
-        pageNumber.innerHTML = currentPage + "";
-        totalPage.innerHTML = Math.ceil(commissionerInformation.length / itemInAPage) + "";
-        totalItems.innerHTML = commissionerInformation.length + "";
-        prevArrow.classList.toggle("enabled", currentPage > 1);
-        prevArrow.classList.toggle("disabled", currentPage === 1);
-        nextArrow.classList.toggle("enabled", currentPage < totalPages);
-        nextArrow.classList.toggle("disabled", currentPage === totalPages);
-        prevArrow.addEventListener("click", function () {
-            if (currentPage <= 1) {
-                return;
-            }
-            currentPage--;
-            changeToPage1();
-        });
-        nextArrow.addEventListener("click", function () {
-            if (currentPage >= Math.ceil(commissionerInformation.length / itemInAPage)) {
-                return;
-            }
-            currentPage++;
-            changeToPage1();
-        });
-    };
-    changeToPage1();
+        ele.classList.toggle("enabled", currentPage < totalPages);
+        ele.classList.toggle("disabled", currentPage === totalPages);
+    });
+    cInitializer.regist("#current-page", function (ele) {
+        ele.innerHTML = currentPage + "";
+    });
+    cInitializer.regist("#total-pages", function (ele) {
+        ele.innerHTML = Math.ceil(commissionerInformation.length / itemInAPage) + "";
+    });
+    cInitializer.regist("#total-items", function (ele) {
+        ele.innerHTML = commissionerInformation.length + "";
+    });
+    pageContainer.show(new CommissionerList(commissionerInformation, commissionerSummaryTemplate, itemInAPage, currentPage, cEvent, cInitializer));
 });

@@ -1,5 +1,5 @@
 /*用于注册事件的*/
-class CommissionerEvent {
+class EventRegister {
     eventList = new Map();
     regist(target, type, listener) {
         if (this.eventList.has(target)) {
@@ -10,4 +10,4 @@ class CommissionerEvent {
         }
     }
 }
-export default CommissionerEvent;
+export default EventRegister;

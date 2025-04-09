@@ -1,8 +1,8 @@
 import CommissionerDAO from "./CommissionerDAO.js";
-import SubPage from "../../../common-component/SubPage.js";
+import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
 
 /*详情页面*/
-class CommissionerDetails implements SubPage {
+class CommissionerDetails implements IsSubPage {
     public commissioner: CommissionerDAO;
     public template: HTMLTemplateElement;
 
@@ -44,9 +44,8 @@ class CommissionerDetails implements SubPage {
         root.querySelector("slot[name='role']").replaceWith(roleSlot);
         root.querySelector("slot[name='duty']").replaceWith(dutySlot);
         root.querySelector("slot[name='duty-content']").replaceWith(dutyContentSlot);
-    
-        documentFragmemt.appendChild(root);
 
+        documentFragmemt.appendChild(root);
         return documentFragmemt;
     }
 

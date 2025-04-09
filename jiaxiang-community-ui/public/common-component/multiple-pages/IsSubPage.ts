@@ -2,10 +2,11 @@
 * 用于给所有子页面最基本规范的接口
 * */
 
-interface SubPage {
+interface IsSubPage {
     template: HTMLTemplateElement;
 
     render(): DocumentFragment;
+
 }
 
-export default SubPage;
+export default IsSubPage;

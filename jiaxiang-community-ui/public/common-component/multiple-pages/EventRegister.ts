@@ -1,4 +1,4 @@
-import CommissionerDAO from "./CommissionerDAO";
+import ElementSelector from "./ElementSelector.js";
 
 type EventCB = (this: HTMLElement, ev: DocumentEventMap[keyof DocumentEventMap]) => any;
 
@@ -8,11 +8,11 @@ interface EventInfo {
 }
 
 /*用于注册事件的*/
-class CommissionerEvent {
-    public eventList: Map<CommissionerDAO, EventInfo[]> = new Map();
+class EventRegister {
+    public eventList: Map<ElementSelector, EventInfo[]> = new Map();
 
     public regist<K extends keyof DocumentEventMap>
-    (target: CommissionerDAO, type: K, listener: EventCB
+    (target: ElementSelector, type: K, listener: EventCB
     ): void {
         if(this.eventList.has(target)){
             this.eventList.get(target).push({type, listener});
@@ -22,4 +22,4 @@ class CommissionerEvent {
     }
 }
 
-export default CommissionerEvent;
+export default EventRegister;

@@ -1,16 +1,20 @@
-import CommissionerDAO from "./CommissionerDAO";
-import CommissionerEvent from "./CommissionerEvent";
-import SubPage from "../../../common-component/SubPage";
+import CommissionerDAO from "./CommissionerDAO.js";
+import EventRegister from "../../../common-component/multiple-pages/EventRegister.js";
+import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
+import CanRegistryEvent from "../../../common-component/multiple-pages/CanRegistryEvent.js";
+import CanInitData from "../../../common-component/multiple-pages/CanInitData.js";
+import DataInitializer from "../../../common-component/multiple-pages/DataInitializer";
 
 /*概要页面*/
-class CommissionerList implements SubPage {
+class CommissionerList implements IsSubPage, CanRegistryEvent, CanInitData {
     public list: CommissionerDAO[];
-    public event: CommissionerEvent;
     public currentPage: number;
     public itemInAPage: number;
     public totalPage: number;
 
     public template: HTMLTemplateElement;
+    public event: EventRegister;
+    public initializer: DataInitializer;
 
     private renderMemberBox(memberBox: HTMLElement, member: CommissionerDAO) {
         const img = document.createElement("img");
@@ -32,11 +36,11 @@ class CommissionerList implements SubPage {
         memberBox.appendChild(img);
         memberBox.appendChild(memberInfo);
 
-        if (this.event.eventList.has(member)) {
+        /*if (this.event.eventList.has(member)) {
             this.event.eventList.get(member).forEach((value) => {
                 memberBox.addEventListener(value.type, value.listener);
             })
-        }
+        }*/
     }
 
     public render() {
@@ -49,20 +53,21 @@ class CommissionerList implements SubPage {
         const end = start + this.itemInAPage;
         const pageMembers = this.list.slice(start, end);
 
-        for (let i = 0; i < pageMembers.length; i += 2) {
+        const boxPerRow = 2;
+        for (let rowNum = 0; rowNum < Math.ceil(pageMembers.length / boxPerRow); rowNum += 1) {
             const row = document.createElement("div");
             row.className = "members-row";
 
-            const memberBox1 = document.createElement("div");
-            memberBox1.className = "member-box";
-            this.renderMemberBox(memberBox1, pageMembers[i]);
-            row.appendChild(memberBox1);
+            for (let colNum = 0;
+                 colNum < Math.min(boxPerRow, pageMembers.length - rowNum * boxPerRow);
+                 colNum++) {
+                const count = rowNum * boxPerRow + colNum;
 
-            if (i + 1 < pageMembers.length) {
-                const memberBox2 = document.createElement("div");
-                memberBox2.className = "member-box";
-                this.renderMemberBox(memberBox2, pageMembers[i + 1]);
-                row.appendChild(memberBox2);
+                const memberBox = document.createElement("div");
+                memberBox.className = "member-box";
+                memberBox.id = `${pageMembers[count].name}`;
+                this.renderMemberBox(memberBox, pageMembers[count]);
+                row.appendChild(memberBox);
             }
 
             membersContainer.appendChild(row);
@@ -70,23 +75,49 @@ class CommissionerList implements SubPage {
         const root: HTMLElement = this.template.content.cloneNode(true) as HTMLElement;
         root.querySelector("slot[name='list']").replaceWith(membersContainer);
 
+        this.registryEvent(root);
+        this.operate(root);
+
         documentFragmemt.appendChild(root);
 
         return documentFragmemt;
     }
 
+    public registryEvent(ele: HTMLElement) {
+        this.event.eventList.forEach((eventInfos, selector) => {
+            const selectorEle = ele.querySelector(selector);
+            if (selectorEle) {
+                eventInfos.forEach((eventInfo) => {
+                    selectorEle.addEventListener(eventInfo.type, eventInfo.listener);
+                })
+            }
+        })
+    }
+
+    public operate(ele: HTMLElement): void {
+        this.initializer.list.forEach((callbacks, selector) => {
+            const target = ele.querySelector(selector);
+            if (target) {
+                callbacks.forEach(callback => {
+                    callback.call(ele, target);
+                })
+            }
+        })
+    }
 
     constructor(commissionerList: CommissionerDAO[],
                 template: HTMLTemplateElement,
                 itemInAPage: number,
                 currentPage: number,
-                event: CommissionerEvent) {
+                event: EventRegister,
+                dataInitializer: DataInitializer,) {
         this.list = commissionerList;
         this.template = template;
 
         this.itemInAPage = itemInAPage;
         this.currentPage = currentPage;
         this.event = event;
+        this.initializer = dataInitializer;
 
         this.totalPage = Math.ceil(this.list.length / this.itemInAPage);
 

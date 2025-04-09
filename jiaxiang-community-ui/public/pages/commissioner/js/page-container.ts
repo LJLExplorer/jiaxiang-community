@@ -1,11 +1,11 @@
-import SubPage from "../../../common-component/SubPage.js";
+import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
 
 class PageContainer extends HTMLElement {
     public clear() {
         this.innerHTML = "";
     }
 
-    public async show(page: SubPage) {
+    public async show(page: IsSubPage) {
         this.clear();
 
         const documentFragment: DocumentFragment = page.render();
