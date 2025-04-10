@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jiaxiang.activity.mapper.ActivityMapper">
+    <!--namespace根据自己需要创建的的mapper的路径和名称填写-->
+
+    <resultMap id="ActivityMap" type="com.jiaxiang.model.activity.vos.ActivityPreviewVO">
+        <id column="id" property="id"/>
+        <result column="path_url" property="images"/>
+    </resultMap>
+
+    <select id="getActivitiesByCommunityId" resultMap = "ActivityMap">
+        select activity.id, activity_file.path_url
+        from activity,
+             activity_file
+        where activity.community_id = #{communityId}
+          and activity.id = activity_file.activity_id
+          and activity_file.is_cover = true
+    </select>
+
+</mapper>

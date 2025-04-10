@@ -17,6 +17,7 @@
         <module>jiaxiang-community-content</module>
         <module>jiaxiang-community-portal</module>
         <module>jiaxiang-community-search</module>
+        <module>jiaxiang-community-activity</module>
     </modules>
 
     <properties>
