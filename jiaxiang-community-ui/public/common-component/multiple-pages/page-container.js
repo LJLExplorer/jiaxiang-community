@@ -4,10 +4,11 @@ class PageContainer extends HTMLElement {
     }
     async show(page) {
         this.clear();
-        const documentFragment = page.render();
+        const documentFragment = await page.render();
+        const that = this;
         await new Promise(resolve => {
             document.startViewTransition(() => {
-                this.appendChild(documentFragment);
+                that.appendChild(documentFragment);
                 resolve();
             });
         });

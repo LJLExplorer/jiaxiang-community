@@ -1,4 +1,4 @@
-import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
+import IsSubPage from "./IsSubPage";
 
 class PageContainer extends HTMLElement {
     public clear() {
@@ -8,12 +8,12 @@ class PageContainer extends HTMLElement {
     public async show(page: IsSubPage) {
         this.clear();
 
-        const documentFragment: DocumentFragment = page.render();
-
+        const documentFragment: DocumentFragment = await page.render();
+        const that = this;
 
         await new Promise<void>(resolve => {
             document.startViewTransition(() => {
-                this.appendChild(documentFragment);
+                that.appendChild(documentFragment);
                 resolve();
             })
         })

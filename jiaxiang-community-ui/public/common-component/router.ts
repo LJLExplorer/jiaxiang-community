@@ -10,6 +10,8 @@ const router = {
     "community-honor":"/jiaxiang-community/jiaxiang-community-ui/public/pages/community-honor/index.html",
 
     "jiaxiang-community-map":"/jiaxiang-community/jiaxiang-community-ui/public/files/嘉祥社区地图.svg"
+
+
 };
 
 export default router;

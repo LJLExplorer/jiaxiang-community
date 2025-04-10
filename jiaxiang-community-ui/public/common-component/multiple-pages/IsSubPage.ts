@@ -5,7 +5,7 @@
 interface IsSubPage {
     template: HTMLTemplateElement;
 
-    render(): DocumentFragment;
+    render(): DocumentFragment | Promise<DocumentFragment>;
 
 }
 

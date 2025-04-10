@@ -1,0 +1,82 @@
+.content {
+    flex-grow: 1; /* 让内容区占据剩余空间 */
+    margin-left: 20px; /* 与sidebar保持一定间距 */
+    background-color: #fff; /* 容器背景颜色 */
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+    border-radius: 8px; /* 添加圆角 */
+}
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 70px; /* 增大标题和成员框之间的间距 */
+    text-align: center; /* 标题居中 */
+    background-color: rgb(2, 148, 75); /* 修改为新的颜色 */
+    color: white; /* 修改标题文字颜色 */
+    width: 100%;
+    position: relative;
+    padding: 10px;
+    border-radius: 8px; /* 添加圆角 */
+}
+
+.members-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; /* 调整行间距 */
+}
+
+.member-box {
+    display: flex;
+    border: 1px solid rgb(2, 148, 75); /* 修改左边框颜色 */
+    padding: 10px;
+    width: 48%;
+    height: 250px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 添加阴影 */
+    border-radius: 8px; /* 添加圆角 */
+    cursor: pointer; /* 添加鼠标悬停效果 */
+}
+.member-box img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 50%; /* 图片圆角 */
+}
+.member-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 让内容靠上对齐 */
+    flex-grow: 1;
+}
+.member-name-role {
+    font-weight: bold;
+    margin-bottom: 5px; /* 调整名字职务与职责之间的间距 */
+}
+.member-duty {
+    color: #666;
+    margin-top: 0; /* 确保顶部没有多余间距 */
+}
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 30px; /* 增加下方空间 */
+}
+.pagination .page-info {
+    font-size: 14px;
+    color: #666;
+}
+.pagination .arrow {
+    cursor: pointer;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+.pagination .arrow.enabled {
+    color: #007bff; /* 蓝色，表示可以点击 */
+}
+.pagination .arrow.disabled {
+    color: #ccc; /* 灰色，表示不可点击 */
+    cursor: default;
+}
