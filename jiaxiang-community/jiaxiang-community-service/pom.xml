@@ -12,9 +12,11 @@
     <artifactId>jiaxiang-community-service</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>jiahe-community</module>
         <module>jiaxiang-community-admin</module>
-        <module>jiaxiang-community-article</module>
+        <module>jiaxiang-community-comment</module>
+        <module>jiaxiang-community-content</module>
+        <module>jiaxiang-community-portal</module>
+        <module>jiaxiang-community-search</module>
     </modules>
 
     <properties>

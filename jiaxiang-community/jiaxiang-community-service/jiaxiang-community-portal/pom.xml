@@ -5,15 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.jiaxiang</groupId>
-        <artifactId>jiaxiang-community</artifactId>
+        <artifactId>jiaxiang-community-service</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jiaxiang-community-basic</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>jiaxiang-file-starter</module>
-    </modules>
+    <artifactId>jiaxiang-community-portal</artifactId>
+    <description>门户网站</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
