@@ -1,4 +1,4 @@
-import commissionerInformation from "../../../files/commissioner-information";
+import commissionerInformation from "../../../files/commissioner-information.js";
 import CommissionerDetails from "../Commissioner/CommissionerDetails.js";
 import CommissionerList from "../Commissioner/CommissionerList.js";
 import EventRegister from "../../../common-component/multiple-pages/EventRegister.js";
