@@ -1,13 +1,16 @@
+// 测试环境
+// const prefix = "/jiaxiang-community/jiaxiang-community-ui/public";
+const prefix = "";
 const router = {
-    "homepage": "/jiaxiang-community/jiaxiang-community-ui/public/pages/index/index.html",
-    "profile": "/jiaxiang-community/jiaxiang-community-ui/public/pages/profile/index.html",
-    "grid-management": "/jiaxiang-community/jiaxiang-community-ui/public/pages/grid-management/index.html",
-    "commissioner": "/jiaxiang-community/jiaxiang-community-ui/public/pages/commissioner/index.html",
-    "serve-people": "/jiaxiang-community/jiaxiang-community-ui/public/pages/serve-people/index.html",
-    "matter-list": "/jiaxiang-community/jiaxiang-community-ui/public/pages/matter-list/index.html",
-    "proof": "/jiaxiang-community/jiaxiang-community-ui/public/pages/proof/index.html",
-    "community-details": "/jiaxiang-community/jiaxiang-community-ui/public/pages/community-details/index.html",
-    "community-honor": "/jiaxiang-community/jiaxiang-community-ui/public/pages/community-honor/index.html",
-    "jiaxiang-community-map": "/jiaxiang-community/jiaxiang-community-ui/public/files/嘉祥社区地图.svg"
+    "homepage": prefix + "/pages/index/index.html",
+    "profile": prefix + "/pages/profile/index.html",
+    "grid-management": prefix + "/pages/grid-management/index.html",
+    "commissioner": prefix + "/pages/commissioner/index.html",
+    "serve-people": prefix + "/pages/serve-people/index.html",
+    "matter-list": prefix + "/pages/matter-list/index.html",
+    "proof": prefix + "/pages/proof/index.html",
+    "community-details": prefix + "/pages/community-details/index.html",
+    "community-honor": prefix + "/pages/community-honor/index.html",
+    "jiaxiang-community-map": prefix + "/files/嘉祥社区地图.svg"
 };
 export default router;

@@ -26,12 +26,13 @@ function getMimeType(filePath) {
     return mimeTypeLookup[extname] || 'text/html';
 }
 
+const staticFolderDir = "./public"
 // Middleware to serve static files
-app.use(express.static(path.join(__dirname, 'public')));  // Replace 'public' with your static folder name
+app.use(express.static(path.join(__dirname, staticFolderDir)));  // Replace 'public' with your static folder name
 
 // Route to handle all other requests (assuming they are for static files)
 app.get('*', (req, res) => {
-    const filePath = path.join(__dirname, decodeURIComponent(req.path));  // Replace 'public' with your static folder name
+    const filePath = path.join(__dirname, staticFolderDir, decodeURIComponent(req.path));  // Replace 'public' with your static folder name
 
 
     console.log(filePath)
@@ -46,5 +47,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+    console.log(`监听端口：${port}`);
+    console.log(`入口地址：http://localhost:${port}/pages/index/index.html`)
 });
