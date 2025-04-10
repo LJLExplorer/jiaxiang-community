@@ -15,6 +15,7 @@
     <modules>
         <module>jiahe-community-gateway</module>
         <module>test-gateway</module>
+        <module>community-gateway</module>
     </modules>
 
     <properties>

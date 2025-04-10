@@ -10,28 +10,6 @@
 
 9001已默认分配给sentinel dashboard
 
-#### jiahe-community-dev.yaml
-
-```yaml
-server:
-  port: ${port:9001}
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: test
-    url: jdbc:mysql://127.0.0.1:3306/community_springclould?characterEncoding=utf-8&useSSL=false
-  jackson:
-    serialization:
-      WRITE_DATES_AS_TIMESTAMPS: false
-      FAIL_ON_EMPTY_BEANS: true
-    time-zone: UTC
-mybatis:
-# 与数据库直接操作的别名
-  type-aliases-package: com.jiaxiang.model.community.dos
-  mapper-locations: classpath:mapper/*.xml
-
-```
 #### jiaxiang-article-dev.yaml
 
 ```yaml
@@ -54,11 +32,11 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 ```
 
-#### jiahe-gateway-dev.yaml
+#### community-gateway-dev.yaml
 
 ```
 server:
-  port: 8000
+  port: 8001
 spring:
   cloud:
     gateway:
@@ -67,27 +45,24 @@ spring:
         - id: jiahe-community-route
           # 代理的服务地址
           uri:
-            lb://jiahe-community
-            #http://127.0.0.1:8080
+            lb://jiaxiang-portal
           # 路由断言，可以配置映射路径
           predicates:
-            # - Path=/cf/**
-            # - Path=/**
             - Path=/api/jiahe/**
           filters:
             # 添加请求路径的前缀
-            # - PrefixPath=/cf
             # 表示过滤1个路径，2表示两个路径，以此类推
             - StripPrefix=1
-            # 自定义的过滤器如 HAHAGatewayFilterFactory 去掉 GatewayFilterFactory
-            # - HAHA=name
-            # - HAHA=age
+            - AddRequestParameter=communityId,1
         # 第二个路由规则：访问/cf/**不做任何处理
         - id: article-route
           uri:
             lb://jiaxiang-article
           predicates:
             - Path=/api/article/**
+          filters:
+            - StripPrefix=1
+           
       # globalcors 用于配置全局的 CORS（跨域资源共享）设置。
       globalcors:
         # corsConfigurations: 定义 CORS 配置的路径模式
@@ -99,5 +74,8 @@ spring:
             allowed-methods:
               # 允许来自上面网址的所有GET方法跨域
               - get
+              - post
+              - put
+              - delete
 ```
 

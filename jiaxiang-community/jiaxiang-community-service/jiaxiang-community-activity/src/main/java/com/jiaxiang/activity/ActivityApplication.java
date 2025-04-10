@@ -1,17 +1,15 @@
-package com.jiaxiang.portal;
+package com.jiaxiang.activity;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication
-@LoadBalancerClient(value = "jiaxiang-activity")
 @EnableFeignClients(basePackages = "com.jiaxiang.apis")
-@MapperScan("com.jiaxiang.portal.mapper")
-public class PortalApplication {
+@MapperScan("com.jiaxiang.activity.mapper")
+@SpringBootApplication
+public class ActivityApplication {
     public static void main(String[] args) {
-        SpringApplication.run(PortalApplication.class, args);
+        SpringApplication.run(ActivityApplication.class, args);
     }
 }
