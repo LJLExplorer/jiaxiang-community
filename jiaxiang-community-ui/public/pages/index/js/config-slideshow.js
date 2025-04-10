@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     pic.syncPictureIndex();
     page2.onclick = function () {
+        sessionStorage.setItem("slideshow-index", pic.index + "");
         pic.next();
     };
 });

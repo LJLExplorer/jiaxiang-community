@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchBtn = document.querySelector("#search-button");
     detailsBtn.addEventListener("click", function () {
         // @ts-ignore
-        location = router["community-details"];
+        location = router["profile"];
     });
     honorBtn.addEventListener("click", function () {
         // @ts-ignore
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     slideshowView.addEventListener("click", function () {
         // 跳转到详情页
-        window.location.href = `detail.html`;
+        window.location.href = router["community-activity"];
     });
     searchBtn.addEventListener("click", function () {
         //这个代码没用，因为不知道找的是哪个

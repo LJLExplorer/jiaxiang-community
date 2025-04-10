@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
     pic.syncPictureIndex();
 
     (page2 as HTMLElement).onclick = function () {
+        sessionStorage.setItem("slideshow-index", pic.index + "");
+
         pic.next();
     };
 });

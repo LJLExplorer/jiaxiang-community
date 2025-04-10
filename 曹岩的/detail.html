@@ -20,9 +20,9 @@
         const activity = activities[activityId];
 
         if(activity) {
-            document.getElementById('detailTitle').textContent = activity.title;
+            document.getElementById('detailTitle').textContent = decodeURI(activity.title);
             document.getElementById('detailImage').src = activity.image;
-            document.getElementById('detailDesc').textContent = activity.description;
+            document.getElementById('detailDesc').textContent = decodeURI(activity.description);
         }
     </script>
 </body>

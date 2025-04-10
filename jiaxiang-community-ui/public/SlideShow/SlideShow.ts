@@ -5,7 +5,7 @@ class SlideShow extends Object {
     public image: HTMLElement;
     public hrefs: any[] = [];
     public debug = false;
-    private index = 0;
+    public index = 0;
 
     constructor(hrefs: any[], container: HTMLElement = document.body) {
         super();
