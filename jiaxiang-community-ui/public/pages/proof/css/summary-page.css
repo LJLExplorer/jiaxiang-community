@@ -18,44 +18,39 @@
     padding: 10px;
     border-radius: 8px; /* 添加圆角 */
 }
-
-.members-row {
+.proofs-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px; /* 调整行间距 */
+    margin-bottom: 60px; /* 调整行间距 */
+    gap: 20px; /* 调整证明框之间的间距 */
 }
-
-.member-box {
+.proof-box {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     border: 1px solid rgb(2, 148, 75); /* 修改左边框颜色 */
     padding: 10px;
-    width: 48%;
+    width: 20%;
     height: 250px;
     background-color: #fff;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 添加阴影 */
     border-radius: 8px; /* 添加圆角 */
     cursor: pointer; /* 添加鼠标悬停效果 */
+    margin: 0 100px;
 }
-.member-box img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-right: 10px;
-    border-radius: 50%; /* 图片圆角 */
-}
-.member-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* 让内容靠上对齐 */
-    flex-grow: 1;
-}
-.member-name-role {
+.proof-name {
+    padding-top: 27px;
+    font-size: 20px;
     font-weight: bold;
-    margin-bottom: 5px; /* 调整名字职务与职责之间的间距 */
+    margin-bottom: 150px; /* 调整名字与按钮之间的间距 */
 }
-.member-duty {
-    color: #666;
-    margin-top: 0; /* 确保顶部没有多余间距 */
+.proof-btn {
+    background-color: rgb(2, 148, 75);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .pagination {
     display: flex;

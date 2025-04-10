@@ -3,7 +3,7 @@ import CommissionerEvent from "./EventRegister.js";
 interface CanRegistryEvent {
     event: CommissionerEvent;
 
-    registryEvent(ele: HTMLElement): void;
+    registryEvent(ele: DocumentFragment): void;
 
 }
 

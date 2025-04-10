@@ -72,7 +72,7 @@ class CommissionerList implements IsSubPage, CanRegistryEvent, CanInitData {
 
             membersContainer.appendChild(row);
         }
-        const root: HTMLElement = this.template.content.cloneNode(true) as HTMLElement;
+        const root = this.template.content.cloneNode(true) as DocumentFragment;
         root.querySelector("slot[name='list']").replaceWith(membersContainer);
 
         this.registryEvent(root);
@@ -83,7 +83,7 @@ class CommissionerList implements IsSubPage, CanRegistryEvent, CanInitData {
         return documentFragmemt;
     }
 
-    public registryEvent(ele: HTMLElement) {
+    public registryEvent(ele: DocumentFragment) {
         this.event.eventList.forEach((eventInfos, selector) => {
             const selectorEle = ele.querySelector(selector);
             if (selectorEle) {
@@ -94,7 +94,7 @@ class CommissionerList implements IsSubPage, CanRegistryEvent, CanInitData {
         })
     }
 
-    public operate(ele: HTMLElement): void {
+    public operate(ele: DocumentFragment): void {
         this.initializer.list.forEach((callbacks, selector) => {
             const target = ele.querySelector(selector);
             if (target) {

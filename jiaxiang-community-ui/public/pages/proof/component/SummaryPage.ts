@@ -1,4 +1,4 @@
-import MattersDAO from "./MattersDAO.js";
+import ProofsDAO from "./ProofsDAO.js";
 import EventRegister from "../../../common-component/multiple-pages/EventRegister.js";
 import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
 import CanRegistryEvent from "../../../common-component/multiple-pages/CanRegistryEvent.js";
@@ -7,7 +7,7 @@ import DataInitializer from "../../../common-component/multiple-pages/DataInitia
 
 /*概要页面*/
 class SummaryPage implements IsSubPage, CanRegistryEvent, CanInitData {
-    public list: MattersDAO[];
+    public list: ProofsDAO[];
     public currentPage: number;
     public itemInAPage: number;
     public totalPage: number;
@@ -16,25 +16,44 @@ class SummaryPage implements IsSubPage, CanRegistryEvent, CanInitData {
     public event: EventRegister;
     public initializer: DataInitializer;
 
+    private renderProofBox(proofBox, proof) {
+        const proofName = document.createElement("div");
+        proofName.className = "proof-name";
+        proofName.textContent = proof.name;
+
+        const proofBtn = document.createElement("button");
+        proofBtn.className = "proof-btn";
+        proofBtn.textContent = "点击进入";
+        proofBtn.id = proof.id;
+        proofBox.appendChild(proofName);
+        proofBox.appendChild(proofBtn);
+
+        // 添加点击事件，跳转到证明详细信息页面，并传递当前页码
+        /*proofBox.addEventListener("click", function() {
+            window.location.href = `proof_detail.html?name=${proof.name}&page=${currentPage}`;
+        });*/
+    }
 
     public render() {
-
-        const documentFragmemt = document.createDocumentFragment();
-
-        const container = document.createElement("div");
         const start = (this.currentPage - 1) * this.itemInAPage;
         const end = start + this.itemInAPage;
+        const pageProofs = this.list.slice(start, end);
 
-        this.list.slice(start, end).forEach((matter, index) => {
-            const button = document.createElement("button");
-            button.id = matter.id;
-            button.className = `big-btn`;
-            button.innerHTML = `
-                    ${matter.title}
-                    <span>点击进入</span>
-                `;
-            container.appendChild(button);
-        });
+        const container = document.createElement("div");
+
+        for (let i = 0; i < pageProofs.length; i += 3) {
+            const row = document.createElement("div");
+            row.className = "proofs-row";
+
+            for (let j = 0; j < 3 && i + j < pageProofs.length; j++) {
+                const proofBox = document.createElement("div");
+                proofBox.className = "proof-box";
+                this.renderProofBox(proofBox, pageProofs[i + j]);
+                row.appendChild(proofBox);
+            }
+
+            container.appendChild(row);
+        }
 
         const root = this.template.content.cloneNode(true) as DocumentFragment;
         root.querySelector("slot[name='list']").replaceWith(container);
@@ -42,9 +61,7 @@ class SummaryPage implements IsSubPage, CanRegistryEvent, CanInitData {
         this.registryEvent(root);
         this.operate(root);
 
-        documentFragmemt.appendChild(root);
-
-        return documentFragmemt;
+        return root;
     }
 
     public registryEvent(ele: DocumentFragment) {
@@ -69,13 +86,13 @@ class SummaryPage implements IsSubPage, CanRegistryEvent, CanInitData {
         })
     }
 
-    constructor(commissionerList: MattersDAO[],
+    constructor(list: ProofsDAO[],
                 template: HTMLTemplateElement,
                 itemInAPage: number,
                 currentPage: number,
                 event: EventRegister,
                 dataInitializer: DataInitializer,) {
-        this.list = commissionerList;
+        this.list = list;
         this.template = template;
 
         this.itemInAPage = itemInAPage;
