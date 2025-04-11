@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嘉和社区</title>
+    <style>
+        /* 新增动态渐变背景动画 */
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #f0f8ff, #e6f7ff, #ddf2ff, #d4edff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: linear-gradient(135deg, #02a85b 0%, #00c3ff 100%);
+            position: fixed;
+            height: 100%;
+            padding-top: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 25px;
+            text-decoration: none;
+            font-size: 25px;
+            line-height: 1.5;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid white;
+            transform: translateX(10px);
+        }
+
+        .sidebar a:hover:before {
+            left: 100%;
+        }
+
+        .content {
+            margin-left: 220px;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #02a85b 0%, #00c3ff 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: translateX(-100%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .main {
+            display: flex;
+            align-items: flex-start;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin-top: 0;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .main:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .main img {
+            max-width: 50%;
+            height: 700px;
+            margin-right: 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .text {
+            max-width: 50%;
+            padding: 20px;
+            overflow-y: auto;
+            font-size: 20px;
+        }
+
+        .text h1 {
+            text-align: center;
+            margin-top: -21px;
+            font-size: 28px;
+            color: #028c4b;
+            background: linear-gradient(90deg,
+                    rgba(2, 148, 75, 0.1) 0%,
+                    rgba(2, 148, 75, 0.3) 50%,
+                    rgba(2, 148, 75, 0.1) 100%);
+            padding: 15px;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .text h1:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.4) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: translateX(-100%);
+            animation: shine 3s infinite 1s;
+        }
+
+        .text p {
+            text-indent: 2em;
+            font-size: 19px;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .text p:hover {
+            background: rgba(2, 148, 75, 0.05);
+            transform: translateX(5px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            .main {
+                flex-direction: column;
+            }
+
+            .main img,
+            .text {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 侧边栏区域-->
+    <div class="sidebar">
+        <a href="#" onclick="changeModule('main')">首页</a>
+        <a href="#" onclick="changeModule('jianjie')">社区简介</a>
+        <a href="#" onclick="changeModule('honor')">社区荣誉</a>
+        <a href="#" onclick="changeModule('grid')">网格管理</a>
+        <a href="#" onclick="changeModule('lzqd')">两委成员</a>
+        <a href="#" onclick="changeModule('wm')">为民服务</a>
+        <a href="#" onclick="changeModule('matter')">事项清单</a>
+        <a href="#" onclick="changeModule('pool')">证明出具</a>
+    </div>
+    <!-- 标题区域-->
+    <div style="width: 100VW; height: 100VH;" id="dot">
+        <div class="content">
+            <div class="header">
+                <!-- <img src="img/返回.png" alt="Back"> -->
+                <h1>嘉和社区网格管理</h1>
+            </div>
+        </div>
+
+        <!-- 网格区域 -->
+        <div style="width: 120px; height: 120px; background-color: rgba(206, 46, 46, 0); position: relative;">
+            <!-- 所有社区的图像-->
+            <img src="/img/无标题-2025-01-12-2349.svg" alt="Image"
+                style="width: 1920px; height: 700px; position: absolute; top: 50px; left: 50px;z-index: -1;">
+            <!-- 单个社区的按钮-->
+            <div id="clickableDiv_JiaHe"
+                style="width: 46px;height: 72px;background-color: rgba(245, 245, 245, 0);position: absolute;top: 218px;left: 808px;cursor: pointer;">
+                <img src="img/JiaHe.svg" alt="Clickable Image" class="hover-img"
+                    style="width: 100px;height: 100px;position: absolute;top: -9px;left: -39px;">
+            </div>
+
+            <div id="clickableDiv_XiangChengBeiYuan"
+                style="width: 0px;height: 0px;background-color: rgba(219, 63, 63, 0.788);position: absolute;top: 99px;left: 791px;cursor: pointer;">
+                <img src="img/XiangChengBeiYuan.svg" alt="Clickable Image" class="hover-img"
+                    style="width: 120px;height: 165px;position: absolute;top: -41px;left: -51px;">
+
+            </div>
+            <!-- 鼠标画上去就方法的效果-->
+            <style>
+                .hover-img {
+                    width: 100px;
+                    height: 100px;
+                    position: absolute;
+                    top: -9px;
+                    left: -39px;
+                    transition: transform 0.3s ease-in-out;
+                    /* 平滑过渡 */
+                }
+
+                .hover-img:hover {
+                    transform: scale(1.1);
+                    /* 鼠标悬停时放大 1.2 倍 */
+                }
+            </style>
+        </div>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+
+    <!-- 单个社区的简介-->>
+    <div id="infoBox"
+        style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; padding: 20px; background-color: white; border: 2px solid #333; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+        <p><strong>嘉和社区简介</strong></p>
+        <p>嘉和社区是一个充满温暖与活力的居住区域，致力于为居民提供舒适、安全、便捷的生活环境。 社区定期举办各类活动，包括健康讲座、体育赛事、环保行动等，以增强邻里关系，促进社区文化建设。</p>
+        <button id="closeInfo"
+            style="margin-top: 10px; padding: 5px 10px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            关闭
+        </button>
+    </div>
+</div>
+    <!-- 脚本区域：用来控制逻辑-->
+
+    <script>
+
+        window.addEventListener('load', function () {
+            const vantaEffect = VANTA.DOTS({
+                el: "#dot",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 911.00,
+                minWidth: 1920.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color2: 0xf77503,
+                backgroundColor: 0x0,
+                size: 2,
+                spacing: 15.00,
+                showLines: false,
+                backgroundAlpha: 0.5
+
+            })
+        });
+        document.getElementById("clickableDiv_JiaHe").addEventListener("click", function () {
+            document.getElementById("infoBox").style.display = "block"; // 显示简介框
+        });
+        document.getElementById("clickableDiv_XiangChengBeiYuan").addEventListener("click", function () {
+            document.getElementById("infoBox").style.display = "block"; // 显示简介框
+        });
+        document.getElementById("closeInfo").addEventListener("click", function () {
+            document.getElementById("infoBox").style.display = "none"; // 关闭简介框
+        });
+        document.getElementById("backButton").addEventListener("click", function () {
+            window.history.back(); // 返回上一页
+        });
+
+
+
+        function changeModule(moduleFlag) {
+            var urls = {
+                'main': 'main.html',
+                'jianjie': 'jianjie.html',
+                'honor': 'honor.html',
+                'grid': 'gridManagement.html',
+                'wm': 'weimin.html',
+                'lzqd': 'liangwei.html',
+                'matter': 'listMatters.html',
+                'pool': 'proof.html'
+            };
+            // 添加页面切换动画
+            document.querySelector('.content').style.opacity = '0';
+            document.querySelector('.content').style.transform = 'translateY(20px)';
+
+            setTimeout(function () {
+                window.location.href = urls[moduleFlag];
+            }, 300);
+        }
+
+        // 页面加载动画
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.querySelector('.content').style.opacity = '1';
+                document.querySelector('.content').style.transform = 'translateY(0)';
+                document.querySelector('.sidebar').style.opacity = '1';
+            }, 100);
+        });
+
+        // 初始状态
+        document.querySelector('.content').style.opacity = '0';
+        document.querySelector('.content').style.transition = 'all 0.3s ease';
+        document.querySelector('.sidebar').style.opacity = '0';
+        document.querySelector('.sidebar').style.transition = 'all 0.3s ease';
+    </script>
+</body>
+
+</html>

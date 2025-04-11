@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嘉和社区</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: url('/img/一楼大厅.png') no-repeat center center fixed;
+            background-size: cover;
+            color: rgb(255, 255, 255);
+            min-height: 100vh;
+        }
+
+        .header {
+            width: 100%;
+            font-size: 36px;
+            background-color: #ffffff00;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(66, 66, 66, 0.493);
+            border-radius: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .search-bar {
+            margin-top: 0px;
+            display: flex;
+            justify-content: flex-end;
+            /* 调整为左对齐 */
+            gap: 10px;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 12px;
+            width: 80%;
+            max-width: 400px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+
+        .search-bar button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #45a049;
+        }
+
+        .activity-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .activity-content {
+            flex: 1 1 30%;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 15px;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            flex: 0 0 calc(33.33% - 10px);
+            text-align: center;
+        }
+
+        .carousel-item img {
+            width: 90.5%;
+            /* 设置宽度为父容器的100% */
+            height: 250px;
+            /* 设置固定高度 */
+            object-fit: cover;
+            /* 保证图片填充并不变形 */
+            border-radius: 8px;
+        }
+
+
+        .caption {
+            margin-top: 10px;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-controls button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .carousel-controls button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .sidebar-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            margin-top: 20px;
+        }
+
+        .sidebar-buttons button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 200px;
+            height: 100px;
+            padding: 15px 20px;
+            font-size: 25px;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .button-service {
+            background-color: #4CAF50;
+            /* 绿色 */
+        }
+
+        .button-service:hover {
+            background-color: #45a049;
+        }
+
+        .button-affair {
+            background-color: #FF9800;
+            /* 橙色 */
+        }
+
+        .button-affair:hover {
+            background-color: #fb8c00;
+        }
+
+        .button-list {
+            background-color: #2196F3;
+            /* 蓝色 */
+        }
+
+        .button-list:hover {
+            background-color: #1976D2;
+        }
+
+        .sidebar-buttons button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .community-info {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 35px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-left: 0;
+            margin-right: auto;
+            height: 300px;
+        }
+
+        .community-info h2 {
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .community-info p {
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .community-buttons {
+            margin-top: 50px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .community-buttons button {
+            padding: 12px 20px;
+            font-size: 16px;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .community-buttons button:first-child {
+            background-color: #007BFF;
+            /* 蓝色 */
+        }
+
+        .community-buttons button:first-child:hover {
+            background-color: #0056b3;
+        }
+
+        .community-buttons button:last-child {
+            background-color: #28a745;
+            /* 绿色 */
+        }
+
+        .community-buttons button:last-child:hover {
+            background-color: #218838;
+        }
+
+        .edit-button {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .edit-button:hover {
+            background-color: #e68900;
+        }
+
+        .carousel-item {
+            cursor: pointer;
+            /* 如果已经是 flex 布局可以忽略以下属性 */
+            display: inline-block;
+            width: 25%;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100VW; height: 100VH;" id="dot">
+        <header class="header">
+            <h1>嘉和社区</h1>
+            <!-- <div class="search-bar">
+                <input type="text" id="search-input" placeholder="请输入搜索关键词...">
+                <button onclick="searchFunction()">搜索</button>
+            </div> -->
+        </header>
+
+        <div class="container">
+            <div class="activity-container">
+                <div class="activity-content">
+                    <!-- <h2>社区活动</h2> -->
+                    <h2 style="margin-bottom: 12px;margin-left: 16px;" 12px;
+                    margin-left: 16px;>社区活动</h2>
+                    <div class="carousel">
+                        <div class="carousel-track">
+                            <div class="carousel-item" data-id="1001">
+                                <img src="/img/activaties/星火阅读/image1.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>“星火阅读·好书推荐官”风采展示活动</h3>
+                                    <p>2024年10月19日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+                            
+                            <div class="carousel-item" data-id="1002">
+                                <img src="/img/activaties/祥城慧老/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>嘉祥县“祥城慧老”健身气功八段锦</h3>
+                                    <p>2024年11月13日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1003">
+                                <img src="/img/activaties/抵制高价彩礼/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>“抵制高价彩礼 倡树婚俗新风”</h3>
+                                    <p>2024年09月30日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1004">
+                                <img src="/img/activaties/红色贴珠画/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>“红色贴珠画 共抒爱国心”</h3>
+                                    <p>2024年09月25日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1005">
+                                <img src="/img/activaties/绘出多彩世界凝聚社区温情/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>“绘出多彩世界凝聚社区温情”</h3>
+                                    <p>2025年2月16日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1006">
+                                <img src="/img/activaties/圾时分类/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>“圾”时分类，绿色“童”行</h3>
+                                    <p>2024年11月30日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1007">
+                                <img src="/img/activaties/饺香暖冬/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>饺香暖冬</h3>
+                                    <p>2024年11月07日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1008">
+                                <img src="/img/activaties/镂刻新岁，雕艺焕彩/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>镂刻新岁，雕艺焕彩</h3>
+                                    <p>2025年1月22日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1009">
+                                <img src="/img/activaties/巧绘年画，喜迎新春/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>巧绘年画 喜迎新春</h3>
+                                    <p>2025年1月22日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1009">
+                                <img src="/img/activaties/巧手编织，扮靓生活/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>巧手编织，扮靓生活</h3>
+                                    <p>2024年09月26日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1009">
+                                <img src="/img/activaties/巧手做月饼，送出社区情/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>巧手做月饼，送出社区情</h3>
+                                    <p>2024年09月12日-2024年09月13日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1009">
+                                <img src="/img/activaties/正双姿，写未来/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>正双姿，写未来</h3>
+                                    <p>2024年12月15日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1009">
+                                <img src="/img/activaties/健康义诊进社区/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>健康义诊进社区</h3>
+                                    <p>2024年10月24日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1009">
+                                <img src="/img/activaties/老年学堂音乐课堂/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>老年学堂音乐课堂</h3>
+                                    <p>2024年12月04日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1009">
+                                <img src="/img/activaties/品元宵叙党情奔赴新征程/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>品元宵叙党情奔赴新征程</h3>
+                                    <p>2025年2月12日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" data-id="1010">
+                                <img src="/img/activaties/悦享夕阳老年声乐课堂/image.png" alt="活动1">
+                                <!-- 新增文字容器 -->
+                                <div class="image-caption">
+                                    <h3>悦享夕阳老年声乐课堂</h3>
+                                    <p>2025年1月7日</p>
+                                    <!-- <span class="tag">手工活动</span> -->
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="carousel-controls">
+                            <button id="prev">❮</button>
+                            <button id="next">❯</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-buttons">
+                    <button class="button-service" data-href="weimin.html">
+                        <img src="img/service-icon.png" alt="为民服务"> 为民服务
+                    </button>
+                    <button class="button-affair" data-href="honor.html">
+                        <img src="img/affair-icon.png" alt="为民办事"> 为民办事
+                    </button>
+                    <button class="button-list" data-href="liangwei.html">
+                        <img src="img/list-icon.png" alt="履职清单"> 履职清单
+                    </button>
+                </div>
+            </div>
+            <!-- 社区信息 -->
+            <div class="community-info">
+                <!-- <h2>社区简介 <button class="edit-button" onclick="editActivity()">编辑</button></h2> -->
+                <h2>社区简介</h2>
+                <p>
+                    嘉和社区是一个充满温暖与活力的居住区域，致力于为居民提供舒适、安全、便捷的生活环境。
+                    社区定期举办各类活动，包括健康讲座、体育赛事、环保行动等，以增强邻里关系，促进社区文化建设。
+                    我们的目标是打造一个和谐美好的社区，提升居民的幸福感，提供各种便民服务，创造更加美好的生活体验。
+                    嘉和社区坚持“党建为核、治理为基、服务为本”，积极整合社区资源、搭建治理平台、凝聚社会力量，打造
+                    了“幸福嘉 和邻里”的社区品牌，引导各方力量共同参与社区治理，不断提升居民在社区生活的获得感、幸福感。
+                </p>
+                <!-- 按钮 -->
+                <div class="community-buttons">
+                    <button onclick="location.href='jianjie.html'">
+                        <img src="img/icon_search.png" alt="查看详细"> 查看详细
+                    </button>
+                    <button onclick="location.href='honor.html'">
+                        <img src="img/sqry_icon.png" alt="社区荣誉"> 社区荣誉
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            const vantaEffect = VANTA.DOTS({
+                el: "#dot",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 911.00,
+                minWidth: 1000.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color2: 0xf77503,
+                backgroundColor: 0x0,
+                size: 2,
+                spacing: 15.00,
+                showLines: false,
+                backgroundAlpha: 0.5
+
+            })
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.querySelector('.carousel-track');
+            const prevBtn = document.getElementById('prev');
+            const nextBtn = document.getElementById('next');
+            const items = document.querySelectorAll('.carousel-item');
+
+            if (!items.length) return;
+
+            // 获取项目宽度和间距
+            const trackStyle = getComputedStyle(track);
+            const gap = parseInt(trackStyle.gap) || 0;
+            const itemWidth = items[0].offsetWidth + gap;
+
+            let currentPosition = 0;
+            const maxPosition = -((items.length - 1) * itemWidth);
+
+            // 更新按钮状态
+            const updateButtons = () => {
+                prevBtn.disabled = currentPosition === 0;
+                nextBtn.disabled = currentPosition <= maxPosition;
+            };
+
+            // 下一个按钮点击
+            nextBtn.addEventListener('click', () => {
+                if (currentPosition > maxPosition) {
+                    currentPosition -= itemWidth;
+                    track.style.transform = `translateX(${currentPosition}px)`;
+                    updateButtons();
+                }
+            });
+
+            // 上一个按钮点击
+            prevBtn.addEventListener('click', () => {
+                if (currentPosition < 0) {
+                    currentPosition += itemWidth;
+                    track.style.transform = `translateX(${currentPosition}px)`;
+                    updateButtons();
+                }
+            });
+
+            updateButtons(); // 初始化按钮状态
+        });
+        document.querySelectorAll('.sidebar-buttons button').forEach(button => {
+            button.addEventListener('click', function () {
+                window.location.href = this.getAttribute('data-href');
+            });
+        });
+        // 搜索按钮绑定的功能
+        function searchFunction() {
+            const query = document.getElementById("search-input").value.toLowerCase();
+            const captions = document.querySelectorAll(".caption");
+            captions.forEach(caption => {
+                const text = caption.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    caption.parentElement.style.display = "block";
+                } else {
+                    caption.parentElement.style.display = "none";
+                }
+            });
+        }
+        // 编辑社区简介页面
+        function editActivity() {
+            const communityInfo = document.querySelector(".community-info p");
+            const editButton = document.querySelector(".community-info .edit-button");
+
+            if (editButton.textContent === "编辑") {
+                // 变为可编辑状态
+                const textArea = document.createElement("textarea");
+                textArea.value = communityInfo.textContent;
+                textArea.style.width = "100%";
+                textArea.style.height = "150px";
+                textArea.style.padding = "10px";
+                textArea.style.fontSize = "16px";
+                textArea.style.border = "1px solid #ccc";
+                textArea.style.borderRadius = "5px";
+
+                communityInfo.replaceWith(textArea);
+                editButton.textContent = "保存";
+            } else {
+                // 保存修改
+                const textArea = document.querySelector(".community-info textarea");
+                const newParagraph = document.createElement("p");
+                newParagraph.textContent = textArea.value;
+
+                textArea.replaceWith(newParagraph);
+                editButton.textContent = "编辑";
+            }
+        }
+        // 点击事件处理
+        document.querySelectorAll('.carousel-item[data-type="edit"]').forEach(item => {
+            item.addEventListener('click', async () => {
+                // 获取活动ID
+                const activityId = item.dataset.id;
+                // 跳转到带参数的编辑页
+                window.location.href = `/main.html?id=${activityId}`;
+            });
+        });
+        function editActivityContent() {
+            const activityDesc = document.getElementById("activity-description");
+            const editButton = document.querySelector(".activity-content .edit-button");
+
+            if (editButton.textContent === "编辑") {
+                // 创建可编辑输入框
+                const textArea = document.createElement("textarea");
+                textArea.value = activityDesc.textContent;
+                textArea.style.width = "100%";
+                textArea.style.height = "100px";
+                textArea.style.fontSize = "16px";
+                textArea.style.padding = "10px";
+                textArea.style.border = "1px solid #ccc";
+                textArea.style.borderRadius = "5px";
+
+                activityDesc.replaceWith(textArea);
+                editButton.textContent = "保存";
+            } else {
+                // 保存修改
+                const textArea = document.querySelector(".activity-content textarea");
+                const newParagraph = document.createElement("p");
+                newParagraph.id = "activity-description";
+                newParagraph.textContent = textArea.value;
+
+                textArea.replaceWith(newParagraph);
+                editButton.textContent = "编辑";
+            }
+        } 
+    </script>
+</body>
+
+</html>

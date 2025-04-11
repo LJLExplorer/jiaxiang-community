@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嘉和社区</title>
+    <style>
+        /* 新增动态渐变背景动画 */
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #f0f8ff, #e6f7ff, #ddf2ff, #d4edff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: linear-gradient(135deg, #02a85b 0%, #00c3ff 100%);
+            position: fixed;
+            height: 100%;
+            padding-top: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 25px;
+            text-decoration: none;
+            font-size: 25px;
+            line-height: 1.5;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid white;
+            transform: translateX(10px);
+        }
+
+        .sidebar a:hover:before {
+            left: 100%;
+        }
+
+        .content {
+            margin-left: 220px;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #02a85b 0%, #00c3ff 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: translateX(-100%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .main {
+            display: flex;
+            align-items: flex-start;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin-top: 0;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .return-arrow {
+            position: absolute;
+            top: 25px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+
+        #member-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color:rgb(19, 204, 173);
+            width: 80%;
+            max-width: 800px;
+            height: 500px;
+            margin-top: 80px;
+            margin-left: 327px;
+            border: 2px solid rgb(2, 148, 75);
+
+        }
+
+        .member-info {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .member-info img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 50px;
+        }
+
+        .member-details {
+            flex-grow: 1;
+        }
+
+        .member-name-role {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .member-duty {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .duty-content {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+
+
+
+        .main:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .main img {
+            max-width: 50%;
+            height: 700px;
+            margin-right: 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .text {
+            max-width: 50%;
+            padding: 20px;
+            overflow-y: auto;
+            font-size: 20px;
+        }
+
+        .text h1 {
+            text-align: center;
+            margin-top: -21px;
+            font-size: 28px;
+            color: #028c4b;
+            background: linear-gradient(90deg,
+                    rgba(2, 148, 75, 0.1) 0%,
+                    rgba(2, 148, 75, 0.3) 50%,
+                    rgba(2, 148, 75, 0.1) 100%);
+            padding: 15px;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .text h1:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.4) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: translateX(-100%);
+            animation: shine 3s infinite 1s;
+        }
+
+        .text p {
+            text-indent: 2em;
+            font-size: 19px;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .text p:hover {
+            background: rgba(2, 148, 75, 0.05);
+            transform: translateX(5px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            .main {
+                flex-direction: column;
+            }
+
+            .main img,
+            .text {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="#" onclick="changeModule('main')">首页</a>
+        <a href="#" onclick="changeModule('jianjie')">社区简介</a>
+        <a href="#" onclick="changeModule('honor')">社区荣誉</a>
+        <a href="#" onclick="changeModule('grid')">网格管理</a>
+        <a href="#" onclick="changeModule('lzqd')">两委成员</a>
+        <a href="#" onclick="changeModule('wm')">为民服务</a>
+        <a href="#" onclick="changeModule('matter')">事项清单</a>
+        <a href="#" onclick="changeModule('pool')">证明出具</a>
+    </div>
+    <div style="width: 100VW; height: 100VH;" id="dot">
+        <div class="content">
+            <div class="header">
+                <h1>两委成员</h1>
+            </div>
+
+            <div id="member-container">
+                <!-- 动态加载成员信息 -->
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            const vantaEffect = VANTA.DOTS({
+                el: "#dot",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 1080.00,
+                minWidth: 1920.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color2: 0xf77503,
+                backgroundColor: 0x0,
+                size: 2,
+                spacing: 15.00,
+                showLines: false,
+                backgroundAlpha: 0.5
+
+            })
+        });
+        function changeModule(moduleFlag) {
+            var urls = {
+                'main': 'main.html',
+                'jianjie': 'jianjie.html',
+                'honor': 'honor.html',
+                'grid': 'gridManagement.html',
+                'wm': 'weimin.html',
+                'lzqd': 'liangwei.html',
+                'matter': 'listMatters.html',
+                'pool': 'proof.html'
+            };
+            // 添加页面切换动画
+            document.querySelector('.content').style.opacity = '0';
+            document.querySelector('.content').style.transform = 'translateY(20px)';
+
+            setTimeout(function () {
+                window.location.href = urls[moduleFlag];
+            }, 300);
+        }
+
+        // 页面加载动画
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.querySelector('.content').style.opacity = '1';
+                document.querySelector('.content').style.transform = 'translateY(0)';
+                document.querySelector('.sidebar').style.opacity = '1';
+            }, 100);
+        });
+
+        // 初始状态
+        document.querySelector('.content').style.opacity = '0';
+        document.querySelector('.content').style.transition = 'all 0.3s ease';
+        document.querySelector('.sidebar').style.opacity = '0';
+        document.querySelector('.sidebar').style.transition = 'all 0.3s ease';
+
+
+        // 后续的脚本
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        const members = [
+            {
+                name: "于燕",
+                role: "社区党委书记 居委会主任",
+                duty: "管理社区所有小区",
+                image: "img/liangwei-photo/yuyan.png",
+                dutyContent: [
+
+                ]
+            },
+            {
+                name: "郭亚芳",
+                role: "社区书记助理 社区两委成员",
+                duty: "管理红旗花园小区",
+                image: "img/liangwei-photo/guoyafang.png",
+                dutyContent: [
+                    "协助书记处理社区日常事务，确保社区工作的顺利进行。",
+                    "在书记的指导下，负责社区重要项目的推进和实施。",
+                    "协调社区内各部门之间的沟通，确保信息畅通。",
+                    "参与社区重要会议，提出建设性意见。",
+                    "负责社区居民的反馈收集，及时向书记汇报。"
+                ]
+            },
+            {
+                name: "郭振南",
+                role: "一般社区工作人员",
+                duty: "管理祥曾园小区",
+                image: "img/liangwei-photo/guozhennan.png",
+                dutyContent: [
+                    "负责社区组织建设，制定组织工作计划并组织实施。",
+                    "组织社区党员和居民开展各类活动，增强社区凝聚力。",
+                    "负责社区党员的教育和管理，提高党员素质。",
+                    "协调社区内外部资源，推动社区组织发展。",
+                    "完成上级组织交办的其他任务。"
+                ]
+            },
+            {
+                name: "黄威",
+                role: "一般社区工作人员",
+                duty: "管理嘉和苑西区",
+                image: "img/liangwei-photo/huangwei.png",
+                dutyContent: [
+                    "负责社区宣传工作，制定宣传计划并组织实施。",
+                    "通过多种渠道宣传社区活动和政策，提高居民知晓率。",
+                    "负责社区宣传材料的制作和分发，确保宣传效果。",
+                    "组织社区居民开展宣传活动，提升社区形象。",
+                    "完成上级宣传部门交办的其他任务。"
+                ]
+            },
+            {
+                name: "江婷婷",
+                role: "一般社区工作人员",
+                duty: "管理财苑小区、碧城华园小区",
+                image: "img/liangwei-photo/jiangtingting.png",
+                dutyContent: [
+                    "负责社区纪律检查工作，确保社区工作廉洁高效。",
+                    "监督社区工作人员遵守纪律，防止违规行为。",
+                    "处理居民投诉和举报，维护社区良好秩序。",
+                    "定期开展廉政教育活动，提高社区工作人员廉洁意识。",
+                    "完成上级纪检部门交办的其他任务。"
+                ]
+            },
+            {
+                name: "蒋彦臣",
+                role: "一般社区工作人员",
+                duty: "管理金都花苑小区",
+                image: "img/liangwei-photo/jiangyanchen.png",
+                dutyContent: [
+                    "负责社区青年工作，制定青年工作计划并组织实施。",
+                    "组织青年开展各类活动，促进青年成长和发展。",
+                    "关注青年需求，为青年提供就业创业指导和服务。",
+                    "引导青年参与社区建设，发挥青年积极作用。",
+                    "完成上级青年组织交办的其他任务。"
+                ]
+            },
+            {
+                name: "孟如",
+                role: "一般社区工作人员",
+                duty: "管理国际商贸城小区",
+                image: "img/liangwei-photo/mengru.png",
+                dutyContent: [
+                    "负责社区妇女工作，制定妇女工作计划并组织实施。",
+                    "组织妇女开展各类活动，提升妇女素质和能力。",
+                    "维护妇女合法权益，关注妇女需求。",
+                    "引导妇女参与社区建设，发挥妇女积极作用。",
+                    "完成上级妇女组织交办的其他任务。"
+                ]
+            },
+            {
+                name: "张传祥",
+                role: "一般社区工作人员",
+                duty: "管理红旗花园小区",
+                image: "img/liangwei-photo/zhangchuanxiang.png",
+                dutyContent: [
+                    "负责社区统战工作，制定统战工作计划并组织实施。",
+                    "组织统战对象开展各类活动，促进社区和谐稳定。",
+                    "加强与统战对象的沟通和联系，了解他们的需求和意见。",
+                    "引导统战对象参与社区建设，发挥积极作用。",
+                    "完成上级统战部门交办的其他任务。"
+                ]
+            },
+            {
+                name: "赵劲松",
+                role: "一般社区工作人员",
+                duty: "管理博悦城小区",
+                image: "img/liangwei-photo/zhaojinsong.png",
+                dutyContent: [
+                    "负责社区统战工作，制定统战工作计划并组织实施。",
+                    "组织统战对象开展各类活动，促进社区和谐稳定。",
+                    "加强与统战对象的沟通和联系，了解他们的需求和意见。",
+                    "引导统战对象参与社区建设，发挥积极作用。",
+                    "完成上级统战部门交办的其他任务。"
+                ]
+            }
+        ];
+        const itemsPerPage = 4;
+
+        function calculatePageForMember(memberName) {
+            const memberIndex = members.findIndex(member => member.name === memberName);
+            if (memberIndex === -1) return 1; // 如果成员未找到，返回第一页
+            return Math.ceil((memberIndex + 1) / itemsPerPage);
+        }
+
+        function goBack() {
+            const memberName = getParameterByName('id');
+            const page = calculatePageForMember(memberName);
+            window.location.href = `liangwei.html?page=${page}`;
+        }
+
+        window.onload = function () {
+            const memberName = getParameterByName('id');
+            const member = members.find(m => m.name === memberName);
+
+            if (member) {
+                const container = document.getElementById('member-container');
+                container.innerHTML = `
+                    <div class="member-info">
+                        <img src="${member.image}" alt="成员照片">
+                        <div class="member-details">
+                            <div class="member-name-role">${member.name} - ${member.role}</div>
+                            <div class="member-duty">职责：${member.duty}</div>
+                            <div class="duty-content">
+                                <p>具体职责内容：</p>
+                                ${member.dutyContent.map(content => `<p>${content}</p>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                alert('成员信息未找到');
+            }
+        };
+    </script>
+</body>
+
+</html>
