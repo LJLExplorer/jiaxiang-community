@@ -20,11 +20,11 @@ public interface PortalService {
      */
     public ResponseEntity<ResponseResult<?>> listCommunityActivityDetail(Long communityId, Long activityId);
 
-//    /**
-//     * 列出社区简介
-//     *
-//     * @param communityId 社区id
-//     * @return 社区简介
-//     */
-//    public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId);
+    /**
+     * 列出社区简介
+     *
+     * @param communityId 社区id
+     * @return 社区简介
+     */
+    public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId);
 }

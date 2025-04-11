@@ -40,14 +40,14 @@ public class PortalServiceImpl implements PortalService {
         return iActivityClient.listCommunityActivityDetail(communityId, activityId);
     }
 
-//    /**
-//     * 列出社区简介
-//     *
-//     * @param communityId 社区id
-//     * @return 社区简介
-//     */
-//    @Override
-//    public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId) {
-//        return iContentClient.listCommunityProfile(communityId);
-//    }
+    /**
+     * 列出社区简介
+     *
+     * @param communityId 社区id
+     * @return 社区简介
+     */
+    @Override
+    public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId) {
+        return iContentClient.listCommunityProfile(communityId);
+    }
 }

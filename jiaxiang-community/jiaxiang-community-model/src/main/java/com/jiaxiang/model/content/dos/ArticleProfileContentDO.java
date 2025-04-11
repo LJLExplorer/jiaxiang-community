@@ -1,4 +1,4 @@
-package com.jiaxiang.model.community.dos;
+package com.jiaxiang.model.content.dos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommunityDo {
+public class ArticleProfileContentDO {
     private Long id;
-    private String name;
-    private String description;
+    private Long articleProfileId;
+    private String content;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

@@ -19,4 +19,5 @@ public class IContentClientFallback implements IContentClient {
     public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId) {
         return ResponseWrapper.serverError(AppHttpCodeEnum.SERVER_ERROR.getCode(), "获取数据失败");
     }
+
 }
