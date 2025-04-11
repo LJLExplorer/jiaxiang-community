@@ -10,5 +10,21 @@ public interface PortalService {
      * @param communityId 社区id
      * @return 返回活动预览图
      */
-    public ResponseEntity<ResponseResult<?>> listJiaHeCommunityActivities(Long communityId);
+    public ResponseEntity<ResponseResult<?>> listCommunityActivities(Long communityId);
+
+    /**
+     * 列出社区活动详情
+     *
+     * @param communityId 社区id
+     * @return 活动详情
+     */
+    public ResponseEntity<ResponseResult<?>> listCommunityActivityDetail(Long communityId, Long activityId);
+
+//    /**
+//     * 列出社区简介
+//     *
+//     * @param communityId 社区id
+//     * @return 社区简介
+//     */
+//    public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId);
 }

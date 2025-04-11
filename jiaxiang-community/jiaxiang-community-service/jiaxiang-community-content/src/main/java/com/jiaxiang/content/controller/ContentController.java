@@ -2,15 +2,17 @@ package com.jiaxiang.content.controller;
 
 import com.jiaxiang.content.service.ContentService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.jiaxiang.model.common.constant.ApiRouterConsts.CONTENT_URL_PREFIX;
+
 @RestController
-@RequestMapping("/content")
+@RequestMapping(CONTENT_URL_PREFIX)
 public class ContentController {
 
     @Autowired
@@ -21,5 +23,8 @@ public class ContentController {
         return null;
     }
 
-
+    @GetMapping("/community_profile")
+    public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId){
+        return null;
+    }
 }

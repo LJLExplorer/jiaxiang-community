@@ -28,10 +28,10 @@
             <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>
         <!-- Sentinel数据源之 Nacos -->
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-datasource-nacos</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.csp</groupId>-->
+<!--            <artifactId>sentinel-datasource-nacos</artifactId>-->
+<!--        </dependency>-->
         <!-- nacos服务的注册发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

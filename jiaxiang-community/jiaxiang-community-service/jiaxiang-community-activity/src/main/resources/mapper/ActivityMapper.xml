@@ -3,13 +3,30 @@
 <mapper namespace="com.jiaxiang.activity.mapper.ActivityMapper">
     <!--namespace根据自己需要创建的的mapper的路径和名称填写-->
 
-    <resultMap id="ActivityMap" type="com.jiaxiang.model.activity.vos.ActivityPreviewVO">
+    <resultMap id="ActivitiesPreviewMap" type="com.jiaxiang.model.activity.vos.ActivityPreviewVO">
         <id column="id" property="id"/>
         <result column="path_url" property="images"/>
     </resultMap>
 
-    <select id="getActivitiesByCommunityId" resultMap = "ActivityMap">
-        select activity.id, activity_file.path_url
+    <resultMap id="ActivityDetailMap" type="com.jiaxiang.model.activity.vos.ActivityDetailVO">
+        <id column="id" property="id"/>
+        <result column="community_id" property="communityId"/>
+        <result column="title" property="title"/>
+        <result column="location" property="location"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="organizer" property="organizer"/>
+        <result column="participant_count" property="participantCount"/>
+        <result column="participant_type" property="participantType"/>
+        <result column="theme" property="theme"/>
+        <result column="introduction" property="introduction"/>
+        <result column="content" property="content"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="getActivitiesByCommunityId" resultMap = "ActivitiesPreviewMap">
+        select activity.id, activity_file.path_url, activity.start_time, activity.title
         from activity,
              activity_file
         where activity.community_id = #{communityId}
@@ -17,4 +34,29 @@
           and activity_file.is_cover = true
     </select>
 
+    <select id="getActivityDetailWithOutImagesByActivityId" resultMap="ActivityDetailMap">
+        select activity.id,
+               activity.community_id,
+               activity.title,
+               activity.location,
+               activity.start_time,
+               activity.end_time,
+               activity.organizer,
+               activity.participant_count,
+               activity.participant_type,
+               activity_detail.theme,
+               activity_detail.Introduction,
+               activity_detail.content,
+               activity.create_time,
+               activity.end_time
+        from activity,
+             activity_detail
+        where activity.community_id = #{communityId}
+          and activity.id = #{activityId}
+          and activity_detail.activity_id = activity.id
+    </select>
+
+    <select id="getFilesByActivityId" resultType="com.jiaxiang.model.activity.dos.ActivityFileDo">
+        select * from activity_file where activity_id = #{activityId}
+    </select>
 </mapper>
