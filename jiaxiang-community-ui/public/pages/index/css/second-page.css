@@ -1,4 +1,4 @@
-section.page:nth-of-type(2) {
+section.page:nth-of-type(1) {
     --primary-color: #ffffff;
     --secondary-color: #f5f5f5;
     --text-color: #333;
@@ -9,7 +9,7 @@ section.page:nth-of-type(2) {
 }
 
 /* 整个 section 使用网格布局，叠放内容 */
-section.page:nth-of-type(2) {
+section.page:nth-of-type(1) {
     display: grid;
     grid-template-areas:
     "stack";
@@ -19,41 +19,72 @@ section.page:nth-of-type(2) {
 /* 轮播容器，作为背景底层 */
 #slide-show-container {
     grid-area: stack;
+    align-self: center;
+    justify-self: center;
+
     display: flex;
     flex-direction: row-reverse;
     width: 100%;
-    height: 100%;
+    height: 90%;
     overflow: hidden;
 
-    /* 三个背景层：
-       第一层：左侧渐变，从白色到透明（从左向右）
-       第二层：右侧渐变，从白色到透明（从右向左）
-       第三层：实际的背景图片 */
-    background-image:
-    linear-gradient(to left, white, transparent 30%),
+    background-image: linear-gradient(to top, transparent, white),
+    linear-gradient(to bottom, transparent, white),
+    linear-gradient(to left, transparent, #fff3 50%, #fff),
     url('../image/主页背景图片.png');
 
     /* 背景属性设置： */
-    background-position: right, right, right;
-    background-size: 75% 100%, 25% 100%, 75% 100%;
-    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: top, bottom, left, right;
+    background-size: 100% 15%, 100% 15%, 50% 100%, contain;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
 
     /* background-blend-mode: multiply; */
 }
 
 /* 标题样式，重叠在 slide 上 */
-h2 {
+h1 {
     grid-area: stack;
-    font-size: 2rem;
+    font-family: msyh, serif;
+    font-weight: lighter;
+    font-size: 2.2rem;
+    text-shadow: 0 0 10px white;
     color: var(--text-color);
-    margin: 1rem;
+    margin: 2.5em;
     z-index: 1;
     align-self: start;
-    justify-self: center;
-    background-color: rgba(255, 255, 255, 0.6);
+    justify-self: start;
+    /*background-color: rgba(255, 255, 255, 0.6);*/
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
-    box-shadow: var(--shadow);
+    /*box-shadow: var(--shadow);*/
+}
+
+#slideshow-info {
+    grid-area: stack;
+
+    align-self: end;
+    justify-self: start;
+
+    margin: 5rem;
+
+    font-family: msyh, serif;
+
+    text-shadow: 0 0 10px white;
+}
+
+#slideshow-info > #slideshow-info-no {
+    font-size: 1.3rem;
+}
+
+#slideshow-info > #slideshow-info-name {
+    text-indent: 2.5rem;
+    font-size: 2.5rem;
+}
+
+#slideshow-info > #slideshow-info-date {
+    font-size: 1rem;
+    text-indent: 2.5rem;
+    transform: translateY(-1rem);
 }
 
 /* 按钮容器，使用 flex 对齐到底部右侧 */
@@ -116,17 +147,19 @@ h2 {
     backdrop-filter: blur(4px);
 }
 
-#slideshow-previous{
+#slideshow-previous {
     position: absolute;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
 }
-#slideshow-next{
+
+#slideshow-next {
     position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
 }
+

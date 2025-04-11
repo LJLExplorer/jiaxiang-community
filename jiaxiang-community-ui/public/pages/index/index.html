@@ -4,40 +4,30 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="css/navigator.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
 </head>
 <body>
-<header id="navigator-container">
-    <!--    <nav>1</nav>
-        <nav>2</nav>
-        <nav>3</nav>-->
-</header>
+<header id="navigator-container"></header>
 <main>
     <div class="arrow cantSelect" id="to-pre-page">></div>
     <div class="arrow cantSelect" id="to-next-page">></div>
     <section class="page main-cur-page header">
-        <link rel="stylesheet" type="text/css" href="css/first-page.css"/>
-
-        <h1>嘉和社区</h1>
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="请输入搜索关键词..."/>
-            <button id="search-button">搜索</button>
-        </div>
-    </section>
-
-    <section class="page main-next-page">
         <link rel="stylesheet" type="text/css" href="css/second-page.css"/>
 
-        <h2>社区活动</h2>
+        <h1>嘉和社区</h1>
+        <div id="slide-show-container"></div>
 
-        <div id="slide-show-container">
-
+        <div id="slideshow-info">
+            <p id="slideshow-info-no">活动1：</p>
+            <p id="slideshow-info-name">星火阅读好书推荐管风采展示活动</p>
+            <p id="slideshow-info-date">2024年5月1日</p>
         </div>
 
         <div class="sidebar-buttons">
             <button id="slideshow-view">查看当前正在展示的活动</button>
-            <button class="button-service"><img src="image/service-icon.png" alt="为民服务"> 为民服务</button>
-            <button class="button-affair"><img src="image/affair-icon.png" alt="为民办事"> 为民办事</button>
-            <button class="button-list"><img src="image/list-icon.png" alt="履职清单"> 履职清单</button>
+            <button class="button-service" id="button-service"><img src="image/service-icon.png" alt="为民服务"> 为民服务</button>
+            <button class="button-affair" id="button-affair"><img src="image/affair-icon.png" alt="为民办事"> 为民办事</button>
+            <button class="button-list" id="button-list"><img src="image/list-icon.png" alt="履职清单"> 履职清单</button>
         </div>
     </section>
     <section class="page main-next-page">

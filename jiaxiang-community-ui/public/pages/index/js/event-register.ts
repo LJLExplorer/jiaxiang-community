@@ -5,8 +5,23 @@ document.addEventListener("DOMContentLoaded", function () {
     const honorBtn = document.querySelector("#community-honor") as HTMLElement;
     const editBtn = document.querySelector("#community-edit") as HTMLElement;
     const slideshowView = document.querySelector("#slideshow-view") as HTMLElement;
-    const searchBtn = document.querySelector("#search-button") as HTMLElement;
 
+    const buttonService = document.querySelector("#button-service") as HTMLElement;
+    const buttonAffair = document.querySelector("#button-affair") as HTMLElement;
+    const buttonList = document.querySelector("#button-list") as HTMLElement;
+
+    buttonService.addEventListener("click", function () {
+        // @ts-ignore
+        location = router["serve-people"];
+    });
+    buttonAffair.addEventListener("click", function () {
+        // @ts-ignore
+        location = router["community-honor"];
+    });
+    buttonList.addEventListener("click", function () {
+        // @ts-ignore
+        location = router["commissioner"];
+    });
     detailsBtn.addEventListener("click", function () {
         // @ts-ignore
         location = router["profile"];
@@ -48,18 +63,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     });
-
-    searchBtn.addEventListener("click", function () {
-        //这个代码没用，因为不知道找的是哪个
-        const query = (document.getElementById("search-input") as HTMLInputElement).value.toLowerCase();
-        const captions = document.querySelectorAll(".caption");
-        captions.forEach(caption => {
-            const text = (caption.textContent + "").toLowerCase();
-            if (text.includes(query)) {
-                (caption.parentElement as HTMLElement).style.display = "block";
-            } else {
-                (caption.parentElement as HTMLElement).style.display = "none";
-            }
-        });
-    })
 })

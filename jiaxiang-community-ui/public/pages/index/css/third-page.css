@@ -1,4 +1,4 @@
-section.page:nth-of-type(3) .community-info {
+section.page:nth-of-type(2) .community-info {
     box-sizing: border-box;
 
     background-color: white;
@@ -16,27 +16,29 @@ section.page:nth-of-type(3) .community-info {
 
 }
 
-section.page:nth-of-type(3) .community-info h2 {
+section.page:nth-of-type(2) .community-info h2 {
+    text-align: center;
     color: #000000;
     margin-bottom: 10px;
 }
 
-section.page:nth-of-type(3) .community-info p {
+section.page:nth-of-type(2) .community-info p {
     height: 100%;
     width: calc(100% - 20px * 2);
     color: #000000;
-    line-height: 1.6;/*
-    white-space: pre;
-    text-align: center;*/
+    line-height: 1.6;
+    /*
+        white-space: pre;
+        text-align: center;*/
 }
 
-section.page:nth-of-type(3) .community-buttons {
+section.page:nth-of-type(2) .community-buttons {
     margin-top: 20px;
     display: flex;
     gap: 15px;
 }
 
-section.page:nth-of-type(3) .community-buttons button {
+section.page:nth-of-type(2) .community-buttons button {
     padding: 12px 20px;
     font-size: 16px;
     color: white;
@@ -46,25 +48,25 @@ section.page:nth-of-type(3) .community-buttons button {
     transition: background-color 0.3s;
 }
 
-section.page:nth-of-type(3) .community-buttons button:first-child {
+section.page:nth-of-type(2) .community-buttons button:first-child {
     background-color: #007BFF;
     /* 蓝色 */
 }
 
-section.page:nth-of-type(3) .community-buttons button:first-child:hover {
+section.page:nth-of-type(2) .community-buttons button:first-child:hover {
     background-color: #0056b3;
 }
 
-section.page:nth-of-type(3) .community-buttons button:last-child {
+section.page:nth-of-type(2) .community-buttons button:last-child {
     background-color: #28a745;
     /* 绿色 */
 }
 
-section.page:nth-of-type(3) .community-buttons button:last-child:hover {
+section.page:nth-of-type(2) .community-buttons button:last-child:hover {
     background-color: #218838;
 }
 
-section.page:nth-of-type(3) .edit-button {
+section.page:nth-of-type(2) .edit-button {
     background-color: #ff9800;
     color: white;
     border: none;
@@ -75,11 +77,11 @@ section.page:nth-of-type(3) .edit-button {
     margin-left: 10px;
 }
 
-section.page:nth-of-type(3) .edit-button:hover {
+section.page:nth-of-type(2) .edit-button:hover {
     background-color: #e68900;
 }
 
-section.page:nth-of-type(3) .carousel-item {
+section.page:nth-of-type(2) .carousel-item {
     cursor: pointer;
     /* 如果已经是 flex 布局可以忽略以下属性 */
     display: inline-block;

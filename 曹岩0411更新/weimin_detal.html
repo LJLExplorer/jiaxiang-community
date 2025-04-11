@@ -484,6 +484,7 @@
             
         ];
 
+        // 获取URL参数
         function getParameterByName(name, url = window.location.href) {
             name = name.replace(/[$$$$]/g, '\\$&');
             var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),

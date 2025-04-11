@@ -4,7 +4,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const honorBtn = document.querySelector("#community-honor");
     const editBtn = document.querySelector("#community-edit");
     const slideshowView = document.querySelector("#slideshow-view");
-    const searchBtn = document.querySelector("#search-button");
+    const buttonService = document.querySelector("#button-service");
+    const buttonAffair = document.querySelector("#button-affair");
+    const buttonList = document.querySelector("#button-list");
+    buttonService.addEventListener("click", function () {
+        // @ts-ignore
+        location = router["serve-people"];
+    });
+    buttonAffair.addEventListener("click", function () {
+        // @ts-ignore
+        location = router["community-honor"];
+    });
+    buttonList.addEventListener("click", function () {
+        // @ts-ignore
+        location = router["commissioner"];
+    });
     detailsBtn.addEventListener("click", function () {
         // @ts-ignore
         location = router["profile"];
@@ -41,19 +55,5 @@ document.addEventListener("DOMContentLoaded", function () {
     slideshowView.addEventListener("click", function () {
         // 跳转到详情页
         window.location.href = router["community-activity"];
-    });
-    searchBtn.addEventListener("click", function () {
-        //这个代码没用，因为不知道找的是哪个
-        const query = document.getElementById("search-input").value.toLowerCase();
-        const captions = document.querySelectorAll(".caption");
-        captions.forEach(caption => {
-            const text = (caption.textContent + "").toLowerCase();
-            if (text.includes(query)) {
-                caption.parentElement.style.display = "block";
-            }
-            else {
-                caption.parentElement.style.display = "none";
-            }
-        });
     });
 });
