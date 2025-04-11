@@ -38,16 +38,15 @@ public class PortalController {
         return portalService.listCommunityActivityDetail(communityId, activityId);
     }
 
-    // Todo
 
-//    /**
-//     * 列出社区简介
-//     *
-//     * @param communityId 社区id
-//     * @return 社区简介
-//     */
-//    @GetMapping("/jiahe/community_profile")
-//    public ResponseEntity<ResponseResult<?>> listJiaHeCommunityProfile(Long communityId) {
-//        return portalService.listCommunityActivityDetail(communityId);
-//    }
+    /**
+     * 列出社区简介
+     *
+     * @param communityId 社区id
+     * @return 社区简介
+     */
+    @GetMapping("/jiahe/community_profile")
+    public ResponseEntity<ResponseResult<?>> listJiaHeCommunityProfile(Long communityId) {
+        return portalService.listCommunityProfile(communityId);
+    }
 }

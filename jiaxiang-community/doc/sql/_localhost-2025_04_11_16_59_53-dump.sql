@@ -179,9 +179,9 @@ DROP TABLE IF EXISTS `article_profile`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `article_profile` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `author_id` int DEFAULT NULL COMMENT '发表人id',
-  `community_id` int NOT NULL COMMENT '社区id',
-  `article_type_id` int DEFAULT NULL COMMENT '文章类型',
+  `author_id` bigint DEFAULT NULL COMMENT '发表人id',
+  `community_id` bigint NOT NULL COMMENT '社区id',
+  `article_type_id` bigint DEFAULT NULL COMMENT '文章类型',
   `title` varchar(50) DEFAULT NULL COMMENT '标题',
   `layout` tinyint DEFAULT NULL COMMENT '无图文章、单图文章、多图文章(0,1,2)',
   `comment_nums` int DEFAULT '0' COMMENT '评论数量',
@@ -216,8 +216,8 @@ CREATE TABLE `article_profile_config` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `article_profile_id` bigint NOT NULL,
   `is_comment` tinyint DEFAULT '0' COMMENT '是否可评论(0/1)，默认0不可以',
-  `is_show` int DEFAULT '1' COMMENT '是否展示（0/1），默认1 展示(不展示相当于草稿)',
-  `is_delete` int DEFAULT '0' COMMENT '是否删除（默认0未删除）',
+  `is_show` tinyint(1) DEFAULT '1' COMMENT '是否展示（0/1），默认1 展示(不展示相当于草稿)',
+  `is_delete` tinyint(1) DEFAULT '0' COMMENT '是否删除（默认0未删除）',
   `create_time` datetime DEFAULT (now()) COMMENT '创建时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
@@ -273,12 +273,13 @@ DROP TABLE IF EXISTS `article_type`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `article_type` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `type` varchar(500) DEFAULT NULL COMMENT '文章所属类型',
-  `description` varchar(500) DEFAULT NULL COMMENT '中文描述',
+  `type` varchar(100) DEFAULT NULL COMMENT '文章所属类型',
+  `description` varchar(255) DEFAULT NULL COMMENT '中文描述',
   `create_time` datetime DEFAULT (now()) COMMENT '创建时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `article_type_pk_2` (`id`)
+  UNIQUE KEY `article_type_pk_2` (`id`),
+  UNIQUE KEY `article_type_pk` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文章类型，比如社区活动简介，个人荣誉简介，社区简介等';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -288,7 +289,7 @@ CREATE TABLE `article_type` (
 
 LOCK TABLES `article_type` WRITE;
 /*!40000 ALTER TABLE `article_type` DISABLE KEYS */;
-INSERT INTO `article_type` VALUES (1,'Community_Profile','社区简介','2025-04-10 19:15:57','2025-04-10 19:15:57');
+INSERT INTO `article_type` VALUES (1,'community_profile','社区简介','2025-04-10 19:15:57','2025-04-11 15:30:10');
 /*!40000 ALTER TABLE `article_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,4 +330,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-11 14:22:15
+-- Dump completed on 2025-04-11 16:59:53
