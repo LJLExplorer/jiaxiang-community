@@ -320,6 +320,70 @@ LOCK TABLES `community` WRITE;
 INSERT INTO `community` VALUES (1,'jia_he_community','嘉和社区','2025-04-09 20:17:43','2025-04-09 20:18:04');
 /*!40000 ALTER TABLE `community` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `serve_people_info`
+--
+
+DROP TABLE IF EXISTS `serve_people_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `serve_people_info` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `images` varchar(100) DEFAULT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `open_days_and_time` varchar(50) DEFAULT NULL,
+  `location` varchar(100) DEFAULT NULL,
+  `serviceIntro` varchar(522) DEFAULT NULL,
+  `serviceContent` varchar(255) DEFAULT NULL,
+  `serviceRules` varchar(255) DEFAULT NULL,
+  `start_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `serve_people_info_pk_2` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='为人民服务详细表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `serve_people_info`
+--
+
+LOCK TABLES `serve_people_info` WRITE;
+/*!40000 ALTER TABLE `serve_people_info` DISABLE KEYS */;
+INSERT INTO `serve_people_info` VALUES (1,'暖心嘉','http:/127.0.0.1:9000/jiaxiang/2025/04/11/weimin2.jpg','0550-1234567','工作日08:00-17:30','丰山街道社区服务中心3楼','暖心嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。\n\n',NULL,NULL,'2025-04-11 21:12:08','2025-04-11 21:16:05'),(2,'和睦嘉','http:/127.0.0.1:9000/jiaxiang/2025/04/11/weimin3.jpg','0550-1234567','工作日08:00-17:30','丰山街道社区服务中心3楼','和睦嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。',NULL,NULL,'2025-04-11 21:17:25','2025-04-11 21:19:15'),(3,'和美嘉\n                       ','http:/127.0.0.1:9000/jiaxiang/2025/04/11/weimin4.jpg','0550-1234567','工作日08:00-17:30','丰山街道社区服务中心3楼','和美嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。\n\n                       ',NULL,NULL,'2025-04-11 21:17:25','2025-04-11 21:22:48');
+/*!40000 ALTER TABLE `serve_people_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `staff_info`
+--
+
+DROP TABLE IF EXISTS `staff_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `staff_info` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nameAndPosition` varchar(100) DEFAULT NULL,
+  `images` varchar(255) DEFAULT NULL,
+  `duty` varchar(100) DEFAULT NULL,
+  `dutyDescription` text,
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `staff_info_pk_2` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='两委成员表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `staff_info`
+--
+
+LOCK TABLES `staff_info` WRITE;
+/*!40000 ALTER TABLE `staff_info` DISABLE KEYS */;
+INSERT INTO `staff_info` VALUES (1,'于燕 - 社区党委书记 居委会主任\n','http:/127.0.0.1:9000/jiaxiang/2025/04/11/yuyan','管理社区所有小区','','2025-04-11 20:48:07','2025-04-11 20:54:44'),(2,'郭亚芳 - 社区书记助理 社区两委成员\n','http:/127.0.0.1:9000/jiaxiang/2025/04/11/guoyafang.png','管理红旗花园小区','协助书记处理社区日常事务，确保社区工作的顺利进行。\n\n在书记的指导下，负责社区重要项目的推进和实施。\n\n协调社区内各部门之间的沟通，确保信息畅通。\n\n参与社区重要会议，提出建设性意见。\n\n负责社区居民的反馈收集，及时向书记汇报。','2025-04-11 20:48:57','2025-04-11 21:03:02'),(3,'郭振南 - 一般社区工作人员','http:/127.0.0.1:9000/jiaxiang/2025/04/11/guozhennan.png','管理祥曾园小区','负责社区组织建设，制定组织工作计划并组织实施。\n\n组织社区党员和居民开展各类活动，增强社区凝聚力。\n\n负责社区党员的教育和管理，提高党员素质。\n\n协调社区内外部资源，推动社区组织发展。\n\n完成上级组织交办的其他任务。','2025-04-11 20:49:22','2025-04-11 21:03:02'),(4,'黄威 - 一般社区工作人员','http:/127.0.0.1:9000/jiaxiang/2025/04/11/huangwei.png','管理嘉和苑西区','负责社区宣传工作，制定宣传计划并组织实施。\n\n通过多种渠道宣传社区活动和政策，提高居民知晓率。\n\n负责社区宣传材料的制作和分发，确保宣传效果。\n\n组织社区居民开展宣传活动，提升社区形象。\n\n完成上级宣传部门交办的其他任务。','2025-04-11 20:49:44','2025-04-11 21:03:02'),(5,'江婷婷 - 一般社区工作人员','http:/127.0.0.1:9000/jiaxiang/2025/04/11/jiangtingting.png','管理财苑小区、碧城华园小区','负责社区纪律检查工作，确保社区工作廉洁高效。\n\n监督社区工作人员遵守纪律，防止违规行为。\n\n处理居民投诉和举报，维护社区良好秩序。\n\n定期开展廉政教育活动，提高社区工作人员廉洁意识。\n\n完成上级纪检部门交办的其他任务。','2025-04-11 20:50:07','2025-04-11 21:03:02'),(6,'蒋彦臣 - 一般社区工作人员','http:/127.0.0.1:9000/jiaxiang/2025/04/11/jiangyanchen.png','管理金都花苑小区','负责社区青年工作，制定青年工作计划并组织实施。\n\n组织青年开展各类活动，促进青年成长和发展。\n\n关注青年需求，为青年提供就业创业指导和服务。\n\n引导青年参与社区建设，发挥青年积极作用。\n\n完成上级青年组织交办的其他任务。','2025-04-11 20:50:54','2025-04-11 21:03:02'),(7,'孟如 - 一般社区工作人员','http:/127.0.0.1:9000/jiaxiang/2025/04/11/mengru.png.png','管理国际商贸城小区','负责社区妇女工作，制定妇女工作计划并组织实施。\n\n组织妇女开展各类活动，提升妇女素质和能力。\n\n维护妇女合法权益，关注妇女需求。\n\n引导妇女参与社区建设，发挥妇女积极作用。\n\n完成上级妇女组织交办的其他任务。','2025-04-11 20:51:18','2025-04-11 21:03:02'),(8,'张传祥 - 一般社区工作人员','http:/127.0.0.1:9000/jiaxiang/2025/04/11/zhangchuanxiang.png','管理红旗花园小区','负责社区统战工作，制定统战工作计划并组织实施。\n\n组织统战对象开展各类活动，促进社区和谐稳定。\n\n加强与统战对象的沟通和联系，了解他们的需求和意见。\n\n引导统战对象参与社区建设，发挥积极作用。\n\n完成上级统战部门交办的其他任务。','2025-04-11 20:51:45','2025-04-11 21:03:02'),(9,'赵劲松 - 一般社区工作人员','http:/127.0.0.1:9000/jiaxiang/2025/04/11/zhaojinsong.png','管理博悦城小区','负责社区统战工作，制定统战工作计划并组织实施。\n\n组织统战对象开展各类活动，促进社区和谐稳定。\n\n加强与统战对象的沟通和联系，了解他们的需求和意见。\n\n引导统战对象参与社区建设，发挥积极作用。\n\n完成上级统战部门交办的其他任务。','2025-04-11 20:52:11','2025-04-11 21:03:02');
+/*!40000 ALTER TABLE `staff_info` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -330,4 +394,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-11 16:59:53
+-- Dump completed on 2025-04-11 21:23:13

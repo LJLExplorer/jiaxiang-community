@@ -1,8 +1,10 @@
 package com.jiaxiang.content.service;
 
-import com.jiaxiang.model.community.dos.CommunityDO;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
+import com.jiaxiang.model.content.dos.ArticleFileDO;
 import com.jiaxiang.model.content.vos.ContentVO;
+
+import java.util.List;
 
 public interface ContentService {
 
@@ -21,4 +23,11 @@ public interface ContentService {
      * @return 文章
      */
     ContentVO listContentByCommunityAndType(Long communityId, String type);
+
+    /**
+     * 查询文章附件
+     * @param articleId 文章id
+     * @return ArticleFileDO
+     */
+    public List<ArticleFileDO> listArticleFileByArticleId(Long articleId);
 }

@@ -60,6 +60,7 @@ public class ContentServiceImpl implements ContentService {
      * @param articleId 文章id
      * @return ArticleFileDO
      */
+    @Override
     public List<ArticleFileDO> listArticleFileByArticleId(Long articleId){
         return contentMapper.listArticleFileByArticleId(articleId);
     }
