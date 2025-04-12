@@ -2,7 +2,9 @@ package com.jiaxiang.content.service.impl;
 
 import com.jiaxiang.content.mapper.ContentMapper;
 import com.jiaxiang.content.service.ContentService;
+import com.jiaxiang.model.community.dos.CommunityDO;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
+import com.jiaxiang.model.community.vos.GridVO;
 import com.jiaxiang.model.content.dos.ArticleFileDO;
 import com.jiaxiang.model.content.vos.ContentVO;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.jiaxiang.model.common.constant.ArticleTypeConstant.COMMUNITY_PROFILE;
@@ -57,11 +61,29 @@ public class ContentServiceImpl implements ContentService {
 
     /**
      * 查询文章附件
+     *
      * @param articleId 文章id
      * @return ArticleFileDO
      */
     @Override
-    public List<ArticleFileDO> listArticleFileByArticleId(Long articleId){
+    public List<ArticleFileDO> listArticleFileByArticleId(Long articleId) {
         return contentMapper.listArticleFileByArticleId(articleId);
+    }
+
+    /**
+     * 网格管理
+     *
+     * @param communityId 社区id
+     * @return 网格管理
+     */
+    @Override
+    public List<GridVO> listGridManagement(Long communityId) {
+        List<CommunityDO> communityDOList = contentMapper.listAllCommunity();
+        return communityDOList.stream().map(communityDO -> {
+            Map<String, String> meta = new HashMap<>();
+            meta.put("profile", communityDO.getDescription());
+            meta.put("title", communityDO.getNameCn() + "简介");
+            return new GridVO(communityDO.getNameCn(), communityDO.getIcon(), meta);
+        }).toList();
     }
 }

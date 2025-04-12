@@ -27,4 +27,12 @@ public interface PortalService {
      * @return 社区简介
      */
     public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId);
+
+    /**
+     * 网格管理
+     *
+     * @param communityId 社区id
+     * @return 网格管理
+     */
+    public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId);
 }

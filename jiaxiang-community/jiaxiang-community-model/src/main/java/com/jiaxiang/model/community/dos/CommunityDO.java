@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommunityDO {
     private Long id;
-    private String name;
+    private String nameEn;
+    private String nameCn;
+    private String icon;
     private String description;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;

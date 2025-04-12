@@ -35,4 +35,8 @@
         from article_file
         where article_id = #{articleId}
     </select>
+
+    <select id="listAllCommunity" resultType="com.jiaxiang.model.community.dos.CommunityDO">
+        select * from community
+    </select>
 </mapper>

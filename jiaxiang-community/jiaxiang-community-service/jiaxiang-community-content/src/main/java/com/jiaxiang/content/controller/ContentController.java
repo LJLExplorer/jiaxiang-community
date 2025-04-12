@@ -4,6 +4,7 @@ import com.jiaxiang.content.service.ContentService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
+import com.jiaxiang.model.community.vos.GridVO;
 import com.jiaxiang.model.content.vos.ContentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConsts.CONTENT_URL_PREFIX;
 
@@ -52,14 +55,25 @@ public class ContentController {
     }
 
     /**
-     *
-     * @param communityId
-     * @param id
-     * @return
+     * 履职信息
+     * @param communityId 社区id
+     * @param id id
+     * @return 履职信息
      */
     @GetMapping("/list_personal_info")
     public ResponseEntity<ResponseResult<?>> listPersonalInfoById(Long communityId, Long id) {
 //        Todo 查询
         return ResponseWrapper.success(null);
+    }
+
+    /**
+     * 网格管理
+     * @param communityId 社区id
+     * @return 网格管理
+     */
+    @GetMapping("/grid_management")
+    public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId) {
+        List<GridVO> gridVOList = contentService.listGridManagement(communityId);
+        return ResponseWrapper.success(gridVOList);
     }
 }

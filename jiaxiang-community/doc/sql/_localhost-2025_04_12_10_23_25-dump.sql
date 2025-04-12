@@ -302,13 +302,15 @@ DROP TABLE IF EXISTS `community`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `community` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL COMMENT '社区名字',
+  `name_en` varchar(100) DEFAULT NULL COMMENT '社区名字',
+  `name_cn` varchar(100) DEFAULT NULL COMMENT '中文名',
+  `icon` varchar(100) DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL COMMENT '简单社区描述',
   `create_time` datetime DEFAULT (now()) COMMENT '创建时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `community_name_pk_2` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='社区表 标注有多少个社区';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='社区表 标注有多少个社区';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -317,7 +319,7 @@ CREATE TABLE `community` (
 
 LOCK TABLES `community` WRITE;
 /*!40000 ALTER TABLE `community` DISABLE KEYS */;
-INSERT INTO `community` VALUES (1,'jia_he_community','嘉和社区','2025-04-09 20:17:43','2025-04-09 20:18:04');
+INSERT INTO `community` VALUES (1,'jia_he_community','嘉和社区','','嘉和社区是一个充满温暖与活力的居住区域，致力于为居民提供舒适、安全、便捷的生活环境。 社区定期举办各类活动，包括健康讲座、体育赛事、环保行动等，以增强邻里关系，促进社区文化建设。','2025-04-09 20:17:43','2025-04-12 10:21:02'),(2,'xiang_cheng_bei_yuan_community','祥城北苑社区','','祥城北苑社区是一个充满温暖与活力的居住区域，致力于为居民提供舒适、安全、便捷的生活环境。 社区定期举办各类活动，包括健康讲座、体育赛事、环保行动等，以增强邻里关系，促进社区文化建设。','2025-04-12 09:51:11','2025-04-12 10:21:02');
 /*!40000 ALTER TABLE `community` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -394,4 +396,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-11 21:48:45
+-- Dump completed on 2025-04-12 10:23:25

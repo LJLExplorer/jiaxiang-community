@@ -49,4 +49,14 @@ public class PortalController {
     public ResponseEntity<ResponseResult<?>> listJiaHeCommunityProfile(Long communityId) {
         return portalService.listCommunityProfile(communityId);
     }
+
+    /**
+     * 网格管理
+     * @param communityId 社区id
+     * @return 网格管理
+     */
+    @GetMapping("/jiahe/grid_management")
+    public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId) {
+        return portalService.listGridManagement(communityId);
+    }
 }

@@ -19,4 +19,7 @@ public interface IContentClient {
 
     @GetMapping(CONTENT_URL_PREFIX + "/community_profile")
     public ResponseEntity<ResponseResult<?>> listCommunityProfile(@RequestParam Long communityId);
+
+    @GetMapping(CONTENT_URL_PREFIX + "/grid_management")
+    public ResponseEntity<ResponseResult<?>> listGridManagement(@RequestParam Long communityId);
 }

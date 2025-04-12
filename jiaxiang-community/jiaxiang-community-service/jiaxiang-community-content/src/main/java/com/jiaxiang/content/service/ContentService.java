@@ -1,6 +1,7 @@
 package com.jiaxiang.content.service;
 
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
+import com.jiaxiang.model.community.vos.GridVO;
 import com.jiaxiang.model.content.dos.ArticleFileDO;
 import com.jiaxiang.model.content.vos.ContentVO;
 
@@ -30,4 +31,11 @@ public interface ContentService {
      * @return ArticleFileDO
      */
     public List<ArticleFileDO> listArticleFileByArticleId(Long articleId);
+
+    /**
+     * 网格管理
+     * @param communityId 社区id
+     * @return 网格管理
+     */
+    public List<GridVO> listGridManagement(Long communityId);
 }

@@ -50,4 +50,15 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId) {
         return iContentClient.listCommunityProfile(communityId);
     }
+
+    /**
+     * 网格管理
+     *
+     * @param communityId 社区id
+     * @return 网格管理
+     */
+    @Override
+    public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId) {
+        return iContentClient.listGridManagement(communityId);
+    }
 }
