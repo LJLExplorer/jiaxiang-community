@@ -30,4 +30,9 @@ public class IContentClientFallback implements IContentClient {
         return ResponseWrapper.serverError(AppHttpCodeEnum.SERVER_ERROR.getCode(), "获取数据失败");
     }
 
+    @Override
+    public ResponseEntity<ResponseResult<?>> listPersonalInfo(Long communityId, long id) {
+        return ResponseWrapper.serverError(AppHttpCodeEnum.SERVER_ERROR.getCode(), "获取数据失败");
+    }
+
 }

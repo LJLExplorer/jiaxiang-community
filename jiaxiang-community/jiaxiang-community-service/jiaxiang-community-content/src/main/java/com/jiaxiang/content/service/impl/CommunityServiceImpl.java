@@ -59,4 +59,15 @@ public class CommunityServiceImpl implements CommuniyuService {
     public Integer getCommitteesMembersCount() {
         return communityMapper.getCommitteesMembersCount();
     }
+
+    /**
+     * 履职信息
+     *
+     * @param id 个人id
+     * @return 履职信息
+     */
+    @Override
+    public CommitteesMemberVO listPersonalInfo(long id) {
+        return communityMapper.listPersonalInfo(id);
+    }
 }

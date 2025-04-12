@@ -19,15 +19,24 @@ public interface CommuniyuService {
 
     /**
      * 列出两委成员
-     * @param pageNum
-     * @param pageSize
-     * @return
+     *
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     * @return 两委成员列表
      */
     List<CommitteesMemberVO> listCommitteesMembers(int pageNum, int pageSize);
 
     /**
      * 得到员工总数
-     * @return
+     * @return 总数
      */
     Integer getCommitteesMembersCount();
+
+    /**
+     * 履职信息
+     *
+     * @param id 个人id
+     * @return 履职信息
+     */
+    CommitteesMemberVO listPersonalInfo(long id);
 }

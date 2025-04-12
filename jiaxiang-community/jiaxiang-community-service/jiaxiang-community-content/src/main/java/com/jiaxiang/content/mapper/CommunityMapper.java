@@ -15,4 +15,6 @@ public interface CommunityMapper {
     Integer getCommitteesMembersCount();
 
     List<CommitteesMemberVO> listCommitteesMembers(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
+
+    CommitteesMemberVO listPersonalInfo(long id);
 }

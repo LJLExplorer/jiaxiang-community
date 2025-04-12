@@ -2,7 +2,6 @@ package com.jiaxiang.apis.Content;
 
 import com.jiaxiang.apis.Content.fallback.IContentClientFallback;
 import com.jiaxiang.model.common.dtos.ResponseResult;
-import feign.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,5 +24,8 @@ public interface IContentClient {
     public ResponseEntity<ResponseResult<?>> listGridManagement(@RequestParam Long communityId);
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/list_committees_members")
-    public ResponseEntity<ResponseResult<?>> listCommitteesMembers(@RequestParam int pageNum,@RequestParam int pageSize);
+    public ResponseEntity<ResponseResult<?>> listCommitteesMembers(@RequestParam int pageNum, @RequestParam int pageSize);
+
+    @GetMapping(COMMUNITY_URL_PREFIX + "/personal_info")
+    ResponseEntity<ResponseResult<?>> listPersonalInfo(@RequestParam Long communityId, @RequestParam long id);
 }

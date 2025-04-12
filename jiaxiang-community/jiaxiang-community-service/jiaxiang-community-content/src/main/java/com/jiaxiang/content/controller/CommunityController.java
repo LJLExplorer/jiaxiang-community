@@ -25,19 +25,6 @@ public class CommunityController {
     private CommuniyuService communiyuService;
 
     /**
-     * 履职信息
-     *
-     * @param communityId 社区id
-     * @param id          id
-     * @return 履职信息
-     */
-    @GetMapping("/list_personal_info")
-    public ResponseEntity<ResponseResult<?>> listPersonalInfoById(Long communityId, Long id) {
-//        Todo 查询
-        return ResponseWrapper.success(null);
-    }
-
-    /**
      * 网格管理
      *
      * @param communityId 社区id
@@ -51,14 +38,28 @@ public class CommunityController {
 
     /**
      * 列出两委成员
-     * @param pageNum
-     * @param pageSize
-     * @return
+     *
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     * @return 两委成员列表
      */
     @GetMapping("/list_committees_members")
     public ResponseEntity<ResponseResult<?>> listCommitteesMembers(int pageNum, int pageSize) {
         Integer total = communiyuService.getCommitteesMembersCount();
         List<CommitteesMemberVO> committeesMemberVOList = communiyuService.listCommitteesMembers(pageNum, pageSize);
         return ResponseWrapper.successWithPage(committeesMemberVOList, pageNum, pageSize, total, total / pageSize);
+    }
+
+    /**
+     * 履职信息
+     *
+     * @param communityId 社区id
+     * @param id 个人id
+     * @return 履职信息
+     */
+    @GetMapping("/personal_info")
+    public ResponseEntity<ResponseResult<?>> listPersonalInfo(Long communityId, long id) {
+        CommitteesMemberVO committeesMemberVO = communiyuService.listPersonalInfo(id);
+        return ResponseWrapper.success(committeesMemberVO);
     }
 }

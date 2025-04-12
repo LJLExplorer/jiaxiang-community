@@ -43,4 +43,13 @@ public interface PortalService {
      * @return 两委成员列表
      */
     ResponseEntity<ResponseResult<?>> listCommitteesMembers(int pageNum, int pageSize);
+
+    /**
+     * 履职信息
+     *
+     * @param communityId 社区id
+     * @param id 个人id
+     * @return 履职信息
+     */
+    ResponseEntity<ResponseResult<?>> listPersonalInfo(Long communityId, long id);
 }

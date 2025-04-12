@@ -16,4 +16,8 @@
         from staff_info
         limit #{pageNum} ,#{pageSize}
     </select>
+
+    <select id="listPersonalInfo" resultType="com.jiaxiang.model.community.vos.CommitteesMemberVO">
+        select * from staff_info where id = #{id}
+    </select>
 </mapper>
