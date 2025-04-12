@@ -69,21 +69,4 @@ public class ContentServiceImpl implements ContentService {
     public List<ArticleFileDO> listArticleFileByArticleId(Long articleId) {
         return contentMapper.listArticleFileByArticleId(articleId);
     }
-
-    /**
-     * 网格管理
-     *
-     * @param communityId 社区id
-     * @return 网格管理
-     */
-    @Override
-    public List<GridVO> listGridManagement(Long communityId) {
-        List<CommunityDO> communityDOList = contentMapper.listAllCommunity();
-        return communityDOList.stream().map(communityDO -> {
-            Map<String, String> meta = new HashMap<>();
-            meta.put("profile", communityDO.getDescription());
-            meta.put("title", communityDO.getNameCn() + "简介");
-            return new GridVO(communityDO.getNameCn(), communityDO.getIcon(), meta);
-        }).toList();
-    }
 }

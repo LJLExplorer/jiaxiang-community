@@ -52,11 +52,24 @@ public class PortalController {
 
     /**
      * 网格管理
+     *
      * @param communityId 社区id
      * @return 网格管理
      */
     @GetMapping("/jiahe/grid_management")
     public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId) {
         return portalService.listGridManagement(communityId);
+    }
+
+
+    /**
+     * 列出两委成员列表
+     *
+     * @param communityId 社区id
+     * @return 两委成员列表
+     */
+    @GetMapping("/jiahe/list_committees_members")
+    public ResponseEntity<ResponseResult<?>> listCommitteesMembers(Long communityId, int pageNum, int pageSize) {
+        return portalService.listCommitteesMembers(pageNum, pageSize);
     }
 }

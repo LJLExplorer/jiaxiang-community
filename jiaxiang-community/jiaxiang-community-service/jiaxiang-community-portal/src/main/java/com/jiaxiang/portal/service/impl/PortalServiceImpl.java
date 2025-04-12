@@ -61,4 +61,16 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId) {
         return iContentClient.listGridManagement(communityId);
     }
+
+    /**
+     * 列出两委成员列表
+     *
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     * @return 两委成员列表
+     */
+    @Override
+    public ResponseEntity<ResponseResult<?>> listCommitteesMembers(int pageNum, int pageSize) {
+        return iContentClient.listCommitteesMembers(pageNum, pageSize);
+    }
 }

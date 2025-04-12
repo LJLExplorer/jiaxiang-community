@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 增强型响应包装类，简化ResponseEntity的使用
  * 支持所有预定义的AppHttpCodeEnum错误类型
  */
-public class ResponseWrapper implements Serializable {
+public class ResponseWrapper<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class ResponseWrapper implements Serializable {
     /**
      * 创建自定义状态码的成功响应，带数据
      *
-     * @param data    响应数据
+     * @param data 响应数据
      * @return 包装后的响应实体
      */
     public static <T> ResponseEntity<ResponseResult<?>> success(T data) {
@@ -53,6 +53,10 @@ public class ResponseWrapper implements Serializable {
         return ResponseEntity.ok(result);
     }
 
+    public static <T> ResponseEntity<ResponseResult<?>> successWithPage(T data, Integer currentPage, Integer pageSize, Integer total, int pages) {
+        PageData<T> result = new PageData<>(currentPage, pageSize, total, pages, data);
+        return ResponseEntity.ok(ResponseResult.okResult(result));
+    }
 
     private static ResponseEntity<ResponseResult<?>> error(HttpStatus httpStatus, int code, String message) {
         ResponseResult<?> result = ResponseResult.errorResult(code, message);

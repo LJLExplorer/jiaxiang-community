@@ -35,4 +35,12 @@ public interface PortalService {
      * @return 网格管理
      */
     public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId);
+
+    /**
+     * 列出两委成员列表
+     * @param pageNum 当前页
+     * @param pageSize 页大小
+     * @return 两委成员列表
+     */
+    ResponseEntity<ResponseResult<?>> listCommitteesMembers(int pageNum, int pageSize);
 }

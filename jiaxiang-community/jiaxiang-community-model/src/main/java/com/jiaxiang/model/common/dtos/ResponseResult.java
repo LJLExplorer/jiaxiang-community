@@ -159,14 +159,14 @@ public class ResponseResult<T> implements Serializable {
 //        ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN, "用户未登录");
 //        System.out.println(result);
 
-        PageResponseResult pageResponseResult = new PageResponseResult(1, 10, 60);
-        List<String> list = new ArrayList<>();
-        list.add("haha");
-        list.add("hehehheh");
-        pageResponseResult.setData(list);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println(objectMapper.writeValueAsString(pageResponseResult));
+//        PageResponseResult pageResponseResult = new PageResponseResult(1, 10, 60);
+//        List<String> list = new ArrayList<>();
+//        list.add("haha");
+//        list.add("hehehheh");
+//        pageResponseResult.setData(list);
+//
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        System.out.println(objectMapper.writeValueAsString(pageResponseResult));
     }
 
 }

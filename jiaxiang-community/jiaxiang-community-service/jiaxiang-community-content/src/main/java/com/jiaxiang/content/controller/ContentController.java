@@ -53,27 +53,4 @@ public class ContentController {
         ContentVO contentVO = contentService.listContentByCommunityAndType(communityId, type);
         return ResponseWrapper.success(contentVO);
     }
-
-    /**
-     * 履职信息
-     * @param communityId 社区id
-     * @param id id
-     * @return 履职信息
-     */
-    @GetMapping("/list_personal_info")
-    public ResponseEntity<ResponseResult<?>> listPersonalInfoById(Long communityId, Long id) {
-//        Todo 查询
-        return ResponseWrapper.success(null);
-    }
-
-    /**
-     * 网格管理
-     * @param communityId 社区id
-     * @return 网格管理
-     */
-    @GetMapping("/grid_management")
-    public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId) {
-        List<GridVO> gridVOList = contentService.listGridManagement(communityId);
-        return ResponseWrapper.success(gridVOList);
-    }
 }

@@ -19,4 +19,9 @@ public class ApiRouterConsts {
      * 活动请求前缀
      */
     public static final String ACTIVITY_URL_PREFIX = "/activity";
+
+    /**
+     * 社区请求前缀
+     */
+    public static final String COMMUNITY_URL_PREFIX = "/community";
 }
