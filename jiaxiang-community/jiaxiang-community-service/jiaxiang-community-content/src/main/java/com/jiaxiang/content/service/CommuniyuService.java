@@ -3,6 +3,7 @@ package com.jiaxiang.content.service;
 import com.jiaxiang.model.community.vos.CommitteesMemberVO;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
 import com.jiaxiang.model.community.vos.GridVO;
+import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
 import com.jiaxiang.model.content.dos.ArticleFileDO;
 import com.jiaxiang.model.content.vos.ContentVO;
 
@@ -39,4 +40,18 @@ public interface CommuniyuService {
      * @return 履职信息
      */
     CommitteesMemberVO listPersonalInfo(long id);
+
+    /**
+     * 得到为民服务数量
+     * @return 总数
+     */
+    Integer getServerPeopleCount();
+
+    /**
+     * 列出为民服务清单
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     * @return 列出为民服务清单
+     */
+    List<ServePeopleInfoVO> listServePeople(int pageNum, int pageSize);
 }

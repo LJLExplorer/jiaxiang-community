@@ -2,6 +2,7 @@ package com.jiaxiang.content.mapper;
 
 import com.jiaxiang.model.community.dos.CommunityDO;
 import com.jiaxiang.model.community.vos.CommitteesMemberVO;
+import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,4 +18,8 @@ public interface CommunityMapper {
     List<CommitteesMemberVO> listCommitteesMembers(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
 
     CommitteesMemberVO listPersonalInfo(long id);
+
+    Integer getServerPeopleCount();
+
+    List<ServePeopleInfoVO> listServePeople(int pageNum, int pageSize);
 }

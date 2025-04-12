@@ -52,4 +52,12 @@ public interface PortalService {
      * @return 履职信息
      */
     ResponseEntity<ResponseResult<?>> listPersonalInfo(Long communityId, long id);
+
+    /**
+     * 列出为民服务清单
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     * @return 列出为民服务清单
+     */
+    ResponseEntity<ResponseResult<?>> listServePeople(int pageNum, int pageSize);
 }

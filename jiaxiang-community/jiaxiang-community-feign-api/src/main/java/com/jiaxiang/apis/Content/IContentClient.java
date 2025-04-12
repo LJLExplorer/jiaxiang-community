@@ -28,4 +28,7 @@ public interface IContentClient {
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/personal_info")
     ResponseEntity<ResponseResult<?>> listPersonalInfo(@RequestParam Long communityId, @RequestParam long id);
+
+    @GetMapping(COMMUNITY_URL_PREFIX + "/list_serve_people")
+    ResponseEntity<ResponseResult<?>> listServePeople(@RequestParam int pageNum, @RequestParam int pageSize);
 }

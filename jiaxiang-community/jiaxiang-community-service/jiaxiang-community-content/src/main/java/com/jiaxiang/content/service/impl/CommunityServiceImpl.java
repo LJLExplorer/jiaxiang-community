@@ -5,6 +5,7 @@ import com.jiaxiang.content.service.CommuniyuService;
 import com.jiaxiang.model.community.dos.CommunityDO;
 import com.jiaxiang.model.community.vos.CommitteesMemberVO;
 import com.jiaxiang.model.community.vos.GridVO;
+import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,5 +70,27 @@ public class CommunityServiceImpl implements CommuniyuService {
     @Override
     public CommitteesMemberVO listPersonalInfo(long id) {
         return communityMapper.listPersonalInfo(id);
+    }
+
+    /**
+     * 得到为民服务数量
+     *
+     * @return 总数
+     */
+    @Override
+    public Integer getServerPeopleCount() {
+        return communityMapper.getServerPeopleCount();
+    }
+
+    /**
+     * 列出为民服务清单
+     *
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     * @return 列出为民服务清单
+     */
+    @Override
+    public List<ServePeopleInfoVO> listServePeople(int pageNum, int pageSize) {
+        return communityMapper.listServePeople((pageNum - 1) * pageSize, pageSize);
     }
 }

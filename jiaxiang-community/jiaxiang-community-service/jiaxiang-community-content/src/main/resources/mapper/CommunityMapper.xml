@@ -20,4 +20,12 @@
     <select id="listPersonalInfo" resultType="com.jiaxiang.model.community.vos.CommitteesMemberVO">
         select * from staff_info where id = #{id}
     </select>
+
+    <select id="getServerPeopleCount" resultType="java.lang.Integer">
+        select count(id) from serve_people_info
+    </select>
+
+    <select id="listServePeople" resultType="com.jiaxiang.model.community.vos.ServePeopleInfoVO">
+        select * from serve_people_info limit #{pageNum} ,#{pageSize}
+    </select>
 </mapper>

@@ -85,4 +85,16 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> listPersonalInfo(Long communityId, long id) {
         return iContentClient.listPersonalInfo(communityId, id);
     }
+
+    /**
+     * 列出为民服务清单
+     *
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     * @return 列出为民服务清单
+     */
+    @Override
+    public ResponseEntity<ResponseResult<?>> listServePeople(int pageNum, int pageSize) {
+        return iContentClient.listServePeople(pageNum, pageSize);
+    }
 }

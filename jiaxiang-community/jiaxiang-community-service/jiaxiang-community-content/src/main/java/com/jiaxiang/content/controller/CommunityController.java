@@ -5,6 +5,7 @@ import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.community.vos.CommitteesMemberVO;
 import com.jiaxiang.model.community.vos.GridVO;
+import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class CommunityController {
     }
 
     /**
-     * 列出两委成员
+     * 列出两委成员列表
      *
      * @param pageNum  当前页
      * @param pageSize 页大小
@@ -54,12 +55,26 @@ public class CommunityController {
      * 履职信息
      *
      * @param communityId 社区id
-     * @param id 个人id
+     * @param id          个人id
      * @return 履职信息
      */
     @GetMapping("/personal_info")
     public ResponseEntity<ResponseResult<?>> listPersonalInfo(Long communityId, long id) {
         CommitteesMemberVO committeesMemberVO = communiyuService.listPersonalInfo(id);
         return ResponseWrapper.success(committeesMemberVO);
+    }
+
+    /**
+     * 列出为人民服务列表
+     *
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     * @return 为人民服务列表
+     */
+    @GetMapping("/list_serve_people")
+    public ResponseEntity<ResponseResult<?>> listServePeople(int pageNum, int pageSize) {
+        Integer total = communiyuService.getServerPeopleCount();
+        List<ServePeopleInfoVO> servePeopleInfoVOList = communiyuService.listServePeople(pageNum, pageSize);
+        return ResponseWrapper.successWithPage(servePeopleInfoVOList, pageNum, pageSize, total, total / pageSize);
     }
 }

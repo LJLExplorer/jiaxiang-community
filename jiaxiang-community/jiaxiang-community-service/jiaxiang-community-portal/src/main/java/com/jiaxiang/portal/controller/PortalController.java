@@ -86,4 +86,17 @@ public class PortalController {
     public ResponseEntity<ResponseResult<?>> listPersonalInfo(Long communityId, long id) {
         return portalService.listPersonalInfo(communityId, id);
     }
+
+    /**
+     * 列出两委成员列表
+     *
+     * @param communityId 社区id,可能员工仅属于某个社区
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     * @return 两委成员列表
+     */
+    @GetMapping("/jiahe/list_serve_people")
+    public ResponseEntity<ResponseResult<?>> listServePeople(Long communityId, int pageNum, int pageSize) {
+        return portalService.listServePeople(pageNum, pageSize);
+    }
 }
