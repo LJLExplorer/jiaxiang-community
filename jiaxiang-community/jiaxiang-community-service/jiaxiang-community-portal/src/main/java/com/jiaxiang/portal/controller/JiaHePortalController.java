@@ -6,12 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.jiaxiang.model.common.constant.ApiRouterConsts.JIA_HE_URL_PREFIX;
+
 @Slf4j
 @RestController
-public class PortalController {
+@RequestMapping(JIA_HE_URL_PREFIX)
+public class JiaHePortalController {
 
     @Autowired
     private PortalService portalService;
@@ -22,7 +26,7 @@ public class PortalController {
      * @param communityId 社区id
      * @return 预览图
      */
-    @GetMapping("/jiahe/list_community_activities")
+    @GetMapping(  "/list_community_activities")
     public ResponseEntity<ResponseResult<?>> listCommunityActivities(Long communityId) {
         return portalService.listCommunityActivities(communityId);
     }
@@ -33,7 +37,7 @@ public class PortalController {
      * @param communityId 社区id
      * @return 活动详情
      */
-    @GetMapping("/jiahe/community_activity_detail")
+    @GetMapping(  "/community_activity_detail")
     public ResponseEntity<ResponseResult<?>> listCommunityActivityDetail(@RequestParam("communityId") Long communityId, @RequestParam("id") Long activityId) {
         return portalService.listCommunityActivityDetail(communityId, activityId);
     }
@@ -45,7 +49,7 @@ public class PortalController {
      * @param communityId 社区id
      * @return 社区简介
      */
-    @GetMapping("/jiahe/community_profile")
+    @GetMapping("/community_profile")
     public ResponseEntity<ResponseResult<?>> listJiaHeCommunityProfile(Long communityId) {
         return portalService.listCommunityProfile(communityId);
     }
@@ -56,7 +60,7 @@ public class PortalController {
      * @param communityId 社区id
      * @return 网格管理
      */
-    @GetMapping("/jiahe/grid_management")
+    @GetMapping("/grid_management")
     public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId) {
         return portalService.listGridManagement(communityId);
     }
@@ -66,11 +70,11 @@ public class PortalController {
      * 列出两委成员列表
      *
      * @param communityId 社区id,可能员工仅属于某个社区
-     * @param pageNum  当前页
-     * @param pageSize 页大小
+     * @param pageNum     当前页
+     * @param pageSize    页大小
      * @return 两委成员列表
      */
-    @GetMapping("/jiahe/list_committees_members")
+    @GetMapping("/list_committees_members")
     public ResponseEntity<ResponseResult<?>> listCommitteesMembers(Long communityId, int pageNum, int pageSize) {
         return portalService.listCommitteesMembers(pageNum, pageSize);
     }
@@ -79,10 +83,10 @@ public class PortalController {
      * 履职信息
      *
      * @param communityId 社区id
-     * @param id 个人id
+     * @param id          个人id
      * @return 履职信息
      */
-    @GetMapping("/jiahe/personal_info")
+    @GetMapping("/personal_info")
     public ResponseEntity<ResponseResult<?>> listPersonalInfo(Long communityId, long id) {
         return portalService.listPersonalInfo(communityId, id);
     }
@@ -91,11 +95,11 @@ public class PortalController {
      * 列出两委成员列表
      *
      * @param communityId 社区id,可能员工仅属于某个社区
-     * @param pageNum  当前页
-     * @param pageSize 页大小
+     * @param pageNum     当前页
+     * @param pageSize    页大小
      * @return 两委成员列表
      */
-    @GetMapping("/jiahe/list_serve_people")
+    @GetMapping("/list_serve_people")
     public ResponseEntity<ResponseResult<?>> listServePeople(Long communityId, int pageNum, int pageSize) {
         return portalService.listServePeople(pageNum, pageSize);
     }

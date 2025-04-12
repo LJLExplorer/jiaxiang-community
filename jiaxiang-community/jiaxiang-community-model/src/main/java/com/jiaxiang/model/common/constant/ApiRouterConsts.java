@@ -11,6 +11,11 @@ public class ApiRouterConsts {
     public static final String API_URL_PREFIX = "/api";
 
     /**
+     * jiahe请求路径前缀
+     */
+    public static final String JIA_HE_URL_PREFIX = "/jiahe";
+
+    /**
      * 内容请求前缀
      */
     public static final String CONTENT_URL_PREFIX = "/content";
