@@ -117,4 +117,9 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize) {
         return iContentClient.proofDocuments(communityId, pageNum, pageSize);
     }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> proofInfo(int id) {
+        return iContentClient.proofInfo(id);
+    }
 }

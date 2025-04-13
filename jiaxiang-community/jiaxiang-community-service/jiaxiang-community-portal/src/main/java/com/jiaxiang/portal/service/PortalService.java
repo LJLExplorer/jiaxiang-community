@@ -68,4 +68,6 @@ public interface PortalService {
     ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize);
 
     ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize);
+
+    ResponseEntity<ResponseResult<?>> proofInfo(int id);
 }

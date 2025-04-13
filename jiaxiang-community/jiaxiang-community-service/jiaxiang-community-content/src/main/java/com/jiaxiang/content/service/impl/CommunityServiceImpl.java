@@ -126,4 +126,9 @@ public class CommunityServiceImpl implements CommuniyuService {
     public List<ProofDocumentsPreviewVO> proofDocuments(Long communityId, int pageNum, int pageSize) {
         return communityMapper.proofDocuments(communityId, (pageNum - 1) * pageSize, pageSize);
     }
+
+    @Override
+    public ProofDocumentsDetailDO proofInfo(int id) {
+        return communityMapper.proofInfo(id);
+    }
 }

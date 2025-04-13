@@ -43,4 +43,7 @@ public interface IContentClient {
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/proof_documents")
     ResponseEntity<ResponseResult<?>> proofDocuments(@RequestParam Long communityId, @RequestParam int pageNum, @RequestParam int pageSize);
+
+    @GetMapping(COMMUNITY_URL_PREFIX + "/proof_info")
+    ResponseEntity<ResponseResult<?>> proofInfo(@RequestParam int id);
 }
