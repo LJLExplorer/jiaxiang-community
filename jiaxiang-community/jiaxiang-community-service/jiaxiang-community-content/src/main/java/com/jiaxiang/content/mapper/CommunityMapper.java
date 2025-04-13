@@ -35,4 +35,6 @@ public interface CommunityMapper {
     Integer getProofDocumentsCount();
 
     List<ProofDocumentsPreviewVO> proofDocuments(@Param("communityId") Long communityId,@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
+
+    ProofDocumentsDetailDO proofInfo(int id);
 }

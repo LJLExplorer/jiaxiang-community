@@ -56,4 +56,8 @@
     <select id="proofDocuments" resultType="com.jiaxiang.model.community.vos.ProofDocumentsPreviewVO">
         select * from proof_documents where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
     </select>
+
+    <select id="proofInfo" resultType="com.jiaxiang.model.community.vos.ProofDocumentsDetailDO">
+        select * from proof_documents where id = #{id}
+    </select>
 </mapper>

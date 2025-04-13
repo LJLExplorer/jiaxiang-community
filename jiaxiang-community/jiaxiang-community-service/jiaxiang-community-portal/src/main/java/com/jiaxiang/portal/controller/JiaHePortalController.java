@@ -131,4 +131,10 @@ public class JiaHePortalController {
     public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize) {
         return portalService.proofDocuments(communityId, pageNum, pageSize);
     }
+
+
+    @GetMapping("/proof_info")
+    public ResponseEntity<ResponseResult<?>> proofInfo(Long communityId, int id) {
+        return portalService.proofInfo(id);
+    }
 }

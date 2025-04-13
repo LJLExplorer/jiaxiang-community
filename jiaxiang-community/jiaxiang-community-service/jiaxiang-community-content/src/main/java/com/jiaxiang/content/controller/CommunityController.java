@@ -103,4 +103,9 @@ public class CommunityController {
         return ResponseWrapper.successWithPage(proofDocumentsPreviewVOList, pageNum, pageSize, total, total / pageSize);
     }
 
+    @GetMapping("/proof_info")
+    public ResponseEntity<ResponseResult<?>> proofInfo(int id) {
+        ProofDocumentsDetailDO proofDocumentsDetailDO = communiyuService.proofInfo(id);
+        return ResponseWrapper.success(proofDocumentsDetailDO);
+    }
 }

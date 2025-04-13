@@ -65,4 +65,6 @@ public interface CommuniyuService {
     Integer getProofDocumentsCount();
 
     List<ProofDocumentsPreviewVO> proofDocuments(Long communityId, int pageNum, int pageSize);
+
+    ProofDocumentsDetailDO proofInfo(int id);
 }
