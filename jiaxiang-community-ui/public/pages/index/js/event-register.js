@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const detailsBtn = document.querySelector("#community-details");
     const honorBtn = document.querySelector("#community-honor");
     const editBtn = document.querySelector("#community-edit");
-    const slideshowView = document.querySelector("#slideshow-view");
+    // const slideshowView = document.querySelector("#slideshow-view") as HTMLElement;
     const buttonService = document.querySelector("#button-service");
     const buttonAffair = document.querySelector("#button-affair");
     const buttonList = document.querySelector("#button-list");
@@ -52,8 +52,10 @@ document.addEventListener("DOMContentLoaded", function () {
             editButton.textContent = "编辑";
         }
     });
-    slideshowView.addEventListener("click", function () {
+    /*slideshowView.addEventListener("click", function () {
         // 跳转到详情页
         window.location.href = router["community-activity"];
-    });
+
+
+    });*/
 });

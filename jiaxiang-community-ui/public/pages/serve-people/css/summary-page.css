@@ -24,49 +24,6 @@ body {
     height: 100vh;
 }
 
-.sidebar {
-    width: 200px;
-    background: linear-gradient(135deg, #02a85b 0%, #00c3ff 100%);
-    position: fixed;
-    height: 100%;
-    padding-top: 20px;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-}
-
-.sidebar a {
-    display: block;
-    color: white;
-    padding: 25px;
-    text-decoration: none;
-    font-size: 25px;
-    line-height: 1.5;
-    transition: all 0.5s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.sidebar a:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: all 0.5s ease;
-}
-
-.sidebar a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-left: 4px solid white;
-    transform: translateX(10px);
-}
-
-.sidebar a:hover:before {
-    left: 100%;
-}
-
 .content {
     padding: 0 20px;
     transition: all 0.3s ease;

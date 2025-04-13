@@ -11,7 +11,7 @@ const router = {
     "proof": prefix + "/pages/proof/index.html",
     "community-details": prefix + "/pages/community-details/index.html",
     "community-honor": prefix + "/pages/community-honor/index.html",
-    "community-activity": prefix + "/pages/community-activity/index.html",
+    // "community-activity": prefix + "/pages/community-activity/index.html",
     "jiaxiang-community-map": prefix + "/files/嘉祥社区地图.svg"
 };
 export default router;
