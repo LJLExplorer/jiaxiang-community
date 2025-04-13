@@ -116,4 +116,14 @@ public class CommunityServiceImpl implements CommuniyuService {
     public List<CommunityHonorVO> communityHonor(Long communityId, int pageNum, int pageSize) {
         return communityMapper.communityHonor(communityId, (pageNum - 1) * pageSize, pageSize);
     }
+
+    @Override
+    public Integer getProofDocumentsCount() {
+        return communityMapper.getProofDocumentsCount();
+    }
+
+    @Override
+    public List<ProofDocumentsPreviewVO> proofDocuments(Long communityId, int pageNum, int pageSize) {
+        return communityMapper.proofDocuments(communityId, (pageNum - 1) * pageSize, pageSize);
+    }
 }

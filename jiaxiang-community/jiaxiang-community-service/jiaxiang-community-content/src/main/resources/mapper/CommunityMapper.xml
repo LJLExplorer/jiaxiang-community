@@ -48,4 +48,12 @@
     <select id="communityHonor" resultType="com.jiaxiang.model.community.vos.CommunityHonorVO">
         select * from community_honor where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
     </select>
+
+    <select id="getProofDocumentsCount" resultType="java.lang.Integer">
+        select count(id) from proof_documents
+    </select>
+
+    <select id="proofDocuments" resultType="com.jiaxiang.model.community.vos.ProofDocumentsPreviewVO">
+        select * from proof_documents where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
+    </select>
 </mapper>

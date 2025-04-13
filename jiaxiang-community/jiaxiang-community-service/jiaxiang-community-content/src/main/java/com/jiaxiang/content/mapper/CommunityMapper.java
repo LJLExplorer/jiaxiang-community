@@ -1,10 +1,7 @@
 package com.jiaxiang.content.mapper;
 
 import com.jiaxiang.model.community.dos.CommunityDO;
-import com.jiaxiang.model.community.vos.CommitteesMemberVO;
-import com.jiaxiang.model.community.vos.CommunityHonorVO;
-import com.jiaxiang.model.community.vos.GuideCategoryVO;
-import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
+import com.jiaxiang.model.community.vos.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -34,4 +31,8 @@ public interface CommunityMapper {
     Integer getHonorCount();
 
     List<CommunityHonorVO> communityHonor(@Param("communityId") Long communityId,@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
+
+    Integer getProofDocumentsCount();
+
+    List<ProofDocumentsPreviewVO> proofDocuments(@Param("communityId") Long communityId,@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
 }

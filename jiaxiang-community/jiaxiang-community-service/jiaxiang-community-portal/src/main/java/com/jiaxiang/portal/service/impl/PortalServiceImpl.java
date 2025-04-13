@@ -112,4 +112,9 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize) {
         return iContentClient.communityHonor(communityId, pageNum, pageSize);
     }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize) {
+        return iContentClient.proofDocuments(communityId, pageNum, pageSize);
+    }
 }

@@ -40,4 +40,7 @@ public interface IContentClient {
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/community_honor")
     ResponseEntity<ResponseResult<?>> communityHonor(@RequestParam Long communityId, @RequestParam int pageNum, @RequestParam int pageSize);
+
+    @GetMapping(COMMUNITY_URL_PREFIX + "/proof_documents")
+    ResponseEntity<ResponseResult<?>> proofDocuments(@RequestParam Long communityId, @RequestParam int pageNum, @RequestParam int pageSize);
 }

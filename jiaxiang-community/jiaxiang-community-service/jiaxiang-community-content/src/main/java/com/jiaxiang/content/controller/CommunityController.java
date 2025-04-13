@@ -96,4 +96,11 @@ public class CommunityController {
         return ResponseWrapper.successWithPage(communityHonorVOList, pageNum, pageSize, total, total / pageSize);
     }
 
+    @GetMapping("/proof_documents")
+    public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize) {
+        Integer total = communiyuService.getProofDocumentsCount();
+        List<ProofDocumentsPreviewVO> proofDocumentsPreviewVOList = communiyuService.proofDocuments(communityId, pageNum, pageSize);
+        return ResponseWrapper.successWithPage(proofDocumentsPreviewVOList, pageNum, pageSize, total, total / pageSize);
+    }
+
 }

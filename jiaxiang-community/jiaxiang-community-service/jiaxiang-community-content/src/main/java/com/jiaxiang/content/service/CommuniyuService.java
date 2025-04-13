@@ -61,4 +61,8 @@ public interface CommuniyuService {
     Integer getHonorCount();
 
     List<CommunityHonorVO> communityHonor(Long communityId, int pageNum, int pageSize);
+
+    Integer getProofDocumentsCount();
+
+    List<ProofDocumentsPreviewVO> proofDocuments(Long communityId, int pageNum, int pageSize);
 }
