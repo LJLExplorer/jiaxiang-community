@@ -324,6 +324,32 @@ INSERT INTO `community` VALUES (1,'jia_he_community','嘉和社区','','嘉和�
 UNLOCK TABLES;
 
 --
+-- Table structure for table `community_honor`
+--
+
+DROP TABLE IF EXISTS `community_honor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `community_honor` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `communityId` bigint DEFAULT NULL,
+  `honor_detail` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `community_honor_pk_2` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `community_honor`
+--
+
+LOCK TABLES `community_honor` WRITE;
+/*!40000 ALTER TABLE `community_honor` DISABLE KEYS */;
+INSERT INTO `community_honor` VALUES (1,1,'2018年，荣获“全国文明社区”称号。'),(2,1,'2019年，被评为“优秀基层党组织'),(3,1,'2020年，获得“社区治理创新奖');
+/*!40000 ALTER TABLE `community_honor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `guide_category`
 --
 
@@ -337,7 +363,7 @@ CREATE TABLE `guide_category` (
   `content` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `guide_category_pk` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='指导清单';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='指导清单';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -346,8 +372,36 @@ CREATE TABLE `guide_category` (
 
 LOCK TABLES `guide_category` WRITE;
 /*!40000 ALTER TABLE `guide_category` DISABLE KEYS */;
-INSERT INTO `guide_category` VALUES (1,1,'村（农村社区）依法履职事项指导清单','内容'),(2,1,'城市社区依法履职事项指导清单','内容'),(3,1,'村（农村社区）依法履职事项指导清单','内容'),(4,1,'城市社区依法履职事项指导清单','内容');
+INSERT INTO `guide_category` VALUES (1,1,'村（农村社区）依法履职事项指导清单','内容'),(2,1,'城市社区依法履职事项指导清单','内容'),(3,1,'村（农村社区）依法履职事项指导清单','内容'),(4,1,'城市社区依法履职事项指导清单','内容'),(5,2,'城市社区依法履职事项指导清单','内容');
 /*!40000 ALTER TABLE `guide_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `proof_documents`
+--
+
+DROP TABLE IF EXISTS `proof_documents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `proof_documents` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `communityId` bigint DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `images` varchar(255) DEFAULT NULL,
+  `content` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `proof_documents_pk_2` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `proof_documents`
+--
+
+LOCK TABLES `proof_documents` WRITE;
+/*!40000 ALTER TABLE `proof_documents` DISABLE KEYS */;
+INSERT INTO `proof_documents` VALUES (1,1,'证明一',NULL,'内容1'),(2,1,'证明二',NULL,'内容1'),(3,1,'证明三',NULL,'内容1'),(4,1,'证明四',NULL,'内容1'),(5,1,'证明五',NULL,'内容1'),(6,1,'证明六',NULL,'内容1'),(7,1,'证明七',NULL,'内容1');
+/*!40000 ALTER TABLE `proof_documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -423,4 +477,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-13 12:23:46
+-- Dump completed on 2025-04-13 13:13:54

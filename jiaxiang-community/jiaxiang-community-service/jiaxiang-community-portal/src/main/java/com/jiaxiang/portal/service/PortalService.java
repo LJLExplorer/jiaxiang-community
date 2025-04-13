@@ -62,4 +62,10 @@ public interface PortalService {
     ResponseEntity<ResponseResult<?>> listServePeople(int pageNum, int pageSize);
 
     ResponseEntity<ResponseResult<?>> listServePeopleInfo(int id);
+
+    ResponseEntity<ResponseResult<?>> listMatters(Long communityId, int pageNum, int pageSize);
+
+    ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize);
+
+    ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize);
 }

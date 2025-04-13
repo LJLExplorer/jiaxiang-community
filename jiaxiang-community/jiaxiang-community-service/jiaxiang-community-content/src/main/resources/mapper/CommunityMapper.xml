@@ -32,4 +32,28 @@
     <select id="listServePeopleInfo" resultType="com.jiaxiang.model.community.vos.ServePeopleInfoVO">
         select * from serve_people_info where id = #{id}
     </select>
+
+    <select id="getMattersCount" resultType="java.lang.Integer">
+        select count(id) from guide_category
+    </select>
+
+    <select id="listMatters" resultType="com.jiaxiang.model.community.vos.GuideCategoryVO">
+        select * from guide_category where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
+    </select>
+
+    <select id="getHonorCount" resultType="java.lang.Integer">
+        select count(id) from community_honor
+    </select>
+
+    <select id="communityHonor" resultType="com.jiaxiang.model.community.vos.CommunityHonorVO">
+        select * from community_honor where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
+    </select>
+
+    <select id="getProofDocumentsCount" resultType="java.lang.Integer">
+        select count(id) from proof_documents
+    </select>
+
+    <select id="proofDocuments" resultType="com.jiaxiang.model.community.vos.ProofDocumentsPreviewVO">
+        select * from proof_documents where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
+    </select>
 </mapper>

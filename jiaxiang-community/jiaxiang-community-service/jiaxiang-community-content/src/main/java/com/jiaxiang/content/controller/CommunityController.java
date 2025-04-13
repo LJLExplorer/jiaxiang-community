@@ -3,9 +3,7 @@ package com.jiaxiang.content.controller;
 import com.jiaxiang.content.service.CommuniyuService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
-import com.jiaxiang.model.community.vos.CommitteesMemberVO;
-import com.jiaxiang.model.community.vos.GridVO;
-import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
+import com.jiaxiang.model.community.vos.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -79,8 +77,30 @@ public class CommunityController {
     }
 
     @GetMapping("/serve_people_info")
-    public ResponseEntity<ResponseResult<?>> listServePeopleInfo(int id){
+    public ResponseEntity<ResponseResult<?>> listServePeopleInfo(int id) {
         ServePeopleInfoVO servePeopleInfoVO = communiyuService.listServePeopleInfo(id);
         return ResponseWrapper.success(servePeopleInfoVO);
     }
+
+    @GetMapping("/list_matters")
+    public ResponseEntity<ResponseResult<?>> listMatters(Long communityId, int pageNum, int pageSize) {
+        Integer total = communiyuService.getMattersCount();
+        List<GuideCategoryVO> guideCategoryVOList = communiyuService.listMatters(communityId, pageNum, pageSize);
+        return ResponseWrapper.successWithPage(guideCategoryVOList, pageNum, pageSize, total, total / pageSize);
+    }
+
+    @GetMapping("/community_honor")
+    public ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize) {
+        Integer total = communiyuService.getHonorCount();
+        List<CommunityHonorVO> communityHonorVOList = communiyuService.communityHonor(communityId, pageNum, pageSize);
+        return ResponseWrapper.successWithPage(communityHonorVOList, pageNum, pageSize, total, total / pageSize);
+    }
+
+    @GetMapping("/proof_documents")
+    public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize) {
+        Integer total = communiyuService.getProofDocumentsCount();
+        List<ProofDocumentsPreviewVO> proofDocumentsPreviewVOList = communiyuService.proofDocuments(communityId, pageNum, pageSize);
+        return ResponseWrapper.successWithPage(proofDocumentsPreviewVOList, pageNum, pageSize, total, total / pageSize);
+    }
+
 }

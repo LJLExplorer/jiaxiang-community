@@ -34,4 +34,13 @@ public interface IContentClient {
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/serve_people_info")
     ResponseEntity<ResponseResult<?>> listServePeopleInfo(@RequestParam int id);
+
+    @GetMapping(COMMUNITY_URL_PREFIX + "/list_matters")
+    ResponseEntity<ResponseResult<?>> listMatters(@RequestParam Long communityId, @RequestParam int pageNum, @RequestParam int pageSize);
+
+    @GetMapping(COMMUNITY_URL_PREFIX + "/community_honor")
+    ResponseEntity<ResponseResult<?>> communityHonor(@RequestParam Long communityId, @RequestParam int pageNum, @RequestParam int pageSize);
+
+    @GetMapping(COMMUNITY_URL_PREFIX + "/proof_documents")
+    ResponseEntity<ResponseResult<?>> proofDocuments(@RequestParam Long communityId, @RequestParam int pageNum, @RequestParam int pageSize);
 }

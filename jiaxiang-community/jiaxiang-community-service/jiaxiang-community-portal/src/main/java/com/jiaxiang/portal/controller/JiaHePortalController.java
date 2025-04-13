@@ -26,7 +26,7 @@ public class JiaHePortalController {
      * @param communityId 社区id
      * @return 预览图
      */
-    @GetMapping(  "/list_community_activities")
+    @GetMapping("/list_community_activities")
     public ResponseEntity<ResponseResult<?>> listCommunityActivities(Long communityId) {
         return portalService.listCommunityActivities(communityId);
     }
@@ -37,7 +37,7 @@ public class JiaHePortalController {
      * @param communityId 社区id
      * @return 活动详情
      */
-    @GetMapping(  "/community_activity_detail")
+    @GetMapping("/community_activity_detail")
     public ResponseEntity<ResponseResult<?>> listCommunityActivityDetail(@RequestParam("communityId") Long communityId, @RequestParam("id") Long activityId) {
         return portalService.listCommunityActivityDetail(communityId, activityId);
     }
@@ -106,6 +106,7 @@ public class JiaHePortalController {
 
     /**
      * 为人民服务
+     *
      * @param communityId
      * @param id
      * @return
@@ -113,5 +114,21 @@ public class JiaHePortalController {
     @GetMapping("/serve_people_info")
     public ResponseEntity<ResponseResult<?>> servePeopleInfo(Long communityId, int id) {
         return portalService.listServePeopleInfo(id);
+    }
+
+
+    @GetMapping("/list_matters")
+    public ResponseEntity<ResponseResult<?>> listMatters(Long communityId, int pageNum, int pageSize) {
+        return portalService.listMatters(communityId, pageNum, pageSize);
+    }
+
+    @GetMapping("/community_honor")
+    public ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize) {
+        return portalService.communityHonor(communityId, pageNum, pageSize);
+    }
+
+    @GetMapping("/proof_documents")
+    public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize) {
+        return portalService.proofDocuments(communityId, pageNum, pageSize);
     }
 }
