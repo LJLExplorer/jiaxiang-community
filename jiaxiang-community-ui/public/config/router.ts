@@ -1,6 +1,7 @@
 // 测试环境
-const prefix = "/jiaxiang-community/jiaxiang-community-ui/public";
-// const prefix = "";
+// const prefix = "/jiaxiang-community/jiaxiang-community-ui/public";
+
+const prefix = "";
 const router = {
     "homepage": prefix + "/pages/index/index.html",
     "profile": prefix + "/pages/profile/index.html",
@@ -12,6 +13,10 @@ const router = {
     "community-details": prefix + "/pages/community-details/index.html",
     "community-honor": prefix + "/pages/community-honor/index.html",
     // "community-activity": prefix + "/pages/community-activity/index.html",
+
     "jiaxiang-community-map": prefix + "/files/嘉祥社区地图.svg"
+
+
 };
+
 export default router;

@@ -1,4 +1,4 @@
-import MarkdownDriver from "../../../common-component/markdown-driver.js";
+import MarkdownDriver from "../../../driver/markdown-driver";
 /*详情页面*/
 class DetailsPage {
     matter;

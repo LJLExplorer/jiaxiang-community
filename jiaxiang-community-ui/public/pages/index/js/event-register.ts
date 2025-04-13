@@ -1,4 +1,4 @@
-import router from "../../../common-component/router.js";
+import router from "../../../config/router.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     const detailsBtn = document.querySelector("#community-details") as HTMLElement;

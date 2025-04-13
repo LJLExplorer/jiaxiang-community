@@ -1,7 +1,7 @@
 // 测试环境
-const prefix = "/jiaxiang-community/jiaxiang-community-ui/public";
+// const prefix = "/jiaxiang-community/jiaxiang-community-ui/public";
 
-// const prefix = "";
+const prefix = "";
 const router = {
     "homepage": prefix + "/pages/index/index.html",
     "profile": prefix + "/pages/profile/index.html",

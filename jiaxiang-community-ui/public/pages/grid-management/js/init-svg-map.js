@@ -1,5 +1,5 @@
-import router from "../../../common-component/router.js";
-import { JiaxiangCommunityMapDriver } from "../../../common-component/jiaxiang-community-map-driver.js";
+import router from "../../../config/router.js";
+import { JiaxiangCommunityMapDriver } from "../../../driver/jiaxiang-community-map-driver.js";
 document.addEventListener("DOMContentLoaded", async function () {
     // 获取 modal 相关元素
     const modalContent = document.querySelector('.modal-content');

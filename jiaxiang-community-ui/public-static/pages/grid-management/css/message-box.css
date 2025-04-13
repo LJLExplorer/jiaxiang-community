@@ -1,0 +1,30 @@
+/* Modal 内容 */
+.modal-content {
+    transition: .3s;
+    
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    border-radius: 8px;
+    text-align: center;
+    position: fixed;
+    top:0;
+    left:0;
+
+    display: none;
+}
+/* 关闭按钮 */
+.close {
+    color: #aaa;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close:hover,
+.close:focus {
+    color: #000;
+}

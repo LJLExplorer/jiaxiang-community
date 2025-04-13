@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="./css/navigator.css"/>
+</head>
+<body>
+<header id="navigator-container"></header>
+<template id="summary-template">
+    <link rel="stylesheet" type="text/css" href="./css/summary-page.css">
+
+    <div class="content">
+        <!-- 标题 -->
+        <div class="header">
+            <h1>社区荣誉</h1>
+        </div>
+        <!-- 内容 -->
+        <div class="main"></div>
+
+        <div class="text">
+            <p>嘉和社区自成立以来，始终秉承服务居民、促进和谐的宗旨，荣获了多项荣誉称号。</p>
+            <slot name="list">荣誉列表</slot>
+        </div>
+    </div>
+
+    <div class="pagination">
+        <span class="arrow" id="prev-arrow">&#8592;</span>
+        <div class="page-info">
+            <span class="page-number" id="current-page">1</span> / <span id="total-pages">1</span>
+            共 <span id="total-items">0</span> 条
+        </div>
+        <span class="arrow" id="next-arrow">&#8594;</span>
+    </div>
+</template>
+<template id="details-template">
+    <link rel="stylesheet" type="text/css" href="./css/details-page.css">
+
+</template>
+
+<page-container id="page-container">
+    <!--当前页面容器-->
+</page-container>
+
+<script type="module" src="./js/init-navigator.js"></script>
+<script type="module" src="../../common-component/multiple-pages/page-container.js"></script>
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>
