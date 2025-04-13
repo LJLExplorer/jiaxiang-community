@@ -337,7 +337,7 @@ CREATE TABLE `guide_category` (
   `content` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `guide_category_pk` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='指导清单';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='指导清单';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -346,7 +346,7 @@ CREATE TABLE `guide_category` (
 
 LOCK TABLES `guide_category` WRITE;
 /*!40000 ALTER TABLE `guide_category` DISABLE KEYS */;
-INSERT INTO `guide_category` VALUES (1,1,'村（农村社区）依法履职事项指导清单','内容'),(2,1,'城市社区依法履职事项指导清单','内容'),(3,1,'村（农村社区）依法履职事项指导清单','内容'),(4,1,'城市社区依法履职事项指导清单','内容');
+INSERT INTO `guide_category` VALUES (1,1,'村（农村社区）依法履职事项指导清单','内容'),(2,1,'城市社区依法履职事项指导清单','内容'),(3,1,'村（农村社区）依法履职事项指导清单','内容'),(4,1,'城市社区依法履职事项指导清单','内容'),(5,2,'城市社区依法履职事项指导清单','内容');
 /*!40000 ALTER TABLE `guide_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,4 +423,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-13 12:23:46
+-- Dump completed on 2025-04-13 12:43:36

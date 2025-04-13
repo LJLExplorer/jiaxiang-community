@@ -1,9 +1,6 @@
 package com.jiaxiang.content.service;
 
-import com.jiaxiang.model.community.vos.CommitteesMemberVO;
-import com.jiaxiang.model.community.vos.CommunityProfileVO;
-import com.jiaxiang.model.community.vos.GridVO;
-import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
+import com.jiaxiang.model.community.vos.*;
 import com.jiaxiang.model.content.dos.ArticleFileDO;
 import com.jiaxiang.model.content.vos.ContentVO;
 
@@ -56,4 +53,8 @@ public interface CommuniyuService {
     List<ServePeopleInfoVO> listServePeople(int pageNum, int pageSize);
 
     ServePeopleInfoVO listServePeopleInfo(int id);
+
+    Integer getMattersCount();
+
+    List<GuideCategoryVO> listMatters(Long communityId,int pageNum, int pageSize);
 }

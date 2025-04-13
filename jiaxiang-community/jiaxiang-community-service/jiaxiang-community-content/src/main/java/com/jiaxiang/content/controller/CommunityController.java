@@ -5,6 +5,7 @@ import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.community.vos.CommitteesMemberVO;
 import com.jiaxiang.model.community.vos.GridVO;
+import com.jiaxiang.model.community.vos.GuideCategoryVO;
 import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,5 +83,12 @@ public class CommunityController {
     public ResponseEntity<ResponseResult<?>> listServePeopleInfo(int id){
         ServePeopleInfoVO servePeopleInfoVO = communiyuService.listServePeopleInfo(id);
         return ResponseWrapper.success(servePeopleInfoVO);
+    }
+
+    @GetMapping("/list_matters")
+    public ResponseEntity<ResponseResult<?>> listMatters(Long communityId,int pageNum, int pageSize) {
+        Integer total = communiyuService.getMattersCount();
+        List<GuideCategoryVO> guideCategoryVOList = communiyuService.listMatters(communityId,pageNum, pageSize);
+        return ResponseWrapper.successWithPage(guideCategoryVOList, pageNum, pageSize, total, total / pageSize);
     }
 }

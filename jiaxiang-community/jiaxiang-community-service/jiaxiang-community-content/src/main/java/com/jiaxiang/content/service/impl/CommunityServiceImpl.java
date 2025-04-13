@@ -5,6 +5,7 @@ import com.jiaxiang.content.service.CommuniyuService;
 import com.jiaxiang.model.community.dos.CommunityDO;
 import com.jiaxiang.model.community.vos.CommitteesMemberVO;
 import com.jiaxiang.model.community.vos.GridVO;
+import com.jiaxiang.model.community.vos.GuideCategoryVO;
 import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,5 +98,15 @@ public class CommunityServiceImpl implements CommuniyuService {
     @Override
     public ServePeopleInfoVO listServePeopleInfo(int id) {
         return communityMapper.listServePeopleInfo(id);
+    }
+
+    @Override
+    public Integer getMattersCount() {
+        return communityMapper.getMattersCount();
+    }
+
+    @Override
+    public List<GuideCategoryVO> listMatters(Long communityId, int pageNum, int pageSize) {
+        return communityMapper.listMatters(communityId, (pageNum - 1) * pageSize, pageSize);
     }
 }

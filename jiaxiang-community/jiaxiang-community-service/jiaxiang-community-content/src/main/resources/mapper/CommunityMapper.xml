@@ -32,4 +32,12 @@
     <select id="listServePeopleInfo" resultType="com.jiaxiang.model.community.vos.ServePeopleInfoVO">
         select * from serve_people_info where id = #{id}
     </select>
+
+    <select id="getMattersCount" resultType="java.lang.Integer">
+        select count(id) from guide_category
+    </select>
+
+    <select id="listMatters" resultType="com.jiaxiang.model.community.vos.GuideCategoryVO">
+        select * from guide_category where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
+    </select>
 </mapper>
