@@ -324,6 +324,32 @@ INSERT INTO `community` VALUES (1,'jia_he_community','嘉和社区','','嘉和�
 UNLOCK TABLES;
 
 --
+-- Table structure for table `community_honor`
+--
+
+DROP TABLE IF EXISTS `community_honor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `community_honor` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `communityId` bigint DEFAULT NULL,
+  `honor_detail` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `community_honor_pk_2` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `community_honor`
+--
+
+LOCK TABLES `community_honor` WRITE;
+/*!40000 ALTER TABLE `community_honor` DISABLE KEYS */;
+INSERT INTO `community_honor` VALUES (1,1,'2018年，荣获“全国文明社区”称号。'),(2,1,'2019年，被评为“优秀基层党组织'),(3,1,'2020年，获得“社区治理创新奖');
+/*!40000 ALTER TABLE `community_honor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `guide_category`
 --
 
@@ -423,4 +449,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-13 12:43:36
+-- Dump completed on 2025-04-13 12:58:46

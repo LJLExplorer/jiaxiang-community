@@ -107,4 +107,9 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> listMatters(Long communityId, int pageNum, int pageSize) {
         return iContentClient.listMatters(communityId, pageNum, pageSize);
     }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize) {
+        return iContentClient.communityHonor(communityId, pageNum, pageSize);
+    }
 }

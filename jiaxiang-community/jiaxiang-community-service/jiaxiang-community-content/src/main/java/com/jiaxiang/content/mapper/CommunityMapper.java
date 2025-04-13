@@ -2,6 +2,7 @@ package com.jiaxiang.content.mapper;
 
 import com.jiaxiang.model.community.dos.CommunityDO;
 import com.jiaxiang.model.community.vos.CommitteesMemberVO;
+import com.jiaxiang.model.community.vos.CommunityHonorVO;
 import com.jiaxiang.model.community.vos.GuideCategoryVO;
 import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,4 +30,8 @@ public interface CommunityMapper {
     Integer getMattersCount();
 
     List<GuideCategoryVO> listMatters(@Param("communityId") Long communityId, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
+
+    Integer getHonorCount();
+
+    List<CommunityHonorVO> communityHonor(@Param("communityId") Long communityId,@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
 }

@@ -3,10 +3,7 @@ package com.jiaxiang.content.service.impl;
 import com.jiaxiang.content.mapper.CommunityMapper;
 import com.jiaxiang.content.service.CommuniyuService;
 import com.jiaxiang.model.community.dos.CommunityDO;
-import com.jiaxiang.model.community.vos.CommitteesMemberVO;
-import com.jiaxiang.model.community.vos.GridVO;
-import com.jiaxiang.model.community.vos.GuideCategoryVO;
-import com.jiaxiang.model.community.vos.ServePeopleInfoVO;
+import com.jiaxiang.model.community.vos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -108,5 +105,15 @@ public class CommunityServiceImpl implements CommuniyuService {
     @Override
     public List<GuideCategoryVO> listMatters(Long communityId, int pageNum, int pageSize) {
         return communityMapper.listMatters(communityId, (pageNum - 1) * pageSize, pageSize);
+    }
+
+    @Override
+    public Integer getHonorCount() {
+        return communityMapper.getHonorCount();
+    }
+
+    @Override
+    public List<CommunityHonorVO> communityHonor(Long communityId, int pageNum, int pageSize) {
+        return communityMapper.communityHonor(communityId, (pageNum - 1) * pageSize, pageSize);
     }
 }

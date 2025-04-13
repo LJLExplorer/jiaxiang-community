@@ -40,4 +40,12 @@
     <select id="listMatters" resultType="com.jiaxiang.model.community.vos.GuideCategoryVO">
         select * from guide_category where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
     </select>
+
+    <select id="getHonorCount" resultType="java.lang.Integer">
+        select count(id) from community_honor
+    </select>
+
+    <select id="communityHonor" resultType="com.jiaxiang.model.community.vos.CommunityHonorVO">
+        select * from community_honor where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
+    </select>
 </mapper>

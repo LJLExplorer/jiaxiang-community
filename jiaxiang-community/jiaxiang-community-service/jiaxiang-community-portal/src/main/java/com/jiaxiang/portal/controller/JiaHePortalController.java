@@ -121,4 +121,9 @@ public class JiaHePortalController {
     public ResponseEntity<ResponseResult<?>> listMatters(Long communityId, int pageNum, int pageSize) {
         return portalService.listMatters(communityId, pageNum, pageSize);
     }
+
+    @GetMapping("/community_honor")
+    public ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize) {
+        return portalService.communityHonor(communityId, pageNum, pageSize);
+    }
 }

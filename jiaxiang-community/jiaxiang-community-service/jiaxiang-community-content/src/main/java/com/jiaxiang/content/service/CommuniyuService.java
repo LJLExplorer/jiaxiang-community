@@ -57,4 +57,8 @@ public interface CommuniyuService {
     Integer getMattersCount();
 
     List<GuideCategoryVO> listMatters(Long communityId,int pageNum, int pageSize);
+
+    Integer getHonorCount();
+
+    List<CommunityHonorVO> communityHonor(Long communityId, int pageNum, int pageSize);
 }
