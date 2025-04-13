@@ -97,4 +97,9 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> listServePeople(int pageNum, int pageSize) {
         return iContentClient.listServePeople(pageNum, pageSize);
     }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> listServePeopleInfo(int id) {
+        return iContentClient.listServePeopleInfo(id);
+    }
 }

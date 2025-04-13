@@ -31,4 +31,7 @@ public interface IContentClient {
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/list_serve_people")
     ResponseEntity<ResponseResult<?>> listServePeople(@RequestParam int pageNum, @RequestParam int pageSize);
+
+    @GetMapping(COMMUNITY_URL_PREFIX + "/serve_people_info")
+    ResponseEntity<ResponseResult<?>> listServePeopleInfo(@RequestParam int id);
 }

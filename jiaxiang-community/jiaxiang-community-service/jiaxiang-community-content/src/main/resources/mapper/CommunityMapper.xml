@@ -28,4 +28,8 @@
     <select id="listServePeople" resultType="com.jiaxiang.model.community.vos.ServePeopleInfoVO">
         select * from serve_people_info limit #{pageNum} ,#{pageSize}
     </select>
+
+    <select id="listServePeopleInfo" resultType="com.jiaxiang.model.community.vos.ServePeopleInfoVO">
+        select * from serve_people_info where id = #{id}
+    </select>
 </mapper>

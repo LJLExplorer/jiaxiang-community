@@ -54,4 +54,6 @@ public interface CommuniyuService {
      * @return 列出为民服务清单
      */
     List<ServePeopleInfoVO> listServePeople(int pageNum, int pageSize);
+
+    ServePeopleInfoVO listServePeopleInfo(int id);
 }

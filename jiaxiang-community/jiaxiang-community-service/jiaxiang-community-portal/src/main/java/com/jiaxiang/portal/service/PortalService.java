@@ -60,4 +60,6 @@ public interface PortalService {
      * @return 列出为民服务清单
      */
     ResponseEntity<ResponseResult<?>> listServePeople(int pageNum, int pageSize);
+
+    ResponseEntity<ResponseResult<?>> listServePeopleInfo(int id);
 }

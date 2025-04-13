@@ -92,15 +92,26 @@ public class JiaHePortalController {
     }
 
     /**
-     * 列出两委成员列表
+     * 列出为人民服务列表
      *
      * @param communityId 社区id,可能员工仅属于某个社区
      * @param pageNum     当前页
      * @param pageSize    页大小
-     * @return 两委成员列表
+     * @return 为人民服务列表
      */
     @GetMapping("/list_serve_people")
     public ResponseEntity<ResponseResult<?>> listServePeople(Long communityId, int pageNum, int pageSize) {
         return portalService.listServePeople(pageNum, pageSize);
+    }
+
+    /**
+     * 为人民服务
+     * @param communityId
+     * @param id
+     * @return
+     */
+    @GetMapping("/serve_people_info")
+    public ResponseEntity<ResponseResult<?>> servePeopleInfo(Long communityId, int id) {
+        return portalService.listServePeopleInfo(id);
     }
 }

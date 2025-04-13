@@ -22,4 +22,6 @@ public interface CommunityMapper {
     Integer getServerPeopleCount();
 
     List<ServePeopleInfoVO> listServePeople(int pageNum, int pageSize);
+
+    ServePeopleInfoVO listServePeopleInfo(int id);
 }

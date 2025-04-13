@@ -77,4 +77,10 @@ public class CommunityController {
         List<ServePeopleInfoVO> servePeopleInfoVOList = communiyuService.listServePeople(pageNum, pageSize);
         return ResponseWrapper.successWithPage(servePeopleInfoVOList, pageNum, pageSize, total, total / pageSize);
     }
+
+    @GetMapping("/serve_people_info")
+    public ResponseEntity<ResponseResult<?>> listServePeopleInfo(int id){
+        ServePeopleInfoVO servePeopleInfoVO = communiyuService.listServePeopleInfo(id);
+        return ResponseWrapper.success(servePeopleInfoVO);
+    }
 }

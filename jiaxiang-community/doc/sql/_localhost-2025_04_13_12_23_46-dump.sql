@@ -324,6 +324,33 @@ INSERT INTO `community` VALUES (1,'jia_he_community','嘉和社区','','嘉和�
 UNLOCK TABLES;
 
 --
+-- Table structure for table `guide_category`
+--
+
+DROP TABLE IF EXISTS `guide_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `guide_category` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `communityId` bigint DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `content` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `guide_category_pk` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='指导清单';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `guide_category`
+--
+
+LOCK TABLES `guide_category` WRITE;
+/*!40000 ALTER TABLE `guide_category` DISABLE KEYS */;
+INSERT INTO `guide_category` VALUES (1,1,'村（农村社区）依法履职事项指导清单','内容'),(2,1,'城市社区依法履职事项指导清单','内容'),(3,1,'村（农村社区）依法履职事项指导清单','内容'),(4,1,'城市社区依法履职事项指导清单','内容');
+/*!40000 ALTER TABLE `guide_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `serve_people_info`
 --
 
@@ -396,4 +423,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-12 22:47:02
+-- Dump completed on 2025-04-13 12:23:46

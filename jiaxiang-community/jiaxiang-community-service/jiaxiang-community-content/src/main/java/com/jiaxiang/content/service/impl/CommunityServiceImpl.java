@@ -93,4 +93,9 @@ public class CommunityServiceImpl implements CommuniyuService {
     public List<ServePeopleInfoVO> listServePeople(int pageNum, int pageSize) {
         return communityMapper.listServePeople((pageNum - 1) * pageSize, pageSize);
     }
+
+    @Override
+    public ServePeopleInfoVO listServePeopleInfo(int id) {
+        return communityMapper.listServePeopleInfo(id);
+    }
 }
