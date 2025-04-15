@@ -42,7 +42,7 @@ class CommissionerList {
                 const count = rowNum * boxPerRow + colNum;
                 const memberBox = document.createElement("div");
                 memberBox.className = "member-box";
-                memberBox.id = `${pageMembers[count].name}`;
+                memberBox.id = `commissioner${pageMembers[count].id}`;
                 this.renderMemberBox(memberBox, pageMembers[count]);
                 row.appendChild(memberBox);
             }

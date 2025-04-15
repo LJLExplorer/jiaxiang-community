@@ -7,7 +7,7 @@ import DataInitializer from "../../../common-component/multiple-pages/DataInitia
 
 /*概要页面*/
 class CommissionerList implements IsSubPage, CanRegistryEvent, CanInitData {
-    public list: CommissionerDAO[];
+    public list: Omit<CommissionerDAO, "dutyContent">[];
     public currentPage: number;
     public itemInAPage: number;
     public totalPage: number;
@@ -16,7 +16,7 @@ class CommissionerList implements IsSubPage, CanRegistryEvent, CanInitData {
     public event: EventRegister;
     public initializer: DataInitializer;
 
-    private renderMemberBox(memberBox: HTMLElement, member: CommissionerDAO) {
+    private renderMemberBox(memberBox: HTMLElement, member: Omit<CommissionerDAO, "dutyContent">) {
         const img = document.createElement("img");
         img.src = member.image;
 
@@ -65,7 +65,7 @@ class CommissionerList implements IsSubPage, CanRegistryEvent, CanInitData {
 
                 const memberBox = document.createElement("div");
                 memberBox.className = "member-box";
-                memberBox.id = `${pageMembers[count].name}`;
+                memberBox.id = `commissioner${pageMembers[count].id}`;
                 this.renderMemberBox(memberBox, pageMembers[count]);
                 row.appendChild(memberBox);
             }
