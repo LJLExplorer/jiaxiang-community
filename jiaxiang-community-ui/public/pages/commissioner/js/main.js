@@ -32,22 +32,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 mainLoader.adapter.display();
             });
         });
-        cEvent.regist("#prev-arrow", "click", async function () {
-            if (currentPage <= 1) {
-                return;
-            }
-            currentPage--;
-            const pre = await getList(currentPage, itemInAPage);
-            pageContainer.show(new CommissionerList(pre, summaryTemplate, itemInAPage, 1, cEvent, cInitializer));
-        });
-        cEvent.regist("#next-arrow", "click", async function () {
-            if (currentPage >= pagesInfo.pages) {
-                return;
-            }
-            currentPage++;
-            const next = await getList(currentPage, itemInAPage);
-            pageContainer.show(new CommissionerList(next, summaryTemplate, itemInAPage, 1, cEvent, cInitializer));
-        });
         return cEvent;
     };
     const cInitializer = new DataInitializer();

@@ -135,6 +135,27 @@ const apiSimulateData = {
             const resID = parseInt(id) - 1;
             return Object.assign(members[resID], {dutyContent: dutyContent[resID]});
         }
+    },
+    "/api/jiahe/community_honor": {
+        "errorMessage": "string",
+        "code": 200,
+        getData: (pageNum: number, pageSize: number) => {
+            const records =  [
+                "2018年，荣获“全国文明社区”称号。",
+                "2019年，被评为“优秀基层党组织",
+                "2020年，获得“社区治理创新奖",
+                "2021年，荣获“绿色环保社区”称号",
+                "2022年，被评为“最具幸福感社区”。",
+            ];
+
+            return {
+                "currentPage": pageNum,   // 当前页码
+                "size": pageSize,   // 每页记录数
+                "total": records.length,     // 总记录数
+                "pages": 1,   // 总页数
+                "records": records.slice((pageNum - 1) * pageSize, pageNum * pageSize)
+            }
+        }
     }
 }
 
@@ -156,11 +177,13 @@ self.addEventListener("fetch", function (ev: FetchEvent) {
 
         if (apiSimulateData[url.pathname].getData) {
             data = apiSimulateData[url.pathname].getData(...Array.from(url.searchParams.values()))
+            console.log("获取api测试数据：", data);
         } else {
             data = apiSimulateData[url.pathname].data;
         }
 
         apiSimulateData[url.pathname].data = data;
+
         ev.respondWith(new Response(JSON.stringify(apiSimulateData[url.pathname])));
     }
 });

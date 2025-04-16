@@ -1,89 +1,39 @@
 import PageContainer from "../../../common-component/multiple-pages/page-container.js";
-import EventRegister from "../../../common-component/multiple-pages/EventRegister.js";
-import navigatorLoader from "../../../common-component/navigator-regist/main-loader.js";
-import NavigatorCell from "../../../Navigator/NavigatorCell.js";
-import mainLoader from "../../../common-component/navigator-regist/main-loader.js";
 import DataInitializer from "../../../common-component/multiple-pages/DataInitializer.js";
-import honors from "../Honor/honor-information.js";
-import DetailsPage from "../Honor/DetailsPage.js";
 import SummaryPage from "../Honor/SummaryPage.js";
+import CommonPagination from "../../../common-component/common-pagination.js";
+import {getPages, getList} from "./api-request.js";
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     const pageContainer: PageContainer = document.querySelector("#page-container");
-    const detailsTemplate: HTMLTemplateElement = document.querySelector("#details-template");
     const summaryTemplate: HTMLTemplateElement = document.querySelector("#summary-template");
-
 
     let itemInAPage = 6;
     let currentPage = 1;
 
-    let cell: NavigatorCell;
-
-    const cEvent = new EventRegister();
     /*
         id: string;
     content: string;
     */
-    //这里不需要跳转
-    /*honors.forEach((serve, index) => {
-        cEvent.regist("#" + serve.id, "click", (e) => {
-            const detailsFragment = new DetailsPage(serve, detailsTemplate)
-            pageContainer.show(detailsFragment);
-
-            cell = new NavigatorCell("返回上一级", function (ev) {
-                pageContainer.show(new SummaryPage(honors, summaryTemplate, itemInAPage, currentPage, cEvent,cInitializer));
-
-                navigatorLoader.removeCell(cell);
-                mainLoader.adapter.clear();
-                mainLoader.adapter.display();
-            });
-
-            navigatorLoader.appendCell(cell);
-            mainLoader.adapter.clear();
-            mainLoader.adapter.display();
-        })
-    });*/
-    cEvent.regist("#prev-arrow", "click", function () {
-        if (currentPage <= 1) {
-            return;
-        }
-
-        currentPage--;
-        pageContainer.show(new SummaryPage(honors, summaryTemplate, itemInAPage, currentPage, cEvent,cInitializer));
-    });
-    cEvent.regist("#next-arrow", "click", function () {
-        if (currentPage >= Math.ceil(honors.length / itemInAPage)) {
-            return;
-        }
-
-        currentPage++;
-        pageContainer.show(new SummaryPage(honors, summaryTemplate, itemInAPage, currentPage, cEvent,cInitializer));
-    });
-
     const cInitializer = new DataInitializer();
-    cInitializer.regist("#prev-arrow", function (ele) {
-        ele.classList.toggle("enabled", currentPage > 1);
-        ele.classList.toggle("disabled", currentPage === 1);
+    const pagesInfo = await getPages(itemInAPage);
 
-    });
-    cInitializer.regist("#next-arrow", function (ele) {
-        const totalPages = Math.ceil(honors.length / itemInAPage);
+    cInitializer.regist(".content", function (ele) {
+        const pagination = new CommonPagination(currentPage, pagesInfo.pages, pagesInfo.total, itemInAPage);
+        ele.appendChild(pagination);
 
-        ele.classList.toggle("enabled", currentPage < totalPages);
-        ele.classList.toggle("disabled", currentPage === totalPages);
-    });
-    cInitializer.regist("#current-page", function (ele) {
-        ele.innerHTML = currentPage + "";
-    });
-    cInitializer.regist("#total-pages", function (ele) {
-        ele.innerHTML = Math.ceil(honors.length / itemInAPage) + "";
-    });
-    cInitializer.regist("#total-items", function (ele) {
-        ele.innerHTML = honors.length + "";
+        const cb = async function () {
+            currentPage = this.currentPage;
+
+            const page = await getList(currentPage, itemInAPage);
+            pageContainer.show(new SummaryPage(page, summaryTemplate, itemInAPage, 1, null, cInitializer));
+        }
+
+        pagination.addEventListener("pre", cb);
+        pagination.addEventListener("next", cb);
     });
 
-
-
-    pageContainer.show(new SummaryPage(honors, summaryTemplate, itemInAPage, currentPage, cEvent,cInitializer));
+    const honors = await getList(currentPage, itemInAPage);
+    pageContainer.show(new SummaryPage(honors, summaryTemplate, itemInAPage, currentPage, null, cInitializer));
 
 });

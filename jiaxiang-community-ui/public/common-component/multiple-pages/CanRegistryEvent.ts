@@ -1,10 +1,12 @@
 import EventRegister from "./EventRegister.js";
 import IsSubPage from "./IsSubPage.js";
 
-class CanRegistryEvent extends IsSubPage{
+class CanRegistryEvent extends IsSubPage {
     public event: EventRegister;
 
     public registryEvent(ele: DocumentFragment) {
+        if (!this.event) return;
+
         this.event.eventList.forEach((eventInfos, selector) => {
             const selectorEle = ele.querySelector(selector);
 

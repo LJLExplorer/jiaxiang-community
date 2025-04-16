@@ -6,7 +6,6 @@ import navigatorLoader from "../../../common-component/navigator-regist/main-loa
 import mainLoader from "../../../common-component/navigator-regist/main-loader.js";
 import NavigatorCell from "../../../Navigator/NavigatorCell.js";
 import DataInitializer from "../../../common-component/multiple-pages/DataInitializer.js";
-import apiUrls from "../../../config/api-urls.js";
 import CommissionerDAO from "../Commissioner/CommissionerDAO.js";
 import {getPages, getList, getDetails} from "./api-request.js";
 import CommonPagination from "../../../common-component/common-pagination.js"
@@ -48,27 +47,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             )
         });
 
-        cEvent.regist("#prev-arrow", "click", async function () {
-            if (currentPage <= 1) {
-                return;
-            }
-
-            currentPage--;
-            const pre = await getList(currentPage, itemInAPage);
-            pageContainer.show(new CommissionerList(pre, summaryTemplate, itemInAPage, 1, cEvent, cInitializer));
-        });
-        cEvent.regist("#next-arrow", "click", async function () {
-            if (currentPage >= pagesInfo.pages) {
-                return;
-            }
-
-            currentPage++;
-            const next = await getList(currentPage, itemInAPage);
-            pageContainer.show(new CommissionerList(next, summaryTemplate, itemInAPage, 1, cEvent, cInitializer));
-        });
         return cEvent
     };
-
 
     const cInitializer = new DataInitializer();
     const pagesInfo = await getPages(itemInAPage);
