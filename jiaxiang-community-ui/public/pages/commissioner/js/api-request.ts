@@ -16,8 +16,6 @@ const getList = async function (currentPage: number, itemInAPage: number): Promi
     const response = await fetch(apiUrls["list_committees_members"](currentPage, itemInAPage));
     const listRes = await response.json();
 
-    console.log(listRes.data)
-
     return listRes.data.records.map((value, index, array) => {
         return new CommissionerDAO(value.id, value.name, value.position, value.duty, value.images);
     });
@@ -28,7 +26,6 @@ const getDetails = async function (id: string): Promise<CommissionerDAO> {
     const res = await response.json();
 
     const data = res.data;
-    console.log(data)
     return new CommissionerDAO(data.id, data.name, data.position, data.duty, data.images, data.dutyContent);
 };
 

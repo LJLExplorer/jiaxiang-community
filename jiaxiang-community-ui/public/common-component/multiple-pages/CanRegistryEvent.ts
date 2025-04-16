@@ -1,9 +1,20 @@
-import CommissionerEvent from "./EventRegister.js";
+import EventRegister from "./EventRegister.js";
+import IsSubPage from "./IsSubPage.js";
 
-interface CanRegistryEvent {
-    event: CommissionerEvent;
+class CanRegistryEvent extends IsSubPage{
+    public event: EventRegister;
 
-    registryEvent(ele: DocumentFragment): void;
+    public registryEvent(ele: DocumentFragment) {
+        this.event.eventList.forEach((eventInfos, selector) => {
+            const selectorEle = ele.querySelector(selector);
+
+            if (selectorEle) {
+                eventInfos.forEach((eventInfo) => {
+                    selectorEle.addEventListener(eventInfo.type, eventInfo.listener);
+                })
+            }
+        })
+    }
 
 }
 

@@ -20,21 +20,17 @@
             <slot name="list">加载列表</slot>
         </div>
 
-        <div class="pagination">
-            <span class="arrow" id="prev-arrow">&#8592;</span>
-            <div class="page-info">
-                <span class="page-number" id="current-page">1</span> / <span id="total-pages">1</span>
-                共 <span id="total-items">0</span> 条
-            </div>
-            <span class="arrow" id="next-arrow">&#8594;</span>
-        </div>
+
     </div>
 </template>
 <template id="commissioner-details-template">
     <link rel="stylesheet" type="text/css" href="./css/details-page.css">
 
     <div class="content">
-        <div class="title">履职信息</div>
+        <div class="header">
+            <h1>履职信息</h1>
+        </div>
+<!--        <div class="title">履职信息</div>-->
         <div class="container" id="member-container">
 
             <!--这一段是需要动态加载的-->
@@ -67,7 +63,7 @@
 <page-container id="page-container">
     <!--当前页面容器-->
 </page-container>
-
+<script type="module" src="../../common-component/common-pagination.js"></script>
 <script type="module" src="./js/init-navigator.js"></script>
 <script type="module" src="../../common-component/multiple-pages/page-container.js"></script>
 <script type="module" src="./js/main.js"></script>

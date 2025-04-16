@@ -1,20 +1,14 @@
 import CommissionerDAO from "./CommissionerDAO.js";
 import EventRegister from "../../../common-component/multiple-pages/EventRegister.js";
-import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
-import CanRegistryEvent from "../../../common-component/multiple-pages/CanRegistryEvent.js";
 import CanInitData from "../../../common-component/multiple-pages/CanInitData.js";
-import DataInitializer from "../../../common-component/multiple-pages/DataInitializer";
+import DataInitializer from "../../../common-component/multiple-pages/DataInitializer.js";
 
 /*概要页面*/
-class CommissionerList implements IsSubPage, CanRegistryEvent, CanInitData {
+class CommissionerList extends CanInitData {
     public list: Omit<CommissionerDAO, "dutyContent">[];
     public currentPage: number;
     public itemInAPage: number;
     public totalPage: number;
-
-    public template: HTMLTemplateElement;
-    public event: EventRegister;
-    public initializer: DataInitializer;
 
     private renderMemberBox(memberBox: HTMLElement, member: Omit<CommissionerDAO, "dutyContent">) {
         const img = document.createElement("img");
@@ -36,11 +30,6 @@ class CommissionerList implements IsSubPage, CanRegistryEvent, CanInitData {
         memberBox.appendChild(img);
         memberBox.appendChild(memberInfo);
 
-        /*if (this.event.eventList.has(member)) {
-            this.event.eventList.get(member).forEach((value) => {
-                memberBox.addEventListener(value.type, value.listener);
-            })
-        }*/
     }
 
     public render() {
@@ -83,34 +72,14 @@ class CommissionerList implements IsSubPage, CanRegistryEvent, CanInitData {
         return documentFragmemt;
     }
 
-    public registryEvent(ele: DocumentFragment) {
-        this.event.eventList.forEach((eventInfos, selector) => {
-            const selectorEle = ele.querySelector(selector);
-            if (selectorEle) {
-                eventInfos.forEach((eventInfo) => {
-                    selectorEle.addEventListener(eventInfo.type, eventInfo.listener);
-                })
-            }
-        })
-    }
-
-    public operate(ele: DocumentFragment): void {
-        this.initializer.list.forEach((callbacks, selector) => {
-            const target = ele.querySelector(selector);
-            if (target) {
-                callbacks.forEach(callback => {
-                    callback.call(ele, target);
-                })
-            }
-        })
-    }
-
     constructor(commissionerList: CommissionerDAO[],
                 template: HTMLTemplateElement,
                 itemInAPage: number,
                 currentPage: number,
                 event: EventRegister,
                 dataInitializer: DataInitializer,) {
+        super();
+
         this.list = commissionerList;
         this.template = template;
 

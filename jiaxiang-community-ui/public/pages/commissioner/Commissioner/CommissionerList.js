@@ -1,12 +1,10 @@
+import CanInitData from "../../../common-component/multiple-pages/CanInitData.js";
 /*概要页面*/
-class CommissionerList {
+class CommissionerList extends CanInitData {
     list;
     currentPage;
     itemInAPage;
     totalPage;
-    template;
-    event;
-    initializer;
     renderMemberBox(memberBox, member) {
         const img = document.createElement("img");
         img.src = member.image;
@@ -22,11 +20,6 @@ class CommissionerList {
         memberInfo.appendChild(duty);
         memberBox.appendChild(img);
         memberBox.appendChild(memberInfo);
-        /*if (this.event.eventList.has(member)) {
-            this.event.eventList.get(member).forEach((value) => {
-                memberBox.addEventListener(value.type, value.listener);
-            })
-        }*/
     }
     render() {
         const documentFragmemt = document.createDocumentFragment();
@@ -55,27 +48,8 @@ class CommissionerList {
         documentFragmemt.appendChild(root);
         return documentFragmemt;
     }
-    registryEvent(ele) {
-        this.event.eventList.forEach((eventInfos, selector) => {
-            const selectorEle = ele.querySelector(selector);
-            if (selectorEle) {
-                eventInfos.forEach((eventInfo) => {
-                    selectorEle.addEventListener(eventInfo.type, eventInfo.listener);
-                });
-            }
-        });
-    }
-    operate(ele) {
-        this.initializer.list.forEach((callbacks, selector) => {
-            const target = ele.querySelector(selector);
-            if (target) {
-                callbacks.forEach(callback => {
-                    callback.call(ele, target);
-                });
-            }
-        });
-    }
     constructor(commissionerList, template, itemInAPage, currentPage, event, dataInitializer) {
+        super();
         this.list = commissionerList;
         this.template = template;
         this.itemInAPage = itemInAPage;
