@@ -12,7 +12,7 @@ const getPages = async function (itemInAPage: number) {
         "pages": listRes.data.pages,
     }
 };
-const getList = async function (currentPage: number, itemInAPage: number): Promise<Omit<ServeDAO[], "dutyContent">> {
+const getList = async function (currentPage: number, itemInAPage: number): Promise<Omit<ServeDAO, "description" | "content" | "rules">[]> {
     const response = await fetch(apiUrls["list_serve_people"](currentPage, itemInAPage));
     const listRes = await response.json();
 

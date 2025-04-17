@@ -4,7 +4,7 @@ import MarkdownDriver from "../../../driver/markdown-driver";
 
 /*详情页面*/
 class DetailsPage implements IsSubPage {
-    public proof: ProofsDAO;
+    public proof: Omit<ProofsDAO, "id">;
     public template: HTMLTemplateElement;
 
 
@@ -25,7 +25,7 @@ class DetailsPage implements IsSubPage {
         return root;
     }
 
-    constructor(proof: ProofsDAO, template: HTMLTemplateElement) {
+    constructor(proof: Omit<ProofsDAO, "id">, template: HTMLTemplateElement) {
         this.proof = proof;
         this.template = template;
     }

@@ -3,10 +3,8 @@ import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
 import MarkdownDriver from "../../../driver/markdown-driver.js";
 
 /*详情页面*/
-class DetailsPage implements IsSubPage {
+class DetailsPage extends IsSubPage {
     public matter: MattersDAO;
-    public template: HTMLTemplateElement;
-
 
     public async render() {
         const documentFragmemt = document.createDocumentFragment();
@@ -36,6 +34,8 @@ class DetailsPage implements IsSubPage {
     }
 
     constructor(matter: MattersDAO, template: HTMLTemplateElement) {
+        super();
+
         this.matter = matter;
         this.template = template;
     }

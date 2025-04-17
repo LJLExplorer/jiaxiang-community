@@ -7,7 +7,7 @@ import DataInitializer from "../../../common-component/multiple-pages/DataInitia
 
 /*概要页面*/
 class SummaryPage implements IsSubPage, CanRegistryEvent, CanInitData {
-    public list: ProofsDAO[];
+    public list: Omit<ProofsDAO, "content">[];
     public currentPage: number;
     public itemInAPage: number;
     public totalPage: number;
@@ -86,7 +86,7 @@ class SummaryPage implements IsSubPage, CanRegistryEvent, CanInitData {
         })
     }
 
-    constructor(list: ProofsDAO[],
+    constructor(list: Omit<ProofsDAO, "content">[],
                 template: HTMLTemplateElement,
                 itemInAPage: number,
                 currentPage: number,

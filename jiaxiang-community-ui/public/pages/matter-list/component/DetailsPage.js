@@ -1,8 +1,8 @@
+import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
 import MarkdownDriver from "../../../driver/markdown-driver.js";
 /*详情页面*/
-class DetailsPage {
+class DetailsPage extends IsSubPage {
     matter;
-    template;
     async render() {
         const documentFragmemt = document.createDocumentFragment();
         const titleSlot = document.createElement("span");
@@ -25,6 +25,7 @@ class DetailsPage {
         return root;
     }
     constructor(matter, template) {
+        super();
         this.matter = matter;
         this.template = template;
     }

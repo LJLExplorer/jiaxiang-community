@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     let itemInAPage = 4;
     let currentPage = 1;
 
-    const registEvent = function (list: ServeDAO[]) {
+    const registEvent = function (list: Omit<ServeDAO, "description" | "content" | "rules">[]) {
         const cEvent = new EventRegister();
         let cell: NavigatorCell;
 

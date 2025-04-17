@@ -12,6 +12,11 @@ const API_URLS = {
         return `${prefix}/api/jiahe/list_serve_people?pageNum=${pageNum}&pageSize=${pageSize}`
     },
     "serve_people_info": (id: string) => `${prefix}/api/jiahe/serve_people_info?id=${id}`,
+
+    "proof_documents": (pageNum: number, pageSize: number) => {
+        return `${prefix}/api/jiahe/proof_documents?pageNum=${pageNum}&pageSize=${pageSize}`
+    },
+    "proof_info": (id: string) => `${prefix}/api/jiahe/proof_info?id=${id}`,
 }
 
 export default API_URLS;

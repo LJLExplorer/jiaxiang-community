@@ -65,7 +65,7 @@ class SummaryPage extends CanInitData {
     }
 
 
-    constructor(commissionerList: ServeDAO[],
+    constructor(commissionerList: Omit<ServeDAO, "description" | "content" | "rules">[],
                 template: HTMLTemplateElement,
                 itemInAPage: number,
                 currentPage: number,

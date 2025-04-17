@@ -6,16 +6,11 @@ import CanInitData from "../../../common-component/multiple-pages/CanInitData.js
 import DataInitializer from "../../../common-component/multiple-pages/DataInitializer.js";
 
 /*概要页面*/
-class SummaryPage implements IsSubPage, CanRegistryEvent, CanInitData {
+class SummaryPage extends CanInitData {
     public list: MattersDAO[];
     public currentPage: number;
     public itemInAPage: number;
     public totalPage: number;
-
-    public template: HTMLTemplateElement;
-    public event: EventRegister;
-    public initializer: DataInitializer;
-
 
     public render() {
 
@@ -47,34 +42,14 @@ class SummaryPage implements IsSubPage, CanRegistryEvent, CanInitData {
         return documentFragmemt;
     }
 
-    public registryEvent(ele: DocumentFragment) {
-        this.event.eventList.forEach((eventInfos, selector) => {
-            const selectorEle = ele.querySelector(selector);
-            if (selectorEle) {
-                eventInfos.forEach((eventInfo) => {
-                    selectorEle.addEventListener(eventInfo.type, eventInfo.listener);
-                })
-            }
-        })
-    }
-
-    public operate(ele: DocumentFragment): void {
-        this.initializer.list.forEach((callbacks, selector) => {
-            const target = ele.querySelector(selector);
-            if (target) {
-                callbacks.forEach(callback => {
-                    callback.call(ele, target);
-                })
-            }
-        })
-    }
-
     constructor(commissionerList: MattersDAO[],
                 template: HTMLTemplateElement,
                 itemInAPage: number,
                 currentPage: number,
                 event: EventRegister,
                 dataInitializer: DataInitializer,) {
+        super();
+
         this.list = commissionerList;
         this.template = template;
 
