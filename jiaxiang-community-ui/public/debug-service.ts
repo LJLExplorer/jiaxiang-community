@@ -618,7 +618,174 @@ const apiSimulateData = {
             }
         }
     },
-
+    "/api/jiahe/grid_management": {
+        "errorMessage": "string",
+        "code": 0,
+        "data": [
+            {
+                "community": "祥城北苑社区",
+                "icon": "",
+                "meta": {
+                    "title": "祥城北苑社区",
+                    "profile": "祥城北苑社区的介绍"
+                }
+            }, {
+                "community": "祥和社区",
+                "icon": "",
+                "meta": {
+                    "title": "祥和社区",
+                    "profile": "祥和社区的介绍"
+                }
+            }, {
+                "community": "嘉和社区",
+                "icon": "",
+                "meta": {
+                    "title": "嘉和社区",
+                    "profile": "嘉和社区的介绍"
+                }
+            }, {
+                "community": "凤舞社区",
+                "icon": "",
+                "meta": {
+                    "title": "凤舞社区",
+                    "profile": "凤舞社区的介绍"
+                }
+            }, {
+                "community": "宗圣社区",
+                "icon": "",
+                "meta": {
+                    "title": "宗圣社区",
+                    "profile": "宗圣社区的介绍"
+                }
+            }, {
+                "community": "顺河社区",
+                "icon": "",
+                "meta": {
+                    "title": "顺河社区",
+                    "profile": "顺河社区的介绍"
+                }
+            }, {
+                "community": "前进河社区",
+                "icon": "",
+                "meta": {
+                    "title": "前进河社区",
+                    "profile": "前进河社区的介绍"
+                }
+            }, {
+                "community": "演武社区",
+                "icon": "",
+                "meta": {
+                    "title": "演武社区",
+                    "profile": "演武社区的介绍"
+                }
+            }, {
+                "community": "麒麟社区",
+                "icon": "",
+                "meta": {
+                    "title": "麒麟社区",
+                    "profile": "麒麟社区的介绍"
+                }
+            }, {
+                "community": "呈祥社区",
+                "icon": "",
+                "meta": {
+                    "title": "呈祥社区",
+                    "profile": "呈祥社区的介绍"
+                }
+            }, {
+                "community": "迎凤社区",
+                "icon": "",
+                "meta": {
+                    "title": "迎凤社区",
+                    "profile": "迎凤社区的介绍"
+                }
+            }, {
+                "community": "萌山社区",
+                "icon": "",
+                "meta": {
+                    "title": "萌山社区",
+                    "profile": "萌山社区的介绍"
+                }
+            }, {
+                "community": "武城社区",
+                "icon": "",
+                "meta": {
+                    "title": "武城社区",
+                    "profile": "武城社区的介绍"
+                }
+            }, {
+                "community": "拥军社区",
+                "icon": "",
+                "meta": {
+                    "title": "拥军社区",
+                    "profile": "拥军社区的介绍"
+                }
+            }, {
+                "community": "卧牛山社区",
+                "icon": "",
+                "meta": {
+                    "title": "卧牛山社区",
+                    "profile": "卧牛山社区的介绍"
+                }
+            }, {
+                "community": "文昌社区",
+                "icon": "",
+                "meta": {
+                    "title": "文昌社区",
+                    "profile": "文昌社区的介绍"
+                }
+            }, {
+                "community": "吉祥社区",
+                "icon": "",
+                "meta": {
+                    "title": "吉祥社区",
+                    "profile": "吉祥社区的介绍"
+                }
+            }, {
+                "community": "幸福社区",
+                "icon": "",
+                "meta": {
+                    "title": "幸福社区",
+                    "profile": "幸福社区的介绍"
+                }
+            }, {
+                "community": "赵王河社区",
+                "icon": "",
+                "meta": {
+                    "title": "赵王河社区",
+                    "profile": "赵王河社区的介绍"
+                }
+            }, {
+                "community": "利国社区",
+                "icon": "",
+                "meta": {
+                    "title": "利国社区",
+                    "profile": "利国社区的介绍"
+                }
+            }, {
+                "community": "嘉悦社区",
+                "icon": "",
+                "meta": {
+                    "title": "嘉悦社区",
+                    "profile": "嘉悦社区的介绍"
+                }
+            }, {
+                "community": "衮兰社区",
+                "icon": "",
+                "meta": {
+                    "title": "衮兰社区",
+                    "profile": "衮兰社区的介绍"
+                }
+            }, {
+                "community": "龙翔社区",
+                "icon": "",
+                "meta": {
+                    "title": "龙翔社区",
+                    "profile": "龙翔社区的介绍"
+                }
+            }
+        ]
+    }
 }
 
 const debug = true;

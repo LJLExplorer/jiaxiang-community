@@ -15,5 +15,6 @@ const API_URLS = {
     },
     "proof_info": (id) => `${prefix}/api/jiahe/proof_info?id=${id}`,
     "list_matters": (pageNum, pageSize) => `${prefix}/api/jiahe/list_matters?pageNum=${pageNum}&pageSize=${pageSize}`,
+    "grid_management": "/api/jiahe/grid_management",
 };
 export default API_URLS;

@@ -1,10 +1,13 @@
 import router from "../../../config/router.js";
 import { JiaxiangCommunityMapDriver } from "../../../driver/jiaxiang-community-map-driver.js";
+import { getList } from "./api-request.js";
 document.addEventListener("DOMContentLoaded", async function () {
     // 获取 modal 相关元素
-    const modalContent = document.querySelector('.modal-content');
-    const modalMessage = document.getElementById('modal-message');
+    const dialog = document.querySelector('#favDialog');
+    const modalMessage = document.querySelector('#favDialog #modal-message');
+    const titleEle = document.querySelector('#favDialog h2');
     const closeBtn = document.querySelector('.close');
+    let gridManamentInfo = await getList();
     const svgContainer = document.getElementById("svg-container");
     const response = await fetch(router["jiaxiang-community-map"]);
     svgContainer.innerHTML = await response.text();
@@ -20,30 +23,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     driver.items.forEach(function (value, index, array) {
         const clientRect = value.svg.getBoundingClientRect();
         value.svg.style.transformOrigin = `${clientRect.left + clientRect.width / 2}px ${clientRect.top + clientRect.height / 2}px`;
-        value.svg.addEventListener("click", function (ev) {
+        value.svg.addEventListener("click", async function (ev) {
             // 阻止事件冒泡，避免影响其他元素
             ev.stopPropagation();
-            // 将消息内容显示在 modal 中
-            modalMessage.textContent = '没有消息';
-            const transition = document.startViewTransition(() => {
-                // 显示 modal
-                modalContent.style.display = 'block';
-                modalContent.style.top = `${ev.y}px`;
-                modalContent.style.left = `${ev.x}px`;
-            });
+            const info = gridManamentInfo.find((item) => item.community === value.name);
+            titleEle.innerText = info.meta.title;
+            modalMessage.innerText = info.meta.profile;
+            dialog.showModal();
         });
     });
     // 定义关闭 modal 的函数
     function closeModal() {
-        modalContent.style.display = 'none';
+        dialog.close();
     }
     // 点击关闭按钮关闭 modal
     closeBtn.addEventListener('click', closeModal);
     // 点击 modal 外部区域也关闭 modal
     window.addEventListener('click', function (event) {
-        if (event.target === modalContent) {
+        if (event.target === dialog) {
             closeModal();
         }
     });
-    console.log(driver.items);
 });
