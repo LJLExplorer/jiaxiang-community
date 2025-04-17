@@ -1,12 +1,10 @@
+import CanInitData from "../../../common-component/multiple-pages/CanInitData.js";
 /*概要页面*/
-class SummaryPage {
+class SummaryPage extends CanInitData {
     list;
     currentPage;
     itemInAPage;
     totalPage;
-    template;
-    event;
-    initializer;
     renderMemberBox(memberBox, member) {
         memberBox.innerHTML = `
             <img src="${member.image}" alt="和睦嘉">
@@ -47,27 +45,8 @@ class SummaryPage {
         documentFragmemt.appendChild(root);
         return documentFragmemt;
     }
-    registryEvent(ele) {
-        this.event.eventList.forEach((eventInfos, selector) => {
-            const selectorEle = ele.querySelector(selector);
-            if (selectorEle) {
-                eventInfos.forEach((eventInfo) => {
-                    selectorEle.addEventListener(eventInfo.type, eventInfo.listener);
-                });
-            }
-        });
-    }
-    operate(ele) {
-        this.initializer.list.forEach((callbacks, selector) => {
-            const target = ele.querySelector(selector);
-            if (target) {
-                callbacks.forEach(callback => {
-                    callback.call(ele, target);
-                });
-            }
-        });
-    }
     constructor(commissionerList, template, itemInAPage, currentPage, event, dataInitializer) {
+        super();
         this.list = commissionerList;
         this.template = template;
         this.itemInAPage = itemInAPage;

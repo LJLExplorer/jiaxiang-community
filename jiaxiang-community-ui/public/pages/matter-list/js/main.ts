@@ -1,5 +1,5 @@
 import mattersInformation from "../../../files/matters-information.js";
-import PageContainer from "../../../common-component/multiple-pages/page-container";
+import PageContainer from "../../../common-component/multiple-pages/page-container.js";
 import EventRegister from "../../../common-component/multiple-pages/EventRegister.js";
 import navigatorLoader from "../../../common-component/navigator-regist/main-loader.js";
 import NavigatorCell from "../../../Navigator/NavigatorCell.js";

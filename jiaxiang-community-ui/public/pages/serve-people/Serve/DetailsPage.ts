@@ -1,10 +1,9 @@
-import ServeDAO from "./serveDAO";
+import ServeDAO from "./ServeDAO";
 import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
 
 /*详情页面*/
-class DetailsPage implements IsSubPage {
+class DetailsPage extends IsSubPage {
     public serve: ServeDAO;
-    public template: HTMLTemplateElement;
 
     /*
     public name: string;
@@ -72,6 +71,7 @@ class DetailsPage implements IsSubPage {
     }
 
     constructor(serve: ServeDAO, template: HTMLTemplateElement) {
+        super();
         this.serve = serve;
         this.template = template;
     }

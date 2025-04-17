@@ -1,7 +1,7 @@
+import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
 /*详情页面*/
-class DetailsPage {
+class DetailsPage extends IsSubPage {
     serve;
-    template;
     /*
     public name: string;
     public role: string;
@@ -56,6 +56,7 @@ class DetailsPage {
         return documentFragmemt;
     }
     constructor(serve, template) {
+        super();
         this.serve = serve;
         this.template = template;
     }

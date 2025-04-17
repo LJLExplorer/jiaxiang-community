@@ -153,7 +153,242 @@ const apiSimulateData = {
                 "records": records.slice((pageNum - 1) * pageSize, pageNum * pageSize)
             };
         }
-    }
+    },
+    "/api/jiahe/list_serve_people": {
+        "errorMessage": "string",
+        "code": 200,
+        getData: (pageNum, pageSize) => {
+            const records = [
+                {
+                    id: "service1",
+                    title: "暖心嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin2.jpg",
+                },
+                {
+                    id: "service2",
+                    title: "和睦嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin3.jpg",
+                },
+                {
+                    id: "service3",
+                    title: "和美嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin4.jpg",
+                },
+                {
+                    id: "service4",
+                    title: "聆听嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin5.jpg",
+                },
+                {
+                    id: "service5",
+                    title: "爱上嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin6.jpg",
+                },
+                {
+                    id: "service6",
+                    title: "敬业嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin7.jpg",
+                },
+                {
+                    id: "service7",
+                    title: "邻里童乐坊",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin8.jpg",
+                },
+                {
+                    id: "service8",
+                    title: "邻里同心坊",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin9.jpg",
+                },
+                {
+                    id: "service9",
+                    title: "邻里同行坊",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin10.jpg",
+                },
+                {
+                    id: "service10",
+                    title: "邻里同悦坊",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin11.jpg",
+                },
+                {
+                    id: "service11",
+                    title: "幸福学堂",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin12.jpg",
+                },
+            ];
+            return {
+                "currentPage": pageNum, // 当前页码
+                "size": pageSize, // 每页记录数
+                "total": records.length, // 总记录数
+                "pages": Math.ceil(records.length / pageSize), // 总页数
+                "records": records.slice((pageNum - 1) * pageSize, pageNum * pageSize)
+            };
+        },
+    },
+    "/api/jiahe/serve_people_info": {
+        "errorMessage": "string",
+        "code": 200,
+        getData: (id) => {
+            const records = [
+                {
+                    id: "service1",
+                    title: "暖心嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin2.jpg",
+                    serviceIntro: "暖心嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+                {
+                    id: "service2",
+                    title: "和睦嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin3.jpg",
+                    serviceIntro: "和睦嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+                {
+                    id: "service3",
+                    title: "和美嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin4.jpg",
+                    serviceIntro: "和美嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+                {
+                    id: "service4",
+                    title: "聆听嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin5.jpg",
+                    serviceIntro: "聆听嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+                {
+                    id: "service5",
+                    title: "爱上嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin6.jpg",
+                    serviceIntro: "爱上嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+                {
+                    id: "service6",
+                    title: "敬业嘉",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin7.jpg",
+                    serviceIntro: "敬业嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+                {
+                    id: "service7",
+                    title: "邻里童乐坊",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin8.jpg",
+                    serviceIntro: "邻里童乐坊是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+                {
+                    id: "service8",
+                    title: "邻里同心坊",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin9.jpg",
+                    serviceIntro: "邻里同心坊是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+                {
+                    id: "service9",
+                    title: "邻里同行坊",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin10.jpg",
+                    serviceIntro: "邻里同行坊是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+                {
+                    id: "service10",
+                    title: "邻里同悦坊",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin11.jpg",
+                    serviceIntro: "邻里同悦坊是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+                {
+                    id: "service11",
+                    title: "幸福学堂",
+                    phone: "0550-1234567",
+                    openDaysAndTime: "工作日08:00-17:30",
+                    location: "丰山街道社区服务中心3楼",
+                    images: "./image/weimin12.jpg",
+                    serviceIntro: "幸福学堂是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    serviceContent: "",
+                    serviceRules: ""
+                },
+            ];
+            return records.find((value, index, array) => {
+                return value.id === id;
+            });
+        },
+    },
 };
 const debug = true;
 self.addEventListener("fetch", function (ev) {

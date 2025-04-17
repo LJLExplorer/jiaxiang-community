@@ -1,4 +1,4 @@
-import ServeDAO from "./serveDAO.js";
+import ServeDAO from "./ServeDAO";
 
 const services: ServeDAO[] = [
     {

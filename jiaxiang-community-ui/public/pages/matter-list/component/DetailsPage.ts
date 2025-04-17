@@ -1,6 +1,6 @@
 import MattersDAO from "./MattersDAO.js";
 import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
-import MarkdownDriver from "../../../driver/markdown-driver";
+import MarkdownDriver from "../../../driver/markdown-driver.js";
 
 /*详情页面*/
 class DetailsPage implements IsSubPage {

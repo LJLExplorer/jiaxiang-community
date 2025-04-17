@@ -7,6 +7,11 @@ const API_URLS = {
     },
     "personal_info": (id: string) => `${prefix}/api/jiahe/personal_info?id=${id}`,
     "community_honor": (pageNum: number, pageSize: number) => `${prefix}/api/jiahe/community_honor?pageNum=${pageNum}&pageSize=${pageSize}`,
+
+    "list_serve_people": (pageNum: number, pageSize: number) => {
+        return `${prefix}/api/jiahe/list_serve_people?pageNum=${pageNum}&pageSize=${pageSize}`
+    },
+    "serve_people_info": (id: string) => `${prefix}/api/jiahe/serve_people_info?id=${id}`,
 }
 
 export default API_URLS;

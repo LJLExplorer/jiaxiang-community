@@ -1,22 +1,16 @@
-import ServeDAO from "./serveDAO.js";
+import ServeDAO from "./ServeDAO";
 import EventRegister from "../../../common-component/multiple-pages/EventRegister.js";
-import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
-import CanRegistryEvent from "../../../common-component/multiple-pages/CanRegistryEvent.js";
 import CanInitData from "../../../common-component/multiple-pages/CanInitData.js";
 import DataInitializer from "../../../common-component/multiple-pages/DataInitializer";
 
 /*概要页面*/
-class SummaryPage implements IsSubPage, CanRegistryEvent, CanInitData {
-    public list: ServeDAO[];
+class SummaryPage extends CanInitData {
+    public list: Omit<ServeDAO, "description" | "content" | "rules">[];
     public currentPage: number;
     public itemInAPage: number;
     public totalPage: number;
 
-    public template: HTMLTemplateElement;
-    public event: EventRegister;
-    public initializer: DataInitializer;
-
-    private renderMemberBox(memberBox: HTMLElement, member: ServeDAO) {
+    private renderMemberBox(memberBox: HTMLElement, member: Omit<ServeDAO, "description" | "content" | "rules">) {
         memberBox.innerHTML = `
             <img src="${member.image}" alt="和睦嘉">
             
@@ -70,34 +64,15 @@ class SummaryPage implements IsSubPage, CanRegistryEvent, CanInitData {
         return documentFragmemt;
     }
 
-    public registryEvent(ele: DocumentFragment) {
-        this.event.eventList.forEach((eventInfos, selector) => {
-            const selectorEle = ele.querySelector(selector);
-            if (selectorEle) {
-                eventInfos.forEach((eventInfo) => {
-                    selectorEle.addEventListener(eventInfo.type, eventInfo.listener);
-                })
-            }
-        })
-    }
-
-    public operate(ele: DocumentFragment): void {
-        this.initializer.list.forEach((callbacks, selector) => {
-            const target = ele.querySelector(selector);
-            if (target) {
-                callbacks.forEach(callback => {
-                    callback.call(ele, target);
-                })
-            }
-        })
-    }
 
     constructor(commissionerList: ServeDAO[],
                 template: HTMLTemplateElement,
                 itemInAPage: number,
                 currentPage: number,
                 event: EventRegister,
-                dataInitializer: DataInitializer,) {
+                dataInitializer: DataInitializer) {
+        super();
+
         this.list = commissionerList;
         this.template = template;
 
