@@ -17,6 +17,8 @@ const API_URLS = {
         return `${prefix}/api/jiahe/proof_documents?pageNum=${pageNum}&pageSize=${pageSize}`
     },
     "proof_info": (id: string) => `${prefix}/api/jiahe/proof_info?id=${id}`,
+    "list_matters": (pageNum: number, pageSize: number) => `${prefix}/api/jiahe/list_matters?pageNum=${pageNum}&pageSize=${pageSize}`,
+
 }
 
 export default API_URLS;

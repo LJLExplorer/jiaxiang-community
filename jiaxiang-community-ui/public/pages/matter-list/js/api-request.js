@@ -1,6 +1,5 @@
 import apiUrls from "../../../config/api-urls.js";
-import HonorDAO from "../Honor/HonorDAO.js";
-
+import MattersDAO from "../component/MattersDAO.js";
 /*
 
 data格式：
@@ -11,24 +10,21 @@ data格式：
 "records": records.slice((pageNum - 1) * pageSize, pageNum * pageSize)
 
 */
-const getPages = async function (itemInAPage: number) {
-    const response = await fetch(apiUrls["community_honor"](1, itemInAPage));
+const getPages = async function (itemInAPage) {
+    const response = await fetch(apiUrls["list_matters"](1, itemInAPage));
     const listRes = await response.json();
-
     return {
         "currentPage": parseInt(listRes.data.currentPage),
         "size": parseInt(listRes.data.size),
         "total": listRes.data.total,
         "pages": listRes.data.pages,
-    }
+    };
 };
-const getList = async function (currentPage: number, itemInAPage: number): Promise<Omit<HonorDAO, "dutyContent">[]> {
-    const response = await fetch(apiUrls["community_honor"](currentPage, itemInAPage));
+const getList = async function (currentPage, itemInAPage) {
+    const response = await fetch(apiUrls["list_matters"](currentPage, itemInAPage));
     const listRes = await response.json();
-
     return listRes.data.records.map((value, index, array) => {
-        return new HonorDAO("honor" + index, value);
+        return new MattersDAO(value.id, value.title, value.content);
     });
 };
-
-export {getPages, getList};
+export { getPages, getList };

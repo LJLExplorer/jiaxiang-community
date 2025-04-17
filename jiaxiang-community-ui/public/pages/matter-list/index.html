@@ -21,16 +21,6 @@
             <slot name="list">列表</slot>
 
         </div>
-
-        <!-- 翻页控件 -->
-        <div class="pagination">
-            <span class="arrow" id="prev-arrow">&#8592;</span>
-            <div class="page-info">
-                <span class="page-number" id="current-page">1</span> / <span id="total-pages">1</span>
-                共 <span id="total-items">0</span> 条
-            </div>
-            <span class="arrow" id="next-arrow">&#8594;</span>
-        </div>
     </div>
 </template>
 <template id="details-template">
@@ -54,5 +44,6 @@
 <script type="module" src="./js/init-navigator.js"></script>
 <script type="module" src="../../common-component/multiple-pages/page-container.js"></script>
 <script type="module" src="./js/main.js"></script>
+<script type="text/javascript" src="../../driver/markdown-driver.js"></script>
 </body>
 </html>

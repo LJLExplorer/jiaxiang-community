@@ -1,6 +1,8 @@
 import MattersDAO from "./MattersDAO.js";
 import IsSubPage from "../../../common-component/multiple-pages/IsSubPage.js";
-import MarkdownDriver from "../../../driver/markdown-driver.js";
+
+// md文件格式转换驱动，全局变量
+declare const marked: any;
 
 /*详情页面*/
 class DetailsPage extends IsSubPage {
@@ -11,18 +13,8 @@ class DetailsPage extends IsSubPage {
 
         const titleSlot = document.createElement("span");
         const fileSlot = document.createElement("div");
-/*
-        titleSlot.setAttribute("slot", "title");
-        fileSlot.setAttribute("slot", "file");*/
 
-        try {
-            let fileResponse = await fetch(this.matter.file)
-            const fileContent = await fileResponse.text();
-            fileSlot.innerHTML = MarkdownDriver.markdownToHtml(fileContent);
-        } catch (error) {
-            fileSlot.innerHTML = `加载失败，失败原因：${error.message}`;
-        }
-
+        fileSlot.innerHTML = marked.parse(this.matter.file);
         titleSlot.innerText = this.matter.title;
 
         const root: DocumentFragment = this.template.content.cloneNode(true) as DocumentFragment;
