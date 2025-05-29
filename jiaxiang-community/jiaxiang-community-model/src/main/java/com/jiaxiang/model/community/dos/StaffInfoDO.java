@@ -19,9 +19,15 @@ public class StaffInfoDO {
     private Long id;
 
     /**
-     * 姓名和职位
+     * 姓名
      */
-    private String nameAndPosition;
+    private String name;
+
+
+    /**
+     * 职位
+     */
+    private String position;
 
     /**
      * 图片路径
