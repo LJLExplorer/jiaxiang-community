@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .header {
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: translateX(-100%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .container {
+            width: 100%;
+            height: 70%;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-container {
+            display: flex;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            height: 80%;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .text-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            height: 100%;
+            width: 20%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .text-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .text-container {
+            padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+            align-items: center;
+        }
+
+        .text-container p:first-child {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .text-container p:last-child {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            /* 允许在小屏幕上换行 */
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: black;
+        }
+
+        .pagination button:hover {
+            background-color: #e9e9e9;
+        }
+
+        .pagination button.active {
+            background-color: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        .page-info {
+            margin: 0 15px;
+            font-size: 14px;
+            color: white;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .pagination {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pagination button {
+                margin: 5px 0;
+            }
+
+            .page-info {
+                margin: 10px 0;
+            }
+        }
+
+        /* 会话框相关样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .close-btn:hover {
+            color: #666;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .modal-body {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #444;
+        }
+
+        .modal-footer {
+            margin-top: 25px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .modal-footer button {
+            padding: 10px 20px;
+            margin-left: 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .close-button {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .close-button:hover {
+            background-color: #d32f2f;
+        }
+
+        /* 会话框背景透明动画效果 */
+        .modal-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
+            opacity: 0;
+            z-index: 999;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%; height: 100%; overflow: hidden;">
+        <div class="header" style="width: 100%; height: 15%;">
+            <h2 style="font-size: 70px;">证明出具</h2>
+        </div>
+        <div class="container">
+            <div class="grid-container" id="itemGrid">
+                <!-- 内容将通过JavaScript动态加载 -->
+            </div>
+
+            <div class="pagination">
+                <button class="first-page">第一页</button>
+                <button class="prev-page">上一页</button>
+                <span class="page-info">第 <span class="current-page">1</span> 页 / 共 <span class="total-pages">1</span>
+                    页</span>
+                <button class="next-page">下一页</button>
+                <button class="last-page">最后一页</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 会话框结构 -->
+    <div class="modal" id="contentModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer">
+                <button class="close-button" id="modalCloseButton">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 动画背景 -->
+    <div class="modal-background" id="modalBackground"></div>
+
+    <script>
+        // 数据 - 包含文字信息
+        const items = [
+            {
+                name: "证明一",
+                text2: "点击进入",
+                content: `
+                        <h3>一、事项名称、内容及用途</h3>
+                        <p>亲属关系证明（仅限公证）。在无法通过公安、民政、卫生健康等部门信息共享方式核对当事人亲属关系，且当事人居民户口簿、结婚证、《出生医学证明》、历史户籍档案等均不能够反映当事人亲属关系的情况下，司法行政部门办理涉及当事人有关公证事项时，村（社区）对属于自身职责范围内且能够核实的事项，依法据实出具证明当事人亲属关系的材料。</p>
+
+                        <h3>二、开具单位</h3>
+                        <p>村（社区）。</p>
+
+                        <h3>三、法律政策依据</h3>
+                        <p>《中华人民共和国公证法》第十一条根据自然人、法人或者其他组织的申请，公证机构办理下列公证事项：（一）合同；（二）继承；（三）委托、声明、赠与、遗嘱；（四）财产分割；（五）招标投标、拍卖；（六）婚姻状况、亲属关系、收养关系；（七）出生、生存、死亡、身份、经历、学历、学位、职务、职称、有无违法犯罪记录；（八）公司章程；（九）保全证据；（十）文书上的签名、印鉴、日期，文书的副本、影印本与原本相符；（十一）自然人、法人或者其他组织自愿申请办理的其他公证事项。法律、行政法规规定应当公证的事项，有关自然人、法人或者其他组织应当向公证机构申请办理公证。《遗赠扶养协议公证细则》第八条 申办遗赠扶养协议公证，当事人应向公证处提交以下证件和材料：（一）当事人遗赠扶养协议公证申请表；（二）当事人的居民身份证或其他身份证明；（三）扶养人为组织的，应提交资格证明、法定代表人身份证明，代理人应提交授权委托书；（四）村民委员会、居民委员会或所在单位出具的遗赠人的家庭成员情况证明；（五）遗赠财产清单和所有权证明；（六）村民委员会、居民委员会或所在单位出具的扶养人的经济情况和家庭成员情况证明；（七）扶养人有配偶的，应提交其配偶同意订立遗赠扶养协议的书面意见；（八）遗赠扶养协议；（九）公证人员认为应当提交的其他材料。《民政部国家发展改革委公安部司法部人力资源社会保障部国家卫生健康委关于改进和规范基层群众性自治组织出具证明工作的指导意见》（民发〔2020〕20号）附件第1项例外规定。</p>
+
+                        <h3>四、办理（申请）条件、材料及流程</h3>
+                        <p>（一）办理（申请）条件</p>
+                        <p>当事人到户籍所在地或原户籍所在地村（社区）提出申请，并按要求提供相关材料。</p>
+                        <p>（二）办理（申请）材料</p>
+                        <ul>
+                            <li>当事人身份证</li>
+                            <li>当事人户口本</li>
+                        </ul>
+                        <p>（三）办理（申请）流程</p>
+                        <ol>
+                            <li>办理（申请）。当事人到户籍所在地或原户籍所在地村（社区）提出申请，并按要求提供相关材料。</li>
+                            <li>受理。村（社区）经审查，当事人一方户籍或原户籍在本村（社区）且提交材料齐全的，予以受理，双方当事人户籍或原户籍均不在本村（社区）的，不予受理。受理后，对当事人与相关人员是否存在亲属关系的事实进行调查核实。</li>
+                            <li>出具。经调查核实，出具对当事人与相关人员存在亲属关系的事实予以证明的材料。</li>
+                        </ol>
+
+                        <h3>五、办理时限</h3>
+                        <p>5个工作日。</p>
+
+                        <h3>六、要求开具单位</h3>
+                        <p>司法行政部门。</p>
+
+                        <h3>七、证明式样</h3>
+                        <p>亲属关系证明式样（仅限公证）</p>
+                    `
+            },
+            { name: "证明二", text2: "点击进入", content: "这是证明二的具体内容。" },
+            { name: "证明三", text2: "点击进入", content: "这是证明三的具体内容。" },
+            { name: "证明四", text2: "点击进入", content: "这是证明四的具体内容。" },
+            { name: "证明五", text2: "点击进入", content: "这是证明五的具体内容。" },
+            { name: "证明六", text2: "点击进入", content: "这是证明六的具体内容。" },
+            { name: "证明七", text2: "点击进入", content: "这是证明七的具体内容。" }
+        ];
+
+        const itemsPerPage = 4;
+        let currentPage = 1;
+        const totalPages = Math.ceil(items.length / itemsPerPage);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const itemGrid = document.getElementById('itemGrid');
+            const prevPageBtn = document.querySelector('.prev-page');
+            const nextPageBtn = document.querySelector('.next-page');
+            const firstPageBtn = document.querySelector('.first-page');
+            const lastPageBtn = document.querySelector('.last-page');
+            const currentPageSpan = document.querySelector('.current-page');
+            const totalPagesSpan = document.querySelector('.total-pages');
+
+            // 会话框相关元素
+            const modal = document.getElementById('contentModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const closeModal = document.getElementById('closeModal');
+            const modalCloseButton = document.getElementById('modalCloseButton');
+            const modalBackground = document.getElementById('modalBackground');
+
+            totalPagesSpan.textContent = totalPages;
+
+            function displayItems() {
+                itemGrid.innerHTML = '';
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+
+                for (let i = startIndex; i < endIndex; i++) {
+                    const item = document.createElement('div');
+                    item.className = 'text-item';
+
+                    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+                    item.style.backgroundColor = randomColor;
+                    item.style.color = getRandomContrastColor(randomColor);
+
+                    item.innerHTML = `
+                        <div class="text-container">
+                            <p>${items[i].name}</p>
+                            <p>${items[i].text2}</p>
+                        </div>
+                    `;
+
+                    itemGrid.appendChild(item);
+
+                    // 添加点击事件监听器
+                    item.addEventListener('click', function () {
+                        openModal(items[i]);
+                    });
+                }
+
+                currentPageSpan.textContent = currentPage;
+
+                // 禁用/启用按钮
+                prevPageBtn.disabled = currentPage === 1;
+                nextPageBtn.disabled = currentPage === totalPages;
+            }
+
+            function goToPage(page) {
+                if (page >= 1 && page <= totalPages) {
+                    currentPage = page;
+                    displayItems();
+                }
+            }
+
+            prevPageBtn.addEventListener('click', () => goToPage(currentPage - 1));
+            nextPageBtn.addEventListener('click', () => goToPage(currentPage + 1));
+            firstPageBtn.addEventListener('click', () => goToPage(1));
+            lastPageBtn.addEventListener('click', () => goToPage(totalPages));
+
+            // 会话框事件监听
+            closeModal.addEventListener('click', closeModalFunction);
+            modalCloseButton.addEventListener('click', closeModalFunction);
+
+            // 背景点击关闭
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    closeModalFunction();
+                }
+            });
+
+            // 初始加载
+            displayItems();
+
+            // 会话框打开函数
+            function openModal(item) {
+                modalTitle.textContent = item.name;
+
+                // 模拟内容加载 - 实际应用中可以从item.file路径加载内容
+                modalBody.innerHTML = `
+                    <div style="line-height: 1.8; color: #333;">
+                        ${item.content}
+                    </div>
+                `;
+
+                modal.style.display = 'flex';
+                modalBackground.style.opacity = 0.3;
+                modalBackground.style.pointerEvents = 'auto';
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
+            }
+
+            // 会话框关闭函数
+            function closeModalFunction() {
+                modal.style.display = 'none';
+                modalBackground.style.opacity = 0;
+                modalBackground.style.pointerEvents = 'none';
+                document.body.style.overflow = 'auto'; // 恢复背景滚动
+            }
+        });
+
+        function getRandomContrastColor(hexColor) {
+            // Convert hex color to RGB
+            const r = parseInt(hexColor.substr(0, 2), 16);
+            const g = parseInt(hexColor.substr(2, 2), 16);
+            const b = parseInt(hexColor.substr(4, 2), 16);
+
+            // Calculate brightness
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+            // Return black or white based on brightness
+            return brightness > 128 ? '#000000' : '#FFFFFF';
+        }
+    </script>
+</body>
+
+</html>

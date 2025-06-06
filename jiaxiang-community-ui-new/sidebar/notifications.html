@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .header {
+        /* background: linear-gradient(90deg, #02a85b 0%, #00c3ff 100%); */
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 24px;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .header:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%);
+        transform: translateX(-100%);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+    }
+
+    .container {
+        /* max-width: 1000px; */
+        margin: 0 auto;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .image-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        overflow: hidden;
+        /* background-color: #fff; */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .image-item:hover {
+        transform: scale(1.03);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-item:hover::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.3);
+        z-index: 1;
+    }
+
+    .image-container {
+        position: relative;
+        height: 200px;
+    }
+
+    .image-container img {
+        width: 30%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 5px;
+    }
+
+    .text-container {
+        padding: 10px;
+        /* background-color: rgba(255, 255, 255, 0.9); */
+        position: absolute;
+        right: 100px;
+        top: 0;
+        height: 100%;
+        width: 294px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        color: white;
+        box-sizing: border-box;
+    }
+
+    .text-container p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .arrow-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .arrow {
+        width: 40px;
+        height: 40px;
+        background-color: #333;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        margin: 0 10px;
+        user-select: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .arrow:hover {
+        background-color: #555;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+    .pagination button {
+        padding: 8px 16px;
+        margin: 0 5px;
+        border: 1px solid #ddd;
+        background-color: #f8f8f8;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+        color: black;
+    }
+
+    .pagination button:hover {
+        background-color: #e9e9e9;
+    }
+
+    .pagination button.active {
+        background-color: #333;
+        color: white;
+        border-color: #333;
+    }
+
+    .page-info {
+        margin: 0 15px;
+        font-size: 14px;
+        color: white;
+    }
+
+    /* 对话框样式 */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 60%;
+        max-width: 800px;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+        animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.3s ease;
+    }
+
+    .close-btn:hover {
+        color: #333;
+    }
+
+    .modal-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    .modal-info {
+        margin-bottom: 15px;
+        display: flex;
+    }
+    .modal-info img{
+        width: 120px;
+        height: auto;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+    .modal-info p {
+        margin: 8px 0;
+        color: #555;
+    }
+
+    .modal-section {
+        margin-top: 20px;
+    }
+
+    .modal-section h3 {
+        color: #444;
+        margin-bottom: 10px;
+    }
+
+    .modal-section ul {
+        padding-left: 20px;
+    }
+
+    .modal-section li {
+        margin-bottom: 8px;
+        color: #666;
+    }
+</style>
+
+<body>
+    <div style="width: 100%; height: 100%; overflow: hidden;">
+        <div class="header" style="width: 100%; height: 15%;">
+            <h2 style="font-size: 70px;">为民服务</h2>
+        </div>
+        <div class="container">
+            <div class="grid-container" id="imageGrid">
+                <!-- 图片将通过JavaScript动态加载 -->
+            </div>
+
+            <div class="arrow-container">
+                <div class="arrow" id="prevArrow">←</div>
+                <div class="arrow" id="nextArrow">→</div>
+            </div>
+
+            <div class="pagination">
+                <button class="first-page">第一页</button>
+                <button class="prev-page">上一页</button>
+                <span class="page-info">第 <span class="current-page">1</span> 页 / 共 <span class="total-pages">1</span>
+                    页</span>
+                <button class="next-page">下一页</button>
+                <button class="last-page">最后一页</button>
+            </div>
+        </div>
+
+        <!-- 对话框 -->
+        <div class="modal" id="itemModal">
+            <div class="modal-content">
+                <span class="close-btn" id="closeModal">&times;</span>
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-info">
+                    <img id="modalImage" src="" alt="服务图片">
+                    <div>
+                        <p><strong>联系电话：</strong><span id="modalPhone"></span></p>
+                        <p><strong>开放时间：</strong><span id="modalTime"></span></p>
+                        <p><strong>活动地址：</strong><span id="modalAddress"></span></p>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <h3>服务描述</h3>
+                    <p id="modalDescription"></p>
+                </div>
+                <div class="modal-section" id="modalContentSection" style="display: none;">
+                    <h3>服务内容</h3>
+                    <ul id="modalContent"></ul>
+                </div>
+                <div class="modal-section" id="modalRulesSection" style="display: none;">
+                    <h3>服务规则</h3>
+                    <ul id="modalRules"></ul>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // 图片数据 - 包含图片URL和对应的文字信息
+            const imageItems = [
+                {
+                    id: "service1",
+                    title: "暖心嘉",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin2.jpg",
+                    description: "暖心嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "社区老年人日常活动",
+                        "健康讲座",
+                        "文艺表演"
+                    ],
+                    rules: [
+                        "需提前预约",
+                        "活动期间保持安静",
+                        "禁止吸烟"
+                    ]
+                },
+                {
+                    id: "service2",
+                    title: "和睦嘉",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin3.jpg",
+                    description: "和睦嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "亲子活动",
+                        "家庭教育讲座",
+                        "儿童才艺展示"
+                    ],
+                    rules: [
+                        "儿童需家长陪同",
+                        "爱护公共设施",
+                        "保持环境整洁"
+                    ]
+                },
+                {
+                    id: "service3",
+                    title: "和美嘉",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin4.jpg",
+                    description: "和美嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "手工制作课程",
+                        "艺术展览",
+                        "文化交流活动"
+                    ],
+                    rules: [
+                        "材料费自理",
+                        "作品可带走",
+                        "遵守课堂纪律"
+                    ]
+                },
+                {
+                    id: "service4",
+                    title: "聆听嘉",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin5.jpg",
+                    description: "聆听嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "心理咨询",
+                        "心理健康讲座",
+                        "压力管理课程"
+                    ],
+                    rules: [
+                        "严格保密",
+                        "提前预约",
+                        "尊重他人隐私"
+                    ]
+                },
+                {
+                    id: "service5",
+                    title: "爱上嘉",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin6.jpg",
+                    description: "爱上嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "相亲活动",
+                        "婚恋讲座",
+                        "情感咨询"
+                    ],
+                    rules: [
+                        "实名制参加",
+                        "文明交流",
+                        "保护个人隐私"
+                    ]
+                },
+                {
+                    id: "service6",
+                    title: "敬业嘉",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin7.jpg",
+                    description: "敬业嘉是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "职业技能培训",
+                        "就业指导",
+                        "创业讲座"
+                    ],
+                    rules: [
+                        "按时参加",
+                        "认真听讲",
+                        "积极参与互动"
+                    ]
+                },
+                {
+                    id: "service7",
+                    title: "邻里童乐坊",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin8.jpg",
+                    description: "邻里童乐坊是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "儿童游乐",
+                        "亲子互动",
+                        "早教课程"
+                    ],
+                    rules: [
+                        "家长全程陪同",
+                        "注意安全",
+                        "爱护玩具"
+                    ]
+                },
+                {
+                    id: "service8",
+                    title: "邻里同心坊",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin9.jpg",
+                    description: "邻里同心坊是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "社区议事",
+                        "居民代表大会",
+                        "意见征集"
+                    ],
+                    rules: [
+                        "文明发言",
+                        "遵守秩序",
+                        "尊重他人意见"
+                    ]
+                },
+                {
+                    id: "service9",
+                    title: "邻里同行坊",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin10.jpg",
+                    description: "邻里同行坊是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "志愿者活动",
+                        "社区服务",
+                        "公益活动"
+                    ],
+                    rules: [
+                        "自愿参加",
+                        "服从安排",
+                        "积极奉献"
+                    ]
+                },
+                {
+                    id: "service10",
+                    title: "邻里同悦坊",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin11.jpg",
+                    description: "邻里同悦坊是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "文艺演出",
+                        "电影放映",
+                        "节日庆祝"
+                    ],
+                    rules: [
+                        "保持安静",
+                        "不乱扔垃圾",
+                        "文明观赏"
+                    ]
+                },
+                {
+                    id: "service11",
+                    title: "幸福学堂",
+                    phone: "0550-1234567",
+                    time: "工作日08:00-17:30",
+                    address: "丰山街道社区服务中心3楼",
+                    image: "../img/weimin-image/weimin12.jpg",
+                    description: "幸福学堂是社区为居民提供各类活动的重要场所，配备了先进的音响设备和投影仪，可容纳50人同时活动。",
+                    content: [
+                        "老年大学课程",
+                        "书法绘画",
+                        "养生讲座"
+                    ],
+                    rules: [
+                        "按时上课",
+                        "互相帮助",
+                        "快乐学习"
+                    ]
+                },
+            ];
+
+            const itemsPerPage = 4;
+            let currentPage = 1;
+            const totalPages = Math.ceil(imageItems.length / itemsPerPage);
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const imageGrid = document.getElementById('imageGrid');
+                const prevPageBtn = document.querySelector('.prev-page');
+                const nextPageBtn = document.querySelector('.next-page');
+                const firstPageBtn = document.querySelector('.first-page');
+                const lastPageBtn = document.querySelector('.last-page');
+                const currentPageSpan = document.querySelector('.current-page');
+                const totalPagesSpan = document.querySelector('.total-pages');
+                const prevArrow = document.getElementById('prevArrow');
+                const nextArrow = document.getElementById('nextArrow');
+                const modal = document.getElementById('itemModal');
+                const closeModal = document.getElementById('closeModal');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalPhone = document.getElementById('modalPhone');
+                const modalTime = document.getElementById('modalTime');
+                const modalAddress = document.getElementById('modalAddress');
+                const modalDescription = document.getElementById('modalDescription');
+                const modalContent = document.getElementById('modalContent');
+                const modalRules = document.getElementById('modalRules');
+                const modalContentSection = document.getElementById('modalContentSection');
+                const modalRulesSection = document.getElementById('modalRulesSection');
+                const modalImage = document.getElementById('modalImage'); // 图片元素
+
+                totalPagesSpan.textContent = totalPages;
+
+                function displayImages() {
+                    imageGrid.innerHTML = '';
+                    const startIndex = (currentPage - 1) * itemsPerPage;
+                    const endIndex = Math.min(startIndex + itemsPerPage, imageItems.length);
+
+                    for (let i = startIndex; i < endIndex; i++) {
+                        const imageItem = document.createElement('div');
+                        imageItem.className = 'image-item';
+                        imageItem.dataset.index = i;
+
+                        imageItem.innerHTML = `
+                        <div class="image-container">
+                            <img src="${imageItems[i].image}" alt="图片${i + 1}">
+                            <div class="text-container">
+                                <h1>${imageItems[i].title}</h1>
+                                <p>【联系电话】--${imageItems[i].phone}</p>
+                                <p>【开放时间】--${imageItems[i].time}</p>
+                                <p>【活动地址】--${imageItems[i].address}</p>
+                            </div>
+                        </div>
+                    `;
+
+                        // 添加点击事件
+                        imageItem.addEventListener('click', function () {
+                            showModal(i);
+                        });
+
+                        imageGrid.appendChild(imageItem);
+                    }
+
+                    currentPageSpan.textContent = currentPage;
+
+                    // 禁用/启用按钮
+                    prevPageBtn.disabled = currentPage === 1;
+                    prevArrow.style.opacity = currentPage === 1 ? '0.5' : '1';
+                    nextPageBtn.disabled = currentPage === totalPages;
+                    nextArrow.style.opacity = currentPage === totalPages ? '0.5' : '1';
+                }
+
+                function showModal(index) {
+                    const item = imageItems[index];
+                    modalTitle.textContent = item.title;
+                    modalPhone.textContent = item.phone;
+                    modalTime.textContent = item.time;
+                    modalAddress.textContent = item.address;
+                    modalDescription.textContent = item.description;
+                    modalImage.src = item.image; // 设置对话框中的图片
+
+                    // 设置服务内容
+                    if (item.content && item.content.length > 0) {
+                        modalContent.innerHTML = '';
+                        item.content.forEach(contentItem => {
+                            const li = document.createElement('li');
+                            li.textContent = contentItem;
+                            modalContent.appendChild(li);
+                        });
+                        modalContentSection.style.display = 'block';
+                    } else {
+                        modalContentSection.style.display = 'none';
+                    }
+
+                    // 设置服务规则
+                    if (item.rules && item.rules.length > 0) {
+                        modalRules.innerHTML = '';
+                        item.rules.forEach(ruleItem => {
+                            const li = document.createElement('li');
+                            li.textContent = ruleItem;
+                            modalRules.appendChild(li);
+                        });
+                        modalRulesSection.style.display = 'block';
+                    } else {
+                        modalRulesSection.style.display = 'none';
+                    }
+
+                    modal.style.display = 'flex';
+                }
+
+                function goToPage(page) {
+                    if (page >= 1 && page <= totalPages) {
+                        currentPage = page;
+                        displayImages();
+                    }
+                }
+
+                prevPageBtn.addEventListener('click', () => goToPage(currentPage - 1));
+                nextPageBtn.addEventListener('click', () => goToPage(currentPage + 1));
+                firstPageBtn.addEventListener('click', () => goToPage(1));
+                lastPageBtn.addEventListener('click', () => goToPage(totalPages));
+                prevArrow.addEventListener('click', () => goToPage(currentPage - 1));
+                nextArrow.addEventListener('click', () => goToPage(currentPage + 1));
+
+                // 关闭模态框
+                closeModal.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+
+                // 点击模态框外部关闭
+                window.addEventListener('click', (event) => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+
+                // 初始加载
+                displayImages();
+            });
+        </script>
+</body>
+
+</html>

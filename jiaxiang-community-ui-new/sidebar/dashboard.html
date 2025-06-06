@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .header {
+        /* background: linear-gradient(90deg, #02a85b 0%, #00c3ff 100%); */
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 24px;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .header:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%);
+        transform: translateX(-100%);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    .main {
+        display: flex;
+        align-items: flex-start;
+        /* background-color: rgba(6, 24, 65, 0.5); */
+        padding: 20px;
+        margin-top: 0;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .main:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .main img {
+        max-width: 50%;
+        height: 100%;
+        margin-right: 20px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .main img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .text {
+        max-width: 50%;
+        height: 95%;
+        padding: 20px;
+        overflow-y: auto;
+        font-size: 20px;
+    }
+
+    .text h1 {
+        text-align: center;
+        margin-top: -21px;
+        font-size: 28px;
+        color: #ffffff;
+        background: linear-gradient(90deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(179, 224, 202, 0.3) 50%,
+                rgba(129, 241, 185, 0.1) 100%);
+        padding: 15px;
+        border-radius: 5px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .text h1:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0) 100%);
+        transform: translateX(-100%);
+        animation: shine 3s infinite 1s;
+    }
+
+    .text p {
+        text-indent: 2em;
+        font-size: 19px;
+        line-height: 1.6;
+        transition: all 0.3s ease;
+        color: #ffffff;
+    }
+
+    .text p:hover {
+        background: rgba(2, 148, 75, 0.05);
+        transform: translateX(5px);
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .content {
+            margin-left: 0;
+        }
+
+        .main {
+            flex-direction: column;
+        }
+
+        .main img,
+        .text {
+            max-width: 100%;
+        }
+    }
+</style>
+
+<body>
+    <div style="width: 100%; height: 100%;">
+        <div class="header" style="width: 100%; height: 15%;">
+            <h2 style="font-size: 70px;">社区简介</h2>
+        </div>
+        <div class="main" style="height: 70%;">
+            <img src="../img/社区大门.jpg" alt="社区图片">
+            <div class="text">
+                <h1>嘉和社区</h1>
+                <p>嘉和社区地处嘉祥县城北，管理范围为东至武路、西至老嘉梁路，南至曾子大道，北至嘉北路。嘉和社区下辖财苑小区、博悦城、碧城华园、曾子园、金都花苑、红旗花园、国际商贸城、嘉和苑西区、圣贤世家等9个小区，居民3333333户、972人，党员259名，商铺532家，拥有嘉和园幼儿园、嘉祥县实验小学、嘉祥县第四中学3所学校，教育和商贸资源丰富。
+                </p>
+                <p>嘉和社区党群中心位于演武路与嘉北路交叉口的临街位置，于2024年8月建成投入使用，服务范围广、功能全，阵地面积1500余平方米。社区立足便民利民、务实管用，科学设置和睦嘉议事厅、暖新嘉驿站、邻里同行坊等12处特色功能阵地，构建一站式社区生活"服务圈"。目前累计开展各类服务活动180余次，服务居民1.2万余人次。
+                </p>
+                <p>嘉和社区坚持"党建为核、治理为基、服务为本"，积极整合社区资源、搭建治理平台、凝聚社会力量，打造了"幸福嘉和邻里"的社区品牌，引导各方力量共同参与社区治理，不断提升居民在社区生活的获得感、幸福感。
+                </p>
+                <p>党建赋能，领航"幸福舫"。完善"社区大党委一网格（小区）党支部一楼栋党小组一党员中心户"四级组织架构，开展"支部进小区、党员进楼栋"行动，构建横向到边、纵向到底的组织体系。持续推进智慧社区建设，完善数据采集、信息发布、网上议事、志愿服务等应用场景，提升服务居民的能力和水平，打造网上服务群众平台。
+                </p>
+                <p>居民参与，启航"幸福舫"。秉承"把居民当家人、把社区当家建"的初衷，打造开放式、互动式办公区域，为居民提供事项办理、政策咨询等服务。充分利用党组织的政治优势和组织优势，引导居民参与社区治理，启航"幸福舫"。
+                </p>
+                <p>多方协同，护航"幸福舫"。建立社区"红色合伙人"资源库，招募嘉祥口腔医院、银泰商圈等"红色合伙人"10个，领资源、服务项目24个。定期邀请驻区单位、社会组织、志愿者等参与社区服务，多方协同，护航"幸福舫"。
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

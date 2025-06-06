@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社区活动</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            /* background-color: #f5f5f5; */
+            color: white;
+        }
+
+        .header {
+            /* background: linear-gradient(90deg, #02a85b 0%, #00c3ff 100%); */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: translateX(-100%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .container {
+            /* max-width: 1200px; */
+            margin: 30px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .image-item {
+            /* border: 1px solid #e0e0e0; */
+            border-radius: 10px;
+            overflow: hidden;
+            /* background-color: white; */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            height: 210px;
+        }
+
+        .image-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-container {
+            position: relative;
+            height: 100%;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .text-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+            color: white;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .text-container h4 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .text-container p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .arrow-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 40px;
+        }
+
+        .arrow {
+            width: 50px;
+            height: 50px;
+            background-color: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            margin: 0 15px;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .arrow:hover {
+            background-color: #555;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: 1px solid #ddd;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination button:hover {
+            background-color: #e9e9e9;
+        }
+
+        .pagination button.active {
+            background-color: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        .page-info {
+            margin: 0 15px;
+            font-size: 16px;
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            color: black;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 900px;
+            height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .modal-info {
+            margin-bottom: 25px;
+            display: flex;
+        }
+
+        .modal-info img {
+            width: 250px;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 30px;
+        }
+
+        .modal-info p {
+            margin: 10px 0;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .modal-section {
+            margin-top: 25px;
+        }
+
+        .modal-section h3 {
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+        }
+
+        .modal-section li {
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .tabs-container {
+            margin: 30px auto;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            margin-right: 10px;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .tab-button:hover {
+            background-color: #e9e9e9;
+        }
+
+        .tab-button.active {
+            background-color: #fff;
+            border-bottom: 1px solid #fff;
+            font-weight: bold;
+            color: #0066cc;
+        }
+
+        .tab-pane {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 0 8px 8px 8px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                padding: 25px;
+            }
+
+            .modal-info {
+                flex-direction: column;
+            }
+
+            .modal-info img {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .header {
+                font-size: 22px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h2>社区活动</h2>
+    </div>
+
+    <div class="container">
+        <div class="grid-container" id="imageGrid">
+            <!-- 图片将通过JavaScript动态加载 -->
+        </div>
+
+        <div class="arrow-container">
+            <div class="arrow" id="prevArrow">←</div>
+            <div class="arrow" id="nextArrow">→</div>
+        </div>
+
+        <div class="pagination">
+            <button class="first-page">第一页</button>
+            <button class="prev-page">上一页</button>
+            <span class="page-info">第 <span class="current-page">1</span> 页 / 共 <span class="total-pages">1</span>
+                页</span>
+            <button class="next-page">下一页</button>
+            <button class="last-page">最后一页</button>
+        </div>
+    </div>
+
+    <!-- 对话框 -->
+    <div class="modal" id="itemModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-info">
+                <img id="modalImage" src="" alt="活动图片">
+                <div>
+                    <p><strong>联系电话：</strong><span id="modalPhone"></span></p>
+                    <p><strong>开放时间：</strong><span id="modalTime"></span></p>
+                    <p><strong>活动地址：</strong><span id="modalAddress"></span></p>
+                </div>
+            </div>
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <div class="tab-button active" data-tab="tab1">活动内容</div>
+                    <div class="tab-button" data-tab="tab2">活动图片</div>
+                    <div class="tab-button" data-tab="tab3">活动视频</div>
+                </div>
+                <div class="tabs-content">
+                    <div class="tab-pane active" id="tab1">
+                        <ol id="modalContent"></ol>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <div id="modalImagesContainer"></div>
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                        <p>暂无视频内容</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 图片数据
+        const imageItems = [
+            {
+                id: "service1",
+                title: "星火阅读·好书推荐官”风采展示活动",
+                time: "2024年10月19日（周六）上午09:00",
+                address: "嘉祥街道嘉和社区党群服务中心二楼",
+                image: "../img/activaties/星火阅读/image1.png",
+                img: [
+                    "../img/activaties/星火阅读/image1.png",
+                    "../img/activaties/星火阅读/图片1.jpg"
+                ],
+                description: "为进一步深化“星火阅读”活动品牌...",
+                content: [
+                    "思想引领环节：志愿者开展“移风易俗”主题宣讲",
+                    "“星火阅读·好书推荐官”风采展示环节",
+                    "颁发活动证书并合影"
+                ],
+                phone: ""
+            },
+            {
+                id: "service2",
+                title: "嘉祥县“祥城慧老”健身气功八段锦",
+                time: "2024年11月13日，09:00-10:00",
+                address: "嘉祥街道嘉和社区党群服务中心一楼大厅",
+                image: "../img/activaties/祥城慧老/image.png",
+                img: [
+                    "../img/activaties/祥城慧老/image.png",
+                    "../img/activaties/祥城慧老/图片2.jpg"
+                ],
+                description: "为推动全民健身工作，提高全民健康素质，营造全民健身的氛围，老年大学联合嘉和社区开展“八段锦”健身公益讲堂活动，旨在为居民们带来身心的放松和愉悦，更有助于居民探索健康生活的新路径。",
+                content: [
+                    "嘉和社区负责布置活动场地、招募居民、宣传报道",
+                    "老年大学专业老师现场教学"
+
+                ],
+                phone: ""
+            },
+            {
+                id: "service3",
+                title: "抵制高价彩礼 倡树婚俗新风",
+                time: "2024年09月30日15:00-17:00",
+                address: "嘉祥县嘉祥街道嘉和社区党群服务中心一楼大厅",
+                image: "../img/activaties/抵制高价彩礼/image.png",
+                img: [
+                    "../img/activaties/抵制高价彩礼/image.png",
+                    "../img/activaties/抵制高价彩礼/图片3.jpg"
+                ],
+                description: "为大力弘扬中华民族传统美德，积极培育和践行社会主义核心价值观，培育文明婚嫁新风尚， 嘉和社区开展以“抵制高价彩礼 倡树婚俗新风”为主题的移风易俗辩论赛。为此制定如下活动方案。",
+                content: [
+                    "确定好活动时间和地点以及活动流程，给居民做好通知工作",
+                    "在活动当天提前布置现场，由社区工作人员做好人员引导就座",
+                    "活动开始社区工作人员进行现场秩序维持",
+                    "活动结束后，对活动进行记录和总结。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service4",
+                title: "红色贴珠画 共抒爱国心",
+                time: "2024年09月25日9:00-10:00",
+                address: "嘉祥县嘉祥街道嘉和社区党群服务中心二楼同行坊",
+                image: "../img/activaties/红色贴珠画/image.png",
+                img: [
+                    "../img/activaties/红色贴珠画/image.png",
+                    "../img/activaties/红色贴珠画/图片4.jpg"
+                ],
+                description: "国庆来临之际，为进一步丰富辖区内居民的业余生活，增进情感交流，提高居民的幸福感和获得感，嘉和社区开展“红色贴珠画 共抒爱国心”手工制作活动为此制定如下活动方案。",
+                content: [
+                    "在活动开始前，确定好活动时间和地点以及活动流程。",
+                    "在活动当天提前布置现场，由社区工作人员做好人员引导就座。",
+                    "活动开始，由社区工作人员进行手工制作讲解，介绍制作方法。",
+                    "活动中，对居民进行制作指导和帮助。活动结束后，对活动进行记录和总结。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service5",
+                title: "“绘出多彩世界凝聚社区温情”",
+                time: "2025年2月16日9:00-11:00",
+                address: "嘉祥县嘉祥街道嘉和社区党群服务中心二楼童乐坊",
+                image: "../img/activaties/绘出多彩世界凝聚社区温情/image.png",
+                img: [
+                    "../img/activaties/绘出多彩世界凝聚社区温情/image.png",
+                    "../img/activaties/绘出多彩世界凝聚社区温情/图片5.jpg"
+                ],
+                description: "嘉和社区嘉和社区为了丰富孩子文化生活，计划开展一场绘画小课堂。",
+                content: [
+                    "在活动开始前，确定好活动时间和地点以及活动流程，提前在居民群里发布公告，确定活动人数，采购好活动材料。",
+                    "在活动当天提前布置现场，由社区工作人员做好人员引导就座。",
+                    "活动开始由老师指导孩子们绘画，社区工作人员进行现场秩序维持。",
+                    "活动结束后，对活动进行记录和总结。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service6",
+                title: "“圾”时分类，绿色“童”行",
+                time: "2024年11月30日（周六）14：30-16：00",
+                address: "嘉和社区党群服务中心二楼童乐坊",
+                image: "../img/activaties/圾时分类/image.png",
+                img: [
+                    "../img/activaties/圾时分类/image.png",
+                    "../img/activaties/圾时分类/图片6.jpg"
+                ],
+                description: "为了通过小学生带动家庭参与低碳环保行动，扩大社会影响力。将低碳环保理念融入校园文化，传承绿色文化基因。嘉和社区计划开展一场“圾”时分类，绿色“童”行宣传活动。",
+                content: [
+                    "活动前两天在居民群内发布活动公告，由家长扫码报名，截止报名时间，有工作人员电话通知报名是否成功。活动前一天，由工作人员现场布置。",
+                    "活动开始首先用开展低碳环保小能手评比、垃圾分类实践、塑料污染防治科普等绿色实践活动，积极营造健康、文明、向上的校园生态文化。 通过宣讲模式开展绿色环保主题教育活动，推动生态文明理念入眼入耳、入脑入心，教育青少年从小事做起，养成绿色、环保、低碳、适度、健康的行为习惯和消费方式。",
+                    "活动结束后，做好活动总结和宣传。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service7",
+                title: "饺香暖冬",
+                time: "2024年11月07日，16:00-18:00",
+                address: "嘉祥街道嘉和社区党群服务中心二楼同心坊",
+                image: "../img/activaties/饺香暖冬/image.png",
+                img: [
+                    "../img/activaties/饺香暖冬/image.png",
+                    "../img/activaties/饺香暖冬/图片7.jpg"
+                ],
+                description: "立冬来临之际，嘉和社区准备邀请辖区居民在党群服务中心开展一场暖心的包饺子活动。通过饺子这一传统美食，不仅提升了居民们的精神文化生活和邻里间的感情，还传递了对居民的关怀与温暖。",
+                content: [
+                    "儿童活动前一天在居民群里发布活动通知，引导居民登记报名表，由工作人员布置好场地。",
+                    "活动当天上午采购好，活动用到的食材和工具，在一楼做好活动居民信息登记，并有工作人员引导上二楼安排人员参加活动。",
+                    "活动中，大家一起动手做饺子。活动结束，由工作人员送居民离开。",
+                    "并做好活动记录，及时汇总、宣传报道。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service8",
+                title: "镂刻新岁，雕艺焕彩",
+                time: "2025年1月22日9:00-11:00",
+                address: "嘉祥县嘉祥街道嘉和社区党群服务中心二楼童乐坊",
+                image: "../img/activaties/镂刻新岁，雕艺焕彩/image.png",
+                img: [
+                    "../img/activaties/镂刻新岁，雕艺焕彩/image.png",
+                    "../img/activaties/镂刻新岁，雕艺焕彩/图片8.jpg"
+                ],
+                description: "为迎接新春佳节，弘扬中华民族优秀传统文化，增进孩子的互动交流，营造欢乐祥和的节日氛围，通过石雕木雕介绍创作，展现雕刻艺术新的光彩。",
+                content: [
+                    "在活动开始前，确定好活动时间和地点以及活动流程，在居民中招募参加对象，提前报名，确定人数，采购好活动材料。",
+                    "在活动当天提前布置现场，由社区工作人员做好人员引导就座。",
+                    "活动开始社区工作人员进行现场秩序维持。",
+                    "活动结束后，对活动进行记录和总结。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service9",
+                title: "巧手编织，扮靓生活",
+                time: "2024年09月26日9:00-10:00",
+                address: "嘉祥县嘉祥街道嘉和社区党群服务中心二楼童乐坊",
+                image: "../img/activaties/巧手编织，扮靓生活/image.png",
+                img: [
+                    "../img/activaties/巧手编织，扮靓生活/image.png",
+                    "../img/activaties/巧手编织，扮靓生活/图片9.jpg"
+                ],
+                description: "嘉和社区，为丰富社区居民的业余生活，提升居民的手工技能，计划开展一场毛线钩织培训活动。",
+                content: [
+                    "在活动开始前，确定好活动时间和地点以及活动流程，给居民做好通知工作。",
+                    "在活动当天提前布置现场，由社区工作人员做好人员引导就座。",
+                    "活动现场，钩织老师耐心地为居民们讲解毛线钩织的基本方法和技巧。从如何拿钩针、如何起针，到如何编织不同的花纹图案，老师一步一步地进行示范，居民们则聚精会神地听讲，不时地提出问题。活动中，对居民进行制作指导和帮助。",
+                    "活动结束后，对活动进行记录和总结。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service10",
+                title: "巧手做月饼，送出社区情",
+                time: "2024年09月12日18:00-20:00~2024年09月13日8:00-09:00",
+                address: "嘉祥县嘉祥街道嘉和社区党群服务中心二楼同行坊、辖区内小区",
+                image: "../img/activaties/巧手做月饼，送出社区情/image.png",
+                img: [
+                    "../img/activaties/巧手做月饼，送出社区情/image.png",
+                    "../img/activaties/巧手做月饼，送出社区情/图片10.jpg"
+                ],
+                description: "中秋节以月之圆兆人之团圆，为寄托思念故乡，思念亲人之情,祈盼丰收与幸福,成为丰富多彩、弥足珍贵的文化遗产。为弘扬中华民族传统文化，营造浓厚的节日氛围，嘉和社区在中秋节来临之际，开展“巧手做月饼 送出社区情”做月饼送月饼活动。",
+                content: [
+                    "在活动开始前，确定好活动时间和地点以及活动流程。",
+                    "在活动当天提前布置现场，由社区工作人员做好月饼，第二天送给值守在岗位的值班人员。",
+                    "活动结束后，做好活动记录和总结。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service11",
+                title: "正双姿，写未来",
+                time: "2024年12月15日15：00-17：00",
+                address: "嘉和社区党群服务中心一楼大厅",
+                image: "../img/activaties/正双姿，写未来/image.png",
+                img: [
+                    "../img/activaties/正双姿，写未来/image.png",
+                    "../img/activaties/正双姿，写未来/图片11.jpg"
+                ],
+                description: "为培养社区儿童对硬笔书法的兴趣，感受中国汉字之美，弘扬博大精深的中华书法文化，嘉和社区预邀请专业硬笔书法老师开展“正双姿 写未来”公益课堂活动。",
+                content: [
+                    "活动前联系专业书法老师，确定好活动时间，提前三天在小区居民群发布活动预告，由家长扫码登记报名，活动前一天截止报名，工作人员依次电话通知时间地点，活动当天有家长带来孩子一起参加活动。",
+                    "活动开始一楼工作人员进行人员签到，引导居民到活动场地按座次牌就座，由专业老师进行授课，工作人员做好活动支持，维持现场秩序。",
+                    "活动结束后，引导居民秩序离开，并做好活动总结和宣传。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service12",
+                title: "健康义诊进社区",
+                time: "2024年10月24日，09:00-10:00",
+                address: "嘉祥街道嘉和社区党群服务中心二楼同行坊",
+                image: "../img/activaties/健康义诊进社区/image.png",
+                img: [
+                    "../img/activaties/健康义诊进社区/image.png",
+                    "../img/activaties/健康义诊进社区/图片12.jpg"
+                ],
+                description: "为了让辖区居民在家门口就能享受到优质医疗服务，进一步弘扬“奉献、友爱、互助、进步”的志愿者精神，嘉和社区计划开展健康义诊进社区志愿服务活动，为辖区居民提供免费的医疗咨询和健康检查。",
+                content: [
+                    "活动前一天联系好社区医院医生，约定好活动时间，并在居民群里发布义诊通知，引导居民报名，并布置好场地。活动当天在一楼做好活动居民信息登记，并有工作人员引导上二楼安排排队就座。",
+                    "活动中，由社区医院工作人员进行为老人检查身体，黄威、劲松现场维持秩序，协助老年人量体重、脱衣服等等。",
+                    "活动结束，由工作人员送居民离开。并做好活动记录，及时汇总、宣传报道。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service13",
+                title: "老年学堂音乐课堂",
+                time: "2024年12月04日15：30-17：00",
+                address: "嘉和社区党群服务中心二楼同乐坊",
+                image: "../img/activaties/老年学堂音乐课堂/image.png",
+                img: [
+                    "../img/activaties/老年学堂音乐课堂/image.png",
+                    "../img/activaties/老年学堂音乐课堂/图片13.jpg"
+                ],
+                description: "为丰富社区老年人的精神文化生活，达到“老有所学，老有所乐”的目标，嘉和社区联合老年大学开展老年音乐课堂活动。",
+                content: [
+                    "活动前联系嘉祥县老年大学音乐老师确定好活动时间；在居民中宣传活动，登记报名人员。",
+                    "活动开始一楼工作人员进行人员签到，引导居民到二楼参加活动场地，二楼工作人员进行现场秩序维持，并做好活动支持。",
+                    "活动结束后，引导居民秩序离开，并做好活动总结和宣传。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service14",
+                title: "品元宵叙党情奔赴新征程",
+                time: "2025年2月12日9:00-11:00",
+                address: "嘉祥县嘉祥街道嘉和社区党群服务中心一楼爱上嘉",
+                image: "../img/activaties/品元宵叙党情奔赴新征程/image.png",
+                img: [
+                    "../img/activaties/品元宵叙党情奔赴新征程/image.png",
+                    "../img/activaties/品元宵叙党情奔赴新征程/图片14.jpg"
+                ],
+                description: "嘉和社区为进一步提升基层党组织的凝聚力，在元宵节计划为党员们举办一场别具意义的品元宵、叙党情交流会活动。",
+                content: [
+                    "在活动开始前，确定好活动时间和地点以及活动流程，提前通知居民，确定人数，采购好活动材料。",
+                    "在活动当天提前布置现场，由社区工作人员做好人员引导就座。",
+                    "活动开始社区工作人员进行现场秩序维持。",
+                    "活动结束后，对活动进行记录和总结。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service15",
+                title: "悦享夕阳老年声乐课堂",
+                time: "2025年1月7日14:00-16:00",
+                address: "嘉祥县嘉祥街道嘉和社区党群服务中心二楼同悦坊",
+                image: "../img/activaties/悦享夕阳老年声乐课堂/image.png",
+                img: [
+                    "../img/activaties/悦享夕阳老年声乐课堂/image.png",
+                    "../img/activaties/悦享夕阳老年声乐课堂/图片15.jpg"
+                ],
+                description: "为加强文化社区的建设，丰富老年居民的业余文化生活，增强老年人对声乐艺术的兴趣，实现老有所学，老有所乐。嘉祥街道嘉和社区联合老年大学，计划开设“老年学堂音乐课堂”，满足老年居民的文化需求。",
+                content: [
+                    "在活动开始前，联系老年大学专业老师确定好活动时间和地点以及活动流程，在居民中招募参加对象，提前报名，确定人数，提前布置活动场地。",
+                    "。在活动当天，由社区工作人员做好人员引导就座。活动开始社区工作人员进行现场秩序维持。",
+                    "活动结束后，对活动进行记录和总结。"
+                ],
+                phone: ""
+            },
+            {
+                id: "service16",
+                title: "巧绘年画，欢喜迎春",
+                time: "2025年1月22日9:00-11:00",
+                address: "嘉祥县嘉祥街道嘉和社区党群服务中心二楼童乐坊",
+                image: "../img/activaties/巧绘年画/image.png",
+                img: [
+                    "../img/activaties/巧绘年画/image.png",
+                    "../img/activaties/巧绘年画/图片16.jpg"
+                ],
+                description: "“年画画年年，年年画年画”，为迎接新春佳节，弘扬中华民族优秀传统文化，增进孩子的互动交流，营造欢乐祥和的节日氛围，嘉和社区开展“巧绘年画 喜迎新春”活动。",
+                content: [
+                    "在活动开始前，确定好活动时间和地点以及活动流程，在居民中招募参加对象，提前报名，确定人数，采购好活动材料。",
+                    "在活动当天提前布置现场，由社区工作人员做好人员引导就座。",
+                    "活动开始社区工作人员进行现场秩序维持。",
+                    "活动结束后，对活动进行记录和总结。"
+                ],
+                phone: ""
+            }
+        ];
+
+        const itemsPerPage = 4;
+        let currentPage = 1;
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function () {
+            // 解析 URL 参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+
+            const totalPages = Math.ceil(imageItems.length / itemsPerPage);
+            document.querySelector('.total-pages').textContent = totalPages;
+
+            displayImages();
+            setupEventListeners();
+
+            if (itemId) {
+                // 找到对应的活动项
+                const itemIndex = imageItems.findIndex(item => item.id === itemId);
+                if (itemIndex !== -1) {
+                    // 显示对应的对话框
+                    showItemDetails(itemIndex);
+                }
+            }
+        });
+
+        function setupEventListeners() {
+            // 分页按钮事件
+            document.querySelector('.prev-page').addEventListener('click', () => goToPage(currentPage - 1));
+            document.querySelector('.next-page').addEventListener('click', () => goToPage(currentPage + 1));
+            document.querySelector('.first-page').addEventListener('click', () => goToPage(1));
+            document.querySelector('.last-page').addEventListener('click', () => goToPage(Math.ceil(imageItems.length / itemsPerPage)));
+            document.getElementById('prevArrow').addEventListener('click', () => goToPage(currentPage - 1));
+            document.getElementById('nextArrow').addEventListener('click', () => goToPage(currentPage + 1));
+
+            // 关闭模态框
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            window.addEventListener('click', (event) => {
+                if (event.target === document.getElementById('itemModal')) {
+                    closeModal();
+                }
+            });
+
+            // 标签页切换
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function () {
+                    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+                    this.classList.add('active');
+                    document.getElementById(this.getAttribute('data-tab')).classList.add('active');
+                });
+            });
+        }
+
+        function displayImages() {
+            const imageGrid = document.getElementById('imageGrid');
+            imageGrid.innerHTML = '';
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, imageItems.length);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const item = imageItems[i];
+                const imageItem = document.createElement('div');
+                imageItem.className = 'image-item';
+                imageItem.dataset.index = i;
+
+                imageItem.innerHTML = `
+                    <div class="image-container">
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="text-container">
+                            <h4>${item.title}</h4>
+                            <p>【开放时间】${item.time}</p>
+                            <p>【活动地址】${item.address}</p>
+                        </div>
+                    </div>
+                `;
+
+                imageItem.addEventListener('click', () => showItemDetails(i));
+                imageGrid.appendChild(imageItem);
+            }
+
+            updatePaginationButtons();
+        }
+
+        function showItemDetails(index) {
+            const item = imageItems[index];
+
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalPhone').textContent = item.phone || '暂无联系电话';
+            document.getElementById('modalTime').textContent = item.time;
+            document.getElementById('modalAddress').textContent = item.address;
+            document.getElementById('modalImage').src = item.image;
+
+            // 填充活动内容
+            const contentList = document.getElementById('modalContent');
+            contentList.innerHTML = '';
+            item.content.forEach(content => {
+                const li = document.createElement('li');
+                li.textContent = content;
+                contentList.appendChild(li);
+            });
+
+            // 填充活动图片
+            const imagesContainer = document.getElementById('modalImagesContainer');
+            imagesContainer.innerHTML = '';
+            item.img.forEach(imgSrc => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.style.width = '100%';
+                img.style.maxWidth = '300px';
+                img.style.margin = '10px';
+                img.style.borderRadius = '8px';
+                imagesContainer.appendChild(img);
+            });
+
+            document.getElementById('itemModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('itemModal').style.display = 'none';
+        }
+
+        function goToPage(page) {
+            const totalPages = Math.ceil(imageItems.length / itemsPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                displayImages();
+                document.querySelector('.current-page').textContent = currentPage;
+            }
+        }
+
+        function updatePaginationButtons() {
+            const totalPages = Math.ceil(imageItems.length / itemsPerPage);
+            document.querySelector('.prev-page').disabled = currentPage === 1;
+            document.querySelector('.next-page').disabled = currentPage === totalPages;
+            document.getElementById('prevArrow').style.opacity = currentPage === 1 ? '0.5' : '1';
+            document.getElementById('nextArrow').style.opacity = currentPage === totalPages ? '0.5' : '1';
+        }
+    </script>
+</body>
+
+</html>
