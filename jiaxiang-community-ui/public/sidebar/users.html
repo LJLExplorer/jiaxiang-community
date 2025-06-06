@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .header {
+        /* background: linear-gradient(90deg, #02a85b 0%, #00c3ff 100%); */
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 24px;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .header:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%);
+        transform: translateX(-100%);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+    }
+    .container{
+        height: 70%;
+    }
+    .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 10px;
+        }
+        .pagination button {
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .pagination button:hover {
+            background-color: #45a049;
+        }
+        .pagination button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .page-info {
+            padding: 8px 12px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+        .content {
+            height: 90%;
+            margin: 20px 0;
+             overflow: hidden;
+        }
+        .p-item {
+            margin: 15px 0;
+            padding: 15px;
+            color: white;
+            /* background-color: #f9f9f9; */
+            border-left: 4px solid #4CAF50;
+            font-size: 16px;
+        }
+        .p-item:hover{
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+            box-sizing: border-box;
+        }
+</style>
+
+<body>
+    <div style="width: 100%; height: 100%;">
+        <div class="header" style="width: 100%; height: 15%;">
+            <h2 style="font-size: 70px;">社区荣誉</h2>
+        </div>
+        <div class="container">
+            <div class="content">
+                <!-- 分页内容将通过JS动态插入 -->
+            </div>
+            <div class="pagination">
+                <button id="firstPage">第一页</button>
+                <button id="prevPage">上一页</button>
+                <span class="page-info">第 <span id="currentPage">1</span> 页</span>
+                <button id="nextPage">下一页</button>
+                <button id="lastPage">最后一页</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 定义内容数组
+        /*const paragraphs = [
+            '<p>嘉和社区自成立以来，始终秉承服务居民、促进和谐的宗旨，荣获了多项荣誉称号。</p>',
+            '<p>2018年，荣获"全国文明社区"称号。</p>',
+            '<p>2019年，被评为"优秀基层党组织"。</p>',
+            '<p>2020年，获得"社区治理创新奖"。</p>',
+            '<p>2021年，荣获"绿色环保社区"称号。</p>',
+            '<p>2022年，被评为"最具幸福感社区"。</p>'
+        ];*/
+        let response;
+        let itemsPerPage = 6;
+        let paragraphs;
+        let currentPage = 1;
+        let totalPages;
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', async function () {
+            response = (await (await fetch(`/api/jiahe/community_honor?pageNum=${currentPage}&pageSize=${itemsPerPage}`)).json()).data;
+
+            paragraphs = response.records;
+            // 分页相关变量
+            itemsPerPage = response.size; // 每页显示的项数
+            currentPage = response.currentPage; // 当前页码
+            totalPages = response.pages; // 总页数
+
+            updateContent();
+            updateButtonsState();
+
+            // 按钮事件监听
+            document.getElementById('firstPage').addEventListener('click', function () {
+                currentPage = 1;
+                updateContent();
+                updateButtonsState();
+            });
+
+            document.getElementById('prevPage').addEventListener('click', function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateContent();
+                    updateButtonsState();
+                }
+            });
+
+            document.getElementById('nextPage').addEventListener('click', function () {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updateContent();
+                    updateButtonsState();
+                }
+            });
+
+            document.getElementById('lastPage').addEventListener('click', function () {
+                currentPage = totalPages;
+                updateContent();
+                updateButtonsState();
+            });
+        });
+
+        // 更新内容显示
+        function updateContent() {
+            const content = document.querySelector('.content');
+            content.innerHTML = ''; // 清空内容
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, paragraphs.length);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const pElement = document.createElement('div');
+                pElement.className = 'p-item';
+                pElement.innerHTML = paragraphs[i];
+                content.appendChild(pElement);
+            }
+
+            // 更新页码显示
+            document.getElementById('currentPage').textContent = currentPage;
+        }
+
+        // 更新按钮状态
+        function updateButtonsState() {
+            document.getElementById('firstPage').disabled = (currentPage === 1);
+            document.getElementById('prevPage').disabled = (currentPage === 1);
+            document.getElementById('nextPage').disabled = (currentPage === totalPages);
+            document.getElementById('lastPage').disabled = (currentPage === totalPages);
+        }
+    </script>
+
+</body>
+
+</html>

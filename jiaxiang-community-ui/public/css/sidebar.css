@@ -1,0 +1,101 @@
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+
+ body {
+     /* min-height: 100vh; */
+     /* font-family: Arial, sans-serif; */
+ }
+
+ .content {
+     width: 100vw;
+     height: 100vh;
+     background: url("../img/一楼大厅.png") no-repeat;
+     background-size: 100% 100%;
+     background-color: rgba(66, 66, 66, 0.493);
+     display: flex;
+     box-sizing: border-box;
+ }
+
+ /* 侧边栏样式 */
+ .sidebar {
+     width: 250px;
+     height: 100%;
+     color: white;
+     padding: 20px 0;
+     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+     box-sizing: border-box;
+ }
+
+ .sidebar-menu {
+     /* padding: 20px 0; */
+     box-sizing: border-box;
+ }
+
+ .sidebar-menu ul {
+     list-style: none;
+     box-sizing: border-box;
+ }
+
+ .sidebar-menu li {
+     height: 10vh;
+     cursor: pointer;
+     transition: background-color 0.3s;
+     text-align: center;
+     line-height: 10vh;
+     font-size: 30px;
+ }
+
+ .sidebar-menu li:hover {
+     box-shadow: 2px 0 5px rgba(210, 208, 208, 0.5);
+     background-color: rgba(210, 208, 208, 0.5);
+     border-left: 7px solid white;
+ }
+
+ .sidebar-menu li.active {
+     /* background-color: #3498db; */
+ }
+
+ .sidebar-menu li i {
+     margin-right: 10px;
+     width: 20px;
+     text-align: center;
+ }
+
+ /* 主内容区域样式 */
+ .main-content {
+     flex: 1;
+     box-sizing: border-box;
+     overflow: hidden;
+ }
+
+ .content-section {
+     width: 100%;
+     height: 100%;
+     display: none;
+     box-sizing: border-box;
+ }
+
+ .content-section.active {
+     display: block;
+ }
+
+ .back-button {
+        position: absolute;
+        top: 5%;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background-image: url('../img/返回.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        z-index: 10;
+    }
+
+    .back-button:hover {
+        transform: scale(1.1);
+    }
