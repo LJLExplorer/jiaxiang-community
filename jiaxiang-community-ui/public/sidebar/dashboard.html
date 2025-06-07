@@ -191,7 +191,7 @@
         const imageEle = document.querySelector(".main img");
         const titleEle = document.querySelector(".main h1");
 
-        fetch(apiUrls["community_profile"]).then(res => res.json())
+        fetch(apiUrls["community_profile"]()).then(res => res.json())
             .then(json => {
                 contentEle.innerHTML = `
                     <h1>${json.data.title}</h1>

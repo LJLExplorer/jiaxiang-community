@@ -38,9 +38,9 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg,
-                    rgba(255, 255, 255, 0) 0%,
-                    rgba(255, 255, 255, 0.3) 50%,
-                    rgba(255, 255, 255, 0) 100%);
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0) 100%);
             transform: translateX(-100%);
             animation: shine 3s infinite;
         }
@@ -354,163 +354,165 @@
 </head>
 
 <body>
-    <div class="header">
-        <h2>社区活动</h2>
+<div class="header">
+    <h2>社区活动</h2>
+</div>
+
+<div class="container">
+    <div class="grid-container" id="imageGrid">
+        <!-- 图片将通过JavaScript动态加载 -->
     </div>
 
-    <div class="container">
-        <div class="grid-container" id="imageGrid">
-            <!-- 图片将通过JavaScript动态加载 -->
-        </div>
+    <div class="arrow-container">
+        <div class="arrow" id="prevArrow">←</div>
+        <div class="arrow" id="nextArrow">→</div>
+    </div>
 
-        <div class="arrow-container">
-            <div class="arrow" id="prevArrow">←</div>
-            <div class="arrow" id="nextArrow">→</div>
-        </div>
-
-        <div class="pagination">
-            <button class="first-page">第一页</button>
-            <button class="prev-page">上一页</button>
-            <span class="page-info">第 <span class="current-page">1</span> 页 / 共 <span class="total-pages">1</span>
+    <div class="pagination">
+        <button class="first-page">第一页</button>
+        <button class="prev-page">上一页</button>
+        <span class="page-info">第 <span class="current-page">1</span> 页 / 共 <span class="total-pages">1</span>
                 页</span>
-            <button class="next-page">下一页</button>
-            <button class="last-page">最后一页</button>
-        </div>
+        <button class="next-page">下一页</button>
+        <button class="last-page">最后一页</button>
     </div>
+</div>
 
-    <!-- 对话框 -->
-    <div class="modal" id="itemModal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-            <h2 class="modal-title" id="modalTitle"></h2>
-            <div class="modal-info">
-                <img id="modalImage" src="" alt="活动图片">
-                <div>
-                    <p><strong>联系电话：</strong><span id="modalPhone"></span></p>
-                    <p><strong>开放时间：</strong><span id="modalTime"></span></p>
-                    <p><strong>活动地址：</strong><span id="modalAddress"></span></p>
-                </div>
-            </div>
-            <div class="tabs-container">
-                <div class="tabs-header">
-                    <div class="tab-button active" data-tab="tab1">活动内容</div>
-                    <div class="tab-button" data-tab="tab2">活动图片</div>
-                    <div class="tab-button" data-tab="tab3">活动视频</div>
-                </div>
-                <div class="tabs-content">
-                    <div class="tab-pane active" id="tab1">
-                        <ol id="modalContent"></ol>
-                    </div>
-                    <div class="tab-pane" id="tab2">
-                        <div id="modalImagesContainer"></div>
-                    </div>
-                    <div class="tab-pane" id="tab3">
-                        <p>暂无视频内容</p>
-                    </div>
-                </div>
+<!-- 对话框 -->
+<div class="modal" id="itemModal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <div class="modal-info">
+            <img id="modalImage" src="" alt="活动图片">
+            <div>
+                <p><strong>联系电话：</strong><span id="modalPhone"></span></p>
+                <p><strong>开放时间：</strong><span id="modalTime"></span></p>
+                <p><strong>活动地址：</strong><span id="modalAddress"></span></p>
             </div>
         </div>
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <div class="tab-button active" data-tab="tab1">活动内容</div>
+                <div class="tab-button" data-tab="tab2">活动图片</div>
+                <div class="tab-button" data-tab="tab3">活动视频</div>
+            </div>
+            <div class="tabs-content">
+                <div class="tab-pane active" id="tab1">
+                    <ol id="modalContent"></ol>
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <div id="modalImagesContainer"></div>
+                </div>
+                <div class="tab-pane" id="tab3">
+                    <p>暂无视频内容</p>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script>
-        // 图片数据
-        let imageItems =[];
+<script type="module">
+    // 图片数据
+    import apiUrls from "../js/api-urls.js";
 
-        let itemsPerPage ;
-        let currentPage ;
-        let totalPages ;
-        // 初始化页面
-        document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(`/api/jiahe/list_community_activities?pageNum=${currentPage}&pageSize=${itemsPerPage}`)).json()).data;
+    let imageItems = [];
+
+    let itemsPerPage = 4;
+    let currentPage = 1;
+    let totalPages;
+    let response;
+
+    // 初始化页面
+    document.addEventListener('DOMContentLoaded', async function () {
+        response = (await (await fetch(apiUrls.list_community_activities(currentPage, itemsPerPage))).json()).data;
 
 
-            for await (let info of response) {
-                const subRes = await fetch('/api/jiahe/community_activity_detail?id=' + info.id)
-                const json = await subRes.json()
-                const obj = json.data;
+        for await (let info of response) {
+            const subRes = await fetch(apiUrls.community_activity_detail(info.id))
+            const json = await subRes.json()
+            const obj = json.data;
 
-                imageItems.push({
-                    id: info.id,
-                    title: info.title,
-                    time: info.startTime,
-                    address: "嘉祥街道嘉和社区党群服务中心二楼",
-                    image: info.images,
-                    img: obj.images,
-                    description: "为进一步深化“星火阅读”活动品牌...",
-                    content: [
-                        obj.content
-                    ],
-                    phone: ""
-                });
+            imageItems.push({
+                id: info.id,
+                title: info.title,
+                time: info.startTime,
+                address: "嘉祥街道嘉和社区党群服务中心二楼",
+                image: info.images,
+                img: obj.images,
+                description: "为进一步深化“星火阅读”活动品牌...",
+                content: [
+                    obj.content
+                ],
+                phone: ""
+            });
+        }
+        // 分页相关变量
+        totalPages = Math.ceil(imageItems.length / itemsPerPage);
+
+
+        // 解析 URL 参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const itemId = urlParams.get('id');
+
+        document.querySelector('.total-pages').textContent = totalPages;
+
+        displayImages();
+        setupEventListeners();
+
+        if (itemId) {
+            // 找到对应的活动项
+            const itemIndex = imageItems.findIndex(item => item.id === itemId);
+            if (itemIndex !== -1) {
+                // 显示对应的对话框
+                showItemDetails(itemIndex);
             }
-            // 分页相关变量
-            itemsPerPage = response.size; // 每页显示的项数
-            currentPage = response.currentPage; // 当前页码
-            totalPages = response.pages; // 总页数
+        }
+    });
 
+    function setupEventListeners() {
+        // 分页按钮事件
+        document.querySelector('.prev-page').addEventListener('click', () => goToPage(currentPage - 1));
+        document.querySelector('.next-page').addEventListener('click', () => goToPage(currentPage + 1));
+        document.querySelector('.first-page').addEventListener('click', () => goToPage(1));
+        document.querySelector('.last-page').addEventListener('click', () => goToPage(Math.ceil(imageItems.length / itemsPerPage)));
+        document.getElementById('prevArrow').addEventListener('click', () => goToPage(currentPage - 1));
+        document.getElementById('nextArrow').addEventListener('click', () => goToPage(currentPage + 1));
 
-            // 解析 URL 参数
-            const urlParams = new URLSearchParams(window.location.search);
-            const itemId = urlParams.get('id');
-
-            document.querySelector('.total-pages').textContent = totalPages;
-
-            displayImages();
-            setupEventListeners();
-
-            if (itemId) {
-                // 找到对应的活动项
-                const itemIndex = imageItems.findIndex(item => item.id === itemId);
-                if (itemIndex !== -1) {
-                    // 显示对应的对话框
-                    showItemDetails(itemIndex);
-                }
+        // 关闭模态框
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        window.addEventListener('click', (event) => {
+            if (event.target === document.getElementById('itemModal')) {
+                closeModal();
             }
         });
 
-        function setupEventListeners() {
-            // 分页按钮事件
-            document.querySelector('.prev-page').addEventListener('click', () => goToPage(currentPage - 1));
-            document.querySelector('.next-page').addEventListener('click', () => goToPage(currentPage + 1));
-            document.querySelector('.first-page').addEventListener('click', () => goToPage(1));
-            document.querySelector('.last-page').addEventListener('click', () => goToPage(Math.ceil(imageItems.length / itemsPerPage)));
-            document.getElementById('prevArrow').addEventListener('click', () => goToPage(currentPage - 1));
-            document.getElementById('nextArrow').addEventListener('click', () => goToPage(currentPage + 1));
+        // 标签页切换
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function () {
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
 
-            // 关闭模态框
-            document.getElementById('closeModal').addEventListener('click', closeModal);
-            window.addEventListener('click', (event) => {
-                if (event.target === document.getElementById('itemModal')) {
-                    closeModal();
-                }
+                this.classList.add('active');
+                document.getElementById(this.getAttribute('data-tab')).classList.add('active');
             });
+        });
+    }
 
-            // 标签页切换
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.addEventListener('click', function () {
-                    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-                    document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+    function displayImages() {
+        const imageGrid = document.getElementById('imageGrid');
+        imageGrid.innerHTML = '';
 
-                    this.classList.add('active');
-                    document.getElementById(this.getAttribute('data-tab')).classList.add('active');
-                });
-            });
-        }
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, imageItems.length);
 
-        function displayImages() {
-            const imageGrid = document.getElementById('imageGrid');
-            imageGrid.innerHTML = '';
+        for (let i = startIndex; i < endIndex; i++) {
+            const item = imageItems[i];
+            const imageItem = document.createElement('div');
+            imageItem.className = 'image-item';
+            imageItem.dataset.index = i;
 
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = Math.min(startIndex + itemsPerPage, imageItems.length);
-
-            for (let i = startIndex; i < endIndex; i++) {
-                const item = imageItems[i];
-                const imageItem = document.createElement('div');
-                imageItem.className = 'image-item';
-                imageItem.dataset.index = i;
-
-                imageItem.innerHTML = `
+            imageItem.innerHTML = `
                     <div class="image-container">
                         <img src="${item.image}" alt="${item.title}">
                         <div class="text-container">
@@ -521,68 +523,68 @@
                     </div>
                 `;
 
-                imageItem.addEventListener('click', () => showItemDetails(i));
-                imageGrid.appendChild(imageItem);
-            }
-
-            updatePaginationButtons();
+            imageItem.addEventListener('click', () => showItemDetails(i));
+            imageGrid.appendChild(imageItem);
         }
 
-        function showItemDetails(index) {
-            const item = imageItems[index];
+        updatePaginationButtons();
+    }
 
-            document.getElementById('modalTitle').textContent = item.title;
-            document.getElementById('modalPhone').textContent = item.phone || '暂无联系电话';
-            document.getElementById('modalTime').textContent = item.time;
-            document.getElementById('modalAddress').textContent = item.address;
-            document.getElementById('modalImage').src = item.image;
+    function showItemDetails(index) {
+        const item = imageItems[index];
 
-            // 填充活动内容
-            const contentList = document.getElementById('modalContent');
-            contentList.innerHTML = '';
-            item.content.forEach(content => {
-                const li = document.createElement('li');
-                li.textContent = content;
-                contentList.appendChild(li);
-            });
+        document.getElementById('modalTitle').textContent = item.title;
+        document.getElementById('modalPhone').textContent = item.phone || '暂无联系电话';
+        document.getElementById('modalTime').textContent = item.time;
+        document.getElementById('modalAddress').textContent = item.address;
+        document.getElementById('modalImage').src = item.image;
 
-            // 填充活动图片
-            const imagesContainer = document.getElementById('modalImagesContainer');
-            imagesContainer.innerHTML = '';
-            item.img.forEach(imgSrc => {
-                const img = document.createElement('img');
-                img.src = imgSrc;
-                img.style.width = '100%';
-                img.style.maxWidth = '300px';
-                img.style.margin = '10px';
-                img.style.borderRadius = '8px';
-                imagesContainer.appendChild(img);
-            });
+        // 填充活动内容
+        const contentList = document.getElementById('modalContent');
+        contentList.innerHTML = '';
+        item.content.forEach(content => {
+            const li = document.createElement('li');
+            li.textContent = content;
+            contentList.appendChild(li);
+        });
 
-            document.getElementById('itemModal').style.display = 'flex';
+        // 填充活动图片
+        const imagesContainer = document.getElementById('modalImagesContainer');
+        imagesContainer.innerHTML = '';
+        item.img.forEach(imgSrc => {
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            img.style.width = '100%';
+            img.style.maxWidth = '300px';
+            img.style.margin = '10px';
+            img.style.borderRadius = '8px';
+            imagesContainer.appendChild(img);
+        });
+
+        document.getElementById('itemModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('itemModal').style.display = 'none';
+    }
+
+    function goToPage(page) {
+        const totalPages = Math.ceil(imageItems.length / itemsPerPage);
+        if (page >= 1 && page <= totalPages) {
+            currentPage = page;
+            displayImages();
+            document.querySelector('.current-page').textContent = currentPage;
         }
+    }
 
-        function closeModal() {
-            document.getElementById('itemModal').style.display = 'none';
-        }
-
-        function goToPage(page) {
-            const totalPages = Math.ceil(imageItems.length / itemsPerPage);
-            if (page >= 1 && page <= totalPages) {
-                currentPage = page;
-                displayImages();
-                document.querySelector('.current-page').textContent = currentPage;
-            }
-        }
-
-        function updatePaginationButtons() {
-            const totalPages = Math.ceil(imageItems.length / itemsPerPage);
-            document.querySelector('.prev-page').disabled = currentPage === 1;
-            document.querySelector('.next-page').disabled = currentPage === totalPages;
-            document.getElementById('prevArrow').style.opacity = currentPage === 1 ? '0.5' : '1';
-            document.getElementById('nextArrow').style.opacity = currentPage === totalPages ? '0.5' : '1';
-        }
-    </script>
+    function updatePaginationButtons() {
+        const totalPages = Math.ceil(imageItems.length / itemsPerPage);
+        document.querySelector('.prev-page').disabled = currentPage === 1;
+        document.querySelector('.next-page').disabled = currentPage === totalPages;
+        document.getElementById('prevArrow').style.opacity = currentPage === 1 ? '0.5' : '1';
+        document.getElementById('nextArrow').style.opacity = currentPage === totalPages ? '0.5' : '1';
+    }
+</script>
 </body>
 
 </html>

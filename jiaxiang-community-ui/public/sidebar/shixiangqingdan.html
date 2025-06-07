@@ -260,20 +260,21 @@
     <!-- 动画背景 -->
     <div class="modal-background" id="modalBackground"></div>
 
-    <script>
+    <script type="module">
         // 数据 - 包含文字信息
+        import apiUrls from "../js/api-urls.js";
+
         let items = [];
 
         let itemsPerPage = 2;
         let currentPage = 1;
         let totalPages = Math.ceil(items.length / itemsPerPage);
+        let response;
 
         document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(`/api/jiahe/list_matters?pageNum=${currentPage}&pageSize=${itemsPerPage}`)).json()).data;
+            response = (await (await fetch(apiUrls.list_matters(currentPage,itemsPerPage))).json()).data;
+
             // 分页相关变量
-            itemsPerPage = response.size; // 每页显示的项数
-            currentPage = response.currentPage; // 当前页码
-            totalPages = response.pages; // 总页数
             items = response.records.map(item => {
                 return {
                     title: item.title,
@@ -282,6 +283,7 @@
                     file: item.content
                 }
             });
+            let totalPages = Math.ceil(items.length / itemsPerPage);
 
             const itemGrid = document.getElementById('itemGrid');
             const prevPageBtn = document.querySelector('.prev-page');

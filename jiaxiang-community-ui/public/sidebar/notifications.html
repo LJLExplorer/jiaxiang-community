@@ -348,20 +348,23 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import apiUrls from "../js/api-urls.js";
+
         // 图片数据 - 包含图片URL和对应的文字信息
-        let imageItems =[];
+        let imageItems = [];
 
         let itemsPerPage = 4;
         let currentPage = 1;
         let totalPages = Math.ceil(imageItems.length / itemsPerPage);
+        let response;
 
         document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(`/api/jiahe/list_serve_people?pageNum=${currentPage}&pageSize=${itemsPerPage}`)).json()).data;
+            response = (await (await fetch(apiUrls.list_serve_people(currentPage, itemsPerPage))).json()).data;
 
 
             for await (let info of response.records) {
-                const subRes = await fetch('/api/jiahe/serve_people_info?id=' + info.id)
+                const subRes = await fetch(apiUrls.serve_people_info(info.id))
                 const json = await subRes.json()
                 const obj = json.data;
 
@@ -378,9 +381,7 @@
                 });
             }
             // 分页相关变量
-            itemsPerPage = response.size; // 每页显示的项数
-            currentPage = response.currentPage; // 当前页码
-            totalPages = response.pages; // 总页数
+            let totalPages = Math.ceil(imageItems.length / itemsPerPage);
 
             const imageGrid = document.getElementById('imageGrid');
             const prevPageBtn = document.querySelector('.prev-page');

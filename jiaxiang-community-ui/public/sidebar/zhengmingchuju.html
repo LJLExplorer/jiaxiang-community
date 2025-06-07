@@ -293,29 +293,30 @@
 <!-- 动画背景 -->
 <div class="modal-background" id="modalBackground"></div>
 
-<script>
+<script type="module">
     // 数据 - 包含文字信息
+    import apiUrls from "../js/api-urls.js";
+
     let items = [];
 
     let itemsPerPage = 4;
     let currentPage = 1;
     let totalPages = Math.ceil(items.length / itemsPerPage);
+    let response;
 
     document.addEventListener('DOMContentLoaded', async function () {
-        response = (await (await fetch(`/api/jiahe/proof_documents?pageNum=${currentPage}&pageSize=${itemsPerPage}`)).json()).data;
+        response = (await (await fetch(apiUrls.proof_documents(currentPage,itemsPerPage))).json()).data;
 
 
         for await (let info of response.records) {
-            const subRes = await fetch('/api/jiahe/proof_info?id=' + info.id)
+            const subRes = await fetch(apiUrls.proof_info(info.id))
             const json = await subRes.json()
             const obj = json.data;
 
             items.push({name: obj.title, text2: "点击进入", content: obj.content});
         }
         // 分页相关变量
-        itemsPerPage = response.size; // 每页显示的项数
-        currentPage = response.currentPage; // 当前页码
-        totalPages = response.pages; // 总页数
+        totalPages = Math.ceil(items.length / itemsPerPage);
 
 
         const itemGrid = document.getElementById('itemGrid');

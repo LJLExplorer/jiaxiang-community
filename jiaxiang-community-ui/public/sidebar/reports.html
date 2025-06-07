@@ -204,7 +204,9 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+
+        import apiUrls from "../js/api-urls.js";
 
         let response;
         // 图片数据 - 包含图片URL和对应的文字信息
@@ -270,15 +272,12 @@
         let totalPages = Math.ceil(imageItems.length / itemsPerPage);
 
         document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(`/api/jiahe/list_committees_members?pageNum=${currentPage}&pageSize=${itemsPerPage}`)).json());
+            response = (await (await fetch(apiUrls.list_committees_members(currentPage, itemsPerPage))).json());
 
             imageItems = response.data.records.map(value => {
-                const [name, position] = value.nameAndPosition.split("-");
-                return {text1: name, text3: position, text2: value.duty, url: value.images}
+                return {text1: value.name, text3: value.position, text2: value.duty, url: value.images}
             });
-            itemsPerPage = response.data.size;
-            currentPage = response.data.currentPage;
-            totalPages = response.data.pages;
+            let totalPages = Math.ceil(imageItems.length / itemsPerPage);
 
             const imageGrid = document.getElementById('imageGrid');
             const prevPageBtn = document.querySelector('.prev-page');
