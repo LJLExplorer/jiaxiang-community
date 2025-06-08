@@ -126,17 +126,9 @@
             </div>
         </div>
     </div>
-    <script type="module">
-        // 定义内容数组
-        /*const paragraphs = [
-            '<p>嘉和社区自成立以来，始终秉承服务居民、促进和谐的宗旨，荣获了多项荣誉称号。</p>',
-            '<p>2018年，荣获"全国文明社区"称号。</p>',
-            '<p>2019年，被评为"优秀基层党组织"。</p>',
-            '<p>2020年，获得"社区治理创新奖"。</p>',
-            '<p>2021年，荣获"绿色环保社区"称号。</p>',
-            '<p>2022年，被评为"最具幸福感社区"。</p>'
-        ];*/
-        import apiUrls from "../js/api-urls.js";
+    <script type="text/javascript" src="../js/api-urls.js"></script>
+    <script type="text/javascript">
+
 
         let response;
         let itemsPerPage = 6;
@@ -146,7 +138,7 @@
 
         // 页面加载时初始化
         document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(apiUrls.community_honor(currentPage,itemsPerPage))).json()).data;
+            response = (await (await fetch(API_URLS.community_honor(currentPage,itemsPerPage))).json()).data;
 
             paragraphs = response.records;
             // 分页相关变量

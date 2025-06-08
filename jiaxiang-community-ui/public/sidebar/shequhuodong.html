@@ -412,10 +412,9 @@
     </div>
 </div>
 
-<script type="module">
+<script type="text/javascript" src="../js/api-urls.js"></script>
+<script type="text/javascript">
     // 图片数据
-    import apiUrls from "../js/api-urls.js";
-
     let imageItems = [];
 
     let itemsPerPage = 4;
@@ -425,11 +424,11 @@
 
     // 初始化页面
     document.addEventListener('DOMContentLoaded', async function () {
-        response = (await (await fetch(apiUrls.list_community_activities(currentPage, itemsPerPage))).json()).data;
+        response = (await (await fetch(API_URLS.list_community_activities(currentPage, itemsPerPage))).json()).data;
 
 
         for await (let info of response) {
-            const subRes = await fetch(apiUrls.community_activity_detail(info.id))
+            const subRes = await fetch(API_URLS.community_activity_detail(info.id))
             const json = await subRes.json()
             const obj = json.data;
 

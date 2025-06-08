@@ -347,9 +347,8 @@
             </div>
         </div>
     </div>
-
-    <script type="module">
-        import apiUrls from "../js/api-urls.js";
+    <script type="text/javascript" src="../js/api-urls.js"></script>
+    <script type="text/javascript">
 
         // 图片数据 - 包含图片URL和对应的文字信息
         let imageItems = [];
@@ -360,11 +359,11 @@
         let response;
 
         document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(apiUrls.list_serve_people(currentPage, itemsPerPage))).json()).data;
+            response = (await (await fetch(API_URLS.list_serve_people(currentPage, itemsPerPage))).json()).data;
 
 
             for await (let info of response.records) {
-                const subRes = await fetch(apiUrls.serve_people_info(info.id))
+                const subRes = await fetch(API_URLS.serve_people_info(info.id))
                 const json = await subRes.json()
                 const obj = json.data;
 
@@ -376,8 +375,8 @@
                     address: obj.location,
                     image: obj.images,
                     description: obj.serviceIntro,
-                    content: obj.serviceContent.split(" "),
-                    rules: obj.serviceRules.split(" ")
+                    content: typeof obj.serviceContent === "string" ? obj.serviceContent.split(" ") : obj.serviceContent,
+                    rules: typeof obj.serviceRules === "string" ? obj.serviceRules.split(" ") : obj.serviceRules,
                 });
             }
             // 分页相关变量

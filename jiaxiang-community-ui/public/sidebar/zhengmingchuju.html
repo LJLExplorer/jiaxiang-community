@@ -293,9 +293,8 @@
 <!-- 动画背景 -->
 <div class="modal-background" id="modalBackground"></div>
 
-<script type="module">
-    // 数据 - 包含文字信息
-    import apiUrls from "../js/api-urls.js";
+<script type="text/javascript" src="../js/api-urls.js"></script>
+<script type="text/javascript">
 
     let items = [];
 
@@ -305,11 +304,11 @@
     let response;
 
     document.addEventListener('DOMContentLoaded', async function () {
-        response = (await (await fetch(apiUrls.proof_documents(currentPage,itemsPerPage))).json()).data;
+        response = (await (await fetch(API_URLS.proof_documents(currentPage,itemsPerPage))).json()).data;
 
 
         for await (let info of response.records) {
-            const subRes = await fetch(apiUrls.proof_info(info.id))
+            const subRes = await fetch(API_URLS.proof_info(info.id))
             const json = await subRes.json()
             const obj = json.data;
 

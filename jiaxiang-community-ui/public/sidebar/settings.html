@@ -166,11 +166,9 @@
         社区定期举办各类活动，包括健康讲座、体育赛事、环保行动等，以增强邻里关系，促进社区文化建设。</p>
     <button id="closeInfo" class="close-button">关闭</button>
 </div>
-
-<script type="module">
+<script type="text/javascript" src="../js/api-urls.js"></script>
+<script type="text/javascript">
     // 计算图片相对于容器的位置
-    import apiUrls from "../js/api-urls.js";
-
     function calculatePosition(relativePos, containerWidth, containerHeight) {
         return {
             top: relativePos.top * containerHeight,
@@ -206,7 +204,8 @@
 
     let response;
     document.addEventListener("DOMContentLoaded", async function () {
-        response = (await (await fetch(apiUrls.grid_management())).json());
+
+        response = (await (await fetch(API_URLS.grid_management())).json());
     });
 
     // 绑定点击事件

@@ -204,75 +204,19 @@
         </div>
     </div>
 
-    <script type="module">
-
-        import apiUrls from "../js/api-urls.js";
+    <script type="text/javascript" src="../js/api-urls.js"></script>
+    <script type="text/javascript">
 
         let response;
         // 图片数据 - 包含图片URL和对应的文字信息
-        let imageItems = [
-            {
-                text1: "于燕",
-                text3: "社区党委书记 居委会主任",
-                text2: "管理社区所有小区",
-                url: "../img/liangwei-photo/yuyan.png"
-            },
-            {
-                text1: "郭亚芳",
-                text3: "社区书记助理 社区两委成员",
-                text2: "管理红旗花园小区",
-                url: "../img/liangwei-photo/guoyafang.png"
-            },
-            {
-                text1: "郭振南",
-                text3: "一般社区工作人员",
-                text2: "管理祥曾园小区",
-                url: "../img/liangwei-photo/guozhennan.png"
-            },
-            {
-                text1: "黄威",
-                text3: "一般社区工作人员",
-                text2: "管理嘉和苑西区",
-                url: "../img/liangwei-photo/huangwei.png"
-            },
-            {
-                text1: "江婷婷",
-                text3: "一般社区工作人员",
-                text2: "管理财苑小区、碧城华园小区",
-                url: "../img/liangwei-photo/jiangtingting.png"
-            },
-            {
-                text1: "蒋彦臣",
-                text3: "一般社区工作人员",
-                text2: "管理金都花苑小区",
-                url: "../img/liangwei-photo/jiangyanchen.png"
-            },
-            {
-                text1: "孟如",
-                text3: "一般社区工作人员",
-                text2: "管理国际商贸城小区",
-                url: "../img/liangwei-photo/mengru.png"
-            },
-            {
-                text1: "张传祥",
-                text3: "一般社区工作人员",
-                text2: "管理红旗花园小区",
-                url: "../img/liangwei-photo/zhangchuanxiang.png"
-            },
-            {
-                text1: "赵劲松",
-                text3: "一般社区工作人员",
-                text2: "管理博悦城小区",
-                url: "../img/liangwei-photo/zhaojinsong.png"
-            },
-        ];
+        let imageItems =[];
 
         let itemsPerPage = 4;
         let currentPage = 1;
         let totalPages = Math.ceil(imageItems.length / itemsPerPage);
 
         document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(apiUrls.list_committees_members(currentPage, itemsPerPage))).json());
+            response = (await (await fetch(API_URLS.list_committees_members(currentPage, itemsPerPage))).json());
 
             imageItems = response.data.records.map(value => {
                 return {text1: value.name, text3: value.position, text2: value.duty, url: value.images}
