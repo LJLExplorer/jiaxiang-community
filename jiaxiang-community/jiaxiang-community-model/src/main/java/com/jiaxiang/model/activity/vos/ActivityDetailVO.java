@@ -26,6 +26,7 @@ public class ActivityDetailVO {
     private String theme;
     private String introduction;
     private String content;
+    private String address;
     private List<String> images;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;

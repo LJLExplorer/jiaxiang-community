@@ -21,6 +21,7 @@
         <result column="theme" property="theme"/>
         <result column="introduction" property="introduction"/>
         <result column="content" property="content"/>
+        <result column="location" property="address"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -47,6 +48,7 @@
                activity_detail.theme,
                activity_detail.Introduction,
                activity_detail.content,
+               activity.location,
                activity.create_time,
                activity.end_time
         from activity,
