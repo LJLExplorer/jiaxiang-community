@@ -359,7 +359,7 @@
         let response;
 
         document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(API_URLS.list_serve_people(currentPage, itemsPerPage))).json()).data;
+            response = (await (await fetch(API_URLS.list_serve_people(currentPage, 999))).json()).data;
 
 
             for await (let info of response.records) {

@@ -46,7 +46,7 @@ public class CommunityController {
     public ResponseEntity<ResponseResult<?>> listCommitteesMembers(int pageNum, int pageSize) {
         Integer total = communiyuService.getCommitteesMembersCount();
         List<CommitteesMemberVO> committeesMemberVOList = communiyuService.listCommitteesMembers(pageNum, pageSize);
-        return ResponseWrapper.successWithPage(committeesMemberVOList, pageNum, pageSize, total, total / pageSize);
+        return ResponseWrapper.successWithPage(committeesMemberVOList, pageNum, pageSize, total, (total + pageSize - 1) / pageSize);
     }
 
     /**
@@ -73,7 +73,7 @@ public class CommunityController {
     public ResponseEntity<ResponseResult<?>> listServePeople(int pageNum, int pageSize) {
         Integer total = communiyuService.getServerPeopleCount();
         List<ServePeopleInfoVO> servePeopleInfoVOList = communiyuService.listServePeople(pageNum, pageSize);
-        return ResponseWrapper.successWithPage(servePeopleInfoVOList, pageNum, pageSize, total, total / pageSize);
+        return ResponseWrapper.successWithPage(servePeopleInfoVOList, pageNum, pageSize, total, (total + pageSize - 1) / pageSize);
     }
 
     @GetMapping("/serve_people_info")
@@ -86,21 +86,21 @@ public class CommunityController {
     public ResponseEntity<ResponseResult<?>> listMatters(Long communityId, int pageNum, int pageSize) {
         Integer total = communiyuService.getMattersCount();
         List<GuideCategoryVO> guideCategoryVOList = communiyuService.listMatters(communityId, pageNum, pageSize);
-        return ResponseWrapper.successWithPage(guideCategoryVOList, pageNum, pageSize, total, total / pageSize);
+        return ResponseWrapper.successWithPage(guideCategoryVOList, pageNum, pageSize, total, (total + pageSize - 1) / pageSize);
     }
 
     @GetMapping("/community_honor")
     public ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize) {
         Integer total = communiyuService.getHonorCount();
         List<CommunityHonorVO> communityHonorVOList = communiyuService.communityHonor(communityId, pageNum, pageSize);
-        return ResponseWrapper.successWithPage(communityHonorVOList, pageNum, pageSize, total, total / pageSize);
+        return ResponseWrapper.successWithPage(communityHonorVOList, pageNum, pageSize, total, (total + pageSize - 1) / pageSize);
     }
 
     @GetMapping("/proof_documents")
     public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize) {
         Integer total = communiyuService.getProofDocumentsCount();
         List<ProofDocumentsPreviewVO> proofDocumentsPreviewVOList = communiyuService.proofDocuments(communityId, pageNum, pageSize);
-        return ResponseWrapper.successWithPage(proofDocumentsPreviewVOList, pageNum, pageSize, total, total / pageSize);
+        return ResponseWrapper.successWithPage(proofDocumentsPreviewVOList, pageNum, pageSize, total, (total + pageSize - 1) / pageSize);
     }
 
     @GetMapping("/proof_info")

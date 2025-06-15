@@ -138,8 +138,9 @@
 
         // 页面加载时初始化
         document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(API_URLS.community_honor(currentPage,itemsPerPage))).json()).data;
+            response = (await (await fetch(API_URLS.community_honor(currentPage,999))).json()).data;
 
+            console.log(response)
             paragraphs = response.records;
             // 分页相关变量
             totalPages = Math.ceil(paragraphs.length / itemsPerPage);
@@ -188,7 +189,7 @@
             for (let i = startIndex; i < endIndex; i++) {
                 const pElement = document.createElement('div');
                 pElement.className = 'p-item';
-                pElement.innerHTML = paragraphs[i];
+                pElement.innerHTML = paragraphs[i].honorDetail;
                 content.appendChild(pElement);
             }
 

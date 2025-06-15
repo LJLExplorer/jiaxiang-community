@@ -53,7 +53,7 @@ public class ResponseWrapper<T> implements Serializable {
         return ResponseEntity.ok(result);
     }
 
-    public static <T> ResponseEntity<ResponseResult<?>> successWithPage(T data, Integer currentPage, Integer pageSize, Integer total, int pages) {
+    public static <T> ResponseEntity<ResponseResult<?>> successWithPage(T data, Integer currentPage, Integer pageSize, Integer total, Integer pages) {
         PageData<T> result = new PageData<>(currentPage, pageSize, total, pages, data);
         return ResponseEntity.ok(ResponseResult.okResult(result));
     }

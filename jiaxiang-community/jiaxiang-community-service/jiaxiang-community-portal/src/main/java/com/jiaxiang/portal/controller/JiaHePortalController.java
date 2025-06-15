@@ -75,7 +75,7 @@ public class JiaHePortalController {
      * @return 两委成员列表
      */
     @GetMapping("/list_committees_members")
-    public ResponseEntity<ResponseResult<?>> listCommitteesMembers(Long communityId, int pageNum, int pageSize) {
+    public ResponseEntity<ResponseResult<?>> listCommitteesMembers(Long communityId,@RequestParam(defaultValue = "1") Integer pageNum,@RequestParam(defaultValue = "1000") Integer pageSize) {
         return portalService.listCommitteesMembers(pageNum, pageSize);
     }
 

@@ -216,12 +216,13 @@
         let totalPages = Math.ceil(imageItems.length / itemsPerPage);
 
         document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(API_URLS.list_committees_members(currentPage, itemsPerPage))).json());
+            response = (await (await fetch(API_URLS.list_committees_members(currentPage, 999))).json());
 
             imageItems = response.data.records.map(value => {
                 return {text1: value.name, text3: value.position, text2: value.duty, url: value.images}
             });
-            let totalPages = Math.ceil(imageItems.length / itemsPerPage);
+            console.log(response)
+            totalPages = Math.ceil(imageItems.length / itemsPerPage);
 
             const imageGrid = document.getElementById('imageGrid');
             const prevPageBtn = document.querySelector('.prev-page');

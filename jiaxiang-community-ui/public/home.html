@@ -186,9 +186,10 @@
 </div>
 <script src="js/three.js"></script>
 <script src="js/dots.js"></script>
-<script type="module">
+<script src="js/api-urls.js"></script>
+<script>
     // 为所有导航按钮添加点击事件
-    import apiUrls from "./js/api-urls.js";
+    //import apiUrls from "./js/api-urls.js";
 
     document.querySelectorAll('.nav-button').forEach(button => {
         button.addEventListener('click', function () {
@@ -206,7 +207,8 @@
         const prevBtn = document.querySelector('.prev');
         const nextBtn = document.querySelector('.next');
 
-        const response = (await (await fetch(apiUrls.list_community_activities(1,1))).json()).data;
+        const response = (await (await fetch(window.API_URLS.list_community_activities(1,999))).json()).data;
+        console.log(response)
         const carouselContent = response.reduce((acc, item, index, arr) => {
             index++;
             acc += `

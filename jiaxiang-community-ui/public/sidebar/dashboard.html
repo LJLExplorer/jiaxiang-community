@@ -194,7 +194,7 @@
             .then(json => {
                 contentEle.innerHTML = `
                     <h1>${json.data.title}</h1>
-                    ${json.data.profile.split("\n").map(ele => `<p>${ele}</p>`).join("")}
+                    ${json.data.profile.split("\\n").map(ele => `<p>${ele}</p>`).join("")}
                 `;
                 imageEle.src = json.data.images;
             })

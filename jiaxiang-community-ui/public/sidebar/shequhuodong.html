@@ -432,6 +432,7 @@
             const json = await subRes.json()
             const obj = json.data;
 
+            if(!json || !obj)continue;
             imageItems.push({
                 id: info.id,
                 title: info.title,
