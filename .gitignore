@@ -2,6 +2,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/maven,git,windows,macos,linux,java,node,python,jetbrains+all,visualstudiocode,visualstudio,react,vue
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,git,windows,macos,linux,java,node,python,jetbrains+all,visualstudiocode,visualstudio,react,vue
 
+.DS_Store
+
 ### Git ###
 # Created by git for backups. To disable backups in Git:
 # $ git config --global mergetool.keepBackup false
