@@ -50,7 +50,7 @@
                activity_detail.content,
                activity.location,
                activity.create_time,
-               activity.end_time
+               activity.update_time
         from activity,
              activity_detail
         where activity.community_id = #{communityId}

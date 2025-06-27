@@ -1,1 +1,2 @@
 com.jiaxiang.common.exception.ExceptionCatch
+com.jiaxiang.common.jackson.JacksonConfig

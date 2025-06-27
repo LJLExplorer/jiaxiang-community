@@ -42,6 +42,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public ActivityDetailVO listCommunityActivityDetail(Long communityId, Long activityId) {
         ActivityDetailVO activityDetailVO = activityMapper.getActivityDetailWithOutImagesByActivityId(communityId, activityId);
+
         List<ActivityFileDo> activityFileDos = activityMapper.getFilesByActivityId(communityId, activityId);
         List<String> images = activityFileDos.stream().map(ActivityFileDo::getPathUrl).toList();
         activityDetailVO.setImages(images);

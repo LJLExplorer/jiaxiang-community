@@ -27,7 +27,6 @@
         <module>jiaxiang-community-service</module>
         <module>jiaxiang-community-basic</module>
         <module>jiaxiang-community-test</module>
-        <module>jiaxiang-community-test/markdown-test</module>
     </modules>
 
     <properties>
