@@ -2,6 +2,7 @@ package com.jiaxiang.auth.controller;
 
 import com.jiaxiang.auth.service.AuthService;
 import com.jiaxiang.model.auth.dos.UserDO;
+import com.jiaxiang.model.auth.dtos.UserLoginDTO;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +24,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseResult<?>> login(@RequestBody UserDO userDO){
+    public ResponseEntity<ResponseResult<?>> login(@RequestBody UserLoginDTO userLoginDTO){
         // TODO 前端后端加解密
-        String codeUserName = userDO.getUserName();
-        String codeUserPassword = userDO.getPassword();
+        String codeUserName = userLoginDTO.getUsername();
+        String codePassword = userLoginDTO.getPassword();
         // 解密后放回userDO
-        userDO.setUserName(codeUserName);
-        userDO.setPassword(codeUserPassword);
+        UserDO userDO = new UserDO(codeUserName, codePassword);
         return authService.login(userDO);
     }
 }

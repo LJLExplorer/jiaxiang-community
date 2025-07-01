@@ -1,5 +1,8 @@
 package com.jiaxiang.gateway.filter;
 
+import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jiaxiang.model.auth.dtos.SecurityUserDTO;
 import com.jiaxiang.utils.JwtUtils;
 import com.jiaxiang.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -8,13 +11,18 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.*;
 import static com.jiaxiang.model.common.constant.AuthConstant.USERID_LOGIN_REDIS_PREFIX;
@@ -88,14 +96,31 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             return exchange.getResponse().writeWith(Mono.just(buffer));
         }
 
-        Integer userIdFromToken = JwtUtils.getUserIdFromToken(token.substring(7));
+        // Redis校验
+        Long userIdFromToken = JwtUtils.getUserIdFromToken(token.substring(7));
         String redisKey = USERID_LOGIN_REDIS_PREFIX + userIdFromToken;
-        // TODO redisUtils待实现
-
+        Object loginUserObj = redisUtils.get(redisKey);
+//        SecurityUserDTO securityUserDTO = JSONUtil.parseObj(loginUserStr).toBean(SecurityUserDTO.class);
+        if(loginUserObj == null){
+            log.error("账号登录已超时，请重新登录");
+            return unauthorized(exchange, "账号登录已超时，请重新登录");
+            //throw new MyLoginException("账号登录已超时，请重新登录");
+        }
+//        UsernamePasswordAuthenticationToken authenticationToken =
+//                new UsernamePasswordAuthenticationToken(securityUserDTO, null, securityUserDTO.getAuthorities());
+//        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         // 校验通过，继续
         return chain.filter(exchange);
+    }
 
-
+    private Mono<Void> unauthorized(ServerWebExchange exchange, String msg) {
+        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+        exchange.getResponse().getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+        String body = String.format("{\"code\":401,\"msg\":\"%s\"}", msg);
+        DataBuffer buffer = exchange.getResponse()
+                .bufferFactory()
+                .wrap(body.getBytes(StandardCharsets.UTF_8));
+        return exchange.getResponse().writeWith(Mono.just(buffer));
     }
 
     @Override

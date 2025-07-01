@@ -131,7 +131,7 @@ public class ResponseWrapper<T> implements Serializable {
      * @return 包装后的响应实体
      */
     public static ResponseEntity<ResponseResult<?>> loginPasswordError() {
-        return error(HttpStatus.UNAUTHORIZED, AppHttpCodeEnum.LOGIN_PASSWORD_ERROR);
+        return error(HttpStatus.UNAUTHORIZED, AppHttpCodeEnum.LOGIN_USERNAME_PASSWORD_ERROR);
     }
 
     /**

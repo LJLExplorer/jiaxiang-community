@@ -74,4 +74,9 @@ public class UserDO {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    public UserDO(String userName, String password){
+        this.userName = userName;
+        this.password = password;
+    }
 }

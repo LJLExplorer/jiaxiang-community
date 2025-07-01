@@ -12,18 +12,16 @@ import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 
 import java.security.Key;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.jiaxiang.model.common.constant.AuthConstant.JWT_EXPIRATION_MS;
+import static com.jiaxiang.model.common.constant.AuthConstant.SECRET_KEY;
+
 @Slf4j
 public class JwtUtils {
-
-    private static final String SECRET_KEY = "q7H9bK2xYpW6vRmFz3JtLdNc8GuA5XoE";
-    // 1小时
-    private static final long EXPIRATION_MS = 60 * 60 * 1000;
-
-    private static final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
     /**
      * 创建jwt
@@ -33,8 +31,9 @@ public class JwtUtils {
      * @param authList 权限列表
      * @return
      */
-    public static String createJwt(Integer id, String username, List<String> authList) {
+    public static String createJwt(Long id, String username, List<String> authList) {
         Map<String, Object> headClaims = new HashMap<>();
+        Date now = new Date();
         headClaims.put("alg", "HS256");
         headClaims.put("typ", "JWT");
         //使用HS256进行签名，secret作为密钥
@@ -43,6 +42,8 @@ public class JwtUtils {
                 .withClaim("UserName", username)
                 .withClaim("userId", id)
                 .withClaim("authList", authList)
+                .withIssuedAt(now)
+                .withExpiresAt(new Date(now.getTime() + JWT_EXPIRATION_MS))
                 .sign(Algorithm.HMAC256(SECRET_KEY));
     }
 
@@ -63,18 +64,18 @@ public class JwtUtils {
         return false;
     }
 
-    public static Integer getUserIdFromToken(String token) {
+    public static Long getUserIdFromToken(String token) {
         try {
             JWTVerifier build = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build();
             DecodedJWT verify = build.verify(token);
 //            String userName = verify.getClaim("UserName").asString();
-            Integer userId = verify.getClaim("userId").asInt();
+            Long userId = verify.getClaim("userId").asLong();
 //            List<String> authList = verify.getClaim("authList").asList(String.class);
             return userId;
         } catch (Exception e) {
             log.error("JWT不合法");
 //            System.out.println("JWT不合法");
-            return -1;
+            return -1L;
         }
     }
 

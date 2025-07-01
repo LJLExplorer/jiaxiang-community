@@ -21,4 +21,6 @@ public class SystemConstant {
     public static final String MESSAGE = "message";
 
 
+    public static final String TOKEN = "token";
+
 }

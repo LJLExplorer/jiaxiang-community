@@ -9,9 +9,10 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
-@ControllerAdvice  //控制器增强类
+@RestControllerAdvice  //控制器增强类
 @AutoConfiguration
 public class ExceptionCatch {
 
@@ -48,4 +49,6 @@ public class ExceptionCatch {
         log.error("catch exception:{}",e);
         return ResponseResult.errorResult(e.getAppHttpCodeEnum());
     }
+
+
 }
