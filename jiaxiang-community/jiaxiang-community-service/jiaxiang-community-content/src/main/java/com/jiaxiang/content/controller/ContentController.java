@@ -4,7 +4,6 @@ import com.jiaxiang.content.service.ContentService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
-import com.jiaxiang.model.community.vos.GridVO;
 import com.jiaxiang.model.content.vos.ContentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-import static com.jiaxiang.model.common.constant.ApiRouterConsts.CONTENT_URL_PREFIX;
+import static com.jiaxiang.model.common.constant.ApiRouterConstant.CONTENT_URL_PREFIX;
 
 @RestController
 @RequestMapping(CONTENT_URL_PREFIX)

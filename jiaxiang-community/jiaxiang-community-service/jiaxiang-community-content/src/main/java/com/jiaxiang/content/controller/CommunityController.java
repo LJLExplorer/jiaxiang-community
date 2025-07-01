@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.jiaxiang.model.common.constant.ApiRouterConsts.COMMUNITY_URL_PREFIX;
+import static com.jiaxiang.model.common.constant.ApiRouterConstant.COMMUNITY_URL_PREFIX;
 
 @Slf4j
 @RestController

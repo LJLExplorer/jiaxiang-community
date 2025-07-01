@@ -3,7 +3,7 @@ package com.jiaxiang.model.common.constant;
 /**
  * Api路由常量
  */
-public class ApiRouterConsts {
+public class ApiRouterConstant {
 
     /**
      * API请求路径前缀
@@ -29,4 +29,10 @@ public class ApiRouterConsts {
      * 社区请求前缀
      */
     public static final String COMMUNITY_URL_PREFIX = "/community";
+
+    /**
+     * 权限系统前缀
+     */
+    public static final String AUTH_URL_PREFIX = "/auth";
+
 }

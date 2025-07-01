@@ -1,14 +1,13 @@
-package com.jiaxiang.gateway;
+package com.jiaxiang.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 
 @ComponentScan(basePackages = "com.jiaxiang")
 @SpringBootApplication
-public class CommunityGatewayApplication {
+public class AuthApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CommunityGatewayApplication.class, args);
+        SpringApplication.run(AuthApplication.class);
     }
 }

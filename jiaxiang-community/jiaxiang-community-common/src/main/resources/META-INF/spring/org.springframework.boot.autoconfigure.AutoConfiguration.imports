@@ -1,2 +1,3 @@
 com.jiaxiang.common.exception.ExceptionCatch
-com.jiaxiang.common.jackson.JacksonConfig
+com.jiaxiang.common.config.jackson.JacksonConfig
+com.jiaxiang.common.config.redis.RedisConfig

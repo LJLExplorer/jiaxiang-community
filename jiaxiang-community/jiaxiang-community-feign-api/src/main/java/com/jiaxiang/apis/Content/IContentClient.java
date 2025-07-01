@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import static com.jiaxiang.model.common.constant.ApiRouterConsts.COMMUNITY_URL_PREFIX;
-import static com.jiaxiang.model.common.constant.ApiRouterConsts.CONTENT_URL_PREFIX;
+import static com.jiaxiang.model.common.constant.ApiRouterConstant.COMMUNITY_URL_PREFIX;
+import static com.jiaxiang.model.common.constant.ApiRouterConstant.CONTENT_URL_PREFIX;
 
 @FeignClient(value = "jiaxiang-content", fallback = IContentClientFallback.class)
 public interface IContentClient {

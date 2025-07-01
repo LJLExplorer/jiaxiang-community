@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.jiaxiang.model.common.constant.ApiRouterConsts.ACTIVITY_URL_PREFIX;
+import static com.jiaxiang.model.common.constant.ApiRouterConstant.ACTIVITY_URL_PREFIX;
 
 @RestController
 @RequestMapping(ACTIVITY_URL_PREFIX)

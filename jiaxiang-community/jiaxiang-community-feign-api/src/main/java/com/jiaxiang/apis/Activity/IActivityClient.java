@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.jiaxiang.model.common.constant.ApiRouterConsts.ACTIVITY_URL_PREFIX;
+import static com.jiaxiang.model.common.constant.ApiRouterConstant.ACTIVITY_URL_PREFIX;
 
 @FeignClient(value = "jiaxiang-activity", fallback = IActivityClientFallback.class )
 public interface IActivityClient {

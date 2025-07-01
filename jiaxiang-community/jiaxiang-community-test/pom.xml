@@ -16,6 +16,7 @@
         <module>sentinel-test</module>
         <module>minio-test</module>
         <module>markdown-test</module>
+        <module>test</module>
     </modules>
 
     <properties>
