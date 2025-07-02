@@ -70,4 +70,7 @@ public interface PortalService {
     ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize);
 
     ResponseEntity<ResponseResult<?>> proofInfo(int id);
+
+    //TODO 测试
+    ResponseEntity<ResponseResult<?>> saveContent(int id);
 }

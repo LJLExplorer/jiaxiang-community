@@ -143,6 +143,14 @@ public class ResponseResult<T> implements Serializable {
                 '}';
     }
 
+    public static String toJson(ResponseResult<?> result) {
+        try {
+            return new ObjectMapper().writeValueAsString(result);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("序列化失败", e);
+        }
+    }
+
     public static void main(String[] args) throws JsonProcessingException {
 //        // 查询一个对象
 //        Map<String, String> map = new HashMap();

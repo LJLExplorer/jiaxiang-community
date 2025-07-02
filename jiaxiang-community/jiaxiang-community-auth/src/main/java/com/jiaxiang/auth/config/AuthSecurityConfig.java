@@ -1,7 +1,7 @@
 package com.jiaxiang.auth.config;
 
-import com.jiaxiang.auth.handler.AuthenticationEntryPointImpl;
-import com.jiaxiang.auth.handler.SimpleAccessDeniedHandler;
+import com.jiaxiang.common.handler.AuthenticationEntryPointImpl;
+import com.jiaxiang.common.handler.SimpleAccessDeniedHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

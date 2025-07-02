@@ -48,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
             String userName = securityUserDTO.getUserDO().getUserName();
             log.info("{}登录成功", userName);
             String token = JwtUtils.createJwt(securityUserDTO.getUserDO().getId(),
-                    securityUserDTO.getUsername(), securityUserDTO.getPermissions());
+                    securityUserDTO.getUsername());
             Map<String, Object> map = new HashMap<>();
             map.put(SystemConstant.TOKEN, token);
             String securityUserVoStr = JSONUtil.toJsonStr(securityUserDTO);

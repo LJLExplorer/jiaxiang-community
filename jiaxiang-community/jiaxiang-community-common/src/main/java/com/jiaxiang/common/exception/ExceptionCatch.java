@@ -3,10 +3,10 @@ package com.jiaxiang.common.exception;
 
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import feign.FeignException;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -48,6 +48,19 @@ public class ExceptionCatch {
     public ResponseResult exception(CustomException e){
         log.error("catch exception:{}",e);
         return ResponseResult.errorResult(e.getAppHttpCodeEnum());
+    }
+
+
+    /**
+     * 处理可控异常  Feign异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(FeignException.class)
+    @ResponseBody
+    public ResponseResult exception(FeignException e){
+        log.error("catch exception:{}",e);
+        return ResponseResult.errorResult(AppHttpCodeEnum.NO_OPERATOR_AUTH);
     }
 
 

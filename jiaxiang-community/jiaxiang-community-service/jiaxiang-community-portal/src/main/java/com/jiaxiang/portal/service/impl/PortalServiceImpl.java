@@ -122,4 +122,10 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> proofInfo(int id) {
         return iContentClient.proofInfo(id);
     }
+
+    //TODO 测试
+    @Override
+    public ResponseEntity<ResponseResult<?>> saveContent(int id) {
+        return iContentClient.saveContent();
+    }
 }

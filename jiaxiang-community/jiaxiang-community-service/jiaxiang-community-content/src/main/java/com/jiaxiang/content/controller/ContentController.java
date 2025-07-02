@@ -5,15 +5,22 @@ import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
 import com.jiaxiang.model.content.vos.ContentVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.jiaxiang.model.common.constant.ApiRouterConstant.CONTENT_URL_PREFIX;
+import java.util.HashMap;
+import java.util.Map;
 
+import static com.jiaxiang.model.common.constant.ApiRouterConstant.CONTENT_URL_PREFIX;
+import static com.jiaxiang.model.common.constant.SystemConstant.MESSAGE;
+
+@Slf4j
 @RestController
 @RequestMapping(CONTENT_URL_PREFIX)
 public class ContentController {
@@ -22,8 +29,12 @@ public class ContentController {
     private ContentService contentService;
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('user:add')")
     public ResponseEntity<ResponseResult<?>> saveContent() {
-        return null;
+        log.info("权限测试成功，有 user:add 权限");
+        Map<String, Object> map = new HashMap<>();
+        map.put(MESSAGE, "权限测试成功，有 user:add 权限");
+        return ResponseWrapper.success(map);
     }
 
     /**

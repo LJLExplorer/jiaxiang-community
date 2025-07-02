@@ -10,27 +10,7 @@
 
 9001已默认分配给sentinel dashboard
 
-#### jiaxiang-article-dev.yaml
-
-```yaml
-server:
-  port: ${port:9002}
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: test
-    url: jdbc:mysql://127.0.0.1:3306/community_springclould?characterEncoding=utf-8&useSSL=false
-  jackson:
-    serialization:
-      WRITE_DATES_AS_TIMESTAMPS: false
-      FAIL_ON_EMPTY_BEANS: true
-    time-zone: UTC
-mybatis:
-# 与数据库直接操作的别名
-  type-aliases-package: com.jiaxiang.model.article.dos
-  mapper-locations: classpath:mapper/*.xml
-```
+auth认证端口是 8300
 
 #### community-gateway-dev.yaml
 
@@ -38,9 +18,21 @@ mybatis:
 server:
   port: 8001
 spring:
+  data:
+    redis: 
+      host: localhost
+      port: 6379
+      password: test
+      database: 0
   cloud:
     gateway:
       routes:
+        - id: auth-route
+          uri: lb://jiaxiang-auth
+          predicates:
+          - Path=/api/auth/**
+          filters:
+            - StripPrefix=1
         # 路由id，可以随意写
         - id: jiahe-community-route
           # 代理的服务地址
@@ -66,16 +58,205 @@ spring:
       # globalcors 用于配置全局的 CORS（跨域资源共享）设置。
       globalcors:
         # corsConfigurations: 定义 CORS 配置的路径模式
-        cors-configurations:
+        corsConfigurations:
           # 匹配所有路径。
           '[/**]':
             # 允许的源，* 表示允许所有源。
             allowed-origins: "*"
             allowed-methods:
               # 允许来自上面网址的所有GET方法跨域
-              - get
-              - post
-              - put
-              - delete
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"
+common:
+  security:
+    jwt-filter-enabled: false
+    security-filter-chain-enabled: false
+gateway:
+  whitelist: 
+    - /api/auth/login
+    - /api/auth/register
+    - /api/jiahe/list_community_activities
+    - /api/jiahe/community_activity_detail
+    - /api/jiahe/community_profile
+    - /api/jiahe/grid_management
+    - /api/jiahe/list_committees_members
+    - /api/jiahe/personal_info
+    - /api/jiahe/list_serve_people
+    - /api/jiahe/serve_people_info
+    - /api/jiahe/list_matters
+    - /api/jiahe/community_honor
+    - /api/jiahe/proof_documents
+    - /api/jiahe/proof_info
+```
+
+#### jiaxiang-portal-dev.yaml
+
+```
+server:
+  port: 8100
+spring:
+  data:
+    redis: 
+      host: localhost
+      port: 6379
+      password: test
+      database: 0
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: test
+    url: jdbc:mysql://127.0.0.1:3306/community_springcloud?characterEncoding=utf-8&useSSL=false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+mybatis:
+# 与数据库直接操作的别名
+  type-aliases-package: com.jiaxiang.model.activity.dos
+  mapper-locations: classpath:mapper/*.xml
+# 下划线回应驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true
+common:
+  security:
+    jwt-filter-enabled: true
+    security-filter-chain-enabled: true
+    whitelist:
+      - /jiahe/list_community_activities
+      - /jiahe/community_activity_detail
+      - /jiahe/community_profile
+      - /jiahe/grid_management
+      - /jiahe/list_committees_members
+      - /jiahe/personal_info
+      - /jiahe/list_serve_people
+      - /jiahe/serve_people_info
+      - /jiahe/list_matters
+      - /jiahe/community_honor
+      - /jiahe/proof_documents
+      - /jiahe/proof_info
+```
+
+#### jiaxiang-activity-dev.yaml
+
+```
+server:
+  port: 8101
+spring:
+  data:
+    redis: 
+      host: localhost
+      port: 6379
+      password: test
+      database: 0
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: test
+    url: jdbc:mysql://127.0.0.1:3306/community_springcloud?characterEncoding=utf-8&useSSL=false
+mybatis:
+# 与数据库直接操作的别名
+  type-aliases-package: com.jiaxiang.model.activity.dos
+  mapper-locations: classpath:mapper/*.xml
+# 下划线回应驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true
+common:
+  security:
+    jwt-filter-enabled: true
+    security-filter-chain-enabled: true
+    whitelist:
+      - /activity/list_community_activities
+      - /activity/community_activity_detail
+```
+
+#### jiaxiang-content-dev.yaml
+
+```
+server:
+  port: 8102
+spring:
+  data:
+    redis: 
+      host: localhost
+      port: 6379
+      password: test
+      database: 0
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: test
+    url: jdbc:mysql://127.0.0.1:3306/community_springcloud?characterEncoding=utf-8&useSSL=false
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+      FAIL_ON_EMPTY_BEANS: true
+    time-zone: UTC
+mybatis:
+# 与数据库直接操作的别名
+  type-aliases-package: com.jiaxiang.model.content.dos
+  mapper-locations: classpath:mapper/*.xml
+# 下划线回应驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true
+common:
+  security:
+    jwt-filter-enabled: true
+    security-filter-chain-enabled: true
+    whitelist:
+      - /community/grid_management
+      - /community/list_committees_members
+      - /community/personal_info
+      - /community/list_serve_people
+      - /community/serve_people_info
+      - /community/list_matters
+      - /community/community_honor
+      - /community/proof_documents
+      - /community/proof_info
+      - /content/community_profile
+      - /content/list_content_by_type
+```
+
+#### jiaxiang-auth-dev.yaml
+
+```
+server:
+  port:  8300
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: test
+    url: jdbc:mysql://127.0.0.1:3306/community_springcloud?characterEncoding=utf-8&useSSL=false
+  data:
+    redis: 
+      host: localhost
+      port: 6379
+      password: test
+      database: 0
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+mybatis:
+# 与数据库直接操作的别名
+  type-aliases-package: com.jiaxiang.model.auth.dos
+  mapper-locations: classpath:mapper/*.xml
+# 下划线回应驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true
+common:
+  security:
+    jwt-filter-enabled: false
+    security-filter-chain-enabled: false
 ```
 

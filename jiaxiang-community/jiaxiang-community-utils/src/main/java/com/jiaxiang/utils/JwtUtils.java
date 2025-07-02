@@ -47,6 +47,28 @@ public class JwtUtils {
                 .sign(Algorithm.HMAC256(SECRET_KEY));
     }
 
+    /**
+     * 创建jwt, 通常不建议在token中存放权限，容易被破解
+     *
+     * @param id       用户id
+     * @param username 用户名
+     * @return
+     */
+    public static String createJwt(Long id, String username) {
+        Map<String, Object> headClaims = new HashMap<>();
+        Date now = new Date();
+        headClaims.put("alg", "HS256");
+        headClaims.put("typ", "JWT");
+        //使用HS256进行签名，secret作为密钥
+        return JWT.create().withHeader(headClaims)
+                .withIssuer(username)
+                .withClaim("UserName", username)
+                .withClaim("userId", id)
+                .withIssuedAt(now)
+                .withExpiresAt(new Date(now.getTime() + JWT_EXPIRATION_MS))
+                .sign(Algorithm.HMAC256(SECRET_KEY));
+    }
+
     public static boolean verifyToken(String token) {
         try {
             JWTVerifier build = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build();

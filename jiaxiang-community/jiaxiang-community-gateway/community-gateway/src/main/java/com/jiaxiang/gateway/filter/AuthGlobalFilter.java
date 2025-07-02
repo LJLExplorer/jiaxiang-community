@@ -1,28 +1,22 @@
 package com.jiaxiang.gateway.filter;
 
-import cn.hutool.json.JSONUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jiaxiang.model.auth.dtos.SecurityUserDTO;
+import com.jiaxiang.gateway.security.GateWayWhiteProperties;
 import com.jiaxiang.utils.JwtUtils;
 import com.jiaxiang.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.*;
 import static com.jiaxiang.model.common.constant.AuthConstant.USERID_LOGIN_REDIS_PREFIX;
@@ -32,7 +26,10 @@ import static com.jiaxiang.model.common.constant.AuthConstant.USERID_LOGIN_REDIS
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     private final RedisUtils redisUtils;
-    private static final AntPathMatcher pathMatcher = new AntPathMatcher();
+
+    private final GateWayWhiteProperties gateWayWhiteProperties;
+
+    private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
 
     // 白名单路径
@@ -54,8 +51,9 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     );
 
 
-    public AuthGlobalFilter(RedisUtils redisUtils) {
+    public AuthGlobalFilter(RedisUtils redisUtils, GateWayWhiteProperties gateWayWhiteProperties) {
         this.redisUtils = redisUtils;
+        this.gateWayWhiteProperties = gateWayWhiteProperties;
     }
 
     @Override
@@ -65,7 +63,9 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 //        if (WHITE_LIST.contains(path)) {
 //            return chain.filter(exchange);
 //        }
-        boolean isWhite = WHITE_LIST.stream().anyMatch(white -> pathMatcher.match(white, path));
+//        boolean isWhite = WHITE_LIST.stream().anyMatch(white -> PATH_MATCHER.match(white, path));
+        List<String> permitAll = gateWayWhiteProperties.getWhitelist();
+        boolean isWhite = permitAll.stream().anyMatch(white -> PATH_MATCHER.match(white, path));
 
         if (isWhite) {
             return chain.filter(exchange);
