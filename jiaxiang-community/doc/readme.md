@@ -98,6 +98,12 @@ gateway:
 server:
   port: 8100
 spring:
+  servlet:
+    multipart:
+      # 单个文件最大允许大小
+      max-file-size: 100MB
+      # 整个文件最大允许大小
+      max-request-size: 100MB
   data:
     redis: 
       host: localhost
@@ -138,6 +144,12 @@ common:
       - /jiahe/community_honor
       - /jiahe/proof_documents
       - /jiahe/proof_info
+minio:
+  accessKey: minio
+  secretKey: minio123
+  bucket: jiaxiang
+  endpoint: http://127.0.0.1:9000
+  readPath: http://127.0.0.1:9000
 ```
 
 #### jiaxiang-activity-dev.yaml
@@ -223,6 +235,12 @@ common:
       - /community/proof_info
       - /content/community_profile
       - /content/list_content_by_type
+minio:
+  accessKey: minio
+  secretKey: minio123
+  bucket: jiaxiang
+  endpoint: http://127.0.0.1:9000
+  readPath: http://127.0.0.1:9000
 ```
 
 #### jiaxiang-auth-dev.yaml

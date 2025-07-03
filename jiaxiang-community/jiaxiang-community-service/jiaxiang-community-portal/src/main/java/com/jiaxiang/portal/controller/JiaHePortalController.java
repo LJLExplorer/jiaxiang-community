@@ -1,11 +1,16 @@
 package com.jiaxiang.portal.controller;
 
+import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.common.dtos.ResponseWrapper;
+import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import com.jiaxiang.portal.service.PortalService;
+import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.JIA_HE_URL_PREFIX;
 
@@ -72,7 +77,7 @@ public class JiaHePortalController {
      * @return 两委成员列表
      */
     @GetMapping("/list_committees_members")
-    public ResponseEntity<ResponseResult<?>> listCommitteesMembers(Long communityId,@RequestParam(defaultValue = "1") Integer pageNum,@RequestParam(defaultValue = "1000") Integer pageSize) {
+    public ResponseEntity<ResponseResult<?>> listCommitteesMembers(Long communityId, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "1000") Integer pageSize) {
         return portalService.listCommitteesMembers(pageNum, pageSize);
     }
 
@@ -135,8 +140,31 @@ public class JiaHePortalController {
         return portalService.proofInfo(id);
     }
 
+    //    TODO 测试接口
     @PostMapping("/save_content")
     public ResponseEntity<ResponseResult<?>> saveContent(Long communityId, int id) {
         return portalService.saveContent(id);
+    }
+
+
+    /**
+     * 上传文件接口
+     *
+     * @param file 文件
+     * @return 上传结果
+     */
+    @PostMapping("/upload_file")
+    public ResponseEntity<ResponseResult<?>> uploadFile(@RequestParam("file") MultipartFile file) {
+        if(file.isEmpty()){
+            return ResponseWrapper.serverError(AppHttpCodeEnum.PARAM_INVALID.getCode(), "文件上传失败,文件不能为空!");
+        }
+        String urlPath = portalService.uploadFile(file);
+        return ResponseWrapper.success(urlPath);
+    }
+
+    //TODO 修改社区活动内容
+    @PutMapping("/update_community_activity_detail/{id}")
+    public ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(Long communityId, @PathParam("id") Long id, @RequestBody ActivityDetailDto s) {
+        return null;
     }
 }

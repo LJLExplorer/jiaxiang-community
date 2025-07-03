@@ -6,6 +6,7 @@ import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class IContentClientFallback implements IContentClient {
@@ -63,6 +64,11 @@ public class IContentClientFallback implements IContentClient {
     @Override
     public ResponseEntity<ResponseResult<?>> proofInfo(int id) {
         return ResponseWrapper.serverError(AppHttpCodeEnum.SERVER_ERROR.getCode(), "获取数据失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> uploadFile(MultipartFile file) {
+        return ResponseWrapper.serverError(AppHttpCodeEnum.SERVER_ERROR.getCode(), "文件上传失败");
     }
 
 }

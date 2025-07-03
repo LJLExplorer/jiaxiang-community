@@ -1,5 +1,7 @@
 package com.jiaxiang.file.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.InputStream;
 import java.util.List;
 
@@ -13,6 +15,14 @@ public interface FileStorageService {
      * @return 文件地址
      */
     public String uploadFile(String prefix, String fileName, InputStream inputStream);
+
+    /**
+     * 上传文件
+     * @param prefix
+     * @param file
+     * @return
+     */
+    public String uploadFile(String prefix, MultipartFile file);
 
     /**
      * 删除文件

@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @Slf4j
 @RestControllerAdvice  //控制器增强类
@@ -63,5 +64,15 @@ public class ExceptionCatch {
         return ResponseResult.errorResult(AppHttpCodeEnum.NO_OPERATOR_AUTH);
     }
 
-
+    /**
+     * 处理超过最大上传文件大小异常  MaxUploadSizeExceededException异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseBody
+    public ResponseResult exception(MaxUploadSizeExceededException e){
+        log.error("catch exception:{}",e);
+        return ResponseResult.errorResult(AppHttpCodeEnum.OVER_MAX_UPLOAD_SIZE);
+    }
 }

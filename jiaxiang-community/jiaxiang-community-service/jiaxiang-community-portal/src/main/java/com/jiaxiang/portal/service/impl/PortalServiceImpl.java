@@ -2,20 +2,28 @@ package com.jiaxiang.portal.service.impl;
 
 import com.jiaxiang.apis.Activity.IActivityClient;
 import com.jiaxiang.apis.Content.IContentClient;
+import com.jiaxiang.file.service.FileStorageService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.portal.service.PortalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class PortalServiceImpl implements PortalService {
 
-    @Autowired
-    private IActivityClient iActivityClient;
+    private final IActivityClient iActivityClient;
 
-    @Autowired
-    private IContentClient iContentClient;
+    private final IContentClient iContentClient;
+
+    private final FileStorageService fileStorageService;
+
+    public PortalServiceImpl(IActivityClient iActivityClient, IContentClient iContentClient, FileStorageService fileStorageService) {
+        this.iActivityClient = iActivityClient;
+        this.iContentClient = iContentClient;
+        this.fileStorageService = fileStorageService;
+    }
 
 
     /**
@@ -127,5 +135,17 @@ public class PortalServiceImpl implements PortalService {
     @Override
     public ResponseEntity<ResponseResult<?>> saveContent(int id) {
         return iContentClient.saveContent();
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param file
+     * @return
+     */
+    @Override
+    public String uploadFile(MultipartFile file) {
+        return fileStorageService.uploadFile("", file);
+//        return iContentClient.uploadFile(file);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Import;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -34,6 +35,7 @@ public class MinioFileStorageService implements FileStorageService {
 
     /**
      * 构建存在bucket下路径
+     *
      * @param dirPath  前缀目录
      * @param filename yyyy/mm/dd/file.jpg
      * @return 创建bucket下的目录
@@ -52,6 +54,7 @@ public class MinioFileStorageService implements FileStorageService {
 
     /**
      * 得到bucket下文件路径
+     *
      * @param pathUrl 文件地址
      * @return 文件路径
      */
@@ -67,6 +70,36 @@ public class MinioFileStorageService implements FileStorageService {
         }
     }
 
+    /**
+     * 上传文件
+     *
+     * @param prefix 前缀名(文件夹分类)
+     * @param file   文件
+     * @return 返回地址
+     */
+    @Override
+    public String uploadFile(String prefix, MultipartFile file) {
+        try {
+            String fileName = file.getOriginalFilename();
+            String filePath = builderFilePath(prefix, fileName);
+            InputStream inputStream = file.getInputStream();
+            PutObjectArgs putObjectArgs = PutObjectArgs.builder()
+                    .object(filePath)
+                    .contentType(file.getContentType())
+                    .bucket(minioConfigProperties.getBucket())
+                    .stream(inputStream, inputStream.available(), -1)
+                    .build();
+            minioClient.putObject(putObjectArgs);
+            StringBuilder urlPath = new StringBuilder(minioConfigProperties.getReadPath());
+            urlPath.append(SEPARATOR + minioConfigProperties.getBucket());
+            urlPath.append(SEPARATOR);
+            urlPath.append(filePath);
+            return urlPath.toString();
+        } catch (Exception e) {
+            log.error("minio put file error.", e);
+            throw new RuntimeException("上传文件失败");
+        }
+    }
 
     /**
      * 上传文件
@@ -154,7 +187,7 @@ public class MinioFileStorageService implements FileStorageService {
                 }
             } catch (Exception e) {
                 // 处理异常
-                System.out.println("Exception occurred while deleting object: " + e.getMessage());
+                log.error("Exception occurred while deleting object: " + e.getMessage());
             }
         }
     }
@@ -222,5 +255,6 @@ public class MinioFileStorageService implements FileStorageService {
             throw new RuntimeException("下载失败：发生未知错误，请稍后再试！");
         }
     }
+
 
 }

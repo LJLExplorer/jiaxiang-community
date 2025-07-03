@@ -2,6 +2,7 @@ package com.jiaxiang.portal.service;
 
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface PortalService {
 
@@ -73,4 +74,11 @@ public interface PortalService {
 
     //TODO 测试
     ResponseEntity<ResponseResult<?>> saveContent(int id);
+
+    /**
+     * 上传文件
+     * @param file
+     * @return
+     */
+    String uploadFile(MultipartFile file);
 }

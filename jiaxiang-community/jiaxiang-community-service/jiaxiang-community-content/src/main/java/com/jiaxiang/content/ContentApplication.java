@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @MapperScan("com.jiaxiang.content.mapper")
 @SpringBootApplication
 @EnableMethodSecurity
-@ComponentScan(basePackages = {"com.jiaxiang.common", "com.jiaxiang.content", "com.jiaxiang.utils"})
+@ComponentScan(basePackages = {"com.jiaxiang.common", "com.jiaxiang.content", "com.jiaxiang.utils", "com.jiaxiang.file"})
 public class ContentApplication {
     public static void main(String[] args) {
         SpringApplication.run(ContentApplication.class, args);

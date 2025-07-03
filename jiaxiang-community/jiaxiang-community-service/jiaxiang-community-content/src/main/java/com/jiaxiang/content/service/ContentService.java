@@ -4,6 +4,7 @@ import com.jiaxiang.model.community.vos.CommunityProfileVO;
 import com.jiaxiang.model.community.vos.GridVO;
 import com.jiaxiang.model.content.dos.ArticleFileDO;
 import com.jiaxiang.model.content.vos.ContentVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,4 +33,10 @@ public interface ContentService {
      */
     public List<ArticleFileDO> listArticleFileByArticleId(Long articleId);
 
+    /**
+     * 上传文件接口
+     * @param file
+     * @return
+     */
+    String uploadFile(MultipartFile file);
 }

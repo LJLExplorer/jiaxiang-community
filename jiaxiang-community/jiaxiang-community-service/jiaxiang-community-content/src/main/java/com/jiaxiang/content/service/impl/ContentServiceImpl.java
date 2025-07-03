@@ -2,19 +2,16 @@ package com.jiaxiang.content.service.impl;
 
 import com.jiaxiang.content.mapper.ContentMapper;
 import com.jiaxiang.content.service.ContentService;
-import com.jiaxiang.model.community.dos.CommunityDO;
+import com.jiaxiang.file.service.FileStorageService;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
-import com.jiaxiang.model.community.vos.GridVO;
 import com.jiaxiang.model.content.dos.ArticleFileDO;
 import com.jiaxiang.model.content.vos.ContentVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static com.jiaxiang.model.common.constant.ArticleTypeConstant.COMMUNITY_PROFILE;
@@ -24,8 +21,14 @@ import static com.jiaxiang.model.common.constant.ArticleTypeConstant.COMMUNITY_P
 @Transactional
 public class ContentServiceImpl implements ContentService {
 
-    @Autowired
-    private ContentMapper contentMapper;
+    private final ContentMapper contentMapper;
+
+    private final FileStorageService fileStorageService;
+
+    public ContentServiceImpl(ContentMapper contentMapper, FileStorageService fileStorageService) {
+        this.contentMapper = contentMapper;
+        this.fileStorageService = fileStorageService;
+    }
 
     /**
      * 列出社区简介
@@ -68,5 +71,16 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public List<ArticleFileDO> listArticleFileByArticleId(Long articleId) {
         return contentMapper.listArticleFileByArticleId(articleId);
+    }
+
+    /**
+     * 上传文件接口
+     *
+     * @param file
+     * @return
+     */
+    @Override
+    public String uploadFile(MultipartFile file) {
+        return fileStorageService.uploadFile("", file);
     }
 }

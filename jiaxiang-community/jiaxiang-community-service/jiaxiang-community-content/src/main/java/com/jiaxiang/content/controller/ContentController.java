@@ -3,18 +3,18 @@ package com.jiaxiang.content.controller;
 import com.jiaxiang.content.service.ContentService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
+import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
 import com.jiaxiang.model.content.vos.ContentVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.CONTENT_URL_PREFIX;
@@ -60,5 +60,15 @@ public class ContentController {
     public ResponseEntity<ResponseResult<?>> listContentByType(Long communityId, String type) {
         ContentVO contentVO = contentService.listContentByCommunityAndType(communityId, type);
         return ResponseWrapper.success(contentVO);
+    }
+
+//    @PreAuthorize("hasAuthority('file:add')")
+    @PostMapping("/upload_file")
+    public ResponseEntity<ResponseResult<?>> uploadFile(@RequestParam("file") MultipartFile file) {
+        if(file.isEmpty()){
+            return ResponseWrapper.serverError(AppHttpCodeEnum.PARAM_INVALID.getCode(), "文件上传失败,文件不能为空!");
+        }
+        String urlPath = contentService.uploadFile(file);
+        return ResponseWrapper.success(urlPath);
     }
 }

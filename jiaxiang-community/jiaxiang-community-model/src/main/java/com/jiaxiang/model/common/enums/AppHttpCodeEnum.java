@@ -1,5 +1,7 @@
 package com.jiaxiang.model.common.enums;
 
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+
 public enum AppHttpCodeEnum {
 
     // 成功段固定为200
@@ -23,9 +25,11 @@ public enum AppHttpCodeEnum {
     DATA_EXIST(1000,"数据已经存在"),
     AP_USER_DATA_NOT_EXIST(1001,"ApUser数据不存在"),
     DATA_NOT_EXIST(1002,"数据不存在"),
+    OVER_MAX_UPLOAD_SIZE(1003, "上传文件过大"),
     // 数据错误 3000~3500
     NO_OPERATOR_AUTH(3000,"无权限操作"),
     NEED_ADMIN(3001,"需要管理员权限");
+
 
 
     int code;
