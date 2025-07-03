@@ -103,7 +103,7 @@ spring:
       # 单个文件最大允许大小
       max-file-size: 100MB
       # 整个文件最大允许大小
-      max-request-size: 100MB
+      max-request-size: 1024MB
   data:
     redis: 
       host: localhost
@@ -187,7 +187,7 @@ common:
     security-filter-chain-enabled: true
     whitelist:
       - /activity/list_community_activities
-      - /activity/community_activity_detail
+      - /activity/list_community_activity_detail
 ```
 
 #### jiaxiang-content-dev.yaml

@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.JIA_HE_URL_PREFIX;
 
 @Slf4j
@@ -148,18 +151,23 @@ public class JiaHePortalController {
 
 
     /**
-     * 上传文件接口
-     *
-     * @param file 文件
-     * @return 上传结果
+     * 上传多个文件
+     * @param files 多个文件
+     * @return
      */
     @PostMapping("/upload_file")
-    public ResponseEntity<ResponseResult<?>> uploadFile(@RequestParam("file") MultipartFile file) {
-        if(file.isEmpty()){
+    public ResponseEntity<ResponseResult<?>> uploadFile(@RequestParam("file") MultipartFile[] files) {
+        if (files == null || files.length == 0) {
             return ResponseWrapper.serverError(AppHttpCodeEnum.PARAM_INVALID.getCode(), "文件上传失败,文件不能为空!");
         }
-        String urlPath = portalService.uploadFile(file);
-        return ResponseWrapper.success(urlPath);
+        List<String> urlPaths = new ArrayList<>();
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+                String urlPath = portalService.uploadFile(file);
+                urlPaths.add(urlPath);
+            }
+        }
+        return ResponseWrapper.success(urlPaths);
     }
 
     //TODO 修改社区活动内容
