@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ActivityDo {
 
-
     private Long id;
 
     private Long communityId;
@@ -31,8 +30,22 @@ public class ActivityDo {
 
     private Integer participantCount;
 
+    private String participantType;
+
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+
+    public ActivityDo(Long id, Long communityId, String title, String location, LocalDateTime startTime,
+                      LocalDateTime endTime, String organizer, Integer participantCount) {
+        this.id = id;
+        this.communityId = communityId;
+        this.title = title;
+        this.location = location;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.organizer = organizer;
+        this.participantCount = participantCount;
+    }
 
 }

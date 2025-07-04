@@ -1,5 +1,6 @@
 package com.jiaxiang.activity.service;
 
+import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.activity.vos.ActivityDetailVO;
 import com.jiaxiang.model.activity.vos.ActivityPreviewVO;
 
@@ -21,4 +22,12 @@ public interface ActivityService {
      * @return 活动详情
      */
     ActivityDetailVO listCommunityActivityDetail(Long communityId, Long activityId);
+
+    /**
+     * 更新活动详情
+     * @param communityId
+     * @param activityDetailDto
+     * @return
+     */
+    void updateCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto);
 }

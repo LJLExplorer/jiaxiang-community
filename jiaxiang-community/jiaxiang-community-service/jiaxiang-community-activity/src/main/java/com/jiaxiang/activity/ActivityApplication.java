@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @EnableFeignClients(basePackages = "com.jiaxiang.apis")
 @MapperScan("com.jiaxiang.activity.mapper")
-@ComponentScan(basePackages = {"com.jiaxiang.common", "com.jiaxiang.activity", "com.jiaxiang.utils"})
+@ComponentScan(basePackages = {"com.jiaxiang.common", "com.jiaxiang.activity", "com.jiaxiang.utils", "com.jiaxiang.file"})
 @SpringBootApplication
 public class ActivityApplication {
     public static void main(String[] args) {

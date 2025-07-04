@@ -22,10 +22,17 @@ public class ActivityFileDo {
 
     private String fileType;
 
+    private Boolean isCover;
+
     private String description;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+
+    public ActivityFileDo(Long id, Boolean isCover){
+        this.id = id;
+        this.isCover = isCover;
+    }
 
 }

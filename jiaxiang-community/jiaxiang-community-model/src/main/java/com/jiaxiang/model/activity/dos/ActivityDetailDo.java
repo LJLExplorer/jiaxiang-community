@@ -28,4 +28,12 @@ public class ActivityDetailDo {
 
     private LocalDateTime updateTime;
 
+    public ActivityDetailDo(Long id, Long activityId, String theme, String introduction, String content) {
+        this.id = id;
+        this.activityId = activityId;
+        this.theme = theme;
+        this.introduction = introduction;
+        this.content = content;
+    }
+
 }

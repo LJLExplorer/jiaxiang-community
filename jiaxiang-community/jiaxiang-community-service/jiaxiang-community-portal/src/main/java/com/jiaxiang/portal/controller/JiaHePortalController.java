@@ -170,9 +170,8 @@ public class JiaHePortalController {
         return ResponseWrapper.success(urlPaths);
     }
 
-    //TODO 修改社区活动内容
     @PutMapping("/update_community_activity_detail/{id}")
-    public ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(Long communityId, @PathParam("id") Long id, @RequestBody ActivityDetailDto s) {
-        return null;
+    public ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(Long communityId, @PathParam("id") Long id, @RequestBody ActivityDetailDto activityDetailDto) {
+        return portalService.updateCommunityActivityDetail(communityId, id, activityDetailDto);
     }
 }

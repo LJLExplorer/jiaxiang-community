@@ -1,6 +1,7 @@
 package com.jiaxiang.apis.Content;
 
 import com.jiaxiang.apis.Content.fallback.IContentClientFallback;
+import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -52,4 +53,5 @@ public interface IContentClient {
 
     @PostMapping(value = CONTENT_URL_PREFIX + "/upload_file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<ResponseResult<?>> uploadFile(@RequestPart("file") MultipartFile file);
+
 }

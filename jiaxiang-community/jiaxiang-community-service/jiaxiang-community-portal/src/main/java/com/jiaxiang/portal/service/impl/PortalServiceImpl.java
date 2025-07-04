@@ -3,6 +3,7 @@ package com.jiaxiang.portal.service.impl;
 import com.jiaxiang.apis.Activity.IActivityClient;
 import com.jiaxiang.apis.Content.IContentClient;
 import com.jiaxiang.file.service.FileStorageService;
+import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.portal.service.PortalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,18 @@ public class PortalServiceImpl implements PortalService {
     @Override
     public ResponseEntity<ResponseResult<?>> listCommunityActivityDetail(Long communityId, Long activityId) {
         return iActivityClient.listCommunityActivityDetail(communityId, activityId);
+    }
+
+    /**
+     * 更新活动详情
+     * @param communityId
+     * @param id
+     * @param activityDetailDto
+     * @return
+     */
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(Long communityId, Long id, ActivityDetailDto activityDetailDto) {
+        return iActivityClient.updateCommunityActivityDetail(communityId, activityDetailDto);
     }
 
     /**
@@ -148,4 +161,6 @@ public class PortalServiceImpl implements PortalService {
         return fileStorageService.uploadFile("", file);
 //        return iContentClient.uploadFile(file);
     }
+
+
 }

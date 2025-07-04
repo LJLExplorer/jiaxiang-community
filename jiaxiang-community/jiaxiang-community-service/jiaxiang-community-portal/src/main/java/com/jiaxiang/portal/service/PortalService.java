@@ -1,5 +1,6 @@
 package com.jiaxiang.portal.service;
 
+import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,4 +82,6 @@ public interface PortalService {
      * @return
      */
     String uploadFile(MultipartFile file);
+
+    ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(Long communityId, Long id, ActivityDetailDto activityDetailDto);
 }

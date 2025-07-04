@@ -1,6 +1,7 @@
 package com.jiaxiang.apis.Content.fallback;
 
 import com.jiaxiang.apis.Content.IContentClient;
+import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;

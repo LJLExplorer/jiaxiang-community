@@ -256,5 +256,23 @@ public class MinioFileStorageService implements FileStorageService {
         }
     }
 
-
+    public boolean checkMinioFileExists(String urlPath) {
+//       去调协议和域名
+        String path = urlPath.replaceFirst("https?://[^/]+/", "");
+        int idx = path.indexOf('/');
+        String bucket = path.substring(0, idx);
+        String object = path.substring(idx + 1);
+        try {
+            minioClient.statObject(
+                    StatObjectArgs.builder()
+                            .bucket(bucket)
+                            .object(object)
+                            .build()
+            );
+            return true;
+        } catch (Exception e) {
+            // 文件不存在或其他异常
+            return false;
+        }
+    }
 }

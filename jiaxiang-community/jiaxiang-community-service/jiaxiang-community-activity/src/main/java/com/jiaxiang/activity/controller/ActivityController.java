@@ -1,16 +1,16 @@
 package com.jiaxiang.activity.controller;
 
 import com.jiaxiang.activity.service.ActivityService;
+import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.activity.vos.ActivityDetailVO;
 import com.jiaxiang.model.activity.vos.ActivityPreviewVO;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
+import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,5 +45,19 @@ public class ActivityController {
     public ResponseEntity<ResponseResult<?>> listCommunityActivityDetail(@RequestParam(value = "communityId") Long communityId, @RequestParam(value = "activityId") Long activityId) {
         ActivityDetailVO activityPreviewVOList = activityService.listCommunityActivityDetail(communityId, activityId);
         return ResponseWrapper.success(activityPreviewVOList);
+    }
+
+    /**
+     * 更新社区活动
+     *
+     * @param communityId       社区id
+     * @param id                活动id
+     * @param activityDetailDto 活动内容
+     * @return
+     */
+    @PutMapping("/update_community_activity_detail")
+    ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(@RequestParam("communityId") Long communityId, @RequestBody ActivityDetailDto activityDetailDto) {
+        activityService.updateCommunityActivityDetail(communityId, activityDetailDto);
+        return ResponseWrapper.success("更新成功");
     }
 }

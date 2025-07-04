@@ -26,7 +26,33 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <select id="getActivitiesByCommunityId" resultMap = "ActivitiesPreviewMap">
+    <insert id="insertActivityFiles">
+        INSERT INTO activity_file (
+        activity_id,
+        path_url,
+        file_type,
+        is_cover,
+        description,
+        create_time,
+        update_time
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.activityId}, #{item.pathUrl}, #{item.fileType}, #{item.isCover},
+            #{item.description}, #{item.createTime}, #{item.updateTime})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByActivityIdAndUrls">
+        delete from activity_file where activity_id = #{activateId} and
+        path_url in
+        <foreach collection="toDelete" item="del" open="(" separator="," close=")">
+            #{del}
+        </foreach>
+    </delete>
+
+
+    <select id="getActivitiesByCommunityId" resultMap="ActivitiesPreviewMap">
         select activity.id, activity_file.path_url, activity.start_time, activity.title
         from activity,
              activity_file
@@ -59,6 +85,94 @@
     </select>
 
     <select id="getFilesByActivityId" resultType="com.jiaxiang.model.activity.dos.ActivityFileDo">
-        select * from activity_file where activity_id = #{activityId}
+        select *
+        from activity_file
+        where activity_id = #{activityId}
     </select>
+
+
+    <update id="updateActivityDetailDoById" parameterType="com.jiaxiang.model.activity.dos.ActivityDetailDo">
+        UPDATE activity_detail
+        <set>
+            <if test="activityId != null">
+                activity_id = #{activityId},
+            </if>
+            <if test="theme != null and theme != ''">
+                theme = #{theme},
+            </if>
+            <if test="introduction != null and introduction != ''">
+                introduction = #{introduction},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateActivityDo" parameterType="com.jiaxiang.model.activity.dos.ActivityDo">
+        UPDATE activity
+        <set>
+            <if test="communityId != null">
+                community_id = #{communityId},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="location != null and location != ''">
+                location = #{location},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="organizer != null and organizer != ''">
+                organizer = #{organizer},
+            </if>
+            <if test="participantCount != null">
+                participant_count = #{participantCount},
+            </if>
+            <if test="participantType != null and participantType != ''">
+                participant_type = #{participantType},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateActivityFileDo" parameterType="com.jiaxiang.model.activity.dos.ActivityFileDo">
+        update activity_file
+        <set>
+            <if test="activityId != null and activityId != ''">
+                activity_id = #{activityId},
+            </if>
+            <if test="pathUrl != null and pathUrl != ''">
+                path_url = #{pathUrl},
+            </if>
+            <if test="fileType != null and fileType != ''">
+                file_type = #{fileType},
+            </if>
+            <if test="isCover != null">
+                is_cover = #{isCover},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
 </mapper>

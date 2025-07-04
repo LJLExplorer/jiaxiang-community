@@ -1,5 +1,6 @@
 package com.jiaxiang.model.activity.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 public class ActivityDetailDto {
     private Long id;
+    private Long activateId;
     private Long communityId;
     private String title;
     private String location;
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startTime;
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endTime;
     private String organizer;
     private Integer participantCount;
