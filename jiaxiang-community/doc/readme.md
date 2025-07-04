@@ -116,10 +116,10 @@ spring:
     password: test
     url: jdbc:mysql://127.0.0.1:3306/community_springcloud?characterEncoding=utf-8&useSSL=false
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+    # date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-    serialization:
-      write-dates-as-timestamps: false
+    # serialization:
+      # write-dates-as-timestamps: false
 mybatis:
 # 与数据库直接操作的别名
   type-aliases-package: com.jiaxiang.model.activity.dos
@@ -165,10 +165,10 @@ spring:
       password: test
       database: 0
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+    # date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-    serialization:
-      write-dates-as-timestamps: false
+    # serialization:
+      # write-dates-as-timestamps: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
@@ -188,6 +188,12 @@ common:
     whitelist:
       - /activity/list_community_activities
       - /activity/list_community_activity_detail
+minio:
+  accessKey: minio
+  secretKey: minio123
+  bucket: jiaxiang
+  endpoint: http://127.0.0.1:9000
+  readPath: http://127.0.0.1:9000
 ```
 
 #### jiaxiang-content-dev.yaml
@@ -208,10 +214,10 @@ spring:
     password: test
     url: jdbc:mysql://127.0.0.1:3306/community_springcloud?characterEncoding=utf-8&useSSL=false
   jackson:
-    serialization:
-      WRITE_DATES_AS_TIMESTAMPS: false
-      FAIL_ON_EMPTY_BEANS: true
-    time-zone: UTC
+    # date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    # serialization:
+      # write-dates-as-timestamps: false
 mybatis:
 # 与数据库直接操作的别名
   type-aliases-package: com.jiaxiang.model.content.dos
