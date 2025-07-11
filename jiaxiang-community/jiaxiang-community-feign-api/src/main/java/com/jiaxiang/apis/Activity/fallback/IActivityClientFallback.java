@@ -7,7 +7,6 @@ import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Component
 public class IActivityClientFallback implements IActivityClient {
@@ -25,5 +24,10 @@ public class IActivityClientFallback implements IActivityClient {
     @Override
     public ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto) {
         return ResponseWrapper.serverError(AppHttpCodeEnum.SERVER_ERROR.getCode(), "更新活动详情失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addCommunityActivity(Long communityId, ActivityDetailDto activityDetailDto) {
+        return ResponseWrapper.serverError(AppHttpCodeEnum.SERVER_ERROR.getCode(), "添加活动失败");
     }
 }

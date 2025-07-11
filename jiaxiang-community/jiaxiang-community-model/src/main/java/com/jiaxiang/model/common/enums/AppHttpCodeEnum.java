@@ -6,6 +6,7 @@ public enum AppHttpCodeEnum {
 
     // 成功段固定为200
     SUCCESS(200,"操作成功"),
+    SERVICE_UNAVAILABLE(201, "远程服务调用错误"),
     // 登录段1~50
     NEED_LOGIN(1,"需要登录后操作"),
     LOGIN_USERNAME_PASSWORD_ERROR(2,"用户名或密码错误"),
@@ -29,6 +30,7 @@ public enum AppHttpCodeEnum {
     // 数据错误 3000~3500
     NO_OPERATOR_AUTH(3000,"无权限操作"),
     NEED_ADMIN(3001,"需要管理员权限");
+
 
 
 

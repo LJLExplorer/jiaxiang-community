@@ -20,4 +20,7 @@ public interface IActivityClient {
 
     @PutMapping(ACTIVITY_URL_PREFIX + "/update_community_activity_detail")
     ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(@RequestParam("communityId") Long communityId,@RequestBody ActivityDetailDto activityDetailDto);
+ 
+    @PostMapping(ACTIVITY_URL_PREFIX + "/addCommunityActivity")
+    ResponseEntity<ResponseResult<?>> addCommunityActivity(@RequestParam("communityId") Long communityId,@RequestBody ActivityDetailDto dto);
 }

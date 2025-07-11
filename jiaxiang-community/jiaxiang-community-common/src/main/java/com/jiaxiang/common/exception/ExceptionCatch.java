@@ -61,6 +61,10 @@ public class ExceptionCatch {
     @ResponseBody
     public ResponseResult exception(FeignException e){
         log.error("catch exception:{}",e);
+        if (e instanceof FeignException.ServiceUnavailable) {
+            // 处理 503 ServiceUnavailable 异常
+            return ResponseResult.errorResult(AppHttpCodeEnum.SERVICE_UNAVAILABLE, "远程服务不可用，请稍后重试");
+        }
         return ResponseResult.errorResult(AppHttpCodeEnum.NO_OPERATOR_AUTH);
     }
 
