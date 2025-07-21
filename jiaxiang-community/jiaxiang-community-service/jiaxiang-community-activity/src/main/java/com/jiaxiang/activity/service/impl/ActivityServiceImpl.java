@@ -21,7 +21,7 @@ import static com.jiaxiang.model.common.enums.ViewContentTypeEnum.getContentType
 
 @Slf4j
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class ActivityServiceImpl implements ActivityService {
 
     @Autowired
@@ -61,12 +61,10 @@ public class ActivityServiceImpl implements ActivityService {
      * 更新活动详情
      *
      * @param communityId
-     * @param id
      * @param activityDetailDto
      * @return
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void updateCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto) {
         List<String> images = activityDetailDto.getImages();
         images.add(activityDetailDto.getCoverImage());

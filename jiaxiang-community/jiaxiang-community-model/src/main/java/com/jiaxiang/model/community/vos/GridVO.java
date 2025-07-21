@@ -10,6 +10,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GridVO {
+    private Long id;
     private String community;
     private String icon;
     private Map<String, String> meta;

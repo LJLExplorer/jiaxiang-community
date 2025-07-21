@@ -97,13 +97,13 @@
             <if test="activityId != null">
                 activity_id = #{activityId},
             </if>
-            <if test="theme != null and theme != ''">
+            <if test="theme != null">
                 theme = #{theme},
             </if>
-            <if test="introduction != null and introduction != ''">
+            <if test="introduction != null">
                 introduction = #{introduction},
             </if>
-            <if test="content != null and content != ''">
+            <if test="content != null">
                 content = #{content}
             </if>
         </set>
@@ -116,10 +116,10 @@
             <if test="communityId != null">
                 community_id = #{communityId},
             </if>
-            <if test="title != null and title != ''">
+            <if test="title != null">
                 title = #{title},
             </if>
-            <if test="location != null and location != ''">
+            <if test="location != null">
                 location = #{location},
             </if>
             <if test="startTime != null">
@@ -128,13 +128,13 @@
             <if test="endTime != null">
                 end_time = #{endTime},
             </if>
-            <if test="organizer != null and organizer != ''">
+            <if test="organizer != null">
                 organizer = #{organizer},
             </if>
             <if test="participantCount != null">
                 participant_count = #{participantCount},
             </if>
-            <if test="participantType != null and participantType != ''">
+            <if test="participantType != null">
                 participant_type = #{participantType},
             </if>
             <if test="createTime != null">
@@ -150,19 +150,19 @@
     <update id="updateActivityFileDo" parameterType="com.jiaxiang.model.activity.dos.ActivityFileDo">
         update activity_file
         <set>
-            <if test="activityId != null and activityId != ''">
+            <if test="activityId != null">
                 activity_id = #{activityId},
             </if>
-            <if test="pathUrl != null and pathUrl != ''">
+            <if test="pathUrl != null">
                 path_url = #{pathUrl},
             </if>
-            <if test="fileType != null and fileType != ''">
+            <if test="fileType != null">
                 file_type = #{fileType},
             </if>
             <if test="isCover != null">
                 is_cover = #{isCover},
             </if>
-            <if test="description != null and description != ''">
+            <if test="description != null">
                 description = #{description},
             </if>
             <if test="createTime != null">

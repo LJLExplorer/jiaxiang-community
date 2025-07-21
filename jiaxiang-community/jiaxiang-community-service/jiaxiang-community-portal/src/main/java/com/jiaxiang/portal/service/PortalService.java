@@ -2,13 +2,17 @@ package com.jiaxiang.portal.service;
 
 import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.community.dos.ItemListDO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 public interface PortalService {
 
     /**
      * 根据社区id列出活动预览
+     *
      * @param communityId 社区id
      * @return 返回活动预览图
      */
@@ -40,7 +44,8 @@ public interface PortalService {
 
     /**
      * 列出两委成员列表
-     * @param pageNum 当前页
+     *
+     * @param pageNum  当前页
      * @param pageSize 页大小
      * @return 两委成员列表
      */
@@ -50,13 +55,14 @@ public interface PortalService {
      * 履职信息
      *
      * @param communityId 社区id
-     * @param id 个人id
+     * @param id          个人id
      * @return 履职信息
      */
     ResponseEntity<ResponseResult<?>> listPersonalInfo(Long communityId, long id);
 
     /**
      * 列出为民服务清单
+     *
      * @param pageNum  当前页
      * @param pageSize 页大小
      * @return 列出为民服务清单
@@ -73,15 +79,42 @@ public interface PortalService {
 
     ResponseEntity<ResponseResult<?>> proofInfo(int id);
 
-    //TODO 测试
+    // 测试
     ResponseEntity<ResponseResult<?>> saveContent(int id);
 
     /**
      * 上传文件
+     *
      * @param file
      * @return
      */
     String uploadFile(MultipartFile file);
 
     ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(Long communityId, Long id, ActivityDetailDto activityDetailDto);
+
+    /**
+     * 从md文件这种读取数据
+     *
+     * @param content
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
+    ItemListDO getItemMattersFromMarkdownFileContent(String content, String fileName, String id) throws IOException;
+
+    /**
+     * 保存事项清单
+     *
+     * @param content
+     * @param name
+     */
+    void saveItemContent(String content, String name, String id) throws Exception;
+
+    /**
+     * 异步解析md文档
+     *
+     * @param content
+     * @param fileName
+     */
+    void getItemContentAsync(String content, String fileName, String id);
 }

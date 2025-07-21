@@ -51,7 +51,6 @@ public class ActivityController {
      * 更新社区活动
      *
      * @param communityId       社区id
-     * @param id                活动id
      * @param activityDetailDto 活动内容
      * @return
      */

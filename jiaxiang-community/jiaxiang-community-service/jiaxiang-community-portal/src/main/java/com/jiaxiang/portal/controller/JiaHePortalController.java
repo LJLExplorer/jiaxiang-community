@@ -1,17 +1,19 @@
 package com.jiaxiang.portal.controller;
 
+import cn.hutool.core.lang.UUID;
 import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import com.jiaxiang.portal.service.PortalService;
+import com.jiaxiang.utils.AsyncTaskExecutor;
 import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +24,16 @@ import static com.jiaxiang.model.common.constant.ApiRouterConstant.JIA_HE_URL_PR
 @RequestMapping(JIA_HE_URL_PREFIX)
 public class JiaHePortalController {
 
-    @Autowired
-    private PortalService portalService;
+    private final PortalService portalService;
+
+    private final AsyncTaskExecutor asyncTaskExecutor;
+
+
+    public JiaHePortalController(PortalService portalService, AsyncTaskExecutor asyncTaskExecutor) {
+        this.portalService = portalService;
+        this.asyncTaskExecutor = asyncTaskExecutor;
+    }
+
 
     /**
      * 列出社区活动预览
@@ -143,7 +153,7 @@ public class JiaHePortalController {
         return portalService.proofInfo(id);
     }
 
-    //    TODO 测试接口
+    // 测试接口
     @PostMapping("/save_content")
     public ResponseEntity<ResponseResult<?>> saveContent(Long communityId, int id) {
         return portalService.saveContent(id);
@@ -152,6 +162,7 @@ public class JiaHePortalController {
 
     /**
      * 上传多个文件
+     *
      * @param files 多个文件
      * @return
      */
@@ -174,4 +185,31 @@ public class JiaHePortalController {
     public ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(Long communityId, @PathParam("id") Long id, @RequestBody ActivityDetailDto activityDetailDto) {
         return portalService.updateCommunityActivityDetail(communityId, id, activityDetailDto);
     }
+
+    /**
+     * 添加事项清单
+     *
+     * @param communityId
+     * @param file
+     * @return
+     */
+    @PostMapping("/add_item_matters")
+    public ResponseEntity<ResponseResult<?>> addItemMatters(Long communityId, @RequestParam("file") MultipartFile file) throws Exception {
+        if (file == null) {
+            return ResponseWrapper.serverError(AppHttpCodeEnum.PARAM_INVALID.getCode(), "文件上传失败,文件不能为空!");
+        }
+        asyncTaskExecutor.runAsync(() -> {
+            String urlPath = portalService.uploadFile(file);
+            log.info("MD文件上传存储地址: {}", urlPath);
+        });
+        String content = new String(file.getBytes(), StandardCharsets.UTF_8);
+        String name = file.getOriginalFilename();
+        System.out.println(content + "name : " + name);
+        String id = UUID.randomUUID().toString();
+//        portalService.getItemContentAsync(content, name, id);
+        portalService.saveItemContent(content, name, id);
+        return ResponseWrapper.success("添加事项" + name + "成功");
+    }
+
+
 }

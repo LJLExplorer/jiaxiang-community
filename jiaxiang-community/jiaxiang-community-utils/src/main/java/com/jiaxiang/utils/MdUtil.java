@@ -32,7 +32,7 @@ public class MdUtil {
      * @return 转换后的HTML字符串，转换失败时返回空字符串
      * @throws IllegalArgumentException 当文件路径为null或文件不存在时抛出
      */
-    public static String md2Html(String mdFilePath) {
+    public static String mdFile2Html(String mdFilePath) {
         // 参数验证
         if (mdFilePath == null || mdFilePath.isEmpty()) {
             throw new IllegalArgumentException("Markdown文件路径不能为空");
@@ -77,5 +77,30 @@ public class MdUtil {
             log.error("Markdown转HTML失败: {}", mdFilePath, e);
             return ""; // 返回空字符串而不是null
         }
+    }
+
+    public static String mdSting2Html(String markdown){
+        // 配置解析器选项以提高性能和功能
+        MutableDataSet options = new MutableDataSet()
+                .set(Parser.EXTENSIONS, Arrays.asList(
+                        TablesExtension.create(),
+                        StrikethroughExtension.create(),
+                        TaskListExtension.create()
+                ))
+                .set(HtmlRenderer.SOFT_BREAK, "<br />")
+                .set(Parser.PARSE_INNER_HTML_COMMENTS, true);
+
+        // 解析Markdown为HTML
+        Parser parser = Parser.builder(options).build();
+        Node document = parser.parse(markdown);
+        HtmlRenderer renderer = HtmlRenderer.builder(options).build();
+        String htmlBody = renderer.render(document);
+
+        // 仅在debug级别记录详细内容
+        if (log.isDebugEnabled()) {
+            log.debug("Markdown内容已转换为HTML");
+        }
+
+        return htmlBody;
     }
 }

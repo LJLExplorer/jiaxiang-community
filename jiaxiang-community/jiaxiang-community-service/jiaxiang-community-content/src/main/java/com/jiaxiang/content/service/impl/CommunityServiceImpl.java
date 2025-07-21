@@ -32,7 +32,7 @@ public class CommunityServiceImpl implements CommuniyuService {
             Map<String, String> meta = new HashMap<>();
             meta.put("profile", communityDO.getDescription());
             meta.put("title", communityDO.getNameCn() + "简介");
-            return new GridVO(communityDO.getNameCn(), communityDO.getIcon(), meta);
+            return new GridVO(communityDO.getId(), communityDO.getNameCn(), communityDO.getIcon(), meta);
         }).toList();
     }
 

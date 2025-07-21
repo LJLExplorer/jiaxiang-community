@@ -108,4 +108,5 @@ public class CommunityController {
         ProofDocumentsDetailDO proofDocumentsDetailDO = communiyuService.proofInfo(id);
         return ResponseWrapper.success(proofDocumentsDetailDO);
     }
+
 }

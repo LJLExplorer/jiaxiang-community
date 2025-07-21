@@ -964,3 +964,4 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,git,windows,macos,linux,java,node,python,jetbrains+all,visualstudiocode,visualstudio,react,vue
+settings.json

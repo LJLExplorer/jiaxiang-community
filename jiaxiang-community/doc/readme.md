@@ -110,6 +110,8 @@ spring:
       port: 6379
       password: test
       database: 0
+    mongodb: 
+      uri: mongodb://localhost:27017/community_springcloud
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
@@ -120,6 +122,12 @@ spring:
     time-zone: GMT+8
     # serialization:
       # write-dates-as-timestamps: false
+  rabbitmq:
+    enabled: true
+    host: 127.0.0.1
+    port: 5672
+    username: root
+    password: test
 mybatis:
 # 与数据库直接操作的别名
   type-aliases-package: com.jiaxiang.model.activity.dos
@@ -208,6 +216,8 @@ spring:
       port: 6379
       password: test
       database: 0
+    mongodb:
+      uri: mongodb://localhost:27017/community_springcloud
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
@@ -218,6 +228,12 @@ spring:
     time-zone: GMT+8
     # serialization:
       # write-dates-as-timestamps: false
+  rabbitmq:
+    enabled: true
+    host: 127.0.0.1
+    port: 5672
+    username: root
+    password: test
 mybatis:
 # 与数据库直接操作的别名
   type-aliases-package: com.jiaxiang.model.content.dos
