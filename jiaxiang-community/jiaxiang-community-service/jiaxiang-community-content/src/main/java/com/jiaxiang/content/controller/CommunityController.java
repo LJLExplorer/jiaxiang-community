@@ -1,12 +1,15 @@
 package com.jiaxiang.content.controller;
 
+import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.content.service.CommuniyuService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
+import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import com.jiaxiang.model.community.vos.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,6 +90,16 @@ public class CommunityController {
         Integer total = communiyuService.getMattersCount();
         List<GuideCategoryVO> guideCategoryVOList = communiyuService.listMatters(communityId, pageNum, pageSize);
         return ResponseWrapper.successWithPage(guideCategoryVOList, pageNum, pageSize, total, (total + pageSize - 1) / pageSize);
+    }
+
+    @DeleteMapping("/delete_matters")
+    public ResponseEntity<ResponseResult<?>> deleteMatters(Long communityId, String id) {
+        long count = communiyuService.deleteMattersById(id);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "找不到待删除文件");
+//            return ResponseWrapper.serverError(AppHttpCodeEnum.PARAM_INVALID.getCode(), "找不到待删除文件");
+        }
+        return ResponseWrapper.success("删除" + id + "成功！");
     }
 
     @GetMapping("/community_honor")

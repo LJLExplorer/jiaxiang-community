@@ -1,15 +1,11 @@
 package com.jiaxiang.apis.Content;
 
 import com.jiaxiang.apis.Content.fallback.IContentClientFallback;
-import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.COMMUNITY_URL_PREFIX;
@@ -54,4 +50,6 @@ public interface IContentClient {
     @PostMapping(value = CONTENT_URL_PREFIX + "/upload_file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<ResponseResult<?>> uploadFile(@RequestPart("file") MultipartFile file);
 
+    @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_matters")
+    ResponseEntity<ResponseResult<?>> deleteMattersById(@RequestParam String id);
 }

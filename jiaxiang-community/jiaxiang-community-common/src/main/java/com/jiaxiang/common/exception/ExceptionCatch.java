@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 @AutoConfiguration
 public class ExceptionCatch {
 
-    public ExceptionCatch(){
+    public ExceptionCatch() {
         log.info("ExceptionCatch 已加载到 Spring 容器中");
     }
 
@@ -28,55 +28,56 @@ public class ExceptionCatch {
 
     /**
      * 处理不可控异常
+     *
      * @param e
      * @return
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public ResponseResult exception(Exception e){
+    public ResponseResult exception(Exception e) {
         e.printStackTrace();
-        log.error("catch exception:{}",e.getMessage());
-        return ResponseResult.errorResult(AppHttpCodeEnum.SERVER_ERROR);
+        log.error("catch exception:{}", e.getMessage());
+        return ResponseResult.errorResult(AppHttpCodeEnum.SERVER_ERROR, e.getMessage());
     }
 
     /**
      * 处理可控异常  自定义异常
+     *
      * @param e
      * @return
      */
     @ExceptionHandler(CustomException.class)
     @ResponseBody
-    public ResponseResult exception(CustomException e){
-        log.error("catch exception:{}",e);
-        return ResponseResult.errorResult(e.getAppHttpCodeEnum());
+    public ResponseResult exception(CustomException e) {
+        log.error("catch exception:{}", e);
+        return ResponseResult.errorResult(e.getAppHttpCodeEnum(), e.getErrorMessage());
     }
 
 
     /**
      * 处理可控异常  Feign异常
+     *
      * @param e
      * @return
      */
-    @ExceptionHandler(FeignException.class)
+    @ExceptionHandler(FeignException.ServiceUnavailable.class)
     @ResponseBody
-    public ResponseResult exception(FeignException e){
-        log.error("catch exception:{}",e);
-        if (e instanceof FeignException.ServiceUnavailable) {
-            // 处理 503 ServiceUnavailable 异常
-            return ResponseResult.errorResult(AppHttpCodeEnum.SERVICE_UNAVAILABLE, "远程服务不可用，请稍后重试");
-        }
-        return ResponseResult.errorResult(AppHttpCodeEnum.NO_OPERATOR_AUTH);
+    public ResponseResult exception(FeignException e) {
+        // 处理 503 ServiceUnavailable 异常
+        return ResponseResult.errorResult(AppHttpCodeEnum.SERVICE_UNAVAILABLE, "远程服务不可用，请稍后重试");
+
     }
 
     /**
      * 处理超过最大上传文件大小异常  MaxUploadSizeExceededException异常
+     *
      * @param e
      * @return
      */
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     @ResponseBody
-    public ResponseResult exception(MaxUploadSizeExceededException e){
-        log.error("catch exception:{}",e);
+    public ResponseResult exception(MaxUploadSizeExceededException e) {
+        log.error("catch exception:{}", e);
         return ResponseResult.errorResult(AppHttpCodeEnum.OVER_MAX_UPLOAD_SIZE);
     }
 }

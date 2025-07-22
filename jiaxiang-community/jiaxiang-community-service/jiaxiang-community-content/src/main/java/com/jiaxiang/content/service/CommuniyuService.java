@@ -67,4 +67,18 @@ public interface CommuniyuService {
     List<ProofDocumentsPreviewVO> proofDocuments(Long communityId, int pageNum, int pageSize);
 
     ProofDocumentsDetailDO proofInfo(int id);
+
+    /**
+     * 根据id查事项清单
+     * @param id
+     * @return
+     */
+    long getMattersById(String id);
+
+    /**
+     * 根据id删除事项清单
+     * @param id
+     * @return
+     */
+    long deleteMattersById(String id);
 }

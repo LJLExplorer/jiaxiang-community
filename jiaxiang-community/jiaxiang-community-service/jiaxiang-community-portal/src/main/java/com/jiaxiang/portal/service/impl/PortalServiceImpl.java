@@ -258,6 +258,17 @@ public class PortalServiceImpl implements PortalService {
     }
 
     /**
+     * 根据id删除事项清单
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteMattersById(String id) {
+        return iContentClient.deleteMattersById(id);
+    }
+
+    /**
      * 保存事项清单
      *
      * @param content

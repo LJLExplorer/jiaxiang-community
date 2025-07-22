@@ -7,8 +7,10 @@ import com.jiaxiang.model.community.dos.CommunityDO;
 import com.jiaxiang.model.community.dos.ItemListDO;
 import com.jiaxiang.model.community.dtos.LawItemDTO;
 import com.jiaxiang.model.community.vos.*;
+import com.mongodb.client.result.DeleteResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -126,19 +128,15 @@ public class CommunityServiceImpl implements CommuniyuService {
         Query query = new Query();
         query.skip((long) (pageNum - 1) * pageSize).limit(pageSize);
         List<ItemListDO> itemListDoS = mongoTemplate.find(query, ItemListDO.class);
-        List<GuideCategoryVO> list = itemListDoS.stream().map(itemListDO -> {
+        return itemListDoS.stream().map(itemListDO -> {
             GuideCategoryVO guideCategoryVO = new GuideCategoryVO();
             BeanUtil.copyProperties(itemListDO, guideCategoryVO);
             guideCategoryVO.setTitle(itemListDO.getFileName());
             String mdContent = convertItemListDo2Markdown(itemListDO);
-            log.info(mdContent);
             String mdSting2Html = mdSting2Html(mdContent);
-            System.out.println();
-            log.info("html" + mdSting2Html);
             guideCategoryVO.setContent(mdSting2Html);
             return guideCategoryVO;
         }).toList();
-        return list;
 //        return communityMapper.listMatters(communityId, (pageNum - 1) * pageSize, pageSize);
     }
 
@@ -190,5 +188,32 @@ public class CommunityServiceImpl implements CommuniyuService {
     @Override
     public ProofDocumentsDetailDO proofInfo(int id) {
         return communityMapper.proofInfo(id);
+    }
+
+    /**
+     * 根据id查事项清单
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public long getMattersById(String id) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(id));
+        return mongoTemplate.count(query, ItemListDO.class);
+    }
+
+    /**
+     * 根据id删除事项清单
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public long deleteMattersById(String id) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(id));
+        DeleteResult remove = mongoTemplate.remove(query, ItemListDO.class);
+        return remove.getDeletedCount();
     }
 }

@@ -117,4 +117,11 @@ public interface PortalService {
      * @param fileName
      */
     void getItemContentAsync(String content, String fileName, String id);
+
+    /**
+     * 根据id删除事项清单
+     * @param id
+     * @return
+     */
+    ResponseEntity<ResponseResult<?>> deleteMattersById(String id);
 }

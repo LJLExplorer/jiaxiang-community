@@ -72,4 +72,9 @@ public class IContentClientFallback implements IContentClient {
         return ResponseWrapper.serverError(AppHttpCodeEnum.SERVER_ERROR.getCode(), "文件上传失败");
     }
 
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteMattersById(String id) {
+        return ResponseWrapper.serverError(AppHttpCodeEnum.SERVER_ERROR.getCode(), "删除失败");
+    }
+
 }

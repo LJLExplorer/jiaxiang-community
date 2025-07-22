@@ -211,5 +211,8 @@ public class JiaHePortalController {
         return ResponseWrapper.success("添加事项" + name + "成功");
     }
 
-
+    @DeleteMapping("/delete_matters")
+    public ResponseEntity<ResponseResult<?>> deleteMattersById(Long communityId, String id){
+        return portalService.deleteMattersById(id);
+    }
 }
