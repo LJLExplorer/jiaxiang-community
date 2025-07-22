@@ -13,7 +13,7 @@ public class GuideCategoryVO {
     /**
      * 主键 ID
      */
-    private Long id;
+    private String id;
 
     /**
      * 所属社区 ID

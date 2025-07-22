@@ -20,6 +20,6 @@ public class MQListener {
     @RabbitListener(queues = ITEM_MATTERS_QUEUE)
     public void saveItemContent(String message) {
         ItemListDO itemListDO = JSONUtil.parseObj(message).toBean(ItemListDO.class);
-        mongoTemplate.save(itemListDO, "item_list");
+        mongoTemplate.save(itemListDO);
     }
 }
