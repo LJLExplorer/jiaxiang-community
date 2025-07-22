@@ -1,6 +1,7 @@
 package com.jiaxiang.portal.controller;
 
 import cn.hutool.core.lang.UUID;
+import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
@@ -169,7 +170,7 @@ public class JiaHePortalController {
     @PostMapping("/upload_file")
     public ResponseEntity<ResponseResult<?>> uploadFile(@RequestParam("file") MultipartFile[] files) {
         if (files == null || files.length == 0) {
-            return ResponseWrapper.serverError(AppHttpCodeEnum.PARAM_INVALID.getCode(), "文件上传失败,文件不能为空!");
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "文件上传失败,文件不能为空!");
         }
         List<String> urlPaths = new ArrayList<>();
         for (MultipartFile file : files) {
@@ -196,7 +197,7 @@ public class JiaHePortalController {
     @PostMapping("/add_item_matters")
     public ResponseEntity<ResponseResult<?>> addItemMatters(Long communityId, @RequestParam("file") MultipartFile file) throws Exception {
         if (file == null) {
-            return ResponseWrapper.serverError(AppHttpCodeEnum.PARAM_INVALID.getCode(), "文件上传失败,文件不能为空!");
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "文件上传失败,文件不能为空!");
         }
         asyncTaskExecutor.runAsync(() -> {
             String urlPath = portalService.uploadFile(file);
@@ -212,7 +213,7 @@ public class JiaHePortalController {
     }
 
     @DeleteMapping("/delete_matters")
-    public ResponseEntity<ResponseResult<?>> deleteMattersById(Long communityId, String id){
+    public ResponseEntity<ResponseResult<?>> deleteMattersById(Long communityId, String id) {
         return portalService.deleteMattersById(id);
     }
 }

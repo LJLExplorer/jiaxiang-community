@@ -1,5 +1,6 @@
 package com.jiaxiang.content.controller;
 
+import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.content.service.ContentService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.CONTENT_URL_PREFIX;
@@ -62,11 +62,11 @@ public class ContentController {
         return ResponseWrapper.success(contentVO);
     }
 
-//    @PreAuthorize("hasAuthority('file:add')")
+    //    @PreAuthorize("hasAuthority('file:add')")
     @PostMapping("/upload_file")
     public ResponseEntity<ResponseResult<?>> uploadFile(@RequestParam("file") MultipartFile file) {
-        if(file.isEmpty()){
-            return ResponseWrapper.serverError(AppHttpCodeEnum.PARAM_INVALID.getCode(), "文件上传失败,文件不能为空!");
+        if (file.isEmpty()) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "文件上传失败,文件不能为空!");
         }
         String urlPath = contentService.uploadFile(file);
         return ResponseWrapper.success(urlPath);

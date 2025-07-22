@@ -35,8 +35,7 @@ public class ExceptionCatch {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseResult exception(Exception e) {
-        e.printStackTrace();
-        log.error("catch exception:{}", e.getMessage());
+        log.error("ExceptionCatch catch exception:{}", e.getMessage());
         return ResponseResult.errorResult(AppHttpCodeEnum.SERVER_ERROR, e.getMessage());
     }
 
@@ -49,7 +48,7 @@ public class ExceptionCatch {
     @ExceptionHandler(CustomException.class)
     @ResponseBody
     public ResponseResult exception(CustomException e) {
-        log.error("catch exception:{}", e);
+        log.error("ExceptionCatch catch exception:{}", e.getErrorMessage());
         return ResponseResult.errorResult(e.getAppHttpCodeEnum(), e.getErrorMessage());
     }
 

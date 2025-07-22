@@ -2,6 +2,7 @@ package com.jiaxiang.auth.service.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.jiaxiang.auth.service.AuthService;
+import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.model.auth.dos.UserDO;
 import com.jiaxiang.model.auth.dtos.SecurityUserDTO;
 import com.jiaxiang.model.common.constant.SystemConstant;
@@ -22,7 +23,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.jiaxiang.model.common.constant.AuthConstant.*;
+import static com.jiaxiang.model.common.constant.AuthConstant.LOGIN_REDIS_EXPIRATION_S;
+import static com.jiaxiang.model.common.constant.AuthConstant.USERID_LOGIN_REDIS_PREFIX;
 
 @Slf4j
 @Service
@@ -54,9 +56,9 @@ public class AuthServiceImpl implements AuthService {
             String securityUserVoStr = JSONUtil.toJsonStr(securityUserDTO);
             redisUtils.set(USERID_LOGIN_REDIS_PREFIX + securityUserDTO.getUserDO().getId(), securityUserVoStr, LOGIN_REDIS_EXPIRATION_S);
             return ResponseWrapper.success(map);
-        }catch (BadCredentialsException badCredentialsException){
+        } catch (BadCredentialsException badCredentialsException) {
             log.error("登陆失败，用户名或密码错误");
-            return ResponseWrapper.badRequest(AppHttpCodeEnum.LOGIN_USERNAME_PASSWORD_ERROR, "用户名或密码错误");
+            throw new CustomException(AppHttpCodeEnum.LOGIN_USERNAME_PASSWORD_ERROR, "用户名或密码错误");
         }
 
     }

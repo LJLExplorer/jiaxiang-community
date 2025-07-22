@@ -12,9 +12,7 @@ public class CustomException extends RuntimeException {
         this.appHttpCodeEnum = appHttpCodeEnum;
     }
 
-    public AppHttpCodeEnum getAppHttpCodeEnum() {
-        return appHttpCodeEnum;
-    }
+
 
     public CustomException() {
         this.appHttpCodeEnum = AppHttpCodeEnum.SERVER_ERROR;
@@ -29,4 +27,9 @@ public class CustomException extends RuntimeException {
     public String getErrorMessage() {
         return errorMessage;
     }
+
+    public AppHttpCodeEnum getAppHttpCodeEnum() {
+        return appHttpCodeEnum;
+    }
+
 }

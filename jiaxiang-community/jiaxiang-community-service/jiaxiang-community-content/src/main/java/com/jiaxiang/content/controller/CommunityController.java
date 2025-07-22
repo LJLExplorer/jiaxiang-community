@@ -97,7 +97,6 @@ public class CommunityController {
         long count = communiyuService.deleteMattersById(id);
         if (count <= 0) {
             throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "找不到待删除文件");
-//            return ResponseWrapper.serverError(AppHttpCodeEnum.PARAM_INVALID.getCode(), "找不到待删除文件");
         }
         return ResponseWrapper.success("删除" + id + "成功！");
     }
