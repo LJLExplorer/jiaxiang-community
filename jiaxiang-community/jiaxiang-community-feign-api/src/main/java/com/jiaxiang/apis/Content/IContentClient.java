@@ -2,6 +2,7 @@ package com.jiaxiang.apis.Content;
 
 import com.jiaxiang.apis.Content.fallback.IContentClientFallback;
 import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
 import com.jiaxiang.model.community.dtos.GridDTO;
 import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
 import com.jiaxiang.model.community.dtos.StaffInfoDTO;
@@ -70,6 +71,15 @@ public interface IContentClient {
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/community_honor")
     ResponseEntity<ResponseResult<?>> communityHonor(@RequestParam Long communityId, @RequestParam int pageNum, @RequestParam int pageSize);
+
+    @PostMapping(COMMUNITY_URL_PREFIX + "/add_community_honor")
+    ResponseEntity<ResponseResult<?>> addCommunityHonor(@RequestBody CommunityHonorDTO communityHonorDTO);
+
+    @PutMapping(COMMUNITY_URL_PREFIX + "/update_community_honor")
+    ResponseEntity<ResponseResult<?>> updateCommunityHonor(@RequestBody CommunityHonorDTO communityHonorDTO);
+
+    @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_community_honor")
+    ResponseEntity<ResponseResult<?>> deleteCommunityHonor(@RequestParam Long id);
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/proof_documents")
     ResponseEntity<ResponseResult<?>> proofDocuments(@RequestParam Long communityId, @RequestParam int pageNum, @RequestParam int pageSize);

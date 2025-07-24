@@ -1,6 +1,8 @@
 package com.jiaxiang.content.service;
 
 import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.community.dos.CommunityHonorDO;
+import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
 import com.jiaxiang.model.community.dtos.GridDTO;
 import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
 import com.jiaxiang.model.community.dtos.StaffInfoDTO;
@@ -104,4 +106,10 @@ public interface CommuniyuService {
     ResponseEntity<ResponseResult<?>> deletePersonalInfo(Long id);
 
     ResponseEntity<ResponseResult<?>> updatePersonalInfo(StaffInfoDTO staffInfoDTO);
+
+    ResponseEntity<ResponseResult<?>> updateCommunityHonor(CommunityHonorDTO communityHonorDTO);
+
+    ResponseEntity<ResponseResult<?>> addCommunityHonor(CommunityHonorDTO communityHonorDTO);
+
+    ResponseEntity<ResponseResult<?>> deleteCommunityHonor(Long id);
 }

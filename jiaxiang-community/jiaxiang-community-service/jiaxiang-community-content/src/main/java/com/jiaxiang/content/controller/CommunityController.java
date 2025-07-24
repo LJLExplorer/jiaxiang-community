@@ -6,6 +6,8 @@ import com.jiaxiang.file.service.impl.MinioFileStorageService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.community.dos.CommunityHonorDO;
+import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
 import com.jiaxiang.model.community.dtos.GridDTO;
 import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
 import com.jiaxiang.model.community.dtos.StaffInfoDTO;
@@ -181,6 +183,19 @@ public class CommunityController {
         Integer total = communiyuService.getHonorCount();
         List<CommunityHonorVO> communityHonorVOList = communiyuService.communityHonor(communityId, pageNum, pageSize);
         return ResponseWrapper.successWithPage(communityHonorVOList, pageNum, pageSize, total, (total + pageSize - 1) / pageSize);
+    }
+
+    @PutMapping("/update_community_honor")
+    public ResponseEntity<ResponseResult<?>> updateCommunityHonor(@RequestBody CommunityHonorDTO communityHonorDTO){
+        return communiyuService.updateCommunityHonor(communityHonorDTO);
+    }
+    @PostMapping("/add_community_honor")
+    public ResponseEntity<ResponseResult<?>> addCommunityHonor(@RequestBody CommunityHonorDTO communityHonorDTO){
+        return communiyuService.addCommunityHonor(communityHonorDTO);
+    }
+    @DeleteMapping("/delete_community_honor")
+    public ResponseEntity<ResponseResult<?>> deleteCommunityHonor(@RequestParam Long id){
+        return communiyuService.deleteCommunityHonor(id);
     }
 
     @GetMapping("/proof_documents")

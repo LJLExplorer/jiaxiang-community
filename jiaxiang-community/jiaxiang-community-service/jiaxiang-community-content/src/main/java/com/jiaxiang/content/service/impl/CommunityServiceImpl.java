@@ -9,10 +9,7 @@ import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import com.jiaxiang.model.community.dos.*;
-import com.jiaxiang.model.community.dtos.GridDTO;
-import com.jiaxiang.model.community.dtos.LawItemDTO;
-import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
-import com.jiaxiang.model.community.dtos.StaffInfoDTO;
+import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.model.community.vos.*;
 import com.jiaxiang.utils.AsyncTaskExecutor;
 import com.mongodb.client.result.DeleteResult;
@@ -170,6 +167,7 @@ public class CommunityServiceImpl implements CommuniyuService {
         return ResponseWrapper.success("更新成功！");
     }
 
+
     @Override
     public ResponseEntity<ResponseResult<?>> addServePeopleInfo(ServePeopleInfoDTO servePeopleInfoDTO) {
         ServePeopleInfoDO servePeopleInfoDO = new ServePeopleInfoDO();
@@ -275,6 +273,37 @@ public class CommunityServiceImpl implements CommuniyuService {
     @Override
     public List<CommunityHonorVO> communityHonor(Long communityId, int pageNum, int pageSize) {
         return communityMapper.communityHonor(communityId, (pageNum - 1) * pageSize, pageSize);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateCommunityHonor(CommunityHonorDTO communityHonorDTO) {
+        CommunityHonorDO communityHonorDO = new CommunityHonorDO();
+        BeanUtil.copyProperties(communityHonorDTO, communityHonorDO);
+        int count = communityMapper.updateCommunityHonor(communityHonorDO);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "社区荣誉不存在！");
+        }
+        return ResponseWrapper.success("更新社区荣誉成功");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addCommunityHonor(CommunityHonorDTO communityHonorDTO) {
+        CommunityHonorDO communityHonorDO = new CommunityHonorDO();
+        BeanUtil.copyProperties(communityHonorDTO, communityHonorDO);
+        int count = communityMapper.addCommunityHonor(communityHonorDO);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "添加社区荣誉失败，请稍后重试！");
+        }
+        return ResponseWrapper.success("添加社区荣誉成功");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteCommunityHonor(Long id) {
+        int count = communityMapper.deleteCommunityHonor(id);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "删除失败，没有待删除数据，请刷新后重试！");
+        }
+        return ResponseWrapper.success("删除成功");
     }
 
     @Override

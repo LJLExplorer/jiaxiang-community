@@ -4,6 +4,7 @@ import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.community.dos.GridDO;
 import com.jiaxiang.model.community.dos.ItemListDO;
+import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
 import com.jiaxiang.model.community.dtos.GridDTO;
 import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
 import com.jiaxiang.model.community.dtos.StaffInfoDTO;
@@ -146,4 +147,10 @@ public interface PortalService {
     ResponseEntity<ResponseResult<?>> updateServePeopleInfo(ServePeopleInfoDTO servePeopleInfDTO);
 
     ResponseEntity<ResponseResult<?>> deleteServePeopleInfo(Long id);
+
+    ResponseEntity<ResponseResult<?>> addCommunityHonor(CommunityHonorDTO communityHonorDTO);
+
+    ResponseEntity<ResponseResult<?>> updateCommunityHonor(CommunityHonorDTO communityHonorDTO);
+
+    ResponseEntity<ResponseResult<?>> deleteCommunityHonor(Long id);
 }

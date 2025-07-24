@@ -9,10 +9,7 @@ import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.community.dos.GridDO;
 import com.jiaxiang.model.community.dos.ItemListDO;
-import com.jiaxiang.model.community.dtos.GridDTO;
-import com.jiaxiang.model.community.dtos.LawItemDTO;
-import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
-import com.jiaxiang.model.community.dtos.StaffInfoDTO;
+import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.portal.service.PortalService;
 import com.jiaxiang.utils.AsyncTaskExecutor;
 import org.slf4j.Logger;
@@ -206,6 +203,21 @@ public class PortalServiceImpl implements PortalService {
     @Override
     public ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize) {
         return iContentClient.communityHonor(communityId, pageNum, pageSize);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addCommunityHonor(CommunityHonorDTO communityHonorDTO) {
+        return iContentClient.addCommunityHonor(communityHonorDTO);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateCommunityHonor(CommunityHonorDTO communityHonorDTO) {
+        return iContentClient.updateCommunityHonor(communityHonorDTO);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteCommunityHonor(Long id) {
+        return iContentClient.deleteCommunityHonor(id);
     }
 
     @Override

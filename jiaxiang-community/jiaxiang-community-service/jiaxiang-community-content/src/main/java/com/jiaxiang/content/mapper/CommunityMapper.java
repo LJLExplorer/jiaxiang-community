@@ -1,9 +1,6 @@
 package com.jiaxiang.content.mapper;
 
-import com.jiaxiang.model.community.dos.CommunityDO;
-import com.jiaxiang.model.community.dos.GridDO;
-import com.jiaxiang.model.community.dos.ServePeopleInfoDO;
-import com.jiaxiang.model.community.dos.StaffInfoDO;
+import com.jiaxiang.model.community.dos.*;
 import com.jiaxiang.model.community.vos.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -61,4 +58,9 @@ public interface CommunityMapper {
 
     int deleteServePeopleInfo(Long id);
 
+    int updateCommunityHonor(CommunityHonorDO communityHonorDO);
+
+    int addCommunityHonor(CommunityHonorDO communityHonorDO);
+
+    int deleteCommunityHonor(Long id);
 }

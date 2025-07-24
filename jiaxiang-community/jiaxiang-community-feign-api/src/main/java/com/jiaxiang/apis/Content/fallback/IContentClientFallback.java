@@ -4,6 +4,7 @@ import com.jiaxiang.apis.Content.IContentClient;
 import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
 import com.jiaxiang.model.community.dtos.GridDTO;
 import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
 import com.jiaxiang.model.community.dtos.StaffInfoDTO;
@@ -102,6 +103,21 @@ public class IContentClientFallback implements IContentClient {
     @Override
     public ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize) {
         throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "保存社区荣誉数据失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addCommunityHonor(CommunityHonorDTO communityHonorDTO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加社区荣誉失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateCommunityHonor(CommunityHonorDTO communityHonorDTO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "更新社区荣誉失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteCommunityHonor(Long id) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "删除社区荣誉失败");
     }
 
     @Override

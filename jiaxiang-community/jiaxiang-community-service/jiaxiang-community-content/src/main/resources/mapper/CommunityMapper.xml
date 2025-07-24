@@ -189,6 +189,34 @@
         limit #{pageNum} ,#{pageSize}
     </select>
 
+    <update id="updateCommunityHonor">
+        UPDATE community_honor
+        <set>
+            <if test="communityId != null">communityId = #{communityId},</if>
+            <if test="honorDetail != null"> honor_detail = #{honorDetail},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <insert id="addCommunityHonor" parameterType="com.jiaxiang.model.community.dos.CommunityHonorDO">
+        INSERT INTO community_honor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="communityId != null">communityId,</if>
+            <if test="honorDetail != null">honor_detail,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="communityId != null">#{communityId},</if>
+            <if test="honorDetail != null">#{honorDetail},</if>
+        </trim>
+    </insert>
+
+    <delete id="deleteCommunityHonor">
+        DELETE FROM community_honor
+        WHERE id = #{id};
+    </delete>
+
     <select id="getProofDocumentsCount" resultType="java.lang.Integer">
         select count(id)
         from proof_documents
