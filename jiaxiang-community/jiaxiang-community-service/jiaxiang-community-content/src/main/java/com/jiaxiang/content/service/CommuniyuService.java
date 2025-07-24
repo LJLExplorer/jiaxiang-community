@@ -1,8 +1,11 @@
 package com.jiaxiang.content.service;
 
+import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.community.dtos.GridDTO;
+import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
+import com.jiaxiang.model.community.dtos.StaffInfoDTO;
 import com.jiaxiang.model.community.vos.*;
-import com.jiaxiang.model.content.dos.ArticleFileDO;
-import com.jiaxiang.model.content.vos.ContentVO;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -81,4 +84,24 @@ public interface CommuniyuService {
      * @return
      */
     long deleteMattersById(String id);
+
+    ResponseEntity<ResponseResult<?>> addGridManagement(GridDTO gridDTO);
+
+    ResponseEntity<ResponseResult<?>> updateGridManagement(GridDTO gridDTO);
+
+    ResponseEntity<ResponseResult<?>> deleteGridManagement(Long id);
+
+    ResponseEntity<ResponseResult<?>> addServePeopleInfo(ServePeopleInfoDTO servePeopleInfoDTO);
+
+    ResponseEntity<ResponseResult<?>> updateServePeopleInfo(ServePeopleInfoDTO servePeopleInfoDTO);
+
+    String getImageByIdServePersonalInfo(Long id);
+
+    ResponseEntity<ResponseResult<?>> deleteServePeopleInfo(Long id);
+
+    ResponseEntity<ResponseResult<?>> addPersonalInfo(StaffInfoDTO staffInfoDTO);
+
+    ResponseEntity<ResponseResult<?>> deletePersonalInfo(Long id);
+
+    ResponseEntity<ResponseResult<?>> updatePersonalInfo(StaffInfoDTO staffInfoDTO);
 }

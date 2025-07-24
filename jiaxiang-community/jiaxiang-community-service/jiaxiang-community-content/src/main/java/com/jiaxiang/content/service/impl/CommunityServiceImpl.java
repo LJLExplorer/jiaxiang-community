@@ -1,17 +1,26 @@
 package com.jiaxiang.content.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.content.mapper.CommunityMapper;
 import com.jiaxiang.content.service.CommuniyuService;
-import com.jiaxiang.model.community.dos.CommunityDO;
-import com.jiaxiang.model.community.dos.ItemListDO;
+import com.jiaxiang.file.service.impl.MinioFileStorageService;
+import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.common.dtos.ResponseWrapper;
+import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.community.dos.*;
+import com.jiaxiang.model.community.dtos.GridDTO;
 import com.jiaxiang.model.community.dtos.LawItemDTO;
+import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
+import com.jiaxiang.model.community.dtos.StaffInfoDTO;
 import com.jiaxiang.model.community.vos.*;
+import com.jiaxiang.utils.AsyncTaskExecutor;
 import com.mongodb.client.result.DeleteResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,9 +39,15 @@ public class CommunityServiceImpl implements CommuniyuService {
 
     private final MongoTemplate mongoTemplate;
 
-    public CommunityServiceImpl(CommunityMapper communityMapper, MongoTemplate mongoTemplate) {
+    private final MinioFileStorageService minioFileStorageService;
+
+    private final AsyncTaskExecutor asyncTaskExecutor;
+
+    public CommunityServiceImpl(CommunityMapper communityMapper, MongoTemplate mongoTemplate, MinioFileStorageService minioFileStorageService, AsyncTaskExecutor asyncTaskExecutor) {
         this.communityMapper = communityMapper;
         this.mongoTemplate = mongoTemplate;
+        this.minioFileStorageService = minioFileStorageService;
+        this.asyncTaskExecutor = asyncTaskExecutor;
     }
 
 
@@ -51,6 +66,37 @@ public class CommunityServiceImpl implements CommuniyuService {
             meta.put("title", communityDO.getNameCn() + "简介");
             return new GridVO(communityDO.getId(), communityDO.getNameCn(), communityDO.getIcon(), meta);
         }).toList();
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addGridManagement(GridDTO gridDTO) {
+        GridDO gridDO = new GridDO();
+        BeanUtil.copyProperties(gridDTO, gridDO);
+        Integer count = communityMapper.addGridManagement(gridDO);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.DATA_NOT_EXIST, "更新失败，未找到" + gridDTO.getCommunityCn() + "社区信息");
+        }
+        return ResponseWrapper.success("更新成功!");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateGridManagement(GridDTO gridDTO) {
+        GridDO gridDO = new GridDO();
+        BeanUtil.copyProperties(gridDTO, gridDO);
+        Integer count = communityMapper.updateGridManagement(gridDO);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.DATA_NOT_EXIST, "更新失败，未找到" + gridDTO.getCommunityCn() + "社区信息");
+        }
+        return ResponseWrapper.success("更新" + gridDTO.getCommunityCn() + "内容成功!");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteGridManagement(Long id) {
+        Integer count = communityMapper.deleteGridManagement(id);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.DATA_NOT_EXIST, "删除失败，未找到待删除社区信息");
+        }
+        return ResponseWrapper.success("删除社区信息成功!");
     }
 
     /**
@@ -85,6 +131,87 @@ public class CommunityServiceImpl implements CommuniyuService {
     @Override
     public CommitteesMemberVO listPersonalInfo(long id) {
         return communityMapper.listPersonalInfo(id);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addPersonalInfo(StaffInfoDTO staffInfoDTO) {
+        if (staffInfoDTO.getImages() != null && !minioFileStorageService.checkMinioFileExists(staffInfoDTO.getImages())) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "图片不存在");
+        }
+        StaffInfoDO staffInfoDO = new StaffInfoDO();
+        BeanUtil.copyProperties(staffInfoDTO, staffInfoDO);
+        int count = communityMapper.addPersonalInfo(staffInfoDO);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加失败，请稍后重试！");
+        }
+        return ResponseWrapper.success("添加" + staffInfoDTO.getName() + "信息成功");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deletePersonalInfo(Long id) {
+        int count = communityMapper.deletePersonalInfo(id);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "删除失败，员工不存在！");
+        }
+        return ResponseWrapper.success("删除成功！");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updatePersonalInfo(StaffInfoDTO staffInfoDTO) {
+        if (staffInfoDTO.getImages() != null && !minioFileStorageService.checkMinioFileExists(staffInfoDTO.getImages())) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "更新失败，图片不存在！");
+        }
+        StaffInfoDO staffInfoDO = new StaffInfoDO();
+        BeanUtil.copyProperties(staffInfoDTO, staffInfoDO);
+        int count = communityMapper.updatePersonalInfo(staffInfoDO);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "更新失败，员工不存在！");
+        }
+        return ResponseWrapper.success("更新成功！");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addServePeopleInfo(ServePeopleInfoDTO servePeopleInfoDTO) {
+        ServePeopleInfoDO servePeopleInfoDO = new ServePeopleInfoDO();
+        BeanUtil.copyProperties(servePeopleInfoDTO, servePeopleInfoDO);
+        int count = communityMapper.addServePeopleInfo(servePeopleInfoDO);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "添加失败，请稍后重试");
+        }
+        return ResponseWrapper.success("添加" + servePeopleInfoDTO.getTitle() + "成功！");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateServePeopleInfo(ServePeopleInfoDTO servePeopleInfoDTO) {
+        ServePeopleInfoDO servePeopleInfoDO = new ServePeopleInfoDO();
+        BeanUtil.copyProperties(servePeopleInfoDTO, servePeopleInfoDO);
+        int count = communityMapper.updateServePeopleInfo(servePeopleInfoDO);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "更新失败，被更新数据不存在");
+        }
+        return ResponseWrapper.success("更新成功！");
+    }
+
+    @Override
+    public String getImageByIdServePersonalInfo(Long id) {
+        return communityMapper.getImageByIdServePersonalInfo(id);
+    }
+
+
+    public void deleteImageByIdServePersonalInfoAsync(Long id) {
+        asyncTaskExecutor.runAsync(() -> {
+            minioFileStorageService.delete(getImageByIdServePersonalInfo(id));
+        });
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteServePeopleInfo(Long id) {
+//        deleteImageByIdServePersonalInfoAsync(id);
+        int count = communityMapper.deleteServePeopleInfo(id);
+        if (count <= 0) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "待删除信息不存在");
+        }
+        return ResponseWrapper.success("删除成功!");
     }
 
     /**
@@ -140,31 +267,6 @@ public class CommunityServiceImpl implements CommuniyuService {
 //        return communityMapper.listMatters(communityId, (pageNum - 1) * pageSize, pageSize);
     }
 
-    public String convertItemListDo2Markdown(ItemListDO itemListDO) {
-        StringBuilder sb = new StringBuilder();
-
-        List<LawItemDTO> lawItems = itemListDO.getLawItems();
-        for (int i = 0; i < lawItems.size(); i++) {
-            LawItemDTO item = lawItems.get(i);
-
-            // 输出标题，带序号，加粗
-            sb.append(i + 1).append(". ").append(item.getTitle()).append("**").append("\n");
-
-            // 输出依据
-            List<String> basisList = item.getBasisList();
-            if (basisList != null && !basisList.isEmpty()) {
-                sb.append("依据：").append("\n");
-                for (String basis : basisList) {
-                    sb.append(basis).append("\n");
-                }
-            }
-
-            sb.append("\n"); // 每条之间加空行
-        }
-
-        return sb.toString();
-    }
-
     @Override
     public Integer getHonorCount() {
         return communityMapper.getHonorCount();
@@ -216,4 +318,26 @@ public class CommunityServiceImpl implements CommuniyuService {
         DeleteResult remove = mongoTemplate.remove(query, ItemListDO.class);
         return remove.getDeletedCount();
     }
+
+    public String convertItemListDo2Markdown(ItemListDO itemListDO) {
+        StringBuilder sb = new StringBuilder();
+
+        List<LawItemDTO> lawItems = itemListDO.getLawItems();
+        for (int i = 0; i < lawItems.size(); i++) {
+            LawItemDTO item = lawItems.get(i);
+            // 输出标题，带序号，加粗
+            sb.append(i + 1).append(". ").append(item.getTitle()).append("**").append("\n");
+            // 输出依据
+            List<String> basisList = item.getBasisList();
+            if (basisList != null && !basisList.isEmpty()) {
+                sb.append("依据：").append("\n");
+                for (String basis : basisList) {
+                    sb.append(basis).append("\n");
+                }
+            }
+            sb.append("\n"); // 每条之间加空行
+        }
+        return sb.toString();
+    }
+
 }

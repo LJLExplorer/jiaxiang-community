@@ -7,8 +7,12 @@ import com.jiaxiang.apis.Content.IContentClient;
 import com.jiaxiang.file.service.FileStorageService;
 import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.community.dos.GridDO;
 import com.jiaxiang.model.community.dos.ItemListDO;
+import com.jiaxiang.model.community.dtos.GridDTO;
 import com.jiaxiang.model.community.dtos.LawItemDTO;
+import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
+import com.jiaxiang.model.community.dtos.StaffInfoDTO;
 import com.jiaxiang.portal.service.PortalService;
 import com.jiaxiang.utils.AsyncTaskExecutor;
 import org.slf4j.Logger;
@@ -108,6 +112,21 @@ public class PortalServiceImpl implements PortalService {
         return iContentClient.listGridManagement(communityId);
     }
 
+    @Override
+    public ResponseEntity<ResponseResult<?>> addGridManagement(GridDTO gridDO) {
+        return iContentClient.addGridManagement(gridDO);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateGridManagement(GridDTO gridDO) {
+        return iContentClient.updateGridManagement(gridDO);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteGridManagement(Long id) {
+        return iContentClient.deleteGridManagement(id);
+    }
+
     /**
      * 列出两委成员列表
      *
@@ -132,6 +151,21 @@ public class PortalServiceImpl implements PortalService {
         return iContentClient.listPersonalInfo(communityId, id);
     }
 
+    @Override
+    public ResponseEntity<ResponseResult<?>> addPersonalInfo(StaffInfoDTO staffInfoDTO) {
+        return iContentClient.addPersonalInfo(staffInfoDTO);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updatePersonalInfo(StaffInfoDTO staffInfoDTO) {
+        return iContentClient.updatePersonalInfo(staffInfoDTO);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deletePersonalInfo(Long id) {
+        return iContentClient.deletePersonalInfo(id);
+    }
+
     /**
      * 列出为民服务清单
      *
@@ -147,6 +181,21 @@ public class PortalServiceImpl implements PortalService {
     @Override
     public ResponseEntity<ResponseResult<?>> listServePeopleInfo(int id) {
         return iContentClient.listServePeopleInfo(id);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addServePeopleInfo(ServePeopleInfoDTO servePeopleInfoDTO) {
+        return iContentClient.addServePeopleInfo(servePeopleInfoDTO);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateServePeopleInfo(ServePeopleInfoDTO servePeopleInfDTO) {
+        return iContentClient.updateServePeopleInfo(servePeopleInfDTO);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteServePeopleInfo(Long id) {
+        return iContentClient.deleteServePeopleInfo(id);
     }
 
     @Override
@@ -267,6 +316,7 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> deleteMattersById(String id) {
         return iContentClient.deleteMattersById(id);
     }
+
 
     /**
      * 保存事项清单

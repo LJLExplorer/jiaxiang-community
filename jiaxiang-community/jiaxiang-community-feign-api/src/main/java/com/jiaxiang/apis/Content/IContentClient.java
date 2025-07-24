@@ -2,6 +2,9 @@ package com.jiaxiang.apis.Content;
 
 import com.jiaxiang.apis.Content.fallback.IContentClientFallback;
 import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.community.dtos.GridDTO;
+import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
+import com.jiaxiang.model.community.dtos.StaffInfoDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +26,17 @@ public interface IContentClient {
     @GetMapping(COMMUNITY_URL_PREFIX + "/grid_management")
     public ResponseEntity<ResponseResult<?>> listGridManagement(@RequestParam Long communityId);
 
+    @PutMapping(COMMUNITY_URL_PREFIX + "/update_grid_management")
+    ResponseEntity<ResponseResult<?>> updateGridManagement(@RequestBody GridDTO gridDO);
+
+    @PostMapping(COMMUNITY_URL_PREFIX + "/add_grid_management")
+    ResponseEntity<ResponseResult<?>> addGridManagement(@RequestBody GridDTO gridDO);
+
+    @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_grid_management")
+    ResponseEntity<ResponseResult<?>> deleteGridManagement(@RequestParam Long id);
+
     @GetMapping(COMMUNITY_URL_PREFIX + "/list_committees_members")
-    public ResponseEntity<ResponseResult<?>> listCommitteesMembers(@RequestParam int pageNum, @RequestParam int pageSize);
+    ResponseEntity<ResponseResult<?>> listCommitteesMembers(@RequestParam int pageNum, @RequestParam int pageSize);
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/personal_info")
     ResponseEntity<ResponseResult<?>> listPersonalInfo(@RequestParam Long communityId, @RequestParam long id);
@@ -34,6 +46,24 @@ public interface IContentClient {
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/serve_people_info")
     ResponseEntity<ResponseResult<?>> listServePeopleInfo(@RequestParam int id);
+
+    @PostMapping(COMMUNITY_URL_PREFIX + "/add_serve_people_info")
+    ResponseEntity<ResponseResult<?>> addServePeopleInfo(@RequestBody ServePeopleInfoDTO servePeopleInfoDTO);
+
+    @PutMapping(COMMUNITY_URL_PREFIX + "/update_serve_people_info")
+    ResponseEntity<ResponseResult<?>> updateServePeopleInfo(@RequestBody ServePeopleInfoDTO servePeopleInfDTO);
+
+    @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_serve_people_info")
+    ResponseEntity<ResponseResult<?>> deleteServePeopleInfo(@RequestParam Long id);
+
+    @PostMapping(COMMUNITY_URL_PREFIX + "/add_personal_info")
+    ResponseEntity<ResponseResult<?>> addPersonalInfo(@RequestBody StaffInfoDTO staffInfoDTO);
+
+    @PutMapping(COMMUNITY_URL_PREFIX + "/update_personal_info")
+    ResponseEntity<ResponseResult<?>> updatePersonalInfo(@RequestBody StaffInfoDTO staffInfoDTO);
+
+    @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_personal_info")
+    ResponseEntity<ResponseResult<?>> deletePersonalInfo(@RequestParam Long id);
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/list_matters")
     ResponseEntity<ResponseResult<?>> listMatters(@RequestParam Long communityId, @RequestParam int pageNum, @RequestParam int pageSize);
@@ -52,4 +82,5 @@ public interface IContentClient {
 
     @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_matters")
     ResponseEntity<ResponseResult<?>> deleteMattersById(@RequestParam String id);
+
 }

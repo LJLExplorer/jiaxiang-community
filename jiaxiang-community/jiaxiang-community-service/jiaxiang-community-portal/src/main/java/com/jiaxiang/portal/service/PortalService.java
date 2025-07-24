@@ -2,7 +2,11 @@ package com.jiaxiang.portal.service;
 
 import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.community.dos.GridDO;
 import com.jiaxiang.model.community.dos.ItemListDO;
+import com.jiaxiang.model.community.dtos.GridDTO;
+import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
+import com.jiaxiang.model.community.dtos.StaffInfoDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -124,4 +128,22 @@ public interface PortalService {
      * @return
      */
     ResponseEntity<ResponseResult<?>> deleteMattersById(String id);
+
+    ResponseEntity<ResponseResult<?>> addGridManagement(GridDTO gridDO);
+
+    ResponseEntity<ResponseResult<?>> updateGridManagement(GridDTO gridDO);
+
+    ResponseEntity<ResponseResult<?>> deleteGridManagement(Long id);
+
+    ResponseEntity<ResponseResult<?>> addPersonalInfo(StaffInfoDTO staffInfoDTO);
+
+    ResponseEntity<ResponseResult<?>> updatePersonalInfo(StaffInfoDTO staffInfoDTO);
+
+    ResponseEntity<ResponseResult<?>> deletePersonalInfo(Long id);
+
+    ResponseEntity<ResponseResult<?>> addServePeopleInfo(ServePeopleInfoDTO servePeopleInfoDTO);
+
+    ResponseEntity<ResponseResult<?>> updateServePeopleInfo(ServePeopleInfoDTO servePeopleInfDTO);
+
+    ResponseEntity<ResponseResult<?>> deleteServePeopleInfo(Long id);
 }

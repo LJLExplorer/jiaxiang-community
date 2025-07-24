@@ -1,6 +1,9 @@
 package com.jiaxiang.content.mapper;
 
 import com.jiaxiang.model.community.dos.CommunityDO;
+import com.jiaxiang.model.community.dos.GridDO;
+import com.jiaxiang.model.community.dos.ServePeopleInfoDO;
+import com.jiaxiang.model.community.dos.StaffInfoDO;
 import com.jiaxiang.model.community.vos.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,6 +20,12 @@ public interface CommunityMapper {
     List<CommitteesMemberVO> listCommitteesMembers(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
 
     CommitteesMemberVO listPersonalInfo(long id);
+
+    int addPersonalInfo(StaffInfoDO staffInfoDO);
+
+    int deletePersonalInfo(Long id);
+
+    int updatePersonalInfo(StaffInfoDO staffInfoDO);
 
     Integer getServerPeopleCount();
 
@@ -37,4 +46,19 @@ public interface CommunityMapper {
     List<ProofDocumentsPreviewVO> proofDocuments(@Param("communityId") Long communityId,@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
 
     ProofDocumentsDetailDO proofInfo(int id);
+
+    Integer addGridManagement(GridDO gridDO);
+
+    Integer updateGridManagement(GridDO gridDO);
+
+    Integer deleteGridManagement(Long id);
+
+    int addServePeopleInfo(ServePeopleInfoDO servePeopleInfoDO);
+
+    int updateServePeopleInfo(ServePeopleInfoDO servePeopleInfoDO);
+
+    String getImageByIdServePersonalInfo(Long id);
+
+    int deleteServePeopleInfo(Long id);
+
 }

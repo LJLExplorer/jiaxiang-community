@@ -66,12 +66,14 @@ public class ActivityServiceImpl implements ActivityService {
      */
     @Override
     public void updateCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto) {
-        List<String> images = activityDetailDto.getImages();
-        images.add(activityDetailDto.getCoverImage());
-        for (String image : images) {
-            boolean flag = minioFileStorageService.checkMinioFileExists(image);
-            if (!flag) {
-                throw new RuntimeException("图片 " + image + " 不存在！");
+        if(activityDetailDto.getImages() != null){
+            List<String> images = activityDetailDto.getImages();
+            images.add(activityDetailDto.getCoverImage());
+            for (String image : images) {
+                boolean flag = minioFileStorageService.checkMinioFileExists(image);
+                if (!flag) {
+                    throw new RuntimeException("图片 " + image + " 不存在！");
+                }
             }
         }
         ActivityDetailDo activityDetailDo = new ActivityDetailDo(activityDetailDto.getId(), activityDetailDto.getActivateId(), activityDetailDto.getTheme(),
@@ -82,43 +84,47 @@ public class ActivityServiceImpl implements ActivityService {
         activityMapper.updateActivityDetailDoById(activityDetailDo);
         activityMapper.updateActivityDo(activityDo);
 
-        List<ActivityFileDo> dbFiles = activityMapper.getFilesByActivityId(communityId, activityDetailDto.getActivateId());
-        Set<String> dbFileUrls = dbFiles.stream().map(ActivityFileDo::getPathUrl).collect(Collectors.toSet());
-        Set<String> newFileUrls = new HashSet<>(activityDetailDto.getImages());
+        // 更新图片相关的操作
+        if(activityDetailDto.getImages() != null){
+            List<ActivityFileDo> dbFiles = activityMapper.getFilesByActivityId(communityId, activityDetailDto.getActivateId());
+            Set<String> dbFileUrls = dbFiles.stream().map(ActivityFileDo::getPathUrl).collect(Collectors.toSet());
+            Set<String> newFileUrls = new HashSet<>(activityDetailDto.getImages());
 
-        Set<String> toDelete = new HashSet<>(dbFileUrls);
-        toDelete.removeAll(newFileUrls);
+            Set<String> toDelete = new HashSet<>(dbFileUrls);
+            toDelete.removeAll(newFileUrls);
 
-        Set<String> toInsert = new HashSet<>(newFileUrls);
-        toInsert.removeAll(dbFileUrls);
+            Set<String> toInsert = new HashSet<>(newFileUrls);
+            toInsert.removeAll(dbFileUrls);
 
-        if (!toDelete.isEmpty()) {
-            activityMapper.deleteByActivityIdAndUrls(activityDetailDto.getActivateId(), toDelete);
-        }
+            if (!toDelete.isEmpty()) {
+                activityMapper.deleteByActivityIdAndUrls(activityDetailDto.getActivateId(), toDelete);
+            }
 
-        List<ActivityFileDo> insertList = new ArrayList<>();
-        for (String url : toInsert) {
-            ActivityFileDo fileDo = new ActivityFileDo();
-            fileDo.setActivityId(activityDetailDto.getActivateId());
-            fileDo.setPathUrl(url);
-            fileDo.setIsCover(url.equals(activityDetailDto.getCoverImage()));
-            fileDo.setFileType(getContentType(url));
-            fileDo.setDescription(activityDetailDto.getTitle());
-            insertList.add(fileDo);
-        }
-        if (!insertList.isEmpty()) {
-            activityMapper.insertActivityFiles(insertList);
-        }
+            List<ActivityFileDo> insertList = new ArrayList<>();
+            for (String url : toInsert) {
+                ActivityFileDo fileDo = new ActivityFileDo();
+                fileDo.setActivityId(activityDetailDto.getActivateId());
+                fileDo.setPathUrl(url);
+                fileDo.setIsCover(url.equals(activityDetailDto.getCoverImage()));
+                fileDo.setFileType(getContentType(url));
+                fileDo.setDescription(activityDetailDto.getTitle());
+                insertList.add(fileDo);
+            }
+            if (!insertList.isEmpty()) {
+                activityMapper.insertActivityFiles(insertList);
+            }
 
-        // 8. 更新现有图片的 isCover 字段
-        for (ActivityFileDo file : dbFiles) {
-            if (newFileUrls.contains(file.getPathUrl())) {
-                boolean isCover = file.getPathUrl().equals(activityDetailDto.getCoverImage());
-                if (!Objects.equals(file.getIsCover(), isCover)) {
-                    ActivityFileDo activityFileDo = new ActivityFileDo(file.getId(), isCover);
-                    activityMapper.updateActivityFileDo(activityFileDo);
+            // 8. 更新现有图片的 isCover 字段
+            for (ActivityFileDo file : dbFiles) {
+                if (newFileUrls.contains(file.getPathUrl())) {
+                    boolean isCover = file.getPathUrl().equals(activityDetailDto.getCoverImage());
+                    if (!Objects.equals(file.getIsCover(), isCover)) {
+                        ActivityFileDo activityFileDo = new ActivityFileDo(file.getId(), isCover);
+                        activityMapper.updateActivityFileDo(activityFileDo);
+                    }
                 }
             }
         }
+
     }
 }

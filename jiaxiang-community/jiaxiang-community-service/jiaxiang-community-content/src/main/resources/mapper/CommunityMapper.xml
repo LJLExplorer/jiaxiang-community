@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jiaxiang.content.mapper.CommunityMapper">
+
+
     <!--namespace根据自己需要创建的的mapper的路径和名称填写-->
 
     <select id="listAllCommunity" resultType="com.jiaxiang.model.community.dos.CommunityDO">
-        select * from community
+        select *
+        from community
     </select>
 
+    <insert id="addGridManagement">
+        INSERT INTO community
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="communityCn != null">name_cn,</if>
+            <if test="icon != null">icon,</if>
+            <if test="description != null">description,</if>
+            <if test="communityEn != null">name_en,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="communityCn != null">#{communityCn},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="description != null">#{description},</if>
+            <if test="communityEn != null">#{communityEn},</if>
+        </trim>
+    </insert>
+
+    <update id="updateGridManagement">
+        update community
+        <set>
+            <if test="communityCn != null">name_cn = #{communityCn},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="communityEn != null">name_en = #{communityEn},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGridManagement">
+        delete from community where id = #{id}
+    </delete>
+
     <select id="getCommitteesMembersCount" resultType="java.lang.Integer">
-        select count(id) from staff_info
+        select count(id)
+        from staff_info
     </select>
 
     <select id="listCommitteesMembers" resultType="com.jiaxiang.model.community.vos.CommitteesMemberVO">
@@ -18,46 +56,155 @@
     </select>
 
     <select id="listPersonalInfo" resultType="com.jiaxiang.model.community.vos.CommitteesMemberVO">
-        select * from staff_info where id = #{id}
+        select *
+        from staff_info
+        where id = #{id}
     </select>
 
+    <insert id="addPersonalInfo" parameterType="com.jiaxiang.model.community.dos.StaffInfoDO">
+        INSERT INTO staff_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="position != null">position,</if>
+            <if test="images != null">images,</if>
+            <if test="duty != null">duty,</if>
+            <if test="dutyDescription != null">dutyDescription,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="position != null">#{position},</if>
+            <if test="images != null">#{images},</if>
+            <if test="duty != null">#{duty},</if>
+            <if test="dutyDescription != null">#{dutyDescription},</if>
+        </trim>
+    </insert>
+
+    <delete id="deletePersonalInfo">
+        delete from staff_info where id = #{id}
+    </delete>
+
+    <update id="updatePersonalInfo" parameterType="com.jiaxiang.model.community.dos.StaffInfoDO">
+        UPDATE staff_info
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="images != null">images = #{images},</if>
+            <if test="duty != null">duty = #{duty},</if>
+            <if test="dutyDescription != null">dutyDescription = #{dutyDescription},</if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
     <select id="getServerPeopleCount" resultType="java.lang.Integer">
-        select count(id) from serve_people_info
+        select count(id)
+        from serve_people_info
     </select>
 
     <select id="listServePeople" resultType="com.jiaxiang.model.community.vos.ServePeopleInfoVO">
-        select * from serve_people_info limit #{pageNum} ,#{pageSize}
+        select *
+        from serve_people_info
+        limit #{pageNum} ,#{pageSize}
     </select>
 
     <select id="listServePeopleInfo" resultType="com.jiaxiang.model.community.vos.ServePeopleInfoVO">
-        select * from serve_people_info where id = #{id}
+        select *
+        from serve_people_info
+        where id = #{id}
     </select>
 
+    <select id="getImageByIdServePersonalInfo" resultType="java.lang.String">
+        select images from serve_people_info where id = #{id}
+    </select>
+
+    <insert id="addServePeopleInfo">
+        INSERT INTO serve_people_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null">title,</if>
+            <if test="images != null">images,</if>
+            <if test="phone != null">phone,</if>
+            <if test="openDaysAndTime != null">open_days_and_time,</if>
+            <if test="location != null">location,</if>
+            <if test="serviceIntro != null">serviceIntro,</if>
+            <if test="serviceContent != null">serviceContent,</if>
+            <if test="serviceRules != null">serviceRules,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="images != null">#{images},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="openDaysAndTime != null">#{openDaysAndTime},</if>
+            <if test="location != null">#{location},</if>
+            <if test="serviceIntro != null">#{serviceIntro},</if>
+            <if test="serviceContent != null">#{serviceContent},</if>
+            <if test="serviceRules != null">#{serviceRules},</if>
+        </trim>
+    </insert>
+
+
+    <update id="updateServePeopleInfo">
+        UPDATE serve_people_info
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="images != null">images = #{images},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="openDaysAndTime != null">open_days_and_time = #{openDaysAndTime},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="serviceIntro != null">serviceIntro = #{serviceIntro},</if>
+            <if test="serviceContent != null">serviceContent = #{serviceContent},</if>
+            <if test="serviceRules != null">serviceRules = #{serviceRules},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteServePeopleInfo">
+        DELETE
+        FROM serve_people_info
+        WHERE id = #{id}
+    </delete>
+
     <select id="getMattersCount" resultType="java.lang.Integer">
-        select count(id) from guide_category
+        select count(id)
+        from guide_category
     </select>
 
     <select id="listMatters" resultType="com.jiaxiang.model.community.vos.GuideCategoryVO">
-        select * from guide_category where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
+        select *
+        from guide_category
+        where communityId = #{communityId}
+        limit #{pageNum} ,#{pageSize}
     </select>
 
     <select id="getHonorCount" resultType="java.lang.Integer">
-        select count(id) from community_honor
+        select count(id)
+        from community_honor
     </select>
 
     <select id="communityHonor" resultType="com.jiaxiang.model.community.vos.CommunityHonorVO">
-        select * from community_honor where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
+        select *
+        from community_honor
+        where communityId = #{communityId}
+        limit #{pageNum} ,#{pageSize}
     </select>
 
     <select id="getProofDocumentsCount" resultType="java.lang.Integer">
-        select count(id) from proof_documents
+        select count(id)
+        from proof_documents
     </select>
 
     <select id="proofDocuments" resultType="com.jiaxiang.model.community.vos.ProofDocumentsPreviewVO">
-        select * from proof_documents where communityId = #{communityId}  limit #{pageNum} ,#{pageSize}
+        select *
+        from proof_documents
+        where communityId = #{communityId}
+        limit #{pageNum} ,#{pageSize}
     </select>
 
     <select id="proofInfo" resultType="com.jiaxiang.model.community.vos.ProofDocumentsDetailDO">
-        select * from proof_documents where id = #{id}
+        select *
+        from proof_documents
+        where id = #{id}
     </select>
+
 </mapper>

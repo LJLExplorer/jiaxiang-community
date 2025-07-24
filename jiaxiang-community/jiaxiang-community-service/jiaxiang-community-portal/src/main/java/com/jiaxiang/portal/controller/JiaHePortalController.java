@@ -6,6 +6,9 @@ import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.community.dtos.GridDTO;
+import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
+import com.jiaxiang.model.community.dtos.StaffInfoDTO;
 import com.jiaxiang.portal.service.PortalService;
 import com.jiaxiang.utils.AsyncTaskExecutor;
 import jakarta.websocket.server.PathParam;
@@ -215,5 +218,56 @@ public class JiaHePortalController {
     @DeleteMapping("/delete_matters")
     public ResponseEntity<ResponseResult<?>> deleteMattersById(Long communityId, String id) {
         return portalService.deleteMattersById(id);
+    }
+
+    /**
+     * 网格
+     */
+    @PostMapping("/add_grid_management")
+    public ResponseEntity<ResponseResult<?>> addGridManagement(@RequestBody GridDTO gridDTO) {
+        return portalService.addGridManagement(gridDTO);
+    }
+
+    @PutMapping("/update_grid_management")
+    public ResponseEntity<ResponseResult<?>> updateGridManagement(@RequestBody GridDTO gridDTO) {
+        return portalService.updateGridManagement(gridDTO);
+    }
+
+    @DeleteMapping("/delete_grid_management")
+    public ResponseEntity<ResponseResult<?>> deleteGridManagement(@RequestParam Long id) {
+        return portalService.deleteGridManagement(id);
+    }
+
+    /**
+     履职
+     */
+    @PostMapping("/add_personal_info")
+    public ResponseEntity<ResponseResult<?>> addPersonalInfo(@RequestBody StaffInfoDTO staffInfoDTO){
+        return portalService.addPersonalInfo(staffInfoDTO);
+    }
+    @PutMapping("/update_personal_info")
+    public ResponseEntity<ResponseResult<?>> updatePersonalInfo(@RequestBody StaffInfoDTO staffInfoDTO){
+        return portalService.updatePersonalInfo(staffInfoDTO);
+    }
+    @DeleteMapping("/delete_personal_info")
+    public ResponseEntity<ResponseResult<?>> deletePersonalInfo(@RequestParam Long id){
+        return portalService.deletePersonalInfo(id);
+    }
+
+    /**
+     为人民服务
+     */
+
+    @PostMapping("/add_serve_people_info")
+    public ResponseEntity<ResponseResult<?>> addServePeopleInfo(@RequestBody ServePeopleInfoDTO servePeopleInfoDTO){
+        return portalService.addServePeopleInfo(servePeopleInfoDTO);
+    }
+    @PutMapping("/update_serve_people_info")
+    public ResponseEntity<ResponseResult<?>> updateServePeopleInfo(@RequestBody ServePeopleInfoDTO servePeopleInfDTO){
+        return portalService.updateServePeopleInfo(servePeopleInfDTO);
+    }
+    @DeleteMapping("/delete_serve_people_info")
+    public ResponseEntity<ResponseResult<?>> deleteServePeopleInfo(@RequestParam Long id){
+        return portalService.deleteServePeopleInfo(id);
     }
 }

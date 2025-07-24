@@ -4,6 +4,9 @@ import com.jiaxiang.apis.Content.IContentClient;
 import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.community.dtos.GridDTO;
+import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
+import com.jiaxiang.model.community.dtos.StaffInfoDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +30,21 @@ public class IContentClientFallback implements IContentClient {
     }
 
     @Override
+    public ResponseEntity<ResponseResult<?>> updateGridManagement(GridDTO gridDO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "更新网格内容失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addGridManagement(GridDTO gridDO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加网格内容失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteGridManagement(Long id) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "删除网格内容失败");
+    }
+
+    @Override
     public ResponseEntity<ResponseResult<?>> listCommitteesMembers(int pageNum, int pageSize) {
         throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "获取两位成员列表数据失败");
     }
@@ -38,12 +56,42 @@ public class IContentClientFallback implements IContentClient {
 
     @Override
     public ResponseEntity<ResponseResult<?>> listServePeople(int communityId, int pageSize) {
-        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "获取为人民服务数据失败");
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "获取为人民服务列表失败");
     }
 
     @Override
     public ResponseEntity<ResponseResult<?>> listServePeopleInfo(int id) {
         throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "获取为人民服务数据失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addServePeopleInfo(ServePeopleInfoDTO servePeopleInfoDTO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加为人民服务数据失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateServePeopleInfo(ServePeopleInfoDTO servePeopleInfDTO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "更新为人民服务数据失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteServePeopleInfo(Long id) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "删除为人民服务数据失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addPersonalInfo(StaffInfoDTO staffInfoDTO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加履职信息失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updatePersonalInfo(StaffInfoDTO staffInfoDTO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "更新履职信息失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deletePersonalInfo(Long id) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "删除某人履职信息失败");
     }
 
     @Override

@@ -2,17 +2,17 @@ package com.jiaxiang.content.controller;
 
 import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.content.service.CommuniyuService;
+import com.jiaxiang.file.service.impl.MinioFileStorageService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.community.dtos.GridDTO;
+import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
+import com.jiaxiang.model.community.dtos.StaffInfoDTO;
 import com.jiaxiang.model.community.vos.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,8 +23,14 @@ import static com.jiaxiang.model.common.constant.ApiRouterConstant.COMMUNITY_URL
 @RequestMapping(COMMUNITY_URL_PREFIX)
 public class CommunityController {
 
-    @Autowired
-    private CommuniyuService communiyuService;
+    private final CommuniyuService communiyuService;
+
+    private final MinioFileStorageService minioFileStorageService;
+
+    public CommunityController(CommuniyuService communiyuService, MinioFileStorageService minioFileStorageService) {
+        this.communiyuService = communiyuService;
+        this.minioFileStorageService = minioFileStorageService;
+    }
 
     /**
      * 网格管理
@@ -36,6 +42,21 @@ public class CommunityController {
     public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId) {
         List<GridVO> gridVOList = communiyuService.listGridManagement(communityId);
         return ResponseWrapper.success(gridVOList);
+    }
+
+    @PostMapping("/add_grid_management")
+    public ResponseEntity<ResponseResult<?>> addGridManagement(@RequestBody GridDTO gridDTO) {
+        return communiyuService.addGridManagement(gridDTO);
+    }
+
+    @PutMapping("/update_grid_management")
+    public ResponseEntity<ResponseResult<?>> updateGridManagement(@RequestBody GridDTO gridDTO) {
+        return communiyuService.updateGridManagement(gridDTO);
+    }
+
+    @DeleteMapping("/delete_grid_management")
+    public ResponseEntity<ResponseResult<?>> deleteGridManagement(@RequestParam Long id) {
+        return communiyuService.deleteGridManagement(id);
     }
 
     /**
@@ -63,6 +84,60 @@ public class CommunityController {
     public ResponseEntity<ResponseResult<?>> listPersonalInfo(Long communityId, long id) {
         CommitteesMemberVO committeesMemberVO = communiyuService.listPersonalInfo(id);
         return ResponseWrapper.success(committeesMemberVO);
+    }
+
+    @PostMapping("/add_personal_info")
+    public ResponseEntity<ResponseResult<?>> addPersonalInfo(@RequestBody StaffInfoDTO staffInfoDTO) {
+        return communiyuService.addPersonalInfo(staffInfoDTO);
+    }
+
+    @DeleteMapping("/delete_personal_info")
+    public ResponseEntity<ResponseResult<?>> deletePersonalInfo(@RequestParam Long id) {
+        return communiyuService.deletePersonalInfo(id);
+    }
+
+    @PutMapping("/update_personal_info")
+    public ResponseEntity<ResponseResult<?>> updatePersonalInfo(@RequestBody StaffInfoDTO staffInfoDTO) {
+        return communiyuService.updatePersonalInfo(staffInfoDTO);
+    }
+
+    /**
+     * 添加为人民服务
+     *
+     * @param servePeopleInfoDTO
+     * @return
+     */
+    @PostMapping("/add_serve_people_info")
+    public ResponseEntity<ResponseResult<?>> addServePeopleInfo(@RequestBody ServePeopleInfoDTO servePeopleInfoDTO) {
+        if (servePeopleInfoDTO.getImages() != null && !minioFileStorageService.checkMinioFileExists(servePeopleInfoDTO.getImages())) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "图片不存在");
+        }
+        return communiyuService.addServePeopleInfo(servePeopleInfoDTO);
+    }
+
+    /**
+     * 更新为人民服务
+     *
+     * @param servePeopleInfoDTO
+     * @return
+     */
+    @PutMapping("/update_serve_people_info")
+    public ResponseEntity<ResponseResult<?>> updateServePeopleInfo(@RequestBody ServePeopleInfoDTO servePeopleInfoDTO) {
+        if (servePeopleInfoDTO.getImages() != null && !minioFileStorageService.checkMinioFileExists(servePeopleInfoDTO.getImages())) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "图片不存在");
+        }
+        return communiyuService.updateServePeopleInfo(servePeopleInfoDTO);
+    }
+
+    /**
+     * 删除为人民服务
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/delete_serve_people_info")
+    public ResponseEntity<ResponseResult<?>> deleteServePeopleInfo(@RequestParam Long id) {
+        return communiyuService.deleteServePeopleInfo(id);
     }
 
     /**
