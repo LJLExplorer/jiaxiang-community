@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jiaxiang.content.mapper.ContentMapper">
+
     <!--namespace根据自己需要创建的的mapper的路径和名称填写-->
 
 
@@ -29,6 +30,37 @@
           and ap.id = apcontent.article_profile_id
           and ap.article_type_id = at.id
     </select>
+
+    <update id="updateCommunityProfile" parameterType="com.jiaxiang.model.community.dos.CommunityProfileDO">
+        UPDATE article_profile_content
+        <set>
+            <if test="profile != null">
+                content = #{profile},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        WHERE article_profile_id = #{articleProfileId}
+    </update>
+    <update id="updateCommunityTitle">
+        UPDATE article_profile
+        <set>
+            <if test="profile != null">
+                title = #{title},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        WHERE id = #{articleProfileId}
+    </update>
 
     <select id="listArticleFileByArticleId" resultType="com.jiaxiang.model.content.dos.ArticleFileDO">
         select *

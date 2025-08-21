@@ -4,10 +4,7 @@ import com.jiaxiang.apis.Content.IContentClient;
 import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
-import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
-import com.jiaxiang.model.community.dtos.GridDTO;
-import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
-import com.jiaxiang.model.community.dtos.StaffInfoDTO;
+import com.jiaxiang.model.community.dtos.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +20,11 @@ public class IContentClientFallback implements IContentClient {
     @Override
     public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId) {
         throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "获取社区简介失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateCommunityProfile(Long communityId, CommunityProfileDTO communityProfileDTO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "更新社区简介失败");
     }
 
     @Override

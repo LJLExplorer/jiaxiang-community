@@ -5,6 +5,7 @@ import com.jiaxiang.content.service.ContentService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.community.dtos.CommunityProfileDTO;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
 import com.jiaxiang.model.content.vos.ContentVO;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,23 @@ public class ContentController {
         CommunityProfileVO communityProfileVO = contentService.listCommunityProfile(communityId);
         return ResponseWrapper.success(communityProfileVO);
     }
+
+    /**
+     * 更新社区简介
+     *
+     * @param communityId
+     * @param communityProfileDTO
+     * @return
+     */
+    @PutMapping("/update_community_profile")
+    public ResponseEntity<ResponseResult<?>> updateCommunityProfile(Long communityId, @RequestBody CommunityProfileDTO communityProfileDTO) {
+        Integer flag = contentService.updateCommunityProfile(communityId, communityProfileDTO);
+        if (flag <= 0) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "社区简介更新失败");
+        }
+        return ResponseWrapper.success("更新社区简介成功");
+    }
+
 
     /**
      * 根据内容类型列出文章内容

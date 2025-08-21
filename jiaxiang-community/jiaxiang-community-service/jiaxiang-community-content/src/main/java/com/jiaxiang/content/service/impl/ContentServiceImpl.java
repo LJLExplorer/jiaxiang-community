@@ -1,8 +1,13 @@
 package com.jiaxiang.content.service.impl;
 
+import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.content.mapper.ContentMapper;
 import com.jiaxiang.content.service.ContentService;
 import com.jiaxiang.file.service.FileStorageService;
+import com.jiaxiang.file.service.impl.MinioFileStorageService;
+import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.community.dos.CommunityProfileDO;
+import com.jiaxiang.model.community.dtos.CommunityProfileDTO;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
 import com.jiaxiang.model.content.dos.ArticleFileDO;
 import com.jiaxiang.model.content.vos.ContentVO;
@@ -25,9 +30,12 @@ public class ContentServiceImpl implements ContentService {
 
     private final FileStorageService fileStorageService;
 
-    public ContentServiceImpl(ContentMapper contentMapper, FileStorageService fileStorageService) {
+    private final MinioFileStorageService minioFileStorageService;
+
+    public ContentServiceImpl(ContentMapper contentMapper, FileStorageService fileStorageService, MinioFileStorageService minioFileStorageService) {
         this.contentMapper = contentMapper;
         this.fileStorageService = fileStorageService;
+        this.minioFileStorageService = minioFileStorageService;
     }
 
     /**
@@ -43,11 +51,32 @@ public class ContentServiceImpl implements ContentService {
         CommunityProfileVO communityProfileVO = new CommunityProfileVO();
         communityProfileVO.setTitle(contentVO.getTitle());
         communityProfileVO.setProfile(contentVO.getContent());
+        communityProfileVO.setArtiProfileId(contentVO.getId());
         communityProfileVO.setImages(Optional.ofNullable(articleFileDOList)
                 .filter(list -> !list.isEmpty())
                 .map(list -> list.get(0).getPathUrl())
                 .orElse(null));
         return communityProfileVO;
+    }
+
+    /**
+     * 更新社区简介
+     *
+     * @param communityId
+     * @return
+     */
+    @Override
+    public Integer updateCommunityProfile(Long communityId, CommunityProfileDTO communityProfileDTO) {
+        if(communityProfileDTO.getImages() != null){
+            boolean flag = minioFileStorageService.checkMinioFileExists(communityProfileDTO.getImages());
+            if (!flag) {
+                throw new CustomException(AppHttpCodeEnum.DATA_NOT_EXIST, "图片 " + communityProfileDTO.getImages() + " 不存在！");
+            }
+        }
+        CommunityProfileDO communityProfileDO = new CommunityProfileDO(communityProfileDTO.getArtiProfileId(), communityProfileDTO.getTitle(),
+                communityProfileDTO.getProfile());
+        contentMapper.updateCommunityTitle(communityProfileDO);
+        return contentMapper.updateCommunityProfile(communityProfileDO);
     }
 
     /**

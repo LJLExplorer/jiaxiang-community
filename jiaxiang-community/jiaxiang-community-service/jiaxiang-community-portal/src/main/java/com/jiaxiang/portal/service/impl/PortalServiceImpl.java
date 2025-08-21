@@ -99,6 +99,18 @@ public class PortalServiceImpl implements PortalService {
     }
 
     /**
+     * 修改社区简介
+     *
+     * @param communityId
+     * @param communityProfileDTO
+     * @return
+     */
+    @Override
+    public ResponseEntity<ResponseResult<?>> updateCommunityProfile(Long communityId, CommunityProfileDTO communityProfileDTO) {
+        return iContentClient.updateCommunityProfile(communityId, communityProfileDTO);
+    }
+
+    /**
      * 网格管理
      *
      * @param communityId 社区id

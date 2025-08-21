@@ -6,10 +6,7 @@ import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
-import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
-import com.jiaxiang.model.community.dtos.GridDTO;
-import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
-import com.jiaxiang.model.community.dtos.StaffInfoDTO;
+import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.portal.service.PortalService;
 import com.jiaxiang.utils.AsyncTaskExecutor;
 import jakarta.websocket.server.PathParam;
@@ -72,6 +69,17 @@ public class JiaHePortalController {
     @GetMapping("/community_profile")
     public ResponseEntity<ResponseResult<?>> listJiaHeCommunityProfile(Long communityId) {
         return portalService.listCommunityProfile(communityId);
+    }
+
+    /**
+     * 修改社区简介
+     *
+     * @param communityId 社区id
+     * @return 社区简介
+     */
+    @PutMapping("/update_community_profile")
+    public ResponseEntity<ResponseResult<?>> updateCommunityProfile(Long communityId, @RequestBody CommunityProfileDTO communityProfileDTO) {
+        return portalService.updateCommunityProfile(communityId, communityProfileDTO);
     }
 
     /**
