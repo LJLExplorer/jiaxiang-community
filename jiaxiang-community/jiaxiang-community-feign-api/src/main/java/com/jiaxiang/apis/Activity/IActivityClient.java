@@ -27,5 +27,6 @@ public interface IActivityClient {
     @PostMapping(ACTIVITY_URL_PREFIX + "/addCommunityActivity")
     ResponseEntity<ResponseResult<?>> addCommunityActivity(@RequestParam("communityId") Long communityId,@RequestBody ActivityDetailDto dto);
 
-
+    @DeleteMapping(ACTIVITY_URL_PREFIX + "/delete_community_activity_detail")
+    ResponseEntity<ResponseResult<?>> deleteCommunityActivityDetail(@RequestParam("communityId") Long communityId,@RequestParam("id") Long id);
 }

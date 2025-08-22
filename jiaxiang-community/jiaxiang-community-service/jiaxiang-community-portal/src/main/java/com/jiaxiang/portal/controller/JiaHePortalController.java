@@ -204,6 +204,11 @@ public class JiaHePortalController {
         return portalService.addCommunityActivityDetail(communityId, activityDetailDto);
     }
 
+    @DeleteMapping("/delete_community_activity_detail")
+    public ResponseEntity<ResponseResult<?>> deleteCommunityActivityDetail(Long communityId, @RequestParam("id") Long id) {
+        return portalService.deleteCommunityActivityDetail(communityId, id);
+    }
+
     /**
      * 添加事项清单
      *

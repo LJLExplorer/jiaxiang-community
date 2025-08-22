@@ -161,4 +161,6 @@ public interface PortalService {
     ResponseEntity<ResponseResult<?>> deleteCommunityHonor(Long id);
 
     ResponseEntity<ResponseResult<?>> addCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto);
+
+    ResponseEntity<ResponseResult<?>> deleteCommunityActivityDetail(Long communityId, Long id);
 }

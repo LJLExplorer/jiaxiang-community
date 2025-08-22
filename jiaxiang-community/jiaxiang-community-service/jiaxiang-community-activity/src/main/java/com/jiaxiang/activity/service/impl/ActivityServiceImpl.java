@@ -153,7 +153,7 @@ public class ActivityServiceImpl implements ActivityService {
             activityFileDoList.add(activityFileDo);
         }
         Integer flag3 = activityMapper.batchInsertActivityFiles(activityFileDoList);
-        if(flag1 < 1 || flag2 < 1 || flag3 < activityFileDoList.size()){
+        if (flag1 < 1 || flag2 < 1 || flag3 < activityFileDoList.size()) {
             throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加活动详情出现意外错误，请联系管理员操作！");
         }
     }
@@ -166,17 +166,8 @@ public class ActivityServiceImpl implements ActivityService {
      */
     @Override
     public void deleteCommunityActivityDetail(Long communityId, Long activateId) {
-        // 1. 删除活动相关图片
-        List<ActivityFileDo> dbFiles = activityMapper.getFilesByActivityId(communityId, activateId);
-        if (dbFiles != null && !dbFiles.isEmpty()) {
-            Set<String> fileUrls = dbFiles.stream()
-                    .map(ActivityFileDo::getPathUrl)
-                    .collect(Collectors.toSet());
-            activityMapper.deleteByActivityIdAndUrls(activateId, fileUrls);
-        }
-
-        // 2. 删除活动详情和主表
-//        activityMapper.deleteActivityDetailDoById(activateId);
-//        activityMapper.deleteActivityDoById(activateId);
+        Integer flag1 = activityMapper.deleteActivityDetailDoById(activateId);
+        Integer flag2 = activityMapper.deleteActivityDoById(activateId);
+        Integer flag3 = activityMapper.deleteByActivityId(activateId);
     }
 }

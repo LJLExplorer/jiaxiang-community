@@ -83,4 +83,9 @@ public interface ActivityMapper {
     void updateActivityFileDo(ActivityFileDo activityFileDo);
 
 
+    Integer deleteActivityDetailDoById(Long activateId);
+
+    Integer deleteActivityDoById(Long activateId);
+
+    Integer deleteByActivityId(Long activateId);
 }

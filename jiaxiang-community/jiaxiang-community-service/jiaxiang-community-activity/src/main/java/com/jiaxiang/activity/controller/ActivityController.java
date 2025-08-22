@@ -61,7 +61,7 @@ public class ActivityController {
     }
 
     /**
-     * 更新社区活动
+     * 添加社区活动
      *
      * @param communityId       社区id
      * @param activityDetailDto 活动内容
@@ -71,5 +71,18 @@ public class ActivityController {
     ResponseEntity<ResponseResult<?>> addCommunityActivityDetail(@RequestParam("communityId") Long communityId, @RequestBody ActivityDetailDto activityDetailDto) {
         activityService.addCommunityActivityDetail(communityId, activityDetailDto);
         return ResponseWrapper.success("添加活动成功！");
+    }
+
+    /**
+     * 添加社区活动
+     *
+     * @param communityId       社区id
+     * @param id 活动id
+     * @return
+     */
+    @DeleteMapping("/delete_community_activity_detail")
+    ResponseEntity<ResponseResult<?>> deleteCommunityActivityDetail(@RequestParam("communityId") Long communityId, @RequestParam("id") Long id) {
+        activityService.deleteCommunityActivityDetail(communityId, id);
+        return ResponseWrapper.success("删除活动成功！");
     }
 }

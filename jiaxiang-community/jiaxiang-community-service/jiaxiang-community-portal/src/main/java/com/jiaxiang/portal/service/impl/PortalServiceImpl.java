@@ -92,6 +92,11 @@ public class PortalServiceImpl implements PortalService {
         return iActivityClient.addCommunityActivityDetail(communityId, activityDetailDto);
     }
 
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteCommunityActivityDetail(Long communityId, Long id) {
+        return iActivityClient.deleteCommunityActivityDetail(communityId, id);
+    }
+
     /**
      * 列出社区简介
      *
