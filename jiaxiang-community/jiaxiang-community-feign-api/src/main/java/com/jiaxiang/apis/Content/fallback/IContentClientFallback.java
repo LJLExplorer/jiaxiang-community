@@ -142,4 +142,14 @@ public class IContentClientFallback implements IContentClient {
         throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "根据id删除失败");
     }
 
+    @Override
+    public ResponseEntity<ResponseResult<?>> addProofInfo(Long communityId, ProofDocumentsDTO proofDocumentsDTO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加证明材料失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteProofInfoById(Long id) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "删除证明材料失败");
+    }
+
 }

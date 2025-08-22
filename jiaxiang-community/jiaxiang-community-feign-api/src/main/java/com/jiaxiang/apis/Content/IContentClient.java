@@ -93,4 +93,9 @@ public interface IContentClient {
     @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_matters")
     ResponseEntity<ResponseResult<?>> deleteMattersById(@RequestParam String id);
 
+    @PostMapping(COMMUNITY_URL_PREFIX + "/add_proof_info")
+    ResponseEntity<ResponseResult<?>> addProofInfo(@RequestParam("communityId") Long communityId,@RequestBody ProofDocumentsDTO proofDocumentsDTO);
+
+    @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_proof_info")
+    ResponseEntity<ResponseResult<?>> deleteProofInfoById(@RequestParam("id") Long id);
 }

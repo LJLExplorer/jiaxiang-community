@@ -1,13 +1,11 @@
 package com.jiaxiang.portal.service.impl;
 
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.jiaxiang.apis.Activity.IActivityClient;
 import com.jiaxiang.apis.Content.IContentClient;
 import com.jiaxiang.file.service.FileStorageService;
 import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
-import com.jiaxiang.model.community.dos.GridDO;
 import com.jiaxiang.model.community.dos.ItemListDO;
 import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.portal.service.PortalService;
@@ -96,6 +94,7 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> deleteCommunityActivityDetail(Long communityId, Long id) {
         return iActivityClient.deleteCommunityActivityDetail(communityId, id);
     }
+
 
     /**
      * 列出社区简介
@@ -243,7 +242,6 @@ public class PortalServiceImpl implements PortalService {
     }
 
 
-
     @Override
     public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize) {
         return iContentClient.proofDocuments(communityId, pageNum, pageSize);
@@ -252,6 +250,16 @@ public class PortalServiceImpl implements PortalService {
     @Override
     public ResponseEntity<ResponseResult<?>> proofInfo(int id) {
         return iContentClient.proofInfo(id);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> addProofInfo(Long communityId, ProofDocumentsDTO proofDocumentsDTO) {
+        return iContentClient.addProofInfo(communityId, proofDocumentsDTO);
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> deleteProofInfoById(Long communityId, Long id) {
+        return iContentClient.deleteProofInfoById(id);
     }
 
     // 测试

@@ -166,6 +166,30 @@ public class JiaHePortalController {
         return portalService.proofInfo(id);
     }
 
+    /**
+     * 添加证明内容
+     *
+     * @param communityId
+     * @param proofDocumentsDTO
+     * @return
+     */
+    @PostMapping("/add_proof_info")
+    public ResponseEntity<ResponseResult<?>> addproofInfo(Long communityId, @RequestBody ProofDocumentsDTO proofDocumentsDTO) {
+        return portalService.addProofInfo(communityId, proofDocumentsDTO);
+    }
+
+    /**
+     * 删除证明内容
+     *
+     * @param communityId
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/delete_proof_info")
+    public ResponseEntity<ResponseResult<?>> deleteProofInfoById(Long communityId, @RequestParam Long id) {
+        return portalService.deleteProofInfoById(communityId, id);
+    }
+
     // 测试接口
     @PostMapping("/save_content")
     public ResponseEntity<ResponseResult<?>> saveContent(Long communityId, int id) {

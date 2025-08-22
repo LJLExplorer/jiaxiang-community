@@ -6,11 +6,7 @@ import com.jiaxiang.file.service.impl.MinioFileStorageService;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
-import com.jiaxiang.model.community.dos.CommunityHonorDO;
-import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
-import com.jiaxiang.model.community.dtos.GridDTO;
-import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
-import com.jiaxiang.model.community.dtos.StaffInfoDTO;
+import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.model.community.vos.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -186,15 +182,17 @@ public class CommunityController {
     }
 
     @PutMapping("/update_community_honor")
-    public ResponseEntity<ResponseResult<?>> updateCommunityHonor(@RequestBody CommunityHonorDTO communityHonorDTO){
+    public ResponseEntity<ResponseResult<?>> updateCommunityHonor(@RequestBody CommunityHonorDTO communityHonorDTO) {
         return communiyuService.updateCommunityHonor(communityHonorDTO);
     }
+
     @PostMapping("/add_community_honor")
-    public ResponseEntity<ResponseResult<?>> addCommunityHonor(@RequestBody CommunityHonorDTO communityHonorDTO){
+    public ResponseEntity<ResponseResult<?>> addCommunityHonor(@RequestBody CommunityHonorDTO communityHonorDTO) {
         return communiyuService.addCommunityHonor(communityHonorDTO);
     }
+
     @DeleteMapping("/delete_community_honor")
-    public ResponseEntity<ResponseResult<?>> deleteCommunityHonor(@RequestParam Long id){
+    public ResponseEntity<ResponseResult<?>> deleteCommunityHonor(@RequestParam Long id) {
         return communiyuService.deleteCommunityHonor(id);
     }
 
@@ -206,9 +204,21 @@ public class CommunityController {
     }
 
     @GetMapping("/proof_info")
-    public ResponseEntity<ResponseResult<?>> proofInfo(int id) {
+    public ResponseEntity<ResponseResult<?>> proofInfo(Long id) {
         ProofDocumentsDetailDO proofDocumentsDetailDO = communiyuService.proofInfo(id);
         return ResponseWrapper.success(proofDocumentsDetailDO);
+    }
+
+    @PostMapping("/add_proof_info")
+    public ResponseEntity<ResponseResult<?>> addProofInfo(Long communityId, @RequestBody ProofDocumentsDTO proofDocumentsDTO) {
+        communiyuService.addProofInfo(communityId, proofDocumentsDTO);
+        return ResponseWrapper.success("添加证明材料失败");
+    }
+
+    @DeleteMapping("/delete_proof_info")
+    public ResponseEntity<ResponseResult<?>> deleteProofInfoById(Long id) {
+        communiyuService.deleteProofInfoById(id);
+        return ResponseWrapper.success("删除证明内容成功");
     }
 
 }

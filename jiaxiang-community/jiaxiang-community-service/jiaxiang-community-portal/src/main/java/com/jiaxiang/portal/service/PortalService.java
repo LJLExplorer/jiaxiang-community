@@ -2,7 +2,6 @@ package com.jiaxiang.portal.service;
 
 import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
-import com.jiaxiang.model.community.dos.GridDO;
 import com.jiaxiang.model.community.dos.ItemListDO;
 import com.jiaxiang.model.community.dtos.*;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +37,7 @@ public interface PortalService {
 
     /**
      * 修改社区简介
+     *
      * @param communityId
      * @param communityProfileDTO
      * @return
@@ -131,6 +131,7 @@ public interface PortalService {
 
     /**
      * 根据id删除事项清单
+     *
      * @param id
      * @return
      */
@@ -163,4 +164,8 @@ public interface PortalService {
     ResponseEntity<ResponseResult<?>> addCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto);
 
     ResponseEntity<ResponseResult<?>> deleteCommunityActivityDetail(Long communityId, Long id);
+
+    ResponseEntity<ResponseResult<?>> addProofInfo(Long communityId, ProofDocumentsDTO proofDocumentsDTO);
+
+    ResponseEntity<ResponseResult<?>> deleteProofInfoById(Long communityId, Long id);
 }

@@ -212,6 +212,25 @@
         </trim>
     </insert>
 
+    <insert id="addProofInfo">
+        INSERT INTO proof_documents
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="communityId != null">communityId,</if>
+            <if test="title != null">title,</if>
+            <if test="images != null">images,</if>
+            <if test="content != null">content,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="communityId != null">#{communityId},</if>
+            <if test="title != null">#{title},</if>
+            <if test="images != null">#{images},</if>
+            <if test="content != null">#{content},</if>
+        </trim>
+    </insert>
+
     <delete id="deleteCommunityHonor">
         DELETE FROM community_honor
         WHERE id = #{id};
@@ -234,5 +253,11 @@
         from proof_documents
         where id = #{id}
     </select>
+
+    <delete id="deleteProofInfoById">
+        delete
+        from proof_documents
+        where id = #{id}
+    </delete>
 
 </mapper>

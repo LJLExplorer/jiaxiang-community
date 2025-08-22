@@ -306,6 +306,7 @@ public class CommunityServiceImpl implements CommuniyuService {
         return ResponseWrapper.success("删除成功");
     }
 
+
     @Override
     public Integer getProofDocumentsCount() {
         return communityMapper.getProofDocumentsCount();
@@ -317,8 +318,33 @@ public class CommunityServiceImpl implements CommuniyuService {
     }
 
     @Override
-    public ProofDocumentsDetailDO proofInfo(int id) {
+    public ProofDocumentsDetailDO proofInfo(Long id) {
         return communityMapper.proofInfo(id);
+    }
+
+    @Override
+    public void addProofInfo(Long communityId, ProofDocumentsDTO proofDocumentsDTO) {
+        ProofDocumentsDO proofDocumentsDO = new ProofDocumentsDO();
+        BeanUtil.copyProperties(proofDocumentsDTO, proofDocumentsDO);
+        proofDocumentsDTO.setCommunityId(communityId);
+        if(proofDocumentsDO.getImages() != null){
+            boolean b = minioFileStorageService.checkMinioFileExists(proofDocumentsDO.getImages());
+            if (!b) {
+                throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "图片不存在!");
+            }
+        }
+        Integer flag = communityMapper.addProofInfo(proofDocumentsDO);
+        if (flag < 1) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "添加证明材料失败");
+        }
+    }
+
+    @Override
+    public void deleteProofInfoById(Long id) {
+        Integer flag = communityMapper.deleteProofInfoById(id);
+        if(flag < 1){
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "删除证明材料失败");
+        }
     }
 
     /**
