@@ -87,6 +87,11 @@ public class PortalServiceImpl implements PortalService {
         return iActivityClient.updateCommunityActivityDetail(communityId, activityDetailDto);
     }
 
+    @Override
+    public ResponseEntity<ResponseResult<?>> addCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto) {
+        return iActivityClient.addCommunityActivityDetail(communityId, activityDetailDto);
+    }
+
     /**
      * 列出社区简介
      *
@@ -231,6 +236,8 @@ public class PortalServiceImpl implements PortalService {
     public ResponseEntity<ResponseResult<?>> deleteCommunityHonor(Long id) {
         return iContentClient.deleteCommunityHonor(id);
     }
+
+
 
     @Override
     public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize) {

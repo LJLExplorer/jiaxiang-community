@@ -30,9 +30,17 @@ public class ActivityFileDo {
 
     private LocalDateTime updateTime;
 
-    public ActivityFileDo(Long id, Boolean isCover){
+    public ActivityFileDo(Long id, Boolean isCover) {
         this.id = id;
         this.isCover = isCover;
+    }
+
+    public ActivityFileDo(Long activityId, String pathUrl, String fileType, Boolean isCover, String description) {
+        this.activityId = activityId;
+        this.pathUrl = pathUrl;
+        this.fileType = fileType;
+        this.isCover = isCover;
+        this.description = description;
     }
 
 }

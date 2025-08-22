@@ -27,6 +27,11 @@ public class IActivityClientFallback implements IActivityClient {
     }
 
     @Override
+    public ResponseEntity<ResponseResult<?>> addCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加活动详情失败");
+    }
+
+    @Override
     public ResponseEntity<ResponseResult<?>> addCommunityActivity(Long communityId, ActivityDetailDto activityDetailDto) {
         throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加活动失败");
     }

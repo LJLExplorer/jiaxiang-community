@@ -199,6 +199,11 @@ public class JiaHePortalController {
         return portalService.updateCommunityActivityDetail(communityId, id, activityDetailDto);
     }
 
+    @PostMapping("/add_community_activity_detail")
+    public ResponseEntity<ResponseResult<?>> addCommunityActivityDetail(Long communityId, @RequestBody ActivityDetailDto activityDetailDto) {
+        return portalService.addCommunityActivityDetail(communityId, activityDetailDto);
+    }
+
     /**
      * 添加事项清单
      *
