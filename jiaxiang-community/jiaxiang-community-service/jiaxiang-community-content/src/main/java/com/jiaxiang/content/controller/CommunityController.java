@@ -3,16 +3,19 @@ package com.jiaxiang.content.controller;
 import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.content.service.CommuniyuService;
 import com.jiaxiang.file.service.impl.MinioFileStorageService;
+import com.jiaxiang.model.common.constant.CacheConstant;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.model.community.vos.*;
+import com.jiaxiang.utils.CacheUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.COMMUNITY_URL_PREFIX;
 
@@ -25,7 +28,8 @@ public class CommunityController {
 
     private final MinioFileStorageService minioFileStorageService;
 
-    public CommunityController(CommuniyuService communiyuService, MinioFileStorageService minioFileStorageService) {
+
+    public CommunityController(CommuniyuService communiyuService, MinioFileStorageService minioFileStorageService, CacheUtils cacheUtils) {
         this.communiyuService = communiyuService;
         this.minioFileStorageService = minioFileStorageService;
     }

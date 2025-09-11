@@ -5,6 +5,7 @@ import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.content.mapper.CommunityMapper;
 import com.jiaxiang.content.service.CommuniyuService;
 import com.jiaxiang.file.service.impl.MinioFileStorageService;
+import com.jiaxiang.model.common.constant.CacheConstant;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
@@ -12,6 +13,8 @@ import com.jiaxiang.model.community.dos.*;
 import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.model.community.vos.*;
 import com.jiaxiang.utils.AsyncTaskExecutor;
+import com.jiaxiang.utils.CacheUtils;
+import com.jiaxiang.utils.RedisUtils;
 import com.mongodb.client.result.DeleteResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -24,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static com.jiaxiang.utils.MdUtil.mdSting2Html;
 
@@ -40,11 +44,14 @@ public class CommunityServiceImpl implements CommuniyuService {
 
     private final AsyncTaskExecutor asyncTaskExecutor;
 
-    public CommunityServiceImpl(CommunityMapper communityMapper, MongoTemplate mongoTemplate, MinioFileStorageService minioFileStorageService, AsyncTaskExecutor asyncTaskExecutor) {
+    private final CacheUtils cacheUtils;
+
+    public CommunityServiceImpl(CommunityMapper communityMapper, MongoTemplate mongoTemplate, MinioFileStorageService minioFileStorageService, AsyncTaskExecutor asyncTaskExecutor, RedisUtils redisUtils, CacheUtils cacheUtils) {
         this.communityMapper = communityMapper;
         this.mongoTemplate = mongoTemplate;
         this.minioFileStorageService = minioFileStorageService;
         this.asyncTaskExecutor = asyncTaskExecutor;
+        this.cacheUtils = cacheUtils;
     }
 
 
@@ -172,18 +179,30 @@ public class CommunityServiceImpl implements CommuniyuService {
     public ResponseEntity<ResponseResult<?>> addServePeopleInfo(ServePeopleInfoDTO servePeopleInfoDTO) {
         ServePeopleInfoDO servePeopleInfoDO = new ServePeopleInfoDO();
         BeanUtil.copyProperties(servePeopleInfoDTO, servePeopleInfoDO);
+        cacheUtils.deleteCachePage(CacheConstant.SERVER_PEOPLE_PAGE_KEY);
         int count = communityMapper.addServePeopleInfo(servePeopleInfoDO);
+        cacheUtils.delayDeleteCachePage(CacheConstant.SERVER_PEOPLE_PAGE_KEY);
         if (count <= 0) {
             throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "添加失败，请稍后重试");
         }
         return ResponseWrapper.success("添加" + servePeopleInfoDTO.getTitle() + "成功！");
     }
 
+    /**
+     * 更新为人民服务
+     *
+     * @param servePeopleInfoDTO
+     * @return
+     */
     @Override
     public ResponseEntity<ResponseResult<?>> updateServePeopleInfo(ServePeopleInfoDTO servePeopleInfoDTO) {
         ServePeopleInfoDO servePeopleInfoDO = new ServePeopleInfoDO();
         BeanUtil.copyProperties(servePeopleInfoDTO, servePeopleInfoDO);
+        cacheUtils.deleteCachePage(CacheConstant.SERVER_PEOPLE_PAGE_KEY);
+//        log.info("执行sql开始时间{}", System.currentTimeMillis());
         int count = communityMapper.updateServePeopleInfo(servePeopleInfoDO);
+//        log.info("执行sql结束时间{}", System.currentTimeMillis());
+        cacheUtils.delayDeleteCachePage(CacheConstant.SERVER_PEOPLE_PAGE_KEY);
         if (count <= 0) {
             throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "更新失败，被更新数据不存在");
         }
@@ -205,7 +224,9 @@ public class CommunityServiceImpl implements CommuniyuService {
     @Override
     public ResponseEntity<ResponseResult<?>> deleteServePeopleInfo(Long id) {
 //        deleteImageByIdServePersonalInfoAsync(id);
+        cacheUtils.deleteCachePage(CacheConstant.SERVER_PEOPLE_PAGE_KEY);
         int count = communityMapper.deleteServePeopleInfo(id);
+        cacheUtils.delayDeleteCachePage(CacheConstant.SERVER_PEOPLE_PAGE_KEY);
         if (count <= 0) {
             throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "待删除信息不存在");
         }
@@ -231,12 +252,16 @@ public class CommunityServiceImpl implements CommuniyuService {
      */
     @Override
     public List<ServePeopleInfoVO> listServePeople(int pageNum, int pageSize) {
-        return communityMapper.listServePeople((pageNum - 1) * pageSize, pageSize);
+        return cacheUtils.getCacheByPage(pageNum, pageSize, CacheConstant.SERVER_PEOPLE_PAGE_KEY + pageNum + ":" + pageSize,
+                10L, TimeUnit.MINUTES, ServePeopleInfoVO.class, communityMapper::listServePeople);
+//        return communityMapper.listServePeople((pageNum - 1) * pageSize, pageSize);
     }
 
     @Override
     public ServePeopleInfoVO listServePeopleInfo(int id) {
-        return communityMapper.listServePeopleInfo(id);
+        return cacheUtils.getCache(id, CacheConstant.SERVER_PEOPLE_INFO_KEY, ServePeopleInfoVO.class,
+                communityMapper::listServePeopleInfo, 10L, TimeUnit.MINUTES);
+//        return communityMapper.listServePeopleInfo(id);
     }
 
     @Override
@@ -327,7 +352,7 @@ public class CommunityServiceImpl implements CommuniyuService {
         ProofDocumentsDO proofDocumentsDO = new ProofDocumentsDO();
         BeanUtil.copyProperties(proofDocumentsDTO, proofDocumentsDO);
         proofDocumentsDTO.setCommunityId(communityId);
-        if(proofDocumentsDO.getImages() != null){
+        if (proofDocumentsDO.getImages() != null) {
             boolean b = minioFileStorageService.checkMinioFileExists(proofDocumentsDO.getImages());
             if (!b) {
                 throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "图片不存在!");
@@ -342,7 +367,7 @@ public class CommunityServiceImpl implements CommuniyuService {
     @Override
     public void deleteProofInfoById(Long id) {
         Integer flag = communityMapper.deleteProofInfoById(id);
-        if(flag < 1){
+        if (flag < 1) {
             throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "删除证明材料失败");
         }
     }
