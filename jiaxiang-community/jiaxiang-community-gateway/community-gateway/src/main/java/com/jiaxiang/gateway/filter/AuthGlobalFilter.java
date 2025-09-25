@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.*;
+import static com.jiaxiang.model.common.constant.AuthConstant.SECRET_KEY;
 import static com.jiaxiang.model.common.constant.AuthConstant.USERID_LOGIN_REDIS_PREFIX;
 
 @Slf4j
@@ -84,7 +85,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         }
 
         // 校验Token  取出Bearer
-        boolean valid = JwtUtils.verifyToken(token.substring(7));
+        boolean valid = JwtUtils.verifyToken(token.substring(7), SECRET_KEY);
         if (!valid) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
 //            return exchange.getResponse().setComplete();
@@ -97,7 +98,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         }
 
         // Redis校验
-        Long userIdFromToken = JwtUtils.getUserIdFromToken(token.substring(7));
+        Long userIdFromToken = JwtUtils.getUserIdFromToken(token.substring(7), SECRET_KEY);
         String redisKey = USERID_LOGIN_REDIS_PREFIX + userIdFromToken;
         Object loginUserObj = redisUtils.get(redisKey);
 //        SecurityUserDTO securityUserDTO = JSONUtil.parseObj(loginUserStr).toBean(SecurityUserDTO.class);

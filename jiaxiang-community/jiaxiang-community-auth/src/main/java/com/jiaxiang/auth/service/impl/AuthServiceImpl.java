@@ -25,6 +25,9 @@ import java.util.Map;
 
 import static com.jiaxiang.model.common.constant.AuthConstant.LOGIN_REDIS_EXPIRATION_S;
 import static com.jiaxiang.model.common.constant.AuthConstant.USERID_LOGIN_REDIS_PREFIX;
+import static com.jiaxiang.model.common.constant.AuthConstant.JWT_EXPIRATION_MS;
+import static com.jiaxiang.model.common.constant.AuthConstant.SECRET_KEY;
+
 
 @Slf4j
 @Service
@@ -50,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
             String userName = securityUserDTO.getUserDO().getUserName();
             log.info("{}登录成功", userName);
             String token = JwtUtils.createJwt(securityUserDTO.getUserDO().getId(),
-                    securityUserDTO.getUsername());
+                    securityUserDTO.getUsername(), JWT_EXPIRATION_MS, SECRET_KEY);
             Map<String, Object> map = new HashMap<>();
             map.put(SystemConstant.TOKEN, token);
             String securityUserVoStr = JSONUtil.toJsonStr(securityUserDTO);

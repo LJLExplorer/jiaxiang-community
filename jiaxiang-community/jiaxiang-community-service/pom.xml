@@ -12,10 +12,10 @@
     <artifactId>jiaxiang-community-service</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>jiaxiang-community-admin</module>
+<!--        <module>jiaxiang-community-admin</module>-->
         <module>jiaxiang-community-content</module>
         <module>jiaxiang-community-portal</module>
-        <module>jiaxiang-community-search</module>
+<!--        <module>jiaxiang-community-search</module>-->
         <module>jiaxiang-community-activity</module>
     </modules>
 
@@ -81,5 +81,15 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- 这里不需要写版本号，它会从根 pom 的 pluginManagement 中继承 -->
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
