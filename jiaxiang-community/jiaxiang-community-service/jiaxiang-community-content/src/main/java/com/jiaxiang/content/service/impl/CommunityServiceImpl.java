@@ -80,7 +80,7 @@ public class CommunityServiceImpl implements CommuniyuService {
         if (count <= 0) {
             throw new CustomException(AppHttpCodeEnum.DATA_NOT_EXIST, "更新失败，未找到" + gridDTO.getCommunityCn() + "社区信息");
         }
-        return ResponseWrapper.success("更新成功!");
+        return ResponseWrapper.success("添加成功!");
     }
 
     @Override

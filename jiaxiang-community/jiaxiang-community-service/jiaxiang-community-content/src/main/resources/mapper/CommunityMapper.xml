@@ -10,7 +10,7 @@
         from community
     </select>
 
-    <insert id="addGridManagement">
+    <insert id="addGridManagement" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO community
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>

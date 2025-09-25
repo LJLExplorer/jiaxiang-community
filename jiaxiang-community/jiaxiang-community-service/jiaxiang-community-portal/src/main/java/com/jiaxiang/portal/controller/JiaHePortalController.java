@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.JIA_HE_URL_PREFIX;
 
