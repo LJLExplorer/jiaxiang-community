@@ -57,6 +57,32 @@ public class ActivityController {
     @PutMapping("/update_community_activity_detail")
     ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(@RequestParam("communityId") Long communityId, @RequestBody ActivityDetailDto activityDetailDto) {
         activityService.updateCommunityActivityDetail(communityId, activityDetailDto);
-        return ResponseWrapper.success("更新成功");
+        return ResponseWrapper.success("更新成功！");
+    }
+
+    /**
+     * 添加社区活动
+     *
+     * @param communityId       社区id
+     * @param activityDetailDto 活动内容
+     * @return
+     */
+    @PostMapping("/add_community_activity_detail")
+    ResponseEntity<ResponseResult<?>> addCommunityActivityDetail(@RequestParam("communityId") Long communityId, @RequestBody ActivityDetailDto activityDetailDto) {
+        activityService.addCommunityActivityDetail(communityId, activityDetailDto);
+        return ResponseWrapper.success("添加活动成功！");
+    }
+
+    /**
+     * 添加社区活动
+     *
+     * @param communityId       社区id
+     * @param id 活动id
+     * @return
+     */
+    @DeleteMapping("/delete_community_activity_detail")
+    ResponseEntity<ResponseResult<?>> deleteCommunityActivityDetail(@RequestParam("communityId") Long communityId, @RequestParam("id") Long id) {
+        activityService.deleteCommunityActivityDetail(communityId, id);
+        return ResponseWrapper.success("删除活动成功！");
     }
 }

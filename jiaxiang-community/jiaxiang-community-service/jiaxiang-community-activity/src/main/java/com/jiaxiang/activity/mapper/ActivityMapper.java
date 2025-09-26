@@ -40,6 +40,23 @@ public interface ActivityMapper {
     void updateActivityDetailDoById(ActivityDetailDo activityDetailDo);
 
     /**
+     * 添加活动详情
+     * @param activityDo
+     */
+    Integer addActivityDo(ActivityDo activityDo);
+
+    Integer addActivityDetail(ActivityDetailDo activityDetailDo);
+
+    /**
+     * 批量插入
+     * @param activityFileDoList
+     * @return
+     */
+    Integer batchInsertActivityFiles(List<ActivityFileDo> activityFileDoList);
+
+
+
+    /**
      * 根据活动id更新活动
      *
      * @param activityDo
@@ -64,4 +81,11 @@ public interface ActivityMapper {
      * @param activityFileDo
      */
     void updateActivityFileDo(ActivityFileDo activityFileDo);
+
+
+    Integer deleteActivityDetailDoById(Long activateId);
+
+    Integer deleteActivityDoById(Long activateId);
+
+    Integer deleteByActivityId(Long activateId);
 }

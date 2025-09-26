@@ -66,4 +66,14 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- 这里不需要写版本号，它会从根 pom 的 pluginManagement 中继承 -->
+            </plugin>
+        </plugins>
+    </build>
 </project>

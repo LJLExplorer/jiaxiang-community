@@ -43,12 +43,89 @@
         </foreach>
     </insert>
 
+    <insert id="addActivityDo" parameterType="com.jiaxiang.model.activity.dos.ActivityDo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="communityId != null">community_id,</if>
+            <if test="title != null">title,</if>
+            <if test="location != null">location,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="organizer != null">organizer,</if>
+            <if test="participantCount != null">participant_count,</if>
+            <if test="participantType != null">participant_type,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="communityId != null">#{communityId},</if>
+            <if test="title != null">#{title},</if>
+            <if test="location != null">#{location},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="organizer != null">#{organizer},</if>
+            <if test="participantCount != null">#{participantCount},</if>
+            <if test="participantType != null">#{participantType},</if>
+        </trim>
+    </insert>
+
+    <insert id="addActivityDetail">
+        INSERT INTO activity_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">activity_id,</if>
+            <if test="theme != null">theme,</if>
+            <if test="introduction != null">introduction,</if>
+            <if test="content != null">content,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">#{activityId},</if>
+            <if test="theme != null">#{theme},</if>
+            <if test="introduction != null">#{introduction},</if>
+            <if test="content != null">#{content},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <insert id="batchInsertActivityFiles" parameterType="java.util.List">
+        INSERT INTO activity_file (
+        activity_id, path_url, file_type, is_cover, description
+        )
+        VALUES
+        <foreach collection="list" item="file" separator=",">
+            (
+            #{file.activityId},
+            #{file.pathUrl},
+            #{file.fileType},
+            #{file.isCover},
+            #{file.description}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteActivityDetailDoById">
+        delete from activity_detail where activity_id = #{activateId}
+    </delete>
+
+    <delete id="deleteActivityDoById">
+        delete from activity where id = #{activateId}
+    </delete>
+
+
     <delete id="deleteByActivityIdAndUrls">
         delete from activity_file where activity_id = #{activateId} and
         path_url in
         <foreach collection="toDelete" item="del" open="(" separator="," close=")">
             #{del}
         </foreach>
+    </delete>
+
+    <delete id="deleteByActivityId">
+        delete
+        from activity_file
+        where activity_id = #{activateId}
     </delete>
 
 

@@ -36,4 +36,11 @@ public class ActivityDetailDo {
         this.content = content;
     }
 
+    public ActivityDetailDo(Long activityId, String theme, String introduction, String content) {
+        this.activityId = activityId;
+        this.theme = theme;
+        this.introduction = introduction;
+        this.content = content;
+    }
+
 }

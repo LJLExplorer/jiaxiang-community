@@ -48,4 +48,16 @@ public class ActivityDo {
         this.participantCount = participantCount;
     }
 
+    public ActivityDo(Long communityId, String title, String location, LocalDateTime startTime, LocalDateTime endTime,
+                      String organizer, Integer participantCount, String participantType) {
+        this.communityId = communityId;
+        this.title = title;
+        this.location = location;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.organizer = organizer;
+        this.participantCount = participantCount;
+        this.participantType = participantType;
+    }
+
 }

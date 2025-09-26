@@ -1,6 +1,7 @@
 package com.jiaxiang.content.mapper;
 
 import com.jiaxiang.model.community.dos.CommunityDO;
+import com.jiaxiang.model.community.dos.CommunityProfileDO;
 import com.jiaxiang.model.content.dos.ArticleFileDO;
 import com.jiaxiang.model.content.vos.ContentVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,4 +17,8 @@ public interface ContentMapper {
     List<ArticleFileDO> listArticleFileByArticleId(@Param("articleId") Long articleId);
 
     List<CommunityDO> listAllCommunity();
+
+    Integer updateCommunityProfile(CommunityProfileDO communityProfileDO);
+
+    Integer updateCommunityTitle(CommunityProfileDO communityProfileDO);
 }

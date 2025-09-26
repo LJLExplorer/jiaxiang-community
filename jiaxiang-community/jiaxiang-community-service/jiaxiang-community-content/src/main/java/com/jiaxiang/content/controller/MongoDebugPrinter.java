@@ -6,13 +6,13 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 //@Component
-//public class MongoDebugPrinter implements CommandLineRunner {
+public class MongoDebugPrinter implements CommandLineRunner {
 
 //    @Autowired
 //    private MongoTemplate mongoTemplate;
 
-//    @Override
-//    public void run(String... args) throws Exception {
+    @Override
+    public void run(String... args) throws Exception {
 //        System.out.println("🔥 MongoTemplate 正在使用的数据库是：" + mongoTemplate.getDb().getName());
-//    }
-//}
+    }
+}

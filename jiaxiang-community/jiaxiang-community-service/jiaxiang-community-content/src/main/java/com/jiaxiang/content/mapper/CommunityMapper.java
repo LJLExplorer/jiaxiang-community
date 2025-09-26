@@ -42,7 +42,7 @@ public interface CommunityMapper {
 
     List<ProofDocumentsPreviewVO> proofDocuments(@Param("communityId") Long communityId,@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
 
-    ProofDocumentsDetailDO proofInfo(int id);
+    ProofDocumentsDetailDO proofInfo(Long id);
 
     Integer addGridManagement(GridDO gridDO);
 
@@ -63,4 +63,8 @@ public interface CommunityMapper {
     int addCommunityHonor(CommunityHonorDO communityHonorDO);
 
     int deleteCommunityHonor(Long id);
+
+    Integer addProofInfo(ProofDocumentsDO proofDocumentsDO);
+
+    Integer deleteProofInfoById(Long id);
 }

@@ -1,11 +1,16 @@
 package com.jiaxiang.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -99,6 +104,27 @@ public class RedisUtils {
         }
     }
 
+    /**
+     * 普通缓存放入并设置时间
+     * @param key 键
+     * @param value 值
+     * @param time 时间(秒) time要大于0 如果time小于等于0 将设置无限期
+     * @return true成功 false 失败
+     */
+    public boolean set(String key, Object value, long time, TimeUnit timeUnit) {
+        try {
+            if (time > 0) {
+                redisTemplate.opsForValue().set(key, value, time, timeUnit);
+            } else {
+                set(key, value);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public Object hGet(String key, String item) {
         return redisTemplate.opsForHash().get(key, item);
     }
@@ -132,5 +158,22 @@ public class RedisUtils {
 
     public Object lRightPop(String key) {
         return redisTemplate.opsForList().rightPop(key);
+    }
+
+    public void deleteKeysByPrefix(String prefix) {
+        Set<String> keysToDelete = new HashSet<>();
+        // Use SCAN to find keys by prefix
+        redisTemplate.execute((RedisCallback<Object>) (connection) -> {
+            Cursor<byte[]> cursor = connection.scan(ScanOptions.scanOptions().match(prefix + "*").build());
+            while (cursor.hasNext()) {
+                keysToDelete.add(new String(cursor.next()));
+            }
+            return null;
+        });
+
+        // Delete keys in bulk
+        if (!keysToDelete.isEmpty()) {
+            redisTemplate.delete(keysToDelete);
+        }
     }
 }

@@ -2,10 +2,7 @@ package com.jiaxiang.apis.Content;
 
 import com.jiaxiang.apis.Content.fallback.IContentClientFallback;
 import com.jiaxiang.model.common.dtos.ResponseResult;
-import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
-import com.jiaxiang.model.community.dtos.GridDTO;
-import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
-import com.jiaxiang.model.community.dtos.StaffInfoDTO;
+import com.jiaxiang.model.community.dtos.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +20,9 @@ public interface IContentClient {
 
     @GetMapping(CONTENT_URL_PREFIX + "/community_profile")
     public ResponseEntity<ResponseResult<?>> listCommunityProfile(@RequestParam Long communityId);
+
+    @PutMapping(CONTENT_URL_PREFIX + "/update_community_profile")
+    ResponseEntity<ResponseResult<?>> updateCommunityProfile(@RequestParam Long communityId, @RequestBody CommunityProfileDTO communityProfileDTO);
 
     @GetMapping(COMMUNITY_URL_PREFIX + "/grid_management")
     public ResponseEntity<ResponseResult<?>> listGridManagement(@RequestParam Long communityId);
@@ -93,4 +93,9 @@ public interface IContentClient {
     @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_matters")
     ResponseEntity<ResponseResult<?>> deleteMattersById(@RequestParam String id);
 
+    @PostMapping(COMMUNITY_URL_PREFIX + "/add_proof_info")
+    ResponseEntity<ResponseResult<?>> addProofInfo(@RequestParam("communityId") Long communityId,@RequestBody ProofDocumentsDTO proofDocumentsDTO);
+
+    @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_proof_info")
+    ResponseEntity<ResponseResult<?>> deleteProofInfoById(@RequestParam("id") Long id);
 }

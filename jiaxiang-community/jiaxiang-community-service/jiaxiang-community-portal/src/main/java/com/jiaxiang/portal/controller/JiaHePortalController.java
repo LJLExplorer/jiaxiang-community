@@ -6,10 +6,7 @@ import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
-import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
-import com.jiaxiang.model.community.dtos.GridDTO;
-import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
-import com.jiaxiang.model.community.dtos.StaffInfoDTO;
+import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.portal.service.PortalService;
 import com.jiaxiang.utils.AsyncTaskExecutor;
 import jakarta.websocket.server.PathParam;
@@ -21,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.JIA_HE_URL_PREFIX;
 
@@ -72,6 +71,17 @@ public class JiaHePortalController {
     @GetMapping("/community_profile")
     public ResponseEntity<ResponseResult<?>> listJiaHeCommunityProfile(Long communityId) {
         return portalService.listCommunityProfile(communityId);
+    }
+
+    /**
+     * 修改社区简介
+     *
+     * @param communityId 社区id
+     * @return 社区简介
+     */
+    @PutMapping("/update_community_profile")
+    public ResponseEntity<ResponseResult<?>> updateCommunityProfile(Long communityId, @RequestBody CommunityProfileDTO communityProfileDTO) {
+        return portalService.updateCommunityProfile(communityId, communityProfileDTO);
     }
 
     /**
@@ -158,6 +168,30 @@ public class JiaHePortalController {
         return portalService.proofInfo(id);
     }
 
+    /**
+     * 添加证明内容
+     *
+     * @param communityId
+     * @param proofDocumentsDTO
+     * @return
+     */
+    @PostMapping("/add_proof_info")
+    public ResponseEntity<ResponseResult<?>> addproofInfo(Long communityId, @RequestBody ProofDocumentsDTO proofDocumentsDTO) {
+        return portalService.addProofInfo(communityId, proofDocumentsDTO);
+    }
+
+    /**
+     * 删除证明内容
+     *
+     * @param communityId
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/delete_proof_info")
+    public ResponseEntity<ResponseResult<?>> deleteProofInfoById(Long communityId, @RequestParam Long id) {
+        return portalService.deleteProofInfoById(communityId, id);
+    }
+
     // 测试接口
     @PostMapping("/save_content")
     public ResponseEntity<ResponseResult<?>> saveContent(Long communityId, int id) {
@@ -189,6 +223,16 @@ public class JiaHePortalController {
     @PutMapping("/update_community_activity_detail/{id}")
     public ResponseEntity<ResponseResult<?>> updateCommunityActivityDetail(Long communityId, @PathParam("id") Long id, @RequestBody ActivityDetailDto activityDetailDto) {
         return portalService.updateCommunityActivityDetail(communityId, id, activityDetailDto);
+    }
+
+    @PostMapping("/add_community_activity_detail")
+    public ResponseEntity<ResponseResult<?>> addCommunityActivityDetail(Long communityId, @RequestBody ActivityDetailDto activityDetailDto) {
+        return portalService.addCommunityActivityDetail(communityId, activityDetailDto);
+    }
+
+    @DeleteMapping("/delete_community_activity_detail")
+    public ResponseEntity<ResponseResult<?>> deleteCommunityActivityDetail(Long communityId, @RequestParam("id") Long id) {
+        return portalService.deleteCommunityActivityDetail(communityId, id);
     }
 
     /**

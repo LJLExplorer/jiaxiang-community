@@ -17,8 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.jiaxiang.model.common.constant.AuthConstant.JWT_EXPIRATION_MS;
-import static com.jiaxiang.model.common.constant.AuthConstant.SECRET_KEY;
+
 
 @Slf4j
 public class JwtUtils {
@@ -31,7 +30,7 @@ public class JwtUtils {
      * @param authList 权限列表
      * @return
      */
-    public static String createJwt(Long id, String username, List<String> authList) {
+    public static String createJwt(Long id, String username, List<String> authList, String jwtExpirationMs, String secretKey) {
         Map<String, Object> headClaims = new HashMap<>();
         Date now = new Date();
         headClaims.put("alg", "HS256");
@@ -43,8 +42,8 @@ public class JwtUtils {
                 .withClaim("userId", id)
                 .withClaim("authList", authList)
                 .withIssuedAt(now)
-                .withExpiresAt(new Date(now.getTime() + JWT_EXPIRATION_MS))
-                .sign(Algorithm.HMAC256(SECRET_KEY));
+                .withExpiresAt(new Date(now.getTime() + jwtExpirationMs))
+                .sign(Algorithm.HMAC256(secretKey));
     }
 
     /**
@@ -54,7 +53,7 @@ public class JwtUtils {
      * @param username 用户名
      * @return
      */
-    public static String createJwt(Long id, String username) {
+    public static String createJwt(Long id, String username, Long jwtExpirationMs, String secretKey) {
         Map<String, Object> headClaims = new HashMap<>();
         Date now = new Date();
         headClaims.put("alg", "HS256");
@@ -65,13 +64,13 @@ public class JwtUtils {
                 .withClaim("UserName", username)
                 .withClaim("userId", id)
                 .withIssuedAt(now)
-                .withExpiresAt(new Date(now.getTime() + JWT_EXPIRATION_MS))
-                .sign(Algorithm.HMAC256(SECRET_KEY));
+                .withExpiresAt(new Date(now.getTime() + jwtExpirationMs))
+                .sign(Algorithm.HMAC256(secretKey));
     }
 
-    public static boolean verifyToken(String token) {
+    public static boolean verifyToken(String token, String secretKey) {
         try {
-            JWTVerifier build = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build();
+            JWTVerifier build = JWT.require(Algorithm.HMAC256(secretKey)).build();
             build.verify(token);
             return true;
         } catch (TokenExpiredException e) {
@@ -86,9 +85,9 @@ public class JwtUtils {
         return false;
     }
 
-    public static Long getUserIdFromToken(String token) {
+    public static Long getUserIdFromToken(String token, String secretKey) {
         try {
-            JWTVerifier build = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build();
+            JWTVerifier build = JWT.require(Algorithm.HMAC256(secretKey)).build();
             DecodedJWT verify = build.verify(token);
 //            String userName = verify.getClaim("UserName").asString();
             Long userId = verify.getClaim("userId").asLong();
@@ -101,9 +100,9 @@ public class JwtUtils {
         }
     }
 
-    public static String getUserNameFromToken(String token) {
+    public static String getUserNameFromToken(String token, String secretKey) {
         try {
-            JWTVerifier build = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build();
+            JWTVerifier build = JWT.require(Algorithm.HMAC256(secretKey)).build();
             DecodedJWT verify = build.verify(token);
             String userName = verify.getClaim("UserName").asString();
 //            Integer userId = verify.getClaim("userId").asInt();
@@ -116,9 +115,9 @@ public class JwtUtils {
         }
     }
 
-    public static List<String> getAuthListFromToken(String token) {
+    public static List<String> getAuthListFromToken(String token, String secretKey) {
         try {
-            JWTVerifier build = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build();
+            JWTVerifier build = JWT.require(Algorithm.HMAC256(secretKey)).build();
             DecodedJWT verify = build.verify(token);
 //            String userName = verify.getClaim("UserName").asString();
 //            Integer userId = verify.getClaim("userId").asInt();

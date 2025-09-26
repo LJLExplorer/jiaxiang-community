@@ -1,5 +1,6 @@
 package com.jiaxiang.content.service;
 
+import com.jiaxiang.model.community.dtos.CommunityProfileDTO;
 import com.jiaxiang.model.community.vos.CommunityProfileVO;
 import com.jiaxiang.model.community.vos.GridVO;
 import com.jiaxiang.model.content.dos.ArticleFileDO;
@@ -17,6 +18,13 @@ public interface ContentService {
      * @return 社区简介
      */
     CommunityProfileVO listCommunityProfile(Long communityId);
+
+    /**
+     * 更新社区简介
+     * @param communityId
+     * @return
+     */
+    Integer updateCommunityProfile(Long communityId, CommunityProfileDTO communityProfileDTO);
 
     /**
      *  根据社区id和文章类型列出文章内容
@@ -39,4 +47,6 @@ public interface ContentService {
      * @return
      */
     String uploadFile(MultipartFile file);
+
+
 }

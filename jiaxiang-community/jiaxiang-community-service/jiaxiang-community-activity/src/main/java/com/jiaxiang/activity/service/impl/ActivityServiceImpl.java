@@ -2,6 +2,7 @@ package com.jiaxiang.activity.service.impl;
 
 import com.jiaxiang.activity.mapper.ActivityMapper;
 import com.jiaxiang.activity.service.ActivityService;
+import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.file.service.impl.MinioFileStorageService;
 import com.jiaxiang.model.activity.dos.ActivityDetailDo;
 import com.jiaxiang.model.activity.dos.ActivityDo;
@@ -9,6 +10,7 @@ import com.jiaxiang.model.activity.dos.ActivityFileDo;
 import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.activity.vos.ActivityDetailVO;
 import com.jiaxiang.model.activity.vos.ActivityPreviewVO;
+import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,7 +68,7 @@ public class ActivityServiceImpl implements ActivityService {
      */
     @Override
     public void updateCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto) {
-        if(activityDetailDto.getImages() != null){
+        if (activityDetailDto.getImages() != null) {
             List<String> images = activityDetailDto.getImages();
             images.add(activityDetailDto.getCoverImage());
             for (String image : images) {
@@ -85,7 +87,7 @@ public class ActivityServiceImpl implements ActivityService {
         activityMapper.updateActivityDo(activityDo);
 
         // 更新图片相关的操作
-        if(activityDetailDto.getImages() != null){
+        if (activityDetailDto.getImages() != null) {
             List<ActivityFileDo> dbFiles = activityMapper.getFilesByActivityId(communityId, activityDetailDto.getActivateId());
             Set<String> dbFileUrls = dbFiles.stream().map(ActivityFileDo::getPathUrl).collect(Collectors.toSet());
             Set<String> newFileUrls = new HashSet<>(activityDetailDto.getImages());
@@ -126,5 +128,46 @@ public class ActivityServiceImpl implements ActivityService {
             }
         }
 
+    }
+
+    /**
+     * 添加活动详情
+     *
+     * @param communityId
+     * @param activityDetailDto
+     */
+    @Override
+    public void addCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto) {
+        ActivityDo activityDo = new ActivityDo(communityId, activityDetailDto.getTitle(), activityDetailDto.getLocation(),
+                activityDetailDto.getStartTime(), activityDetailDto.getEndTime(), activityDetailDto.getOrganizer(),
+                activityDetailDto.getParticipantCount(), activityDetailDto.getParticipantType());
+        Integer flag1 = activityMapper.addActivityDo(activityDo);
+        Long activityId = activityDo.getId();
+        ActivityDetailDo activityDetailDo = new ActivityDetailDo(activityId, activityDetailDto.getTheme(),
+                activityDetailDto.getIntroduction(), activityDetailDto.getContent());
+        Integer flag2 = activityMapper.addActivityDetail(activityDetailDo);
+        List<ActivityFileDo> activityFileDoList = new ArrayList<>();
+        for (String image : activityDetailDto.getImages()) {
+            ActivityFileDo activityFileDo = new ActivityFileDo(activityId, image, getContentType(image),
+                    image.equals(activityDetailDto.getCoverImage()), activityDetailDto.getTitle());
+            activityFileDoList.add(activityFileDo);
+        }
+        Integer flag3 = activityMapper.batchInsertActivityFiles(activityFileDoList);
+        if (flag1 < 1 || flag2 < 1 || flag3 < activityFileDoList.size()) {
+            throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加活动详情出现意外错误，请联系管理员操作！");
+        }
+    }
+
+    /**
+     * 删除活动详情
+     *
+     * @param communityId
+     * @param activateId
+     */
+    @Override
+    public void deleteCommunityActivityDetail(Long communityId, Long activateId) {
+        Integer flag1 = activityMapper.deleteActivityDetailDoById(activateId);
+        Integer flag2 = activityMapper.deleteActivityDoById(activateId);
+        Integer flag3 = activityMapper.deleteByActivityId(activateId);
     }
 }

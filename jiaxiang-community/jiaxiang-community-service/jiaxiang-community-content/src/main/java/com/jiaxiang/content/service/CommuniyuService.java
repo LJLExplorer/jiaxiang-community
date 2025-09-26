@@ -2,10 +2,7 @@ package com.jiaxiang.content.service;
 
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.community.dos.CommunityHonorDO;
-import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
-import com.jiaxiang.model.community.dtos.GridDTO;
-import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
-import com.jiaxiang.model.community.dtos.StaffInfoDTO;
+import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.model.community.vos.*;
 import org.springframework.http.ResponseEntity;
 
@@ -71,7 +68,7 @@ public interface CommuniyuService {
 
     List<ProofDocumentsPreviewVO> proofDocuments(Long communityId, int pageNum, int pageSize);
 
-    ProofDocumentsDetailDO proofInfo(int id);
+    ProofDocumentsDetailDO proofInfo(Long id);
 
     /**
      * 根据id查事项清单
@@ -112,4 +109,8 @@ public interface CommuniyuService {
     ResponseEntity<ResponseResult<?>> addCommunityHonor(CommunityHonorDTO communityHonorDTO);
 
     ResponseEntity<ResponseResult<?>> deleteCommunityHonor(Long id);
+
+    void addProofInfo(Long communityId, ProofDocumentsDTO proofDocumentsDTO);
+
+    void deleteProofInfoById(Long id);
 }

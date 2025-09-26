@@ -18,11 +18,11 @@
     <name>jiaxiang-community</name>
     <description>嘉祥社区</description>
     <modules>
-        <module>jiaxiang-community-auth</module>
-        <module>jiaxiang-community-common</module>
-        <module>jiaxiang-community-feign-api</module>
         <module>jiaxiang-community-model</module>
         <module>jiaxiang-community-utils</module>
+        <module>jiaxiang-community-common</module>
+        <module>jiaxiang-community-auth</module>
+        <module>jiaxiang-community-feign-api</module>
         <module>jiaxiang-community-gateway</module>
         <module>jiaxiang-community-service</module>
         <module>jiaxiang-community-basic</module>
@@ -80,7 +80,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
-
+        <!--    热更新插件    -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <!-- 定义版本信息 不会自动引入 -->
@@ -167,19 +172,13 @@
     </dependencyManagement>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
+        <pluginManagement> <!-- 将 plugins 标签移入 pluginManagement -->
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

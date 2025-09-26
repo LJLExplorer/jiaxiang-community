@@ -10,6 +10,7 @@ public interface ActivityService {
 
     /**
      * 根据社区id列出活动预览
+     *
      * @param communityId 社区id
      * @return 返回活动预览图
      */
@@ -25,9 +26,25 @@ public interface ActivityService {
 
     /**
      * 更新活动详情
+     *
      * @param communityId
      * @param activityDetailDto
      * @return
      */
     void updateCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto);
+
+    /**
+     * 添加活动详情
+     *
+     * @param communityId
+     * @param activityDetailDto
+     */
+    void addCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto);
+
+    /**
+     * 删除活动详情
+     * @param communityId
+     * @param activateId
+     */
+    void deleteCommunityActivityDetail(Long communityId, Long activateId);
 }

@@ -21,11 +21,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.jiaxiang.model.common.constant.AuthConstant.USERID_LOGIN_REDIS_PREFIX;
+import static com.jiaxiang.model.common.constant.AuthConstant.JWT_EXPIRATION_MS;
+import static com.jiaxiang.model.common.constant.AuthConstant.SECRET_KEY;
 
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final RedisUtils redisUtils;
+
+
 
     public JwtAuthenticationFilter(RedisUtils redisUtils) {
         this.redisUtils = redisUtils;
@@ -36,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = request.getHeader("Authorization");
         if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
             token = token.substring(7);
-            Long userId = JwtUtils.getUserIdFromToken(token);
+            Long userId = JwtUtils.getUserIdFromToken(token, SECRET_KEY);
             String redisKey = USERID_LOGIN_REDIS_PREFIX + userId;
             String loginUserStr = redisUtils.get(redisKey).toString();
             SecurityUserDTO userDTO = JSONUtil.parseObj(loginUserStr).toBean(SecurityUserDTO.class);

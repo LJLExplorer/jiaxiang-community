@@ -2,12 +2,8 @@ package com.jiaxiang.portal.service;
 
 import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
-import com.jiaxiang.model.community.dos.GridDO;
 import com.jiaxiang.model.community.dos.ItemListDO;
-import com.jiaxiang.model.community.dtos.CommunityHonorDTO;
-import com.jiaxiang.model.community.dtos.GridDTO;
-import com.jiaxiang.model.community.dtos.ServePeopleInfoDTO;
-import com.jiaxiang.model.community.dtos.StaffInfoDTO;
+import com.jiaxiang.model.community.dtos.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,6 +34,16 @@ public interface PortalService {
      * @return 社区简介
      */
     public ResponseEntity<ResponseResult<?>> listCommunityProfile(Long communityId);
+
+    /**
+     * 修改社区简介
+     *
+     * @param communityId
+     * @param communityProfileDTO
+     * @return
+     */
+    ResponseEntity<ResponseResult<?>> updateCommunityProfile(Long communityId, CommunityProfileDTO communityProfileDTO);
+
 
     /**
      * 网格管理
@@ -125,6 +131,7 @@ public interface PortalService {
 
     /**
      * 根据id删除事项清单
+     *
      * @param id
      * @return
      */
@@ -153,4 +160,12 @@ public interface PortalService {
     ResponseEntity<ResponseResult<?>> updateCommunityHonor(CommunityHonorDTO communityHonorDTO);
 
     ResponseEntity<ResponseResult<?>> deleteCommunityHonor(Long id);
+
+    ResponseEntity<ResponseResult<?>> addCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto);
+
+    ResponseEntity<ResponseResult<?>> deleteCommunityActivityDetail(Long communityId, Long id);
+
+    ResponseEntity<ResponseResult<?>> addProofInfo(Long communityId, ProofDocumentsDTO proofDocumentsDTO);
+
+    ResponseEntity<ResponseResult<?>> deleteProofInfoById(Long communityId, Long id);
 }
