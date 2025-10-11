@@ -9,6 +9,8 @@ services:
       - "8001:8001"
     networks:
       - mynetwork
+    volumes:
+      - ./logs/content:/var/log/jiaxiang/gateway
 
   jiaxiang-backend-auth-service:
     container_name: jiaxiang-backend-auth-service
@@ -21,6 +23,8 @@ services:
       - mynetwork
     depends_on: # 本服务依赖的服务，控制启动先后顺序
       - jiaxiang-backend-gateway
+    volumes:
+      - ./logs/content:/var/log/jiaxiang/auth
 
   jiaxiang-portal-service:
     container_name: jiaxiang-portal-service
@@ -34,6 +38,8 @@ services:
     depends_on:
       - jiaxiang-backend-gateway
       - jiaxiang-backend-auth-service
+    volumes:
+      - ./logs/content:/var/log/jiaxiang/portal
 
   jiaxiang-activity-service:
     container_name: jiaxiang-activity-service
@@ -48,6 +54,8 @@ services:
       - jiaxiang-backend-gateway
       - jiaxiang-backend-auth-service
       - jiaxiang-portal-service
+    volumes:
+      - ./logs/content:/var/log/jiaxiang/activity
 
   jiaxiang-content-service:
     container_name: jiaxiang-content-service
@@ -62,6 +70,8 @@ services:
       - jiaxiang-backend-gateway
       - jiaxiang-backend-auth-service
       - jiaxiang-portal-service
+    volumes:
+      - ./logs/content:/var/log/jiaxiang/content
 
 # 网络，不定义的话就是默认网络
 networks:
