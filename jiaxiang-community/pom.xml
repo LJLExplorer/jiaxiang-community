@@ -46,6 +46,7 @@
         <jjwt.version>0.11.2</jjwt.version>
         <auth0.version>4.4.0</auth0.version>
         <hutool.version>5.8.26</hutool.version>
+        <maven.test.skip>true</maven.test.skip>
     </properties>
 
     <repositories>

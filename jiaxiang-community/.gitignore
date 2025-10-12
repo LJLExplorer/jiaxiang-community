@@ -69,6 +69,14 @@ replay_pid*
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
+.DS_Store
+*.minio-data
+*.mongodb-data
+*.mysql-data
+*.nacos-data
+*.rabbitmq-data
+*.redis-data
+
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
@@ -920,6 +928,7 @@ ASALocalRun/
 
 # MSBuild Binary and Structured Log
 *.binlog
+*.binlog.*
 
 # NVidia Nsight GPU debugger configuration file
 *.nvuser
@@ -957,5 +966,6 @@ FodyWeavers.xsd
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
+
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,git,windows,macos,linux,java,node,python,jetbrains+all,visualstudiocode,visualstudio,react,vue
