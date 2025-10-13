@@ -76,6 +76,7 @@ replay_pid*
 *.nacos-data
 *.rabbitmq-data
 *.redis-data
+*.mongodb-data/*
 
 # Gradle
 .idea/**/gradle.xml

@@ -156,7 +156,9 @@ export default {
         }
 
         for await (let item of res.data) {
-          const {data: res} = await this.$http.get('/api/jiahe/community_activity_detail', {id: item.id});
+          const { data: res } = await this.$http.get('/api/jiahe/community_activity_detail', { params: { id: item.id } });
+
+          // const {data: res} = await this.$http.get('/api/jiahe/community_activity_detail', {id: item.id});
           item.title = res.data.title;
           item.images = res.data.images;
           item.content = res.data.content;

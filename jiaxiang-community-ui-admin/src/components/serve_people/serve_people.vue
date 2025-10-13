@@ -20,6 +20,11 @@ export default {
         pagenum: 1,
         pagesize: 2,
       },
+      queryInfo1: {
+        query: "",
+        pageNum: 1,
+        pageSize: 2,
+      },
       activityList: [], // 履职信息列表数据
       total: 0, // 总条数
       // 控制对话框显示
@@ -70,7 +75,7 @@ export default {
   methods: {
     // 获取履职信息列表
     async getActivityList() {
-      const {data: res} = await this.$http.get('/api/jiahe/list_serve_people', {params: this.queryInfo});
+      const {data: res} = await this.$http.get('/api/jiahe/list_serve_people', {params: this.queryInfo1});
 
       if (res.code !== 200) {
         this.$message.error(res.errorMessage);
