@@ -235,7 +235,8 @@ export default {
         }
         console.log(this.editForm)
 
-        const {data: res} = await this.$http.put("/api/jiahe/update_community_activity_detail/" + this.editForm.id, this.editForm);
+        // const {data: res} = await this.$http.put("/api/jiahe/update_community_honor/" + this.editForm.id, this.editForm);
+        const {data: res} = await this.$http.put("/api/jiahe/update_community_honor", this.editForm);
 
         this.$message.success("修改活动成功");
         this.dialogVisible = false;

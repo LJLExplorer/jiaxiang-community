@@ -68,7 +68,7 @@ public class ActivityServiceImpl implements ActivityService {
      */
     @Override
     public void updateCommunityActivityDetail(Long communityId, ActivityDetailDto activityDetailDto) {
-        if (activityDetailDto.getImages() != null) {
+        if (!activityDetailDto.getImages().isEmpty()) {
             List<String> images = activityDetailDto.getImages();
             images.add(activityDetailDto.getCoverImage());
             for (String image : images) {
@@ -87,7 +87,7 @@ public class ActivityServiceImpl implements ActivityService {
         activityMapper.updateActivityDo(activityDo);
 
         // 更新图片相关的操作
-        if (activityDetailDto.getImages() != null) {
+        if (!activityDetailDto.getImages().isEmpty()) {
             List<ActivityFileDo> dbFiles = activityMapper.getFilesByActivityId(communityId, activityDetailDto.getActivateId());
             Set<String> dbFileUrls = dbFiles.stream().map(ActivityFileDo::getPathUrl).collect(Collectors.toSet());
             Set<String> newFileUrls = new HashSet<>(activityDetailDto.getImages());
@@ -152,7 +152,10 @@ public class ActivityServiceImpl implements ActivityService {
                     image.equals(activityDetailDto.getCoverImage()), activityDetailDto.getTitle());
             activityFileDoList.add(activityFileDo);
         }
-        Integer flag3 = activityMapper.batchInsertActivityFiles(activityFileDoList);
+        Integer flag3 = 0;
+        if (!activityFileDoList.isEmpty()) {
+            flag3 = activityMapper.batchInsertActivityFiles(activityFileDoList);
+        }
         if (flag1 < 1 || flag2 < 1 || flag3 < activityFileDoList.size()) {
             throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "添加活动详情出现意外错误，请联系管理员操作！");
         }

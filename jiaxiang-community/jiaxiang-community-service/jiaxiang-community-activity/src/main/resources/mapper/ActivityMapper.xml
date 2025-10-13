@@ -130,16 +130,16 @@
 
 
     <select id="getActivitiesByCommunityId" resultMap="ActivitiesPreviewMap">
-        select activity.id, activity_file.path_url, activity.start_time, activity.title
-        from activity,
-             activity_file
-        where activity.community_id = #{communityId}
-          and activity.id = activity_file.activity_id
-          and activity_file.is_cover = true
+        SELECT activity.id, activity_file.path_url, activity.start_time, activity.title
+        FROM activity
+                 LEFT JOIN activity_file
+                           ON activity.id = activity_file.activity_id
+                               AND activity_file.is_cover = true
+        WHERE activity.community_id = #{communityId}
     </select>
 
     <select id="getActivityDetailWithOutImagesByActivityId" resultMap="ActivityDetailMap">
-        select activity.id,
+        SELECT activity.id,
                activity.community_id,
                activity.title,
                activity.location,
@@ -154,11 +154,11 @@
                activity.location,
                activity.create_time,
                activity.update_time
-        from activity,
-             activity_detail
-        where activity.community_id = #{communityId}
-          and activity.id = #{activityId}
-          and activity_detail.activity_id = activity.id
+        FROM activity
+                 LEFT JOIN activity_detail
+                           ON activity_detail.activity_id = activity.id
+        WHERE activity.community_id = #{communityId}
+          AND activity.id = #{activityId}
     </select>
 
     <select id="getFilesByActivityId" resultType="com.jiaxiang.model.activity.dos.ActivityFileDo">
