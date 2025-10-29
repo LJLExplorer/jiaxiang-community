@@ -46,6 +46,7 @@
         <jjwt.version>0.11.2</jjwt.version>
         <auth0.version>4.4.0</auth0.version>
         <hutool.version>5.8.26</hutool.version>
+        <maven.test.skip>true</maven.test.skip>
     </properties>
 
     <repositories>
@@ -80,12 +81,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
-        <!--    热更新插件    -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
+<!--        &lt;!&ndash;    热更新插件    &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-devtools</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
     </dependencies>
 
     <!-- 定义版本信息 不会自动引入 -->

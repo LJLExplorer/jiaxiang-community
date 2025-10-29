@@ -40,10 +40,10 @@ public class AuthSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(AUTH_URL_PREFIX + "/login",
-                                AUTH_URL_PREFIX + "/register").permitAll()
-                        .anyRequest().authenticated())
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers(AUTH_URL_PREFIX + "/login",
+//                                AUTH_URL_PREFIX + "/register").permitAll()
+//                        .anyRequest().authenticated())
                 .exceptionHandling(eh -> eh
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(simpleAccessDeniedHandler));

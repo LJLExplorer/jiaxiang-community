@@ -59,58 +59,58 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String path = exchange.getRequest().getURI().getPath();
-        // 白名单直接放行
-//        if (WHITE_LIST.contains(path)) {
+//        String path = exchange.getRequest().getURI().getPath();
+//        // 白名单直接放行
+////        if (WHITE_LIST.contains(path)) {
+////            return chain.filter(exchange);
+////        }
+////        boolean isWhite = WHITE_LIST.stream().anyMatch(white -> PATH_MATCHER.match(white, path));
+//        List<String> permitAll = gateWayWhiteProperties.getWhitelist();
+//        boolean isWhite = permitAll.stream().anyMatch(white -> PATH_MATCHER.match(white, path));
+//
+//        if (isWhite) {
 //            return chain.filter(exchange);
 //        }
-//        boolean isWhite = WHITE_LIST.stream().anyMatch(white -> PATH_MATCHER.match(white, path));
-        List<String> permitAll = gateWayWhiteProperties.getWhitelist();
-        boolean isWhite = permitAll.stream().anyMatch(white -> PATH_MATCHER.match(white, path));
-
-        if (isWhite) {
-            return chain.filter(exchange);
-        }
-
-        // 获取Authorization头
-        String token = exchange.getRequest().getHeaders().getFirst("Authorization");
-        if (token == null || !token.startsWith("Bearer ")) {
-            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            String body = "{\"code\":401,\"msg\":\"未登录或token无效\"}";
-            DataBuffer buffer = exchange.getResponse()
-                    .bufferFactory()
-                    .wrap(body.getBytes(StandardCharsets.UTF_8));
-//            return exchange.getResponse().setComplete();
-            return exchange.getResponse().writeWith(Mono.just(buffer));
-        }
-
-        // 校验Token  取出Bearer
-        boolean valid = JwtUtils.verifyToken(token.substring(7), SECRET_KEY);
-        if (!valid) {
-            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-//            return exchange.getResponse().setComplete();
-            String body = "{\"code\":401,\"msg\":\"未登录或token无效\"}";
-            DataBuffer buffer = exchange.getResponse()
-                    .bufferFactory()
-                    .wrap(body.getBytes(StandardCharsets.UTF_8));
-//            return exchange.getResponse().setComplete();
-            return exchange.getResponse().writeWith(Mono.just(buffer));
-        }
-
-        // Redis校验
-        Long userIdFromToken = JwtUtils.getUserIdFromToken(token.substring(7), SECRET_KEY);
-        String redisKey = USERID_LOGIN_REDIS_PREFIX + userIdFromToken;
-        Object loginUserObj = redisUtils.get(redisKey);
-//        SecurityUserDTO securityUserDTO = JSONUtil.parseObj(loginUserStr).toBean(SecurityUserDTO.class);
-        if(loginUserObj == null){
-            log.error("账号登录已超时，请重新登录");
-            return unauthorized(exchange, "账号登录已超时，请重新登录");
-            //throw new MyLoginException("账号登录已超时，请重新登录");
-        }
-//        UsernamePasswordAuthenticationToken authenticationToken =
-//                new UsernamePasswordAuthenticationToken(securityUserDTO, null, securityUserDTO.getAuthorities());
-//        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        // 校验通过，继续
+//
+//        // 获取Authorization头
+//        String token = exchange.getRequest().getHeaders().getFirst("Authorization");
+//        if (token == null || !token.startsWith("Bearer ")) {
+//            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+//            String body = "{\"code\":401,\"msg\":\"未登录或token无效\"}";
+//            DataBuffer buffer = exchange.getResponse()
+//                    .bufferFactory()
+//                    .wrap(body.getBytes(StandardCharsets.UTF_8));
+////            return exchange.getResponse().setComplete();
+//            return exchange.getResponse().writeWith(Mono.just(buffer));
+//        }
+//
+//        // 校验Token  取出Bearer
+//        boolean valid = JwtUtils.verifyToken(token.substring(7), SECRET_KEY);
+//        if (!valid) {
+//            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+////            return exchange.getResponse().setComplete();
+//            String body = "{\"code\":401,\"msg\":\"未登录或token无效\"}";
+//            DataBuffer buffer = exchange.getResponse()
+//                    .bufferFactory()
+//                    .wrap(body.getBytes(StandardCharsets.UTF_8));
+////            return exchange.getResponse().setComplete();
+//            return exchange.getResponse().writeWith(Mono.just(buffer));
+//        }
+//
+//        // Redis校验
+//        Long userIdFromToken = JwtUtils.getUserIdFromToken(token.substring(7), SECRET_KEY);
+//        String redisKey = USERID_LOGIN_REDIS_PREFIX + userIdFromToken;
+//        Object loginUserObj = redisUtils.get(redisKey);
+////        SecurityUserDTO securityUserDTO = JSONUtil.parseObj(loginUserStr).toBean(SecurityUserDTO.class);
+//        if(loginUserObj == null){
+//            log.error("账号登录已超时，请重新登录");
+//            return unauthorized(exchange, "账号登录已超时，请重新登录");
+//            //throw new MyLoginException("账号登录已超时，请重新登录");
+//        }
+////        UsernamePasswordAuthenticationToken authenticationToken =
+////                new UsernamePasswordAuthenticationToken(securityUserDTO, null, securityUserDTO.getAuthorities());
+////        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+//        // 校验通过，继续
         return chain.filter(exchange);
     }
 

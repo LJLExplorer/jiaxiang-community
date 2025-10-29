@@ -1,0 +1,13 @@
+# 使用 OpenJDK 17 作为基础镜像
+FROM openjdk:17-jdk-slim
+
+# 设置工作目录
+WORKDIR /app
+
+ADD target/jiaxiang-community-content-1.0-SNAPSHOT.jar .
+
+# 暴露容器的端口号
+EXPOSE 8102
+
+# 启动命令，指定端口号为 8300
+ENTRYPOINT ["java", "-jar", "/app/jiaxiang-community-content-1.0-SNAPSHOT.jar", "--server.port=8102", "--spring.profiles.active=prod"]

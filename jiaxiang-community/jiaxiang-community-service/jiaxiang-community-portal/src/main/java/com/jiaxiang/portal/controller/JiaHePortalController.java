@@ -18,8 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static com.jiaxiang.model.common.constant.ApiRouterConstant.JIA_HE_URL_PREFIX;
 
@@ -57,7 +55,7 @@ public class JiaHePortalController {
      * @return 活动详情
      */
     @GetMapping("/community_activity_detail")
-    public ResponseEntity<ResponseResult<?>> listCommunityActivityDetail(@RequestParam("communityId") Long communityId, @RequestParam("id") Long activityId) {
+    public ResponseEntity<ResponseResult<?>> listCommunityActivityDetail(@RequestParam("communityId") Long communityId, @RequestParam(value = "id", required = false) Long activityId) {
         return portalService.listCommunityActivityDetail(communityId, activityId);
     }
 
@@ -130,7 +128,7 @@ public class JiaHePortalController {
      * @return 为人民服务列表
      */
     @GetMapping("/list_serve_people")
-    public ResponseEntity<ResponseResult<?>> listServePeople(Long communityId, int pageNum, int pageSize) {
+    public ResponseEntity<ResponseResult<?>> listServePeople(Long communityId, Integer pageNum, Integer pageSize) {
         return portalService.listServePeople(pageNum, pageSize);
     }
 
@@ -142,29 +140,29 @@ public class JiaHePortalController {
      * @return
      */
     @GetMapping("/serve_people_info")
-    public ResponseEntity<ResponseResult<?>> servePeopleInfo(Long communityId, int id) {
+    public ResponseEntity<ResponseResult<?>> servePeopleInfo(Long communityId, Integer id) {
         return portalService.listServePeopleInfo(id);
     }
 
 
     @GetMapping("/list_matters")
-    public ResponseEntity<ResponseResult<?>> listMatters(Long communityId, int pageNum, int pageSize) {
+    public ResponseEntity<ResponseResult<?>> listMatters(Long communityId,@RequestParam(defaultValue = "1") Integer pageNum,@RequestParam(defaultValue = "1000") Integer pageSize) {
         return portalService.listMatters(communityId, pageNum, pageSize);
     }
 
     @GetMapping("/community_honor")
-    public ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, int pageNum, int pageSize) {
+    public ResponseEntity<ResponseResult<?>> communityHonor(Long communityId, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "1000") Integer pageSize) {
         return portalService.communityHonor(communityId, pageNum, pageSize);
     }
 
     @GetMapping("/proof_documents")
-    public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, int pageNum, int pageSize) {
+    public ResponseEntity<ResponseResult<?>> proofDocuments(Long communityId, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "1000") Integer pageSize) {
         return portalService.proofDocuments(communityId, pageNum, pageSize);
     }
 
 
     @GetMapping("/proof_info")
-    public ResponseEntity<ResponseResult<?>> proofInfo(Long communityId, int id) {
+    public ResponseEntity<ResponseResult<?>> proofInfo(Long communityId, Integer id) {
         return portalService.proofInfo(id);
     }
 
@@ -194,7 +192,7 @@ public class JiaHePortalController {
 
     // 测试接口
     @PostMapping("/save_content")
-    public ResponseEntity<ResponseResult<?>> saveContent(Long communityId, int id) {
+    public ResponseEntity<ResponseResult<?>> saveContent(Long communityId, Integer id) {
         return portalService.saveContent(id);
     }
 

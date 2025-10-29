@@ -20,4 +20,6 @@ public class MinioConfigProperties implements Serializable {
     private String bucket;
     private String endpoint;
     private String readPath;
+    // 得到外网ip，docker部署用到
+    private String publicEndpoint;
 }

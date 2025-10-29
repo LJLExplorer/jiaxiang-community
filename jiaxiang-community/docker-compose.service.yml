@@ -1,0 +1,78 @@
+version: '3'
+services:
+  jiaxiang-backend-gateway:
+    container_name: jiaxiang-backend-gateway
+    build: # 服务的 Docker 构建文件位置
+      context: ./jiaxiang-community-gateway/community-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    networks:
+      - mynetwork
+    volumes:
+      - ./logs/gateway:/app/logs
+
+  jiaxiang-backend-auth-service:
+    container_name: jiaxiang-backend-auth-service
+    build:
+      context: ./jiaxiang-community-auth
+      dockerfile: Dockerfile
+    ports:
+      - "8300:8300"
+    networks:
+      - mynetwork
+    depends_on: # 本服务依赖的服务，控制启动先后顺序
+      - jiaxiang-backend-gateway
+    volumes:
+      - ./logs/auth:/app/logs
+
+  jiaxiang-portal-service:
+    container_name: jiaxiang-portal-service
+    build:
+      context: ./jiaxiang-community-service/jiaxiang-community-portal
+      dockerfile: Dockerfile
+    ports:
+      - "8100:8100"
+    networks:
+      - mynetwork
+    depends_on:
+      - jiaxiang-backend-gateway
+      - jiaxiang-backend-auth-service
+    volumes:
+      - ./logs/portal:/app/logs
+
+  jiaxiang-activity-service:
+    container_name: jiaxiang-activity-service
+    build:
+      context: ./jiaxiang-community-service/jiaxiang-community-activity
+      dockerfile: Dockerfile
+    ports:
+      - "8101:8101"
+    networks:
+      - mynetwork
+    depends_on:
+      - jiaxiang-backend-gateway
+      - jiaxiang-backend-auth-service
+      - jiaxiang-portal-service
+    volumes:
+      - ./logs/activity:/app/logs
+
+  jiaxiang-content-service:
+    container_name: jiaxiang-content-service
+    build:
+      context: ./jiaxiang-community-service/jiaxiang-community-content
+      dockerfile: Dockerfile
+    ports:
+      - "8102:8102"
+    networks:
+      - mynetwork
+    depends_on:
+      - jiaxiang-backend-gateway
+      - jiaxiang-backend-auth-service
+      - jiaxiang-portal-service
+    volumes:
+      - ./logs/content:/app/logs
+
+# 网络，不定义的话就是默认网络
+networks:
+  mynetwork:

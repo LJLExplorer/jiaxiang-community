@@ -60,7 +60,7 @@ public class MinioFileStorageService implements FileStorageService {
      */
     public String getFileKeyFromUrl(String pathUrl) {
         // 去掉 MinIO 服务地址部分，提取出相对路径
-        String baseUrl = minioConfigProperties.getEndpoint() + "/" + minioConfigProperties.getBucket() + "/";
+        String baseUrl = minioConfigProperties.getPublicEndpoint() + "/" + minioConfigProperties.getBucket() + "/";
 
         if (pathUrl.startsWith(baseUrl)) {
             // 截去 MinIO 服务地址和 bucket 名称部分，返回剩下的路径作为对象 key

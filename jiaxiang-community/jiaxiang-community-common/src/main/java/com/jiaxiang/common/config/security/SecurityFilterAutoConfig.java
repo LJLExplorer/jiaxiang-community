@@ -4,7 +4,6 @@ import com.jiaxiang.common.filter.JwtAuthenticationFilter;
 import com.jiaxiang.common.handler.AuthenticationEntryPointImpl;
 import com.jiaxiang.common.handler.SimpleAccessDeniedHandler;
 import com.jiaxiang.utils.RedisUtils;
-import jakarta.annotation.PostConstruct;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -65,4 +64,19 @@ public class SecurityFilterAutoConfig {
         return http.build();
     }
 
+    // 防止走默认的拦截所有权限
+    @Bean
+    @ConditionalOnProperty(name = "common.security.security-filter-chain-enabled", havingValue = "false",
+            matchIfMissing = false)
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+                .exceptionHandling(eh -> eh
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(simpleAccessDeniedHandler));
+        return http.build();
+    }
 }
