@@ -1,14 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
-import './plugins/element.js'
 import './assets/css/global.css'
 import axios from 'axios'
-import VueQuillEditor from "vue-quill-editor"
-import 'quill/dist/quill.core.css' // import styles
-import 'quill/dist/quill.snow.css' // for snow theme
-import 'quill/dist/quill.bubble.css' // for bubble theme
 
 Vue.config.productionTip = false
 axios.defaults.baseURL = "http://localhost:3000/"

@@ -1,0 +1,72 @@
+.page:first-of-type {
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-image:
+            url('../image/主页背景图片.png'),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 1));
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-blend-mode: screen;
+
+    mix-blend-mode: color;
+    background-size: cover;
+    color: rgb(255, 255, 255);
+    min-height: 100vh;
+}
+
+.header {
+    box-sizing: border-box;
+
+    width: 100%;
+    font-size: 36px;
+    background-color: #ffffff00;
+    padding: 10px;
+    text-align: center;
+}
+
+.container {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.search-bar {
+    margin-top: 0px;
+    display: flex;
+    justify-content: flex-end;
+    /* 调整为左对齐 */
+    gap: 10px;
+}
+
+.search-bar input[type="text"] {
+    padding: 12px;
+    width: 80%;
+    max-width: 400px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+
+.search-bar button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #45a049;
+}
