@@ -1,0 +1,24 @@
+#svg-container {
+    margin: 0 auto;
+    height: 100vh;
+}
+
+#svg-container > svg {
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+
+}
+
+/*选中那些有两个g标签的g标签*/
+#svg-container > svg > g:has(>g:nth-of-type(2)) {
+    /*transform: scale(1);*/
+    /*transform-origin: center;*/
+    cursor: pointer;
+    transition: .3s;
+}
+
+/*
+#svg-container > svg > g:has(>g:nth-of-type(2)):hover {
+    transform: scale(1.02);
+}*/

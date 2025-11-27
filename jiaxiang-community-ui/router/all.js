@@ -56,14 +56,18 @@ router.get("/jiahe/grid_management", (req, res) => {
         "code": 0,
         "data": [
             {
+                "id": 1,
                 "community": "string",
+                "href": "/home.html",
                 "meta": {
                     "title": "",
                     "profile": "string"
                 }
             },
             {
+                "id": 2,
                 "community": "string",
+                "href": "/home.html",
                 "meta": {
                     "title": "",
                     "profile": "string2"

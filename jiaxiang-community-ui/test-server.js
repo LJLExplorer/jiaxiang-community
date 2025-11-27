@@ -50,5 +50,5 @@ app.get('*', (req, res) => {
 
 app.listen(port, () => {
     console.log(`监听端口：${port}`);
-    console.log(`入口地址：http://localhost:${port}/home.html`)
+    console.log(`入口地址：http://localhost:${port}/index.html`)
 });
