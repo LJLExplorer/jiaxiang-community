@@ -3,7 +3,7 @@ const imageUpload = false;    //表示当前页面是否包含图片上传功能
 
 export default {
   data() {
-    // 活动时间验证
+    // 荣誉时间验证
     let checkDateTime = (rule, value, callback) => {
       const regDateTime = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
       if (regDateTime.test(value)) {
@@ -15,18 +15,18 @@ export default {
     return {
       uploadAction: `${this.$http.defaults.baseURL}api/jiahe/upload_file`,
 
-      activityList: [], // 活动列表数据
+      activityList: [], // 荣誉列表数据
       total: 0, // 总条数
       // 控制对话框显示
-      dialogVisible: false, // 添加活动
-      editVisible: false, // 编辑活动
+      dialogVisible: false, // 添加荣誉
+      editVisible: false, // 编辑荣誉
       // 表单数据
       addForm: {
         "communityId": 1,
         "honorDetail": "",
       },
       // 两个上传组件的文件列表（独立维护，避免冲突）
-      activityFileList: [],  // 活动图片的文件列表
+      activityFileList: [],  // 荣誉图片的文件列表
       coverFileList: [],      // 封面图片的文件列表
 
       // 表单验证规则
@@ -61,7 +61,7 @@ export default {
     this.getActivityList();
   },
   methods: {
-    // 获取活动列表
+    // 获取荣誉列表
     async getActivityList() {
       const {data: res} = await this.$http.get('/api/jiahe/community_honor');
 
@@ -78,7 +78,7 @@ export default {
     },
 
     handleActivityExceed(files, fileList) {
-      this.$message.warning(`活动图片最多只能上传${files.length}张，已自动忽略多余文件`);
+      this.$message.warning(`荣誉图片最多只能上传${files.length}张，已自动忽略多余文件`);
     },
 
     // 上传失败
@@ -91,7 +91,7 @@ export default {
         this.$message.success(`"${file.name}" 上传成功`);
         // 存储接口返回的URL（假设接口返回格式为 { code: 200, data: { url: "xxx" } }）
 
-        // 同步更新活动图片数组（从文件列表中提取所有URL）
+        // 同步更新荣誉图片数组（从文件列表中提取所有URL）
         // this.addForm.images = fileList.map(item => item.url);
         // this.editForm.images = fileList.map(item => item.url);
         this.imageName2URL.set(file.name, response.data)
@@ -106,7 +106,7 @@ export default {
     },
     // 移除图片：从images数组中删除对应URL
     handleActivityImageRemove(file, fileList) {
-      // 同步更新活动图片数组
+      // 同步更新荣誉图片数组
       // this.addForm.images = fileList.map(item => item.url);
       // this.editForm.images = fileList.map(item => item.url);
       //根据映射判断是否可以获取到URL，如果可以获取则删除，否则什么也不做
@@ -118,7 +118,7 @@ export default {
       this.activityFileList.splice(file, 1)
       console.log(this.imageName2URL, this.editForm.images)
 
-      this.$message.info(`已移除活动图片："${file.name}"`);
+      this.$message.info(`已移除荣誉图片："${file.name}"`);
     },
     handleCoverExceed(files, fileList) {
       this.$message.warning("封面图片只能上传1张");
@@ -162,7 +162,7 @@ export default {
       this.editForm.images = [];
       this.editForm.coverImage = "";
     },
-    // 添加活动
+    // 添加荣誉
     addActivity() {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) {
@@ -181,7 +181,7 @@ export default {
 
     async handleDelete(row) {
 
-      const confirmResult = await this.$confirm('此操作将永久删除该活动, 是否继续?', '提示', {
+      const confirmResult = await this.$confirm('此操作将永久删除该荣誉, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -196,14 +196,14 @@ export default {
             params: {id: row.id}  // 通过 params 设置查询参数，等价于 ?id=xxx
           });
 
-      this.$message.success("删除活动成功");
+      this.$message.success("删除荣誉成功");
       this.getActivityList();
     },
     async handleEdit(row) {
 
       const info = this.activityList.filter(value => value.id === row.id)[0];
       // console.log(info)
-      /*content: "活动描述内容"id: (...)images: (...)startTime: (...)title: (...)*/
+      /*content: "荣誉描述内容"id: (...)images: (...)startTime: (...)title: (...)*/
 
       for (let name in info) {
         this.editForm[name] = info[name];
@@ -226,7 +226,7 @@ export default {
       console.log(this.editForm)
       this.editVisible = true;
     },
-// 编辑活动
+// 编辑荣誉
     editActivity() {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) {
@@ -235,10 +235,9 @@ export default {
         }
         console.log(this.editForm)
 
-        // const {data: res} = await this.$http.put("/api/jiahe/update_community_honor/" + this.editForm.id, this.editForm);
         const {data: res} = await this.$http.put("/api/jiahe/update_community_honor", this.editForm);
 
-        this.$message.success("修改活动成功");
+        this.$message.success("修改荣誉成功");
         this.dialogVisible = false;
         this.getActivityList();
 
@@ -254,8 +253,8 @@ export default {
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/Home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+      <el-breadcrumb-item>荣誉管理</el-breadcrumb-item>
+      <el-breadcrumb-item>荣誉列表</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 卡片区域 -->
@@ -279,7 +278,7 @@ export default {
                   }...
                 ]
               }-->
-        <!-- 活动表格 -->
+        <!-- 荣誉表格 -->
         <el-table :data="activityList" border stripe>
           <el-table-column type="index" label="#"></el-table-column>
           <el-table-column label="ID" prop="id"></el-table-column>
@@ -316,7 +315,7 @@ export default {
     </el-card>
 
     <el-dialog
-        title="添加活动"
+        title="添加荣誉"
         :visible.sync="dialogVisible"
         width="50%"
         @close="DialogIsClosed"
@@ -343,9 +342,9 @@ export default {
       </span>
     </el-dialog>
 
-    <!-- 编辑活动对话框 -->
+    <!-- 编辑荣誉对话框 -->
     <el-dialog
-        title="修改活动"
+        title="修改荣誉"
         :visible.sync="editVisible"
         width="50%"
         @close="DialogIsClosed"
@@ -353,21 +352,25 @@ export default {
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
         <el-form-item label="id" prop="id">
           <!-- 1. 设置 type="number" 限制输入类型 -->
-          <el-input
-              v-model.number="editForm.id"
-              type="number"
-              placeholder="请输入数字"
-              oninput="value = value.replace(/[^\d]/g, '')"
-          ></el-input>
+          <!--          <el-input
+                        v-model.number="editForm.id"
+                        type="number"
+                        placeholder="请输入数字"
+                        oninput="value = value.replace(/[^\d]/g, '')"
+                    ></el-input>-->
+                    <p style="margin: 0">{{ editForm.id }}</p>
+
         </el-form-item>
         <el-form-item label="communityId" prop="communityId">
           <!-- 1. 设置 type="number" 限制输入类型 -->
-          <el-input
+<!--          <el-input
               v-model.number="editForm.communityId"
               type="number"
               placeholder="请输入数字"
               oninput="value = value.replace(/[^\d]/g, '')"
-          ></el-input>
+          ></el-input>-->
+                              <p style="margin: 0">{{ editForm.communityId }}</p>
+
         </el-form-item>
         <el-form-item label="荣誉详情" prop="honorDetail">
           <el-input type="textarea" v-model="editForm.honorDetail" rows="4"></el-input>

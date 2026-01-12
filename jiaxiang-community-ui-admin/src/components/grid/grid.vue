@@ -183,7 +183,7 @@ export default {
           return;
         }
 
-        const {data: res} = await this.$http.post("/api/jiahe/add_community_honor", this.addForm);
+        const {data: res} = await this.$http.post("/api/jiahe/add_grid_management", this.addForm);
 
         this.$message.success("添加荣誉成功");
         this.dialogVisible = false;
@@ -248,7 +248,7 @@ export default {
         }
         console.log(this.editForm)
 
-        const {data: res} = await this.$http.put("/api/jiahe/update_community_activity_detail/" + this.editForm.id, this.editForm);
+        const {data: res} = await this.$http.put("/api/jiahe/update_grid_management", this.editForm);
 
         this.$message.success("修改网格成功");
         this.dialogVisible = false;
@@ -358,12 +358,14 @@ export default {
                 "description": ""       -->
         <el-form-item label="id" prop="id">
           <!-- 1. 设置 type="number" 限制输入类型 -->
-          <el-input
+<!--          <el-input
               v-model.number="editForm.id"
               type="number"
               placeholder="请输入数字"
               oninput="value = value.replace(/[^\d]/g, '')"
-          ></el-input>
+          ></el-input>-->
+                    <p style="margin: 0">{{ editForm.id }}</p>
+
         </el-form-item>
         <el-form-item label="社区" prop="communityCN">
           <el-input v-model="editForm.communityCN"></el-input>

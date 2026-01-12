@@ -2,7 +2,7 @@
 
 export default {
   data() {
-    // 履职信息时间验证
+    // 服务人民时间验证
     let checkDateTime = (rule, value, callback) => {
       const regDateTime = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
       if (regDateTime.test(value)) {
@@ -14,22 +14,17 @@ export default {
     return {
       uploadAction: `${this.$http.defaults.baseURL}api/jiahe/upload_file`,
 
-      // 获取履职信息列表参数
+      // 获取服务人民列表参数
       queryInfo: {
-        query: "",
-        pagenum: 1,
-        pagesize: 2,
-      },
-      queryInfo1: {
         query: "",
         pageNum: 1,
         pageSize: 2,
       },
-      activityList: [], // 履职信息列表数据
+      activityList: [], // 服务人民列表数据
       total: 0, // 总条数
       // 控制对话框显示
-      dialogVisible: false, // 添加履职信息
-      editVisible: false, // 编辑履职信息
+      dialogVisible: false, // 添加服务人民
+      editVisible: false, // 编辑服务人民
       // 表单数据
       addForm: {
         "title": "",
@@ -42,7 +37,7 @@ export default {
         "serviceRules": ""
       },
       // 两个上传组件的文件列表（独立维护，避免冲突）
-      activityFileList: [],  // 履职信息图片的文件列表
+      activityFileList: [],  // 服务人民图片的文件列表
       coverFileList: [],      // 封面图片的文件列表
 
       // 表单验证规则
@@ -73,9 +68,9 @@ export default {
     this.getActivityList();
   },
   methods: {
-    // 获取履职信息列表
+    // 获取服务人民列表
     async getActivityList() {
-      const {data: res} = await this.$http.get('/api/jiahe/list_serve_people', {params: this.queryInfo1});
+      const {data: res} = await this.$http.get('/api/jiahe/list_serve_people', {params: this.queryInfo});
 
       if (res.code !== 200) {
         this.$message.error(res.errorMessage);
@@ -85,7 +80,7 @@ export default {
     },
 
     handleActivityExceed(files, fileList) {
-      this.$message.warning(`履职信息图片最多只能上传${files.length}张，已自动忽略多余文件`);
+      this.$message.warning(`服务人民图片最多只能上传${files.length}张，已自动忽略多余文件`);
     },
 
     // 上传失败
@@ -98,7 +93,7 @@ export default {
         this.$message.success(`"${file.name}" 上传成功`);
         // 存储接口返回的URL（假设接口返回格式为 { code: 200, data: { url: "xxx" } }）
 
-        // 同步更新履职信息图片数组（从文件列表中提取所有URL）
+        // 同步更新服务人民图片数组（从文件列表中提取所有URL）
         // this.addForm.images = fileList.map(item => item.url);
         // this.editForm.images = fileList.map(item => item.url);
         this.imageName2URL.set(file.name, response.data)
@@ -113,7 +108,7 @@ export default {
     },
     // 移除图片：从images数组中删除对应URL
     handleActivityImageRemove(file, fileList) {
-      // 同步更新履职信息图片数组
+      // 同步更新服务人民图片数组
       // this.addForm.images = fileList.map(item => item.url);
       // this.editForm.images = fileList.map(item => item.url);
       //根据映射判断是否可以获取到URL，如果可以获取则删除，否则什么也不做
@@ -125,7 +120,7 @@ export default {
       this.activityFileList.splice(file, 1)
       console.log(this.imageName2URL, this.editForm.images)
 
-      this.$message.info(`已移除履职信息图片："${file.name}"`);
+      this.$message.info(`已移除服务人民图片："${file.name}"`);
     },
     handleCoverExceed(files, fileList) {
       this.$message.warning("封面图片只能上传1张");
@@ -156,14 +151,14 @@ export default {
       this.$message.info("已移除封面图片");
     },
 
-    // 履职信息状态变更
+    // 服务人民状态变更
     /*async activityStateChanged(activity) {
       const {data: res} = await this.$http.put(`activities/${activity.id}/state/${activity.status}`);
       if (res.meta.status !== 200) {
         activity.status = !activity.status;
-        this.$message.error("更新履职信息状态失败");
+        this.$message.error("更新服务人民状态失败");
       } else {
-        this.$message.success("更新履职信息状态成功");
+        this.$message.success("更新服务人民状态成功");
       }
     },*/
     // 重置添加表单
@@ -178,7 +173,7 @@ export default {
       this.editForm.images = [];
       this.editForm.images = "";
     },
-    // 添加履职信息
+    // 添加服务人民
     addActivity() {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) {
@@ -189,7 +184,7 @@ export default {
 
         const {data: res} = await this.$http.post("/api/jiahe/add_serve_people_info", this.addForm);
 
-        this.$message.success("添加履职信息成功");
+        this.$message.success("添加服务人民成功");
         this.dialogVisible = false;
         this.getActivityList();
 
@@ -198,7 +193,7 @@ export default {
 
     async handleDelete(row) {
 
-      const confirmResult = await this.$confirm('此操作将永久删除该履职信息, 是否继续?', '提示', {
+      const confirmResult = await this.$confirm('此操作将永久删除该服务人民, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -208,19 +203,19 @@ export default {
         return this.$message.info("已取消删除");
       }
 
-      const {data: res} = await this.$http.delete(`/api/jiahe/delete_community_activity_detail`,
+      const {data: res} = await this.$http.delete(`/api/jiahe/delete_serve_people_info`,
           {
             params: {id: row.id}  // 通过 params 设置查询参数，等价于 ?id=xxx
           });
 
-      this.$message.success("删除履职信息成功");
+      this.$message.success("删除服务人民成功");
       this.getActivityList();
     },
     async handleEdit(row) {
 
       const info = this.activityList.filter(value => value.id === row.id)[0];
       // console.log(info)
-      /*content: "履职信息描述内容"id: (...)images: (...)startTime: (...)title: (...)*/
+      /*content: "服务人民描述内容"id: (...)images: (...)startTime: (...)title: (...)*/
 
       for (let name in info) {
         if (name in this.editForm)
@@ -239,7 +234,7 @@ export default {
 
       this.editVisible = true;
     },
-// 编辑履职信息
+// 编辑服务人民
     editActivity() {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) {
@@ -248,9 +243,9 @@ export default {
         }
         console.log(this.editForm)
 
-        const {data: res} = await this.$http.put("/api/jiahe/update_community_activity_detail/" + this.editForm.id, this.editForm);
+        const {data: res} = await this.$http.put("/api/jiahe/update_serve_people_info", this.editForm);
 
-        this.$message.success("修改履职信息成功");
+        this.$message.success("修改服务人民成功");
         this.dialogVisible = false;
         this.getActivityList();
 
@@ -269,7 +264,7 @@ export default {
       <div>
         <el-row :gutter="20">
           <el-col :span="4">
-            <el-button type="primary" @click="dialogVisible=true">添加履职信息</el-button>
+            <el-button type="primary" @click="dialogVisible=true">添加服务人民</el-button>
           </el-col>
         </el-row>
 
@@ -340,7 +335,7 @@ export default {
     </el-card>
 
     <el-dialog
-        title="添加履职信息"
+        title="添加服务人民"
         :visible.sync="dialogVisible"
         width="50%"
         @close="DialogIsClosed"
@@ -392,9 +387,9 @@ export default {
       </span>
     </el-dialog>
 
-    <!-- 编辑履职信息对话框 -->
+    <!-- 编辑服务人民对话框 -->
     <el-dialog
-        title="修改履职信息"
+        title="修改服务人民"
         :visible.sync="editVisible"
         width="50%"
         @close="DialogIsClosed"

@@ -3,7 +3,7 @@ const imageUpload = false;    //表示当前页面是否包含图片上传功能
 
 export default {
   data() {
-    // 活动时间验证
+    // 简介时间验证
     let checkDateTime = (rule, value, callback) => {
       const regDateTime = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
       if (regDateTime.test(value)) {
@@ -20,18 +20,18 @@ export default {
         "title": "",
         "images": "",
         "profile": ""
-      }, // 活动列表数据
+      }, // 简介列表数据
       total: 0, // 总条数
       // 控制对话框显示
-      dialogVisible: false, // 添加活动
-      editVisible: false, // 编辑活动
+      dialogVisible: false, // 添加简介
+      editVisible: false, // 编辑简介
       // 表单数据
       addForm: {
         "communityId": 1,
         "honorDetail": "",
       },
       // 两个上传组件的文件列表（独立维护，避免冲突）
-      activityFileList: [],  // 活动图片的文件列表
+      activityFileList: [],  // 简介图片的文件列表
       coverFileList: [],      // 封面图片的文件列表
 
       // 表单验证规则
@@ -44,7 +44,7 @@ export default {
       imageName2URL: new Map(),
 
       editForm: {
-        "artiProfileId": 0,
+        "artiProfileId": 123,
         "title": "",
         "profile": ""
       }, // 编辑表单数据
@@ -62,7 +62,7 @@ export default {
     await this.getActivityList();
   },
   methods: {
-    // 获取活动列表
+    // 获取简介列表
     async getActivityList() {
       const {data: res} = await this.$http.get('/api/jiahe/community_profile');
 
@@ -75,7 +75,7 @@ export default {
     },
 
     handleActivityExceed(files, fileList) {
-      this.$message.warning(`活动图片最多只能上传${files.length}张，已自动忽略多余文件`);
+      this.$message.warning(`简介图片最多只能上传${files.length}张，已自动忽略多余文件`);
     },
 
     // 上传失败
@@ -88,7 +88,7 @@ export default {
         this.$message.success(`"${file.name}" 上传成功`);
         // 存储接口返回的URL（假设接口返回格式为 { code: 200, data: { url: "xxx" } }）
 
-        // 同步更新活动图片数组（从文件列表中提取所有URL）
+        // 同步更新简介图片数组（从文件列表中提取所有URL）
         // this.addForm.images = fileList.map(item => item.url);
         // this.editForm.images = fileList.map(item => item.url);
         this.imageName2URL.set(file.name, response.data)
@@ -103,7 +103,7 @@ export default {
     },
     // 移除图片：从images数组中删除对应URL
     handleActivityImageRemove(file, fileList) {
-      // 同步更新活动图片数组
+      // 同步更新简介图片数组
       // this.addForm.images = fileList.map(item => item.url);
       // this.editForm.images = fileList.map(item => item.url);
       //根据映射判断是否可以获取到URL，如果可以获取则删除，否则什么也不做
@@ -115,7 +115,7 @@ export default {
       this.activityFileList.splice(file, 1)
       console.log(this.imageName2URL, this.editForm.images)
 
-      this.$message.info(`已移除活动图片："${file.name}"`);
+      this.$message.info(`已移除简介图片："${file.name}"`);
     },
     handleCoverExceed(files, fileList) {
       this.$message.warning("封面图片只能上传1张");
@@ -159,7 +159,7 @@ export default {
       this.editForm.images = [];
       this.editForm.coverImage = "";
     },
-    // 添加活动
+    // 添加简介
     addActivity() {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) {
@@ -178,7 +178,7 @@ export default {
 
     async handleDelete(row) {
 
-      const confirmResult = await this.$confirm('此操作将永久删除该活动, 是否继续?', '提示', {
+      const confirmResult = await this.$confirm('此操作将永久删除该简介, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -193,20 +193,21 @@ export default {
             params: {id: row.id}  // 通过 params 设置查询参数，等价于 ?id=xxx
           });
 
-      this.$message.success("删除活动成功");
+      this.$message.success("删除简介成功");
       this.getActivityList();
     },
     async handleEdit(row) {
 
       const info = this.activityList;
       // console.log(info)
-      /*content: "活动描述内容"id: (...)images: (...)startTime: (...)title: (...)*/
+      /*content: "简介描述内容"id: (...)images: (...)startTime: (...)title: (...)*/
 
       for (let name in info) {
         this.editForm[name] = info[name];
       }
       const that = this;
 
+      console.log(info)
       if (imageUpload) {
         // 遍历URL数组，生成file-list所需的对象数组
         this.activityFileList = this.editForm.images.map((url, index) => {
@@ -220,17 +221,15 @@ export default {
         });
       }
 
-      console.log(this.editForm)
       this.editVisible = true;
     },
-// 编辑活动
+// 编辑简介
     editActivity() {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) {
           this.$message.error("有填写错误");
           return;
         }
-        console.log(this.editForm)
 
         const {data: res} = await this.$http.put("/api/jiahe/update_community_profile", this.editForm);
 
@@ -247,12 +246,6 @@ export default {
 
 <template>
   <div>
-    <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/Home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-    </el-breadcrumb>
     <el-row :gutter="20">
       <el-col :span="4">
         <el-button type="primary" @click="handleEdit()">修改简介</el-button>
@@ -305,9 +298,9 @@ export default {
     </el-container>
 
 
-    <!-- 编辑活动对话框 -->
+    <!-- 编辑简介对话框 -->
     <el-dialog
-        title="修改活动"
+        title="修改简介"
         :visible.sync="editVisible"
         width="50%"
         @close="DialogIsClosed"
@@ -315,12 +308,14 @@ export default {
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
         <el-form-item label="artiProfileId" prop="artiProfileId">
           <!-- 1. 设置 type="number" 限制输入类型 -->
-          <el-input
-              v-model.number="editForm.artiProfileId"
-              type="number"
-              placeholder="请输入数字"
-              oninput="value = value.replace(/[^\d]/g, '')"
-          ></el-input>
+          <!--          <el-input
+                        v-model.number="editForm.artiProfileId"
+                        type="number"
+                        placeholder="请输入数字"
+                        oninput="value = value.replace(/[^\d]/g, '')"
+                    ></el-input>-->
+          <p style="margin: 0">{{ editForm.artiProfileId }}</p>
+
         </el-form-item>
         <el-form-item label="标题" prop="title">
           <el-input v-model="editForm.title"></el-input>

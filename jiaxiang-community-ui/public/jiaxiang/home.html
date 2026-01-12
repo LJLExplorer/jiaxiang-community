@@ -116,7 +116,11 @@
 
 
         let currentIndex = 0;
-        const itemWidth = items[0].offsetWidth + 20; // 包含margin
+        let itemWidth = items[0].offsetWidth + 20; // 包含margin
+        window.onresize = function (){
+            itemWidth = items[0].offsetWidth + 20;
+            updateCarousel()
+        }
 
         function updateCarousel() {
             carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;

@@ -27,7 +27,7 @@ export default {
       editVisible: false, // 编辑活动
       // 表单数据
       addForm: {
-        "id": 1,
+        // "id": 1,
         "communityId": 1,
         "title": "嘉祥运动会",
         "location": "社区体育馆",
@@ -82,7 +82,7 @@ export default {
       imageName2URL: new Map(),
 
       editForm: {
-        "id": 1,
+        // "id": 1,
         "activateId": 1,
         "communityId": 1,
         "title": "",
@@ -155,13 +155,42 @@ export default {
           item.images = undefined;
         }
 
+        /*"id": 2,
+        "communityId": 1,
+        "title": "嘉祥县“祥城慧老”健身气功八段锦公益讲堂活动\r",
+        "location": "嘉祥街道嘉和社区党群服务中心一楼大厅",
+        "startTime": "2024-11-13T09:00:00",
+        "endTime": "2024-11-13T10:00:00",
+        "organizer": null,
+        "participantCount": 20,
+        "participantType": "居民",
+        "theme": "“祥城慧老”健身气功八段锦课堂",
+        "introduction": "为推动全民健身工作，提高全民健康素质，营造全民健身的氛围，老年大学联合嘉和社区开展“八段锦”健身公益讲堂活动，旨在为居民们带来身心的放松和愉悦，更有助于居民探索健康生活的新路径。",
+        "content": "1、嘉和社区负责布置活动场地、招募居民、宣传报道\n2、老年大学专业老师现场教学\n",
+        "address": "嘉祥街道嘉和社区党群服务中心一楼大厅",
+        "images": [
+            "http://127.0.0.1:9000/jiaxiang/2025/04/09/baduanjin1.jpg",
+            "http://127.0.0.1:9000/jiaxiang/2025/04/09/baduanjin2.jpg"
+        ],
+        "createTime": "2025-04-09T21:26:33",
+        "updateTime": "2025-04-10T18:57:25"*/
         for await (let item of res.data) {
-          const { data: res } = await this.$http.get('/api/jiahe/community_activity_detail', { params: { id: item.id } });
-
-          // const {data: res} = await this.$http.get('/api/jiahe/community_activity_detail', {id: item.id});
+          const {data: res} = await this.$http.get('/api/jiahe/community_activity_detail', {params:{id: item.id}});
+          item.communityId = res.data.communityId;
           item.title = res.data.title;
-          item.images = res.data.images;
+          item.location = res.data.location;
+          item.startTime = res.data.startTime;
+          item.endTime = res.data.endTime;
+          item.organizer = res.data.organizer;
+          item.participantCount = res.data.participantCount;
+          item.participantType = res.data.participantType;
+          item.theme = res.data.theme;
+          item.introduction = res.data.introduction;
           item.content = res.data.content;
+          item.address = res.data.address;
+          item.images = res.data.images;
+          item.createTime = res.data.createTime;
+          item.updateTime = res.data.updateTime;
         }
       }
 
@@ -319,8 +348,13 @@ export default {
       /*content: "活动描述内容"id: (...)images: (...)startTime: (...)title: (...)*/
 
       for (let name in info) {
-        this.editForm[name] = info[name];
+        if (name === "id") {
+          this.editForm.id = info.id;
+          this.editForm.activateId = info.id;
+        } else
+          this.editForm[name] = info[name];
       }
+      console.log(this.editForm, info)
       const that = this;
 
       // 遍历URL数组，生成file-list所需的对象数组
@@ -360,13 +394,6 @@ export default {
 
 <template>
   <div>
-    <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/Home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-    </el-breadcrumb>
-
     <!-- 卡片区域 -->
     <el-card class="box-card">
       <div>
@@ -481,14 +508,14 @@ export default {
           "coverImage": "http://127.0.0.1:9000/jiaxiang/2025/04/09/xinghuo2.jpg"
       }-->
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
-        <el-form-item label="ID" prop="id">
+<!--        <el-form-item label="ID" prop="id">
           <el-input
               v-model.number="addForm.id"
               type="number"
               placeholder="请输入数字"
               oninput="value = value.replace(/[^\d]/g, '')"
           ></el-input>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="communityId" prop="communityId">
           <!-- 1. 设置 type="number" 限制输入类型 -->
           <el-input
@@ -591,29 +618,36 @@ export default {
     >
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
         <el-form-item label="ID" prop="id">
-          <el-input
-              v-model.number="editForm.id"
-              type="number"
-              placeholder="请输入数字"
-              oninput="value = value.replace(/[^\d]/g, '')"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="activateId" prop="activateId">
-          <el-input
-              v-model.number="editForm.activateId"
-              type="number"
-              placeholder="请输入数字"
-              oninput="value = value.replace(/[^\d]/g, '')"
-          ></el-input>
+          <!--          <el-input
+                        v-model.number="editForm.id"
+                        :value="editForm.id"
+                        readonly
+                        type="number"
+                        placeholder="请输入数字"
+                        oninput="value = value.replace(/[^\d]/g, '')"
+                    ></el-input>-->
+          <p style="margin: 0">{{ editForm.id }}</p>
         </el-form-item>
         <el-form-item label="communityId" prop="communityId">
           <!-- 1. 设置 type="number" 限制输入类型 -->
-          <el-input
-              v-model.number="editForm.communityId"
-              type="number"
-              placeholder="请输入数字"
-              oninput="value = value.replace(/[^\d]/g, '')"
-          ></el-input>
+          <!--          <el-input
+                        v-model.number="editForm.communityId"
+                        type="number"
+                        placeholder="请输入数字"
+                        oninput="value = value.replace(/[^\d]/g, '')"
+                    ></el-input>-->
+          <p style="margin: 0">{{ editForm.communityId }}</p>
+
+        </el-form-item>
+        <el-form-item label="activateId" prop="activateId">
+          <!--                    <el-input
+                                  v-model.number="editForm.activateId"
+                                  type="number"
+                                  placeholder="请输入数字"
+                                  oninput="value = value.replace(/[^\d]/g, '')"
+                              ></el-input>-->
+          <p style="margin: 0">{{ editForm.activateId }}</p>
+
         </el-form-item>
         <el-form-item label="活动标题" prop="title">
           <el-input v-model="editForm.title"></el-input>

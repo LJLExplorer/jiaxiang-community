@@ -185,7 +185,7 @@ export default {
         }
         console.log(this.addForm)
 
-        const {data: res} = await this.$http.post("/api/jiahe/add_community_activity_detail", this.addForm);
+        const {data: res} = await this.$http.post("/api/jiahe/add_personal_info", this.addForm);
 
         this.$message.success("添加履职信息成功");
         this.dialogVisible = false;
@@ -206,7 +206,7 @@ export default {
         return this.$message.info("已取消删除");
       }
 
-      const {data: res} = await this.$http.delete(`/api/jiahe/delete_community_activity_detail`,
+      const {data: res} = await this.$http.delete(`/api/jiahe/delete_personal_info`,
           {
             params: {id: row.id}  // 通过 params 设置查询参数，等价于 ?id=xxx
           });
@@ -246,7 +246,7 @@ export default {
         }
         console.log(this.editForm)
 
-        const {data: res} = await this.$http.put("/api/jiahe/update_community_activity_detail/" + this.editForm.id, this.editForm);
+        const {data: res} = await this.$http.put("/api/jiahe/update_personal_info", this.editForm);
 
         this.$message.success("修改履职信息成功");
         this.dialogVisible = false;
@@ -422,12 +422,14 @@ export default {
     >
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
         <el-form-item label="ID" prop="id">
-          <el-input
+<!--          <el-input
               v-model.number="editForm.id"
               type="number"
               placeholder="请输入数字"
               oninput="value = value.replace(/[^\d]/g, '')"
-          ></el-input>
+          ></el-input>-->
+                              <p style="margin: 0">{{ editForm.id }}</p>
+
         </el-form-item>
         <el-form-item label="姓名" prop="name">
           <el-input v-model="editForm.name"></el-input>
