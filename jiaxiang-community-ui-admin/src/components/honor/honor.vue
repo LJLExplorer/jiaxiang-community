@@ -1,9 +1,8 @@
 <script>
-const imageUpload = false;    //表示当前页面是否包含图片上传功能
 
 export default {
   data() {
-    // 荣誉时间验证
+    // 社区荣誉时间验证
     let checkDateTime = (rule, value, callback) => {
       const regDateTime = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
       if (regDateTime.test(value)) {
@@ -15,70 +14,60 @@ export default {
     return {
       uploadAction: `${this.$http.defaults.baseURL}api/jiahe/upload_file`,
 
-      activityList: [], // 荣誉列表数据
+      // 获取社区荣誉列表参数
+      queryInfo: {
+        query: "",
+        pageNum: 1,
+        pageSize: 2,
+      },
+      activityList: [], // 社区荣誉列表数据
       total: 0, // 总条数
       // 控制对话框显示
-      dialogVisible: false, // 添加荣誉
-      editVisible: false, // 编辑荣誉
+      dialogVisible: false, // 添加社区荣誉
+      editVisible: false, // 编辑社区荣誉
       // 表单数据
       addForm: {
-        "communityId": 1,
-        "honorDetail": "",
+        communityId: 1,
+        honorDetail: "",
+        honorImage: "",
+        honor: ""
       },
       // 两个上传组件的文件列表（独立维护，避免冲突）
-      activityFileList: [],  // 荣誉图片的文件列表
+      activityFileList: [],  // 社区荣誉图片的文件列表
       coverFileList: [],      // 封面图片的文件列表
 
       // 表单验证规则
-      addFormRules: {
-        communityId: [
-          {required: true, message: '请输入communityId', trigger: 'blur'},
-          {type: 'number', message: '请输入有效的数字', trigger: 'blur'},
-        ]
-      },
+      addFormRules: {},
       imageName2URL: new Map(),
 
       editForm: {
-        "id": 0,
-        "communityId": 0,
-        "honorDetail": ""
+        communityId: 1,
+        honorDetail: "",
+        honorImage: "",
+        honor: ""
       }, // 编辑表单数据
 
       // 表单验证规则
-      editFormRules: {
-        id: [
-          {required: true, message: '请输入ID', trigger: 'blur'},
-          {type: 'number', message: '请输入有效的数字', trigger: 'blur'},
-        ],
-        communityId: [
-          {required: true, message: '请输入communityId', trigger: 'blur'},
-          {type: 'number', message: '请输入有效的数字', trigger: 'blur'},
-        ]
-      },
+      editFormRules: {},
     };
   },
   created() {
     this.getActivityList();
   },
   methods: {
-    // 获取荣誉列表
+    // 获取社区荣誉列表
     async getActivityList() {
-      const {data: res} = await this.$http.get('/api/jiahe/community_honor');
+      const {data: res} = await this.$http.get('/api/jiahe/community_honor', {params: this.queryInfo});
 
       if (res.code !== 200) {
         this.$message.error(res.errorMessage);
       } else {
-        /*
-        * [
-        * {num:1,content:xxx},....]
-        * */
         this.activityList = res.data.records;
       }
-
     },
 
     handleActivityExceed(files, fileList) {
-      this.$message.warning(`荣誉图片最多只能上传${files.length}张，已自动忽略多余文件`);
+      this.$message.warning(`社区荣誉图片最多只能上传${files.length}张，已自动忽略多余文件`);
     },
 
     // 上传失败
@@ -91,14 +80,14 @@ export default {
         this.$message.success(`"${file.name}" 上传成功`);
         // 存储接口返回的URL（假设接口返回格式为 { code: 200, data: { url: "xxx" } }）
 
-        // 同步更新荣誉图片数组（从文件列表中提取所有URL）
-        // this.addForm.images = fileList.map(item => item.url);
-        // this.editForm.images = fileList.map(item => item.url);
+        // 同步更新社区荣誉图片数组（从文件列表中提取所有URL）
+        // this.addForm.honorImage = fileList.map(item => item.url);
+        // this.editForm.honorImage = fileList.map(item => item.url);
         this.imageName2URL.set(file.name, response.data)
-        this.addForm.images.push(response.data);
-        this.editForm.images.push(response.data);
+        this.addForm.honorImage.push(response.data);
+        this.editForm.honorImage.push(response.data);
         this.activityFileList.push(file)
-        console.log(this.editForm.images)
+        console.log(this.editForm.honorImage)
 
       } else {
         this.$message.error(`"${file.name}" 上传失败：${response.msg || "未知错误"}`);
@@ -106,32 +95,32 @@ export default {
     },
     // 移除图片：从images数组中删除对应URL
     handleActivityImageRemove(file, fileList) {
-      // 同步更新荣誉图片数组
-      // this.addForm.images = fileList.map(item => item.url);
-      // this.editForm.images = fileList.map(item => item.url);
+      // 同步更新社区荣誉图片数组
+      // this.addForm.honorImage = fileList.map(item => item.url);
+      // this.editForm.honorImage = fileList.map(item => item.url);
       //根据映射判断是否可以获取到URL，如果可以获取则删除，否则什么也不做
       if (this.imageName2URL.has(file.name)) {
-        this.addForm.images.splice(this.imageName2URL.get(file.name), 1);
-        this.editForm.images.splice(this.imageName2URL.get(file.name), 1);
+        this.addForm.honorImage.splice(this.imageName2URL.get(file.name), 1);
+        this.editForm.honorImage.splice(this.imageName2URL.get(file.name), 1);
         this.imageName2URL.delete(file.name)
       }
       this.activityFileList.splice(file, 1)
-      console.log(this.imageName2URL, this.editForm.images)
+      console.log(this.imageName2URL, this.editForm.honorImage)
 
-      this.$message.info(`已移除荣誉图片："${file.name}"`);
+      this.$message.info(`已移除社区荣誉图片："${file.name}"`);
     },
     handleCoverExceed(files, fileList) {
       this.$message.warning("封面图片只能上传1张");
     },
-    // 上传成功：将URL绑定到coverImage
+    // 上传成功：将URL绑定到images
     handleCoverImageSuccess(response, file, fileList) {
       if (response.code === 200) {
         this.$message.success("封面上传成功");
         // 只保留最新的一张图片（覆盖旧图）
         this.coverFileList = [file];
         // 存储接口返回的URL
-        this.addForm.coverImage = response.data;
-        this.editForm.coverImage = response.data;
+        this.addForm.honorImage = response.data;
+        this.editForm.honorImage = response.data;
       } else {
         this.$message.error(`封面上传失败：${response.msg || "未知错误"}`);
       }
@@ -142,37 +131,47 @@ export default {
       this.$message.error("封面上传失败：网络错误");
     },
 
-    // 移除图片：清空coverImage
+    // 移除图片：清空images
     handleCoverImageRemove(file) {
-      this.addForm.coverImage = "";
-      this.editForm.coverImage = "";
+      this.addForm.honorImage = "";
+      this.editForm.honorImage = "";
       this.$message.info("已移除封面图片");
     },
 
+    // 社区荣誉状态变更
+    /*async activityStateChanged(activity) {
+      const {data: res} = await this.$http.put(`activities/${activity.id}/state/${activity.status}`);
+      if (res.meta.status !== 200) {
+        activity.status = !activity.status;
+        this.$message.error("更新社区荣誉状态失败");
+      } else {
+        this.$message.success("更新社区荣誉状态成功");
+      }
+    },*/
     // 重置添加表单
     DialogIsClosed() {
       // this.$refs.addFormRef.resetFields();
       // this.$refs.editFormRef.resetFields();
       // 清空文件列表和绑定的URL
-      if (!imageUpload) return;
       this.activityFileList = [];
       this.coverFileList = [];
-      this.addForm.images = [];
-      this.addForm.coverImage = "";
-      this.editForm.images = [];
-      this.editForm.coverImage = "";
+      this.addForm.honorImage = [];
+      this.addForm.honorImage = "";
+      this.editForm.honorImage = [];
+      this.editForm.honorImage = "";
     },
-    // 添加荣誉
+    // 添加社区荣誉
     addActivity() {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) {
           this.$message.error("有填写错误");
           return;
         }
+        console.log(this.addForm)
 
         const {data: res} = await this.$http.post("/api/jiahe/add_community_honor", this.addForm);
 
-        this.$message.success("添加荣誉成功");
+        this.$message.success("添加社区荣誉成功");
         this.dialogVisible = false;
         this.getActivityList();
 
@@ -181,7 +180,7 @@ export default {
 
     async handleDelete(row) {
 
-      const confirmResult = await this.$confirm('此操作将永久删除该荣誉, 是否继续?', '提示', {
+      const confirmResult = await this.$confirm('此操作将永久删除该社区荣誉, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -196,37 +195,32 @@ export default {
             params: {id: row.id}  // 通过 params 设置查询参数，等价于 ?id=xxx
           });
 
-      this.$message.success("删除荣誉成功");
+      this.$message.success("删除社区荣誉成功");
       this.getActivityList();
     },
     async handleEdit(row) {
 
       const info = this.activityList.filter(value => value.id === row.id)[0];
       // console.log(info)
-      /*content: "荣誉描述内容"id: (...)images: (...)startTime: (...)title: (...)*/
+      /*content: "社区荣誉描述内容"id: (...)images: (...)startTime: (...)title: (...)*/
 
       for (let name in info) {
-        this.editForm[name] = info[name];
+        if (name in this.editForm)
+          this.editForm[name] = info[name];
       }
-      const that = this;
+      // const that = this;
 
-      if (imageUpload) {
-        // 遍历URL数组，生成file-list所需的对象数组
-        this.activityFileList = this.editForm.images.map((url, index) => {
-          that.imageName2URL.set(`image-${index + 1}.jpg`, url)
-          return {
-            uid: `-${index}`, // 生成唯一标识（负数避免与新上传文件的uid冲突）
-            name: `image-${index + 1}.jpg`, // 显示的文件名（可自定义）
-            url: url, // 图片的URL地址（核心）
-            status: "success" // 标记为已上传状态
-          };
-        });
-      }
+      this.imageName2URL.set(`image-1.jpg`, this.editForm.honorImage)
+      this.activityFileList = [{
+        uid: `-0`, // 生成唯一标识（负数避免与新上传文件的uid冲突）
+        name: `image-1.jpg`, // 显示的文件名（可自定义）
+        url: this.editForm.honorImage, // 图片的URL地址（核心）
+        status: "success" // 标记为已上传状态
+      }];
 
-      console.log(this.editForm)
       this.editVisible = true;
     },
-// 编辑荣誉
+// 编辑社区荣誉
     editActivity() {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) {
@@ -237,8 +231,8 @@ export default {
 
         const {data: res} = await this.$http.put("/api/jiahe/update_community_honor", this.editForm);
 
-        this.$message.success("修改荣誉成功");
-        this.dialogVisible = false;
+        this.$message.success("修改社区荣誉成功");
+        this.editVisible = false;
         this.getActivityList();
 
       });
@@ -250,41 +244,46 @@ export default {
 
 <template>
   <div>
-    <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/Home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>荣誉管理</el-breadcrumb-item>
-      <el-breadcrumb-item>荣誉列表</el-breadcrumb-item>
-    </el-breadcrumb>
 
     <!-- 卡片区域 -->
     <el-card class="box-card">
       <div>
         <el-row :gutter="20">
           <el-col :span="4">
-            <el-button type="primary" @click="dialogVisible=true">添加荣誉</el-button>
+            <el-button type="primary" @click="dialogVisible=true">添加社区荣誉</el-button>
           </el-col>
         </el-row>
 
-        <!--
-        {
-                "data": [
-                  {
-                    "id": 1,
-                    "title": "string",
-                    "startTime": "2025-04-10T12:34:56",
-                    "images": "string",
-                    "content": "string",
-                  }...
-                ]
-              }-->
-        <!-- 荣誉表格 -->
         <el-table :data="activityList" border stripe>
           <el-table-column type="index" label="#"></el-table-column>
-          <el-table-column label="ID" prop="id"></el-table-column>
+          <el-table-column label="id" prop="id"></el-table-column>
           <el-table-column label="社区ID" prop="communityId"></el-table-column>
-          <el-table-column label="荣誉详情" prop="honorDetail"></el-table-column>
-
+          <el-table-column label="标题" prop="honor"></el-table-column>
+          <!-- 概要图列（适配 images 为 URL 字符串） -->
+          <el-table-column label="图" min-width="200">
+            <template slot-scope="scope">
+              <!-- 先判断 images 字符串是否存在且非空 -->
+              <div v-if="scope.row.honorImage" class="single-image">
+                <el-image
+                    :src="scope.row.honorImage"
+                    :preview-src-list="[scope.row.honorImage]"
+                    class="table-image"
+                    lazy
+                    style="max-height: 300px;max-width: 300px"
+                >
+                  <!-- 图片加载失败时的占位 -->
+                  <div slot="error" class="image-placeholder">
+                    <i class="el-icon-picture-outline"></i>
+                  </div>
+                </el-image>
+              </div>
+              <!-- 当 images 为空/undefined/null 时显示占位符 -->
+              <div v-else class="image-placeholder">
+                <i class="el-icon-picture-outline"></i>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="详情" prop="honorDetail"></el-table-column>
           <!-- 新增：操作列（修改/删除按钮） -->
           <el-table-column label="操作" min-width="180" align="center">
             <template slot-scope="scope">
@@ -309,29 +308,40 @@ export default {
             </template>
           </el-table-column>
         </el-table>
-
-
       </div>
     </el-card>
 
     <el-dialog
-        title="添加荣誉"
+        title="添加社区荣誉"
         :visible.sync="dialogVisible"
         width="50%"
         @close="DialogIsClosed"
     >
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
-        <el-form-item label="communityId" prop="communityId">
-          <!-- 1. 设置 type="number" 限制输入类型 -->
-          <el-input
-              v-model.number="addForm.communityId"
-              type="number"
-              placeholder="请输入数字"
-              oninput="value = value.replace(/[^\d]/g, '')"
-          ></el-input>
+        <el-form-item label="社区ID" prop="communityId">
+          <el-input v-model="addForm.communityId"></el-input>
+        </el-form-item>
+        <el-form-item label="标题" prop="honor">
+          <el-input v-model="addForm.honor" placeholder=""></el-input>
+        </el-form-item>
+        <el-form-item label="图片" prop="honorImage">
+          <el-upload
+              class="upload-demo"
+              :action="uploadAction"
+              :limit="1"
+              :multiple="false"
+              list-type="picture-card"
+              :file-list="coverFileList"
+              :on-exceed="handleCoverExceed"
+              :on-success="handleCoverImageSuccess"
+              :on-error="handleCoverImageError"
+              :on-remove="handleCoverImageRemove"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
         </el-form-item>
         <el-form-item label="荣誉详情" prop="honorDetail">
-          <el-input type="textarea" v-model="addForm.honorDetail" rows="4"></el-input>
+          <el-input v-model="addForm.honorDetail" placeholder=""></el-input>
         </el-form-item>
       </el-form>
 
@@ -342,38 +352,38 @@ export default {
       </span>
     </el-dialog>
 
-    <!-- 编辑荣誉对话框 -->
+    <!-- 编辑社区荣誉对话框 -->
     <el-dialog
-        title="修改荣誉"
+        title="修改社区荣誉"
         :visible.sync="editVisible"
         width="50%"
         @close="DialogIsClosed"
     >
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
-        <el-form-item label="id" prop="id">
-          <!-- 1. 设置 type="number" 限制输入类型 -->
-          <!--          <el-input
-                        v-model.number="editForm.id"
-                        type="number"
-                        placeholder="请输入数字"
-                        oninput="value = value.replace(/[^\d]/g, '')"
-                    ></el-input>-->
-                    <p style="margin: 0">{{ editForm.id }}</p>
-
+        <el-form-item label="社区ID" prop="communityId">
+          <el-input v-model="editForm.communityId"></el-input>
         </el-form-item>
-        <el-form-item label="communityId" prop="communityId">
-          <!-- 1. 设置 type="number" 限制输入类型 -->
-<!--          <el-input
-              v-model.number="editForm.communityId"
-              type="number"
-              placeholder="请输入数字"
-              oninput="value = value.replace(/[^\d]/g, '')"
-          ></el-input>-->
-                              <p style="margin: 0">{{ editForm.communityId }}</p>
-
+        <el-form-item label="标题" prop="honor">
+          <el-input v-model="editForm.honor" placeholder=""></el-input>
+        </el-form-item>
+        <el-form-item label="图片" prop="honorImage">
+          <el-upload
+              class="upload-demo"
+              :action="uploadAction"
+              :limit="1"
+              :multiple="false"
+              list-type="picture-card"
+              :file-list="activityFileList"
+              :on-exceed="handleCoverExceed"
+              :on-success="handleCoverImageSuccess"
+              :on-error="handleCoverImageError"
+              :on-remove="handleCoverImageRemove"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
         </el-form-item>
         <el-form-item label="荣誉详情" prop="honorDetail">
-          <el-input type="textarea" v-model="editForm.honorDetail" rows="4"></el-input>
+          <el-input v-model="editForm.honorDetail" placeholder=""></el-input>
         </el-form-item>
       </el-form>
 
@@ -400,4 +410,5 @@ export default {
   width: 100px;
   height: 100px;
   margin-right: 10px;
-}</style>
+}
+</style>
