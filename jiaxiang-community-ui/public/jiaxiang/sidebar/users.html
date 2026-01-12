@@ -327,11 +327,6 @@
             <h2 class="modal-title" id="modalTitle"></h2>
             <div class="modal-info">
                 <img id="modalImage" src="" alt="服务图片">
-                <div>
-                    <p><strong>联系电话：</strong><span id="modalPhone"></span></p>
-                    <p><strong>开放时间：</strong><span id="modalTime"></span></p>
-                    <p><strong>活动地址：</strong><span id="modalAddress"></span></p>
-                </div>
             </div>
             <div class="modal-section">
                 <h3>服务描述</h3>
@@ -347,7 +342,7 @@
             </div>
         </div>
     </div>
-<script type="text/javascript" src="../config/api-urls.js"></script>
+    <script type="text/javascript" src="../config/api-urls.js"></script>
     <script type="text/javascript">
 
         // 图片数据 - 包含图片URL和对应的文字信息
@@ -359,24 +354,16 @@
         let response;
 
         document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(API_URLS.list_serve_people(currentPage, 999))).json()).data;
+            response = (await (await fetch(API_URLS.community_honor(currentPage, 999))).json()).data;
 
 
             for await (let info of response.records) {
-                const subRes = await fetch(API_URLS.serve_people_info(info.id))
-                const json = await subRes.json()
-                const obj = json.data;
-
                 imageItems.push({
-                    id: obj.id,
-                    title: obj.title,
-                    phone: obj.phone,
-                    time: obj.openDaysAndTime,
-                    address: obj.location,
-                    image: obj.images,
-                    description: obj.serviceIntro,
-                    content: typeof obj.serviceContent === "string" ? obj.serviceContent.split(" ") : obj.serviceContent,
-                    rules: typeof obj.serviceRules === "string" ? obj.serviceRules.split(" ") : obj.serviceRules,
+                    id: info.id,
+                    communityId: info.communityId,
+                    honor: info.honor,
+                    honorDetail: info.honorDetail,
+                    honorImage: info.honorImage,
                 });
             }
             // 分页相关变量
@@ -394,9 +381,6 @@
             const modal = document.getElementById('itemModal');
             const closeModal = document.getElementById('closeModal');
             const modalTitle = document.getElementById('modalTitle');
-            const modalPhone = document.getElementById('modalPhone');
-            const modalTime = document.getElementById('modalTime');
-            const modalAddress = document.getElementById('modalAddress');
             const modalDescription = document.getElementById('modalDescription');
             const modalContent = document.getElementById('modalContent');
             const modalRules = document.getElementById('modalRules');
@@ -418,12 +402,10 @@
 
                     imageItem.innerHTML = `
                         <div class="image-container">
-                            <img src="${imageItems[i].image}" alt="图片${i + 1}">
+                            <img src="${imageItems[i].honorImage}" alt="图片${i + 1}">
                             <div class="text-container">
-                                <h1>${imageItems[i].title}</h1>
-                                <p>【联系电话】--${imageItems[i].phone}</p>
-                                <p>【开放时间】--${imageItems[i].time}</p>
-                                <p>【活动地址】--${imageItems[i].address}</p>
+                                <h1>${imageItems[i].honor}</h1>
+                                <!--<p>【社区ID】--${imageItems[i].phone}</p>-->
                             </div>
                         </div>
                     `;
@@ -447,14 +429,12 @@
 
             function showModal(index) {
                 const item = imageItems[index];
-                modalTitle.textContent = item.title;
-                modalPhone.textContent = item.phone;
-                modalTime.textContent = item.time;
-                modalAddress.textContent = item.address;
-                modalDescription.textContent = item.description;
-                modalImage.src = item.image; // 设置对话框中的图片
+                modalTitle.textContent = item.honor;
+                modalDescription.textContent = item.honorDetail;
+                modalImage.src = item.honorImage; // 设置对话框中的图片
+                modalContentSection.style.display = 'none';
 
-                // 设置服务内容
+                /*// 设置服务内容
                 if (item.content && item.content.length > 0) {
                     modalContent.innerHTML = '';
                     item.content.forEach(contentItem => {
@@ -465,7 +445,7 @@
                     modalContentSection.style.display = 'block';
                 } else {
                     modalContentSection.style.display = 'none';
-                }
+                }*/
 
                 // 设置服务规则
                 if (item.rules && item.rules.length > 0) {
