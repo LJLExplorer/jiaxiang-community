@@ -193,7 +193,9 @@
         UPDATE community_honor
         <set>
             <if test="communityId != null">communityId = #{communityId},</if>
-            <if test="honorDetail != null"> honor_detail = #{honorDetail},</if>
+            <if test="honor != null">honor = #{honor},</if>
+            <if test="honorImage != null">honor_image = #{honorImage},</if>
+            <if test="honorDetail != null">honor_detail = #{honorDetail},</if>
         </set>
         WHERE id = #{id}
     </update>
@@ -203,12 +205,16 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="communityId != null">communityId,</if>
+            <if test="honor != null">honor,</if>
             <if test="honorDetail != null">honor_detail,</if>
+            <if test="honorImage != null">honor_image,</if>
         </trim>
         <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="communityId != null">#{communityId},</if>
+            <if test="honor != null">#{honor},</if>
             <if test="honorDetail != null">#{honorDetail},</if>
+            <if test="honorImage != null">#{honorImage},</if>
         </trim>
     </insert>
 
@@ -217,6 +223,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="communityId != null">communityId,</if>
+            <if test="honor != null">honor,</if>
             <if test="title != null">title,</if>
             <if test="images != null">images,</if>
             <if test="content != null">content,</if>

@@ -18,8 +18,13 @@ public class CommunityHonorDTO {
      */
     private Long communityId;
 
+    private String honor;
+
     /**
      * 荣誉详情
      */
     private String honorDetail;
+
+    private String honorImage;
+
 }

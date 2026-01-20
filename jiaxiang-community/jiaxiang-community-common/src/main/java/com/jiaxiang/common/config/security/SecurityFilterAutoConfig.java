@@ -41,28 +41,28 @@ public class SecurityFilterAutoConfig {
         return new JwtAuthenticationFilter(redisUtils);
     }
 
-    @Bean
-    @ConditionalOnProperty(name = "common.security.security-filter-chain-enabled", havingValue = "true")
-    public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                                   JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> {
-                    // 白名单放行
-                    List<String> permitAll = securityWhiteProperties.getWhitelist();
-                    if (permitAll != null && !permitAll.isEmpty()) {
-                        auth.requestMatchers(permitAll.toArray(new String[0])).permitAll();
-                    }
-                    auth.anyRequest().authenticated();
-                })
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(eh -> eh
-                        .authenticationEntryPoint(authenticationEntryPoint)
-                        .accessDeniedHandler(simpleAccessDeniedHandler));
-        return http.build();
-    }
+//    @Bean
+//    @ConditionalOnProperty(name = "common.security.security-filter-chain-enabled", havingValue = "true")
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+//                                                   JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+//        http
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .formLogin(AbstractHttpConfigurer::disable)
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(auth -> {
+//                    // 白名单放行
+//                    List<String> permitAll = securityWhiteProperties.getWhitelist();
+//                    if (permitAll != null && !permitAll.isEmpty()) {
+//                        auth.requestMatchers(permitAll.toArray(new String[0])).permitAll();
+//                    }
+//                    auth.anyRequest().authenticated();
+//                })
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//                .exceptionHandling(eh -> eh
+//                        .authenticationEntryPoint(authenticationEntryPoint)
+//                        .accessDeniedHandler(simpleAccessDeniedHandler));
+//        return http.build();
+//    }
 
     // 防止走默认的拦截所有权限
     @Bean
