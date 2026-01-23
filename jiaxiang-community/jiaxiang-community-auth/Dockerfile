@@ -10,4 +10,4 @@ ADD target/jiaxiang-community-auth-1.0-SNAPSHOT.jar .
 EXPOSE 8300
 
 # 启动命令，指定端口号为 8300
-ENTRYPOINT ["java", "-jar", "/app/jiaxiang-community-auth-1.0-SNAPSHOT.jar", "--server.port=8300", "--spring.profiles.active=prod", "--spring.config.location=classpath:/bootstrap-prod.yml"]
+ENTRYPOINT ["java", "-jar", "/app/jiaxiang-community-auth-1.0-SNAPSHOT.jar", "--server.port=8300", "--spring.profiles.active=prod"]

@@ -111,15 +111,19 @@ public interface PortalService {
      * @return
      * @throws IOException
      */
-    ItemListDO getItemMattersFromMarkdownFileContent(String content, String fileName, String id) throws IOException;
+//    ItemListDO getItemMattersFromMarkdownFileContent(String content, String fileName, String id) throws IOException;
+
 
     /**
-     * 保存事项清单
-     *
+     * 上传事项清单
      * @param content
-     * @param name
+     * @param title
+     * @param communityId
+     * @param fileName
+     * @param url
+     * @throws Exception
      */
-    void saveItemContent(String content, String name, String id) throws Exception;
+    ResponseEntity<ResponseResult<?>> saveItemContent(String content, String title, Long communityId, String fileName, String url) throws Exception;
 
     /**
      * 异步解析md文档
@@ -127,7 +131,7 @@ public interface PortalService {
      * @param content
      * @param fileName
      */
-    void getItemContentAsync(String content, String fileName, String id);
+//    void getItemContentAsync(String content, String fileName, String id);
 
     /**
      * 根据id删除事项清单

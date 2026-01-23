@@ -1,4 +1,4 @@
-const prefix = "http://1.13.158.205:8001";
+const prefix = "http://127.0.0.1:8001";//http://127.0.0.1:8001/api/jiahe/grid_management
 // @ts-ignore
 window.API_URLS = {
     "community_profile": () => prefix + "/api/jiahe/community_profile",

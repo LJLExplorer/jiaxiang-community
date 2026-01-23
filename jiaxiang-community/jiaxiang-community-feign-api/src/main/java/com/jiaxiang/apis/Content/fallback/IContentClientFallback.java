@@ -4,6 +4,7 @@ import com.jiaxiang.apis.Content.IContentClient;
 import com.jiaxiang.common.exception.CustomException;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.community.dos.ItemListDO;
 import com.jiaxiang.model.community.dtos.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -150,6 +151,11 @@ public class IContentClientFallback implements IContentClient {
     @Override
     public ResponseEntity<ResponseResult<?>> deleteProofInfoById(Long id) {
         throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "删除证明材料失败");
+    }
+
+    @Override
+    public ResponseEntity<ResponseResult<?>> saveItemContent(ItemListDO itemListDO) {
+        throw new CustomException(AppHttpCodeEnum.SERVER_ERROR, "保存事项清单失败");
     }
 
 }

@@ -36,11 +36,11 @@ public interface CommunityMapper {
 
     Integer getHonorCount();
 
-    List<CommunityHonorVO> communityHonor(@Param("communityId") Long communityId,@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
+    List<CommunityHonorVO> communityHonor(@Param("communityId") Long communityId, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
 
     Integer getProofDocumentsCount();
 
-    List<ProofDocumentsPreviewVO> proofDocuments(@Param("communityId") Long communityId,@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
+    List<ProofDocumentsPreviewVO> proofDocuments(@Param("communityId") Long communityId, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
 
     ProofDocumentsDetailDO proofInfo(Long id);
 
@@ -67,4 +67,6 @@ public interface CommunityMapper {
     Integer addProofInfo(ProofDocumentsDO proofDocumentsDO);
 
     Integer deleteProofInfoById(Long id);
+
+    Integer saveItemContent(ItemListDO itemListDO);
 }

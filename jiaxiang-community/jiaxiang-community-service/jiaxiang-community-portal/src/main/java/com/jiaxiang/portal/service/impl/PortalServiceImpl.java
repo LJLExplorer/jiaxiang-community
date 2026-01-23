@@ -37,7 +37,7 @@ public class PortalServiceImpl implements PortalService {
 
     private final FileStorageService fileStorageService;
 
-    private final AsyncTaskExecutor asyncTaskExecutor;
+//    private final AsyncTaskExecutor asyncTaskExecutor;
 
     private final RabbitTemplate rabbitTemplate;
 
@@ -45,7 +45,7 @@ public class PortalServiceImpl implements PortalService {
         this.iActivityClient = iActivityClient;
         this.iContentClient = iContentClient;
         this.fileStorageService = fileStorageService;
-        this.asyncTaskExecutor = asyncTaskExecutor;
+//        this.asyncTaskExecutor = asyncTaskExecutor;
         this.rabbitTemplate = rabbitTemplate;
     }
 
@@ -281,74 +281,75 @@ public class PortalServiceImpl implements PortalService {
     }
 
     /**
-     * 解析md文件
+     * 解析md文件  作废 不解析了
      *
      * @param content
      * @param fileName
      * @return
      * @throws IOException
      */
-    @Override
-    public ItemListDO getItemMattersFromMarkdownFileContent(String content, String fileName, String id) throws IOException {
-        String[] lines = content.split("\\r?\\n");
-        List<LawItemDTO> lawItems = new ArrayList<>();
-
-        Pattern titlePattern = Pattern.compile("^\\*{0,2}(\\d+[、\\.．\\)]?)\\s*(.*?)\\*{0,2}$");
-        Pattern basisPattern = Pattern.compile("^依据[:：]?\\s*(.*)");
-
-        String currentTitle = null;
-        List<String> currentBasis = new ArrayList<>();
-
-        for (String rawLine : lines) {
-            String line = rawLine.trim();
-            if (line.isEmpty()) {
-                continue;
-            }
-
-            Matcher titleMatcher = titlePattern.matcher(line);
-            Matcher basisMatcher = basisPattern.matcher(line);
-
-            if (titleMatcher.find()) {
-                // 之前有记录，保存
-                if (currentTitle != null) {
-                    lawItems.add(new LawItemDTO(currentTitle, new ArrayList<>(currentBasis)));
-                    currentBasis.clear();
-                }
-                currentTitle = titleMatcher.group(2).trim();
-            } else if (basisMatcher.find()) {
-                String[] basisLines = basisMatcher.group(1).split("[；;、]");
-                for (String b : basisLines) {
-                    if (!b.isBlank()) {
-                        currentBasis.add(b.trim());
-                    }
-                }
-            } else if (line.startsWith("《") || line.contains("法") || line.contains("条例") || line.contains("办法")) {
-                currentBasis.add(line);
-            }
-        }
-
-        // 最后一条别忘了加
-        if (currentTitle != null) {
-            lawItems.add(new LawItemDTO(currentTitle, currentBasis));
-        }
-        return new ItemListDO(id, 1L, fileName, lawItems);
+//    @Override
+//    public ItemListDO getItemMattersFromMarkdownFileContent(String content, String fileName, String id) throws IOException {
+//        String[] lines = content.split("\\r?\\n");
+//        List<LawItemDTO> lawItems = new ArrayList<>();
+//
+//        Pattern titlePattern = Pattern.compile("^\\*{0,2}(\\d+[、\\.．\\)]?)\\s*(.*?)\\*{0,2}$");
+//        Pattern basisPattern = Pattern.compile("^依据[:：]?\\s*(.*)");
+//
+//        String currentTitle = null;
+//        List<String> currentBasis = new ArrayList<>();
+//
+//        for (String rawLine : lines) {
+//            String line = rawLine.trim();
+//            if (line.isEmpty()) {
+//                continue;
+//            }
+//
+//            Matcher titleMatcher = titlePattern.matcher(line);
+//            Matcher basisMatcher = basisPattern.matcher(line);
+//
+//            if (titleMatcher.find()) {
+//                // 之前有记录，保存
+//                if (currentTitle != null) {
+//                    lawItems.add(new LawItemDTO(currentTitle, new ArrayList<>(currentBasis)));
+//                    currentBasis.clear();
+//                }
+//                currentTitle = titleMatcher.group(2).trim();
+//            } else if (basisMatcher.find()) {
+//                String[] basisLines = basisMatcher.group(1).split("[；;、]");
+//                for (String b : basisLines) {
+//                    if (!b.isBlank()) {
+//                        currentBasis.add(b.trim());
+//                    }
+//                }
+//            } else if (line.startsWith("《") || line.contains("法") || line.contains("条例") || line.contains("办法")) {
+//                currentBasis.add(line);
+//            }
+//        }
+//
+//        // 最后一条别忘了加
+//        if (currentTitle != null) {
+//            lawItems.add(new LawItemDTO(currentTitle, currentBasis));
+//        }
+//        return new ItemListDO(id, 1L, fileName, lawItems);
 //        mongoTemplate.insert();
-    }
+//    }
+
 
     // 异步解析md文件 但是解析错误不知道怎么返回，文件较小 改为同步
-    @Override
-    public void getItemContentAsync(String content, String fileName, String id) {
-        asyncTaskExecutor.runAsync(() -> {
-            try {
-                Thread.sleep(10 * 1000);
-                ItemListDO itemMattersFromMarkdownFileContent = getItemMattersFromMarkdownFileContent(content, fileName, id);
-
-                log.info("解析后的数据: {}", itemMattersFromMarkdownFileContent);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
+//    @Override
+//    public void getItemContentAsync(String content, String fileName, String id) {
+//        asyncTaskExecutor.runAsync(() -> {
+//            try {
+//                Thread.sleep(10 * 1000);
+//                ItemListDO itemMattersFromMarkdownFileContent = getItemMattersFromMarkdownFileContent(content, fileName, id);
+//
+//                log.info("解析后的数据: {}", itemMattersFromMarkdownFileContent);
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//    }
 
     /**
      * 根据id删除事项清单
@@ -362,18 +363,39 @@ public class PortalServiceImpl implements PortalService {
     }
 
 
+//    // todo
+//    /**
+//     * 保存事项清单
+//     *
+//     * @param content
+//     * @param name
+//     */
+//    @Override
+//    public void saveItemContent(String content, String name, String id) throws Exception {
+////        ItemListDO itemMattersFromMarkdownFileContent = getItemMattersFromMarkdownFileContent(content, name, id);
+////        String itemListDoStr = JSONUtil.toJsonStr(itemMattersFromMarkdownFileContent);
+//
+//        rabbitTemplate.convertAndSend(ITEM_MATTERS_TOPIC_EXCHANGE, ITEM_MATTERS_ROUTING_KEY_ADD, itemListDoStr);
+
+    /// /        mongoTemplate.save(itemMattersFromMarkdownFileContent, "test");
+//        System.out.println(itemMattersFromMarkdownFileContent.getId());
+//    }
+
     /**
      * 保存事项清单
      *
      * @param content
-     * @param name
+     * @param title
+     * @param communityId
+     * @param fileName
+     * @param url
+     * @throws Exception
      */
     @Override
-    public void saveItemContent(String content, String name, String id) throws Exception {
-        ItemListDO itemMattersFromMarkdownFileContent = getItemMattersFromMarkdownFileContent(content, name, id);
-        String itemListDoStr = JSONUtil.toJsonStr(itemMattersFromMarkdownFileContent);
-        rabbitTemplate.convertAndSend(ITEM_MATTERS_TOPIC_EXCHANGE, ITEM_MATTERS_ROUTING_KEY_ADD, itemListDoStr);
-//        mongoTemplate.save(itemMattersFromMarkdownFileContent, "test");
-        System.out.println(itemMattersFromMarkdownFileContent.getId());
+    public ResponseEntity<ResponseResult<?>> saveItemContent(String content, String title, Long communityId, String fileName, String url) throws Exception {
+        ItemListDO itemListDO = new ItemListDO(communityId, title, fileName, content, url);
+        return iContentClient.saveItemContent(itemListDO);
     }
+
+
 }

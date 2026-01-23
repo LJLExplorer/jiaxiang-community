@@ -238,6 +238,25 @@
         </trim>
     </insert>
 
+    <insert id="saveItemContent" parameterType="com.jiaxiang.model.community.dos.ItemListDO">
+        insert into guide_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="communityId != null">communityId,</if>
+            <if test="title != null">title,</if>
+            <if test="fileName != null">fileName,</if>
+            <if test="url != null">url,</if>
+            <if test="content != null">content,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="communityId != null">#{communityId},</if>
+            <if test="title != null">#{title},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="url != null">#{url},</if>
+            <if test="content != null">#{content},</if>
+        </trim>
+    </insert>
+
     <delete id="deleteCommunityHonor">
         DELETE FROM community_honor
         WHERE id = #{id};
