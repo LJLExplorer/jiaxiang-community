@@ -1,4 +1,4 @@
-import router from "../../config/api-urls.js";
+// import router from "../../jiaxiang/config/api-urls.js";
 import {
     JiaxiangCommunityMapDriver,
     MapDriverReturnType
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             const info = gridManamentInfo.find((item) => item.community === value.name);
             // location = info.href;
-            location = "/jiaxiang/home.html"
+            location.href = "/jiaxiang/home.html"
         });
     });
 

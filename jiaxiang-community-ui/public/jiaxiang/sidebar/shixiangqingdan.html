@@ -36,9 +36,9 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg,
-                    rgba(255, 255, 255, 0) 0%,
-                    rgba(255, 255, 255, 0.3) 50%,
-                    rgba(255, 255, 255, 0) 100%);
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0) 100%);
             transform: translateX(-100%);
             animation: shine 3s infinite;
         }
@@ -225,185 +225,192 @@
 </head>
 
 <body>
-    <div style="width: 100%; height: 100%; overflow: hidden;">
-        <div class="header" style="width: 100%; height: 15%;">
-            <h2 style="font-size: 70px;">事项清单</h2>
+<div style="width: 100%; height: 100%; overflow: hidden;">
+    <div class="header" style="width: 100%; height: 15%;">
+        <h2 style="font-size: 70px;">事项清单</h2>
+    </div>
+    <div class="container">
+        <div class="grid-container" id="itemGrid">
+            <!-- 内容将通过JavaScript动态加载 -->
         </div>
-        <div class="container">
-            <div class="grid-container" id="itemGrid">
-                <!-- 内容将通过JavaScript动态加载 -->
-            </div>
 
-            <div class="pagination">
-                <button class="first-page">第一页</button>
-                <button class="prev-page">上一页</button>
-                <span class="page-info">第 <span class="current-page">1</span> 页 / 共 <span class="total-pages">1</span>
+        <div class="pagination">
+            <button class="first-page">第一页</button>
+            <button class="prev-page">上一页</button>
+            <span class="page-info">第 <span class="current-page">1</span> 页 / 共 <span class="total-pages">1</span>
                     页</span>
-                <button class="next-page">下一页</button>
-                <button class="last-page">最后一页</button>
-            </div>
+            <button class="next-page">下一页</button>
+            <button class="last-page">最后一页</button>
         </div>
     </div>
+</div>
 
-    <!-- 会话框结构 -->
-    <div class="modal" id="contentModal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-            <h3 class="modal-title" id="modalTitle"></h3>
-            <div class="modal-body" id="modalBody"></div>
-            <div class="modal-footer">
-                <button class="close-button" id="modalCloseButton">关闭</button>
-            </div>
+<!-- 会话框结构 -->
+<div class="modal" id="contentModal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer">
+            <button class="close-button" id="modalCloseButton">关闭</button>
         </div>
     </div>
+</div>
 
-    <!-- 动画背景 -->
-    <div class="modal-background" id="modalBackground"></div>
+<!-- 动画背景 -->
+<div class="modal-background" id="modalBackground"></div>
 
 <script type="text/javascript" src="../config/api-urls.js"></script>
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        let items = [];
+    let items = [];
 
-        let itemsPerPage = 2;
-        let currentPage = 1;
+    let itemsPerPage = 2;
+    let currentPage = 1;
+    let totalPages = Math.ceil(items.length / itemsPerPage);
+    let response;
+
+    document.addEventListener('DOMContentLoaded', async function () {
+        response = (await (await fetch(API_URLS.list_matters(currentPage, itemsPerPage))).json()).data;
+
+        // 分页相关变量
+        items = response.records.map(item => {
+            return {
+                title: item.title,
+                text2: "点击进入",
+                color: "btn-green",
+                file: item.content,
+                url: item.url
+            }
+        });
         let totalPages = Math.ceil(items.length / itemsPerPage);
-        let response;
 
-        document.addEventListener('DOMContentLoaded', async function () {
-            response = (await (await fetch(API_URLS.list_matters(currentPage,itemsPerPage))).json()).data;
+        const itemGrid = document.getElementById('itemGrid');
+        const prevPageBtn = document.querySelector('.prev-page');
+        const nextPageBtn = document.querySelector('.next-page');
+        const firstPageBtn = document.querySelector('.first-page');
+        const lastPageBtn = document.querySelector('.last-page');
+        const currentPageSpan = document.querySelector('.current-page');
+        const totalPagesSpan = document.querySelector('.total-pages');
 
-            // 分页相关变量
-            items = response.records.map(item => {
-                return {
-                    title: item.title,
-                    text2: "点击进入",
-                    color: "btn-green",
-                    file: item.content
-                }
-            });
-            let totalPages = Math.ceil(items.length / itemsPerPage);
+        // 会话框相关元素
+        const modal = document.getElementById('contentModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const closeModal = document.getElementById('closeModal');
+        const modalCloseButton = document.getElementById('modalCloseButton');
+        const modalBackground = document.getElementById('modalBackground');
 
-            const itemGrid = document.getElementById('itemGrid');
-            const prevPageBtn = document.querySelector('.prev-page');
-            const nextPageBtn = document.querySelector('.next-page');
-            const firstPageBtn = document.querySelector('.first-page');
-            const lastPageBtn = document.querySelector('.last-page');
-            const currentPageSpan = document.querySelector('.current-page');
-            const totalPagesSpan = document.querySelector('.total-pages');
+        totalPagesSpan.textContent = totalPages;
 
-            // 会话框相关元素
-            const modal = document.getElementById('contentModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalBody = document.getElementById('modalBody');
-            const closeModal = document.getElementById('closeModal');
-            const modalCloseButton = document.getElementById('modalCloseButton');
-            const modalBackground = document.getElementById('modalBackground');
+        function displayItems() {
+            itemGrid.innerHTML = '';
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, items.length);
 
-            totalPagesSpan.textContent = totalPages;
+            for (let i = startIndex; i < endIndex; i++) {
+                const item = document.createElement('div');
+                item.className = 'text-item';
 
-            function displayItems() {
-                itemGrid.innerHTML = '';
-                const startIndex = (currentPage - 1) * itemsPerPage;
-                const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+                // 随机颜色
+                const randomColor = getRandomColor();
 
-                for (let i = startIndex; i < endIndex; i++) {
-                    const item = document.createElement('div');
-                    item.className = 'text-item';
-                    
-                    // 随机颜色
-                    const randomColor = getRandomColor();
-                    
-                    // 随机字体大小和样式
-                    const randomFontSize1 = Math.floor(Math.random() * 5) + 14; // 14-18px
-                    const randomFontSize2 = Math.floor(Math.random() * 5) + 12; // 12-16px
-                    const fontFamily = ['Arial', 'sans-serif', 'serif', 'cursive'][Math.floor(Math.random() * 4)];
-                    
-                    item.innerHTML = `
+                // 随机字体大小和样式
+                const randomFontSize1 = Math.floor(Math.random() * 5) + 14; // 14-18px
+                const randomFontSize2 = Math.floor(Math.random() * 5) + 12; // 12-16px
+                const fontFamily = ['Arial', 'sans-serif', 'serif', 'cursive'][Math.floor(Math.random() * 4)];
+
+                item.innerHTML = `
                         <div class="text-container" style="font-family: ${fontFamily};">
                             <p style="font-size: ${randomFontSize1}px; margin: 0;">${items[i].title}</p>
                             <p style="font-size: ${randomFontSize2}px; margin: 0;">${items[i].text2}</p>
+                            ${(function () {
+                    if (items[i].url)
+                        return "<a onclick='event.cancelBubble = true' target=\"_blank\" href='" + items[i].url + "' download='" + items[i].title + "'>点击下载" + items[i].title + "</a>"
+                    else
+                        return "";
+                })()}
                         </div>
                     `;
 
-                    // 设置随机背景颜色
-                    item.style.backgroundColor = randomColor;
-                    // 添加一些透明度
-                    item.style.opacity = '0.8';
-                    // 添加边框
-                    item.style.border = '1px solid rgba(0,0,0,0.2)';
-                    
-                    itemGrid.appendChild(item);
+                // 设置随机背景颜色
+                item.style.backgroundColor = randomColor;
+                // 添加一些透明度
+                item.style.opacity = '0.8';
+                // 添加边框
+                item.style.border = '1px solid rgba(0,0,0,0.2)';
 
-                    // 添加点击事件监听器
-                    item.addEventListener('click', function () {
-                        openModal(items[i]);
-                    });
-                }
+                itemGrid.appendChild(item);
 
-                currentPageSpan.textContent = currentPage;
-
-                // 禁用/启用按钮
-                prevPageBtn.disabled = currentPage === 1;
-                nextPageBtn.disabled = currentPage === totalPages;
+                // 添加点击事件监听器
+                item.addEventListener('click', function () {
+                    openModal(items[i]);
+                });
             }
 
-            function getRandomColor() {
-                // 生成随机的rgb颜色
-                const r = Math.floor(Math.random() * 256);
-                const g = Math.floor(Math.random() * 256);
-                const b = Math.floor(Math.random() * 256);
-                return `rgb(${r}, ${g}, ${b})`;
+            currentPageSpan.textContent = currentPage;
+
+            // 禁用/启用按钮
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages;
+        }
+
+        function getRandomColor() {
+            // 生成随机的rgb颜色
+            const r = Math.floor(Math.random() * 100) + 156;
+            const g = Math.floor(Math.random() * 100) + 156;
+            const b = Math.floor(Math.random() * 100) + 156;
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                displayItems();
             }
+        }
 
-            function goToPage(page) {
-                if (page >= 1 && page <= totalPages) {
-                    currentPage = page;
-                    displayItems();
-                }
-            }
+        prevPageBtn.addEventListener('click', () => goToPage(currentPage - 1));
+        nextPageBtn.addEventListener('click', () => goToPage(currentPage + 1));
+        firstPageBtn.addEventListener('click', () => goToPage(1));
+        lastPageBtn.addEventListener('click', () => goToPage(totalPages));
 
-            prevPageBtn.addEventListener('click', () => goToPage(currentPage - 1));
-            nextPageBtn.addEventListener('click', () => goToPage(currentPage + 1));
-            firstPageBtn.addEventListener('click', () => goToPage(1));
-            lastPageBtn.addEventListener('click', () => goToPage(totalPages));
+        // 会话框事件监听
+        closeModal.addEventListener('click', closeModalFunction);
+        modalCloseButton.addEventListener('click', closeModalFunction);
 
-            // 会话框事件监听
-            closeModal.addEventListener('click', closeModalFunction);
-            modalCloseButton.addEventListener('click', closeModalFunction);
-            
-            // 背景点击关闭
-            modal.addEventListener('click', function (e) {
-                if (e.target === modal) {
-                    closeModalFunction();
-                }
-            });
-
-            // 初始加载
-            displayItems();
-
-            // 会话框打开函数
-            function openModal(item) {
-                modalTitle.textContent = item.title;
-                
-                // 模拟内容加载 - 实际应用中可以从item.file路径加载内容
-                modalBody.innerHTML = `${item.file}`;
-
-                modal.style.display = 'flex';
-                modalBackground.style.opacity = 0.3;
-                modalBackground.style.pointerEvents = 'auto';
-                document.body.style.overflow = 'hidden'; // 防止背景滚动
-            }
-
-            // 会话框关闭函数
-            function closeModalFunction() {
-                modal.style.display = 'none';
-                modalBackground.style.opacity = 0;
-                modalBackground.style.pointerEvents = 'none';
-                document.body.style.overflow = 'auto'; // 恢复背景滚动
+        // 背景点击关闭
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                closeModalFunction();
             }
         });
-    </script>
+
+        // 初始加载
+        displayItems();
+
+        // 会话框打开函数
+        function openModal(item) {
+            modalTitle.textContent = item.title;
+
+            // 模拟内容加载 - 实际应用中可以从item.file路径加载内容
+            modalBody.innerHTML = `${item.file}`;
+
+            modal.style.display = 'flex';
+            modalBackground.style.opacity = 0.3;
+            modalBackground.style.pointerEvents = 'auto';
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        }
+
+        // 会话框关闭函数
+        function closeModalFunction() {
+            modal.style.display = 'none';
+            modalBackground.style.opacity = 0;
+            modalBackground.style.pointerEvents = 'none';
+            document.body.style.overflow = 'auto'; // 恢复背景滚动
+        }
+    });
+</script>
 </body>
 
 </html>

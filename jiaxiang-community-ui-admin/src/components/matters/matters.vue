@@ -23,6 +23,7 @@ export default {
       // 表单数据
       addForm: {
         file: null,
+        text:"",
       },
       // 两个上传组件的文件列表（独立维护，避免冲突）
       coverFileList: [],      // 封面图片的文件列表
@@ -126,6 +127,7 @@ export default {
         // file.raw 是原生File对象，必须用它才能正常上传
 
         formData.append('file', this.coverFileList[0].raw);
+        formData.append('text', this.$data.addForm.text);
 
         // 4. 发送请求（Content-Type会自动设为multipart/form-data）
         const {data: res} = await this.$http.post(
@@ -195,6 +197,13 @@ export default {
               <div v-html="scope.row.content" class="content-html"></div>
             </template>
           </el-table-column>
+          <el-table-column label="下载链接">
+          <!-- 使用自定义模板 + v-html 渲染 HTML 内容 -->
+          <template slot-scope="scope">
+            <a v-if="!!scope.row.url" target="_blank" :href="scope.row.url" :download="scope.row.title">点击下载{{scope.row.title}}</a>
+
+          </template>
+        </el-table-column>
           <!-- 新增：操作列（修改/删除按钮） -->
           <el-table-column label="操作" min-width="180" align="center">
             <template slot-scope="scope">
@@ -221,6 +230,10 @@ export default {
         @close="DialogIsClosed"
     >
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
+
+        <el-form-item label="内容" prop="text">
+          <el-input type="textarea" v-model="addForm.text" rows="4"></el-input>
+        </el-form-item>
         <el-form-item label="文件" prop="file">
           <el-upload
               class="upload-file"
@@ -243,6 +256,8 @@ export default {
             </div>
           </el-upload>
         </el-form-item>
+
+
       </el-form>
 
 

@@ -1,3 +1,4 @@
+// import router from "../../jiaxiang/config/api-urls.js";
 import { JiaxiangCommunityMapDriver } from "../plugins/jiaxiang-community-map-driver.js";
 import { getList } from "./api-request.js";
 // ffa
@@ -44,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             ev.stopPropagation();
             const info = gridManamentInfo.find((item) => item.community === value.name);
             // location = info.href;
-            location = "/jiaxiang/home.html";
+            location.href = "/jiaxiang/home.html";
         });
     });
 });

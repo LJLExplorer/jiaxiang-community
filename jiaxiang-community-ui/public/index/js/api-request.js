@@ -1,5 +1,8 @@
+/// <reference path="../../jiaxiang/config/api-urls.js" />
+// import router from "../../jiaxiang/config/api-urls.js";
 import GridManagementDAO from "./GridManagementDAO.js";
 const getList = async function () {
+    // @ts-ignore
     const response = await fetch(API_URLS.grid_management());
     const listRes = await response.json();
     return listRes.data.map((value, index, array) => {

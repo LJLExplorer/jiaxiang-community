@@ -1,4 +1,4 @@
-const prefix = "http://1.13.158.205:8001";
+const prefix = "http://localhost:8083";
 // @ts-ignore
 window.API_URLS = {
     "community_profile": () => prefix + "/api/jiahe/community_profile",
