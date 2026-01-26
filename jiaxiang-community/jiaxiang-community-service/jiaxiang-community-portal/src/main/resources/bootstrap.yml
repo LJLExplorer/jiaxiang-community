@@ -1,45 +1,45 @@
-spring:
-  application:
-    name: jiaxiang-portal
-  profiles:
-    active: dev
-  cloud:
-    nacos:
-      server-addr: localhost:8848
-      username: 'nacos'
-      password: 'nacos'
-      discovery:
-        namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
-      config:
-        refresh-enabled: true
-        namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
-        group: jiaxiang_group
-        file-extension: yaml
-    sentinel:
-      transport:
-        dashboard: 127.0.0.1:9001
-        port: 9098
-#      datasource:
-#        test1: # 自己随便取得
-#          nacos: # 表示使用nacos
-#            namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
-#            server-addr: 127.0.0.1:8848
-#            username: nacos
-#            password: nacos
-#            data-id: portal.json
-#            group-id: DEFAULT_GROUP
-#            data-type: json
-#            rule-type: flow # 表示限流
-#        test2:
-#          nacos:
-#            namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
-#            server-addr: 127.0.0.1:8848
-#            username: nacos
-#            password: nacos
-#            data-id: sentinel-test2.json
-#            group-id: DEFAULT_GROUP
-#            data-type: json
-#            rule-type: degrade # 表示熔断
-  config:
-    import:
-      - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}?refreshEnabled=true
+#spring:
+#  application:
+#    name: jiaxiang-portal
+#  profiles:
+#    active: dev
+#  cloud:
+#    nacos:
+#      server-addr: localhost:8848
+#      username: 'nacos'
+#      password: 'nacos'
+#      discovery:
+#        namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
+#      config:
+#        refresh-enabled: true
+#        namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
+#        group: jiaxiang_group
+#        file-extension: yaml
+#    sentinel:
+#      transport:
+#        dashboard: 127.0.0.1:9001
+#        port: 9098
+##      datasource:
+##        test1: # 自己随便取得
+##          nacos: # 表示使用nacos
+##            namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
+##            server-addr: 127.0.0.1:8848
+##            username: nacos
+##            password: nacos
+##            data-id: portal.json
+##            group-id: DEFAULT_GROUP
+##            data-type: json
+##            rule-type: flow # 表示限流
+##        test2:
+##          nacos:
+##            namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
+##            server-addr: 127.0.0.1:8848
+##            username: nacos
+##            password: nacos
+##            data-id: sentinel-test2.json
+##            group-id: DEFAULT_GROUP
+##            data-type: json
+##            rule-type: degrade # 表示熔断
+#  config:
+#    import:
+#      - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}?refreshEnabled=true

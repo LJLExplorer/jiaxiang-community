@@ -28,12 +28,12 @@ public class JiaHePortalController {
 
     private final PortalService portalService;
 
-    private final AsyncTaskExecutor asyncTaskExecutor;
+//    private final AsyncTaskExecutor asyncTaskExecutor;
 
 
     public JiaHePortalController(PortalService portalService, AsyncTaskExecutor asyncTaskExecutor) {
         this.portalService = portalService;
-        this.asyncTaskExecutor = asyncTaskExecutor;
+//        this.asyncTaskExecutor = asyncTaskExecutor;
     }
 
 
@@ -241,21 +241,22 @@ public class JiaHePortalController {
      * @return
      */
     @PostMapping("/add_item_matters")
-    public ResponseEntity<ResponseResult<?>> addItemMatters(Long communityId, @RequestParam("file") MultipartFile file) throws Exception {
-        if (file == null) {
-            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "文件上传失败,文件不能为空!");
-        }
-        asyncTaskExecutor.runAsync(() -> {
-            String urlPath = portalService.uploadFile(file);
-            log.info("MD文件上传存储地址: {}", urlPath);
-        });
-        String content = new String(file.getBytes(), StandardCharsets.UTF_8);
-        String name = file.getOriginalFilename();
-        System.out.println(content + "name : " + name);
-        String id = UUID.randomUUID().toString();
+    public ResponseEntity<ResponseResult<?>> addItemMatters(Long communityId, @RequestParam("file") MultipartFile file, String text) throws Exception {
+//        if (file == null) {
+//            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "文件上传失败,文件不能为空!");
+//        }
+//        asyncTaskExecutor.runAsync(() -> {
+//            String urlPath = portalService.uploadFile(file);
+//            log.info("MD文件上传存储地址: {}", urlPath);
+//        });
+//        String content = new String(file.getBytes(), StandardCharsets.UTF_8);
+        String title = file.getOriginalFilename();
+//        System.out.println(content + "name : " + name);
+//        String id = UUID.randomUUID().toString();
 //        portalService.getItemContentAsync(content, name, id);
-        portalService.saveItemContent(content, name, id);
-        return ResponseWrapper.success("添加事项" + name + "成功");
+        String url = portalService.uploadFile(file);
+        portalService.saveItemContent(text, title, communityId, title, url);
+        return ResponseWrapper.success("添加事项" + title + "成功");
     }
 
     @DeleteMapping("/delete_matters")

@@ -2,6 +2,7 @@ package com.jiaxiang.apis.Content;
 
 import com.jiaxiang.apis.Content.fallback.IContentClientFallback;
 import com.jiaxiang.model.common.dtos.ResponseResult;
+import com.jiaxiang.model.community.dos.ItemListDO;
 import com.jiaxiang.model.community.dtos.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -94,8 +95,11 @@ public interface IContentClient {
     ResponseEntity<ResponseResult<?>> deleteMattersById(@RequestParam String id);
 
     @PostMapping(COMMUNITY_URL_PREFIX + "/add_proof_info")
-    ResponseEntity<ResponseResult<?>> addProofInfo(@RequestParam("communityId") Long communityId,@RequestBody ProofDocumentsDTO proofDocumentsDTO);
+    ResponseEntity<ResponseResult<?>> addProofInfo(@RequestParam("communityId") Long communityId, @RequestBody ProofDocumentsDTO proofDocumentsDTO);
 
     @DeleteMapping(COMMUNITY_URL_PREFIX + "/delete_proof_info")
     ResponseEntity<ResponseResult<?>> deleteProofInfoById(@RequestParam("id") Long id);
+
+    @PostMapping(COMMUNITY_URL_PREFIX + "/save_item_content")
+    ResponseEntity<ResponseResult<?>> saveItemContent(@RequestBody ItemListDO itemListDO);
 }

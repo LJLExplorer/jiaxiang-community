@@ -12,17 +12,26 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document("item_list")
 public class ItemListDO {
 
-    @Id
     private String id;
 
     private Long communityId;
 
+    private String title;
+
     private String fileName;
 
-    private List<LawItemDTO> lawItems;
+    private String content;
 
+    private String url;
+
+    public ItemListDO(Long communityId, String title, String fileName, String content, String url) {
+        this.communityId = communityId;
+        this.title = title;
+        this.fileName = fileName;
+        this.content = content;
+        this.url = url;
+    }
 
 }

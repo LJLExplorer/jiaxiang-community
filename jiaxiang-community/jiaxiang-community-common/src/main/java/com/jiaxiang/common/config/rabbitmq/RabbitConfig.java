@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 
 import static com.jiaxiang.model.common.constant.MQConstant.*;
 
+/**
+ * 建议自定义个stater封装
+ */
 @Configuration
 @ConditionalOnProperty(prefix = "spring.rabbitmq", name = "enabled", havingValue = "true")
 public class RabbitConfig {

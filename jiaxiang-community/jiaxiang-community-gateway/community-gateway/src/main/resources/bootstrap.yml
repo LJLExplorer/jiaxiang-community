@@ -1,33 +1,33 @@
-spring:
-  application:
-    name: community-gateway
-  profiles:
-    active: dev
-  cloud:
-    nacos:
-      server-addr: localhost:8848
-      username: 'nacos'
-      password: 'nacos'
-      discovery:
-        namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
-      config:
-        refresh-enabled: true
-        namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
-        group: jiaxiang-gateway_group
-        file-extension: yaml
-    sentinel:
-      transport:
-        dashboard: 127.0.0.1:9001
-        port: 8721
-      eager: true
-#      datasource:
-#        gw-nacos:
-#          nacos:
-#            server-addr: 127.0.0.1:8848
-#            data-id: sentinel-gateway-rules
-#            group-id: DEFAULT_GROUP
-#            data-type: json
-#            rule-type: gw-flow
-  config:
-    import:
-      - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}?refreshEnabled=true
+#spring:
+#  application:
+#    name: community-gateway
+#  profiles:
+#    active: dev
+#  cloud:
+#    nacos:
+#      server-addr: localhost:8848
+#      username: 'nacos'
+#      password: 'nacos'
+#      discovery:
+#        namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
+#      config:
+#        refresh-enabled: true
+#        namespace: de2f54a0-2c19-4cbc-87ca-3d9b873c208e
+#        group: jiaxiang-gateway_group
+#        file-extension: yaml
+#    sentinel:
+#      transport:
+#        dashboard: 127.0.0.1:9001
+#        port: 8721
+#      eager: true
+##      datasource:
+##        gw-nacos:
+##          nacos:
+##            server-addr: 127.0.0.1:8848
+##            data-id: sentinel-gateway-rules
+##            group-id: DEFAULT_GROUP
+##            data-type: json
+##            rule-type: gw-flow
+#  config:
+#    import:
+#      - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}?refreshEnabled=true

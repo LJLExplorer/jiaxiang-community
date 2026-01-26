@@ -30,4 +30,8 @@ public class GuideCategoryVO {
      */
     private String content;
 
+    private String url;
+
+    private String fileName;
+
 }

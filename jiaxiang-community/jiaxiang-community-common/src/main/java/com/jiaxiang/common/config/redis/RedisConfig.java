@@ -11,6 +11,9 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+/**
+ * 建议自定义个stater封装
+ */
 @AutoConfiguration
 public class RedisConfig {
     @Bean

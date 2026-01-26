@@ -275,19 +275,19 @@ public class CommunityServiceImpl implements CommuniyuService {
     @Override
     public List<GuideCategoryVO> listMatters(Long communityId, int pageNum, int pageSize) {
         // 改成MongoDB查询
-        Query query = new Query();
-        query.skip((long) (pageNum - 1) * pageSize).limit(pageSize);
-        List<ItemListDO> itemListDoS = mongoTemplate.find(query, ItemListDO.class);
-        return itemListDoS.stream().map(itemListDO -> {
-            GuideCategoryVO guideCategoryVO = new GuideCategoryVO();
-            BeanUtil.copyProperties(itemListDO, guideCategoryVO);
-            guideCategoryVO.setTitle(itemListDO.getFileName());
-            String mdContent = convertItemListDo2Markdown(itemListDO);
-            String mdSting2Html = mdSting2Html(mdContent);
-            guideCategoryVO.setContent(mdSting2Html);
-            return guideCategoryVO;
-        }).toList();
-//        return communityMapper.listMatters(communityId, (pageNum - 1) * pageSize, pageSize);
+//        Query query = new Query();
+//        query.skip((long) (pageNum - 1) * pageSize).limit(pageSize);
+//        List<ItemListDO> itemListDoS = mongoTemplate.find(query, ItemListDO.class);
+//        return itemListDoS.stream().map(itemListDO -> {
+//            GuideCategoryVO guideCategoryVO = new GuideCategoryVO();
+//            BeanUtil.copyProperties(itemListDO, guideCategoryVO);
+//            guideCategoryVO.setTitle(itemListDO.getFileName());
+//            String mdContent = convertItemListDo2Markdown(itemListDO);
+//            String mdSting2Html = mdSting2Html(mdContent);
+//            guideCategoryVO.setContent(mdSting2Html);
+//            return guideCategoryVO;
+//        }).toList();
+        return communityMapper.listMatters(communityId, (pageNum - 1) * pageSize, pageSize);
     }
 
     @Override
@@ -372,6 +372,14 @@ public class CommunityServiceImpl implements CommuniyuService {
         }
     }
 
+    @Override
+    public void save_item_content(ItemListDO itemListDO) {
+        Integer flag = communityMapper.saveItemContent(itemListDO);
+        if (flag < 1) {
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID, "添加事项清单失败");
+        }
+    }
+
     /**
      * 根据id查事项清单
      *
@@ -399,25 +407,25 @@ public class CommunityServiceImpl implements CommuniyuService {
         return remove.getDeletedCount();
     }
 
-    public String convertItemListDo2Markdown(ItemListDO itemListDO) {
-        StringBuilder sb = new StringBuilder();
-
-        List<LawItemDTO> lawItems = itemListDO.getLawItems();
-        for (int i = 0; i < lawItems.size(); i++) {
-            LawItemDTO item = lawItems.get(i);
-            // 输出标题，带序号，加粗
-            sb.append(i + 1).append(". ").append(item.getTitle()).append("**").append("\n");
-            // 输出依据
-            List<String> basisList = item.getBasisList();
-            if (basisList != null && !basisList.isEmpty()) {
-                sb.append("依据：").append("\n");
-                for (String basis : basisList) {
-                    sb.append(basis).append("\n");
-                }
-            }
-            sb.append("\n"); // 每条之间加空行
-        }
-        return sb.toString();
-    }
+//    public String convertItemListDo2Markdown(ItemListDO itemListDO) {
+//        StringBuilder sb = new StringBuilder();
+//
+//        List<LawItemDTO> lawItems = itemListDO.getLawItems();
+//        for (int i = 0; i < lawItems.size(); i++) {
+//            LawItemDTO item = lawItems.get(i);
+//            // 输出标题，带序号，加粗
+//            sb.append(i + 1).append(". ").append(item.getTitle()).append("**").append("\n");
+//            // 输出依据
+//            List<String> basisList = item.getBasisList();
+//            if (basisList != null && !basisList.isEmpty()) {
+//                sb.append("依据：").append("\n");
+//                for (String basis : basisList) {
+//                    sb.append(basis).append("\n");
+//                }
+//            }
+//            sb.append("\n"); // 每条之间加空行
+//        }
+//        return sb.toString();
+//    }
 
 }

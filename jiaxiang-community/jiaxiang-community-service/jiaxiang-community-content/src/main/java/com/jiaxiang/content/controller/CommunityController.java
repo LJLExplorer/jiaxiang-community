@@ -7,6 +7,7 @@ import com.jiaxiang.model.common.constant.CacheConstant;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
+import com.jiaxiang.model.community.dos.ItemListDO;
 import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.model.community.vos.*;
 import com.jiaxiang.utils.CacheUtils;
@@ -223,6 +224,12 @@ public class CommunityController {
     public ResponseEntity<ResponseResult<?>> deleteProofInfoById(Long id) {
         communiyuService.deleteProofInfoById(id);
         return ResponseWrapper.success("删除证明内容成功");
+    }
+
+    @PostMapping("/save_item_content")
+    public ResponseEntity<ResponseResult<?>> save_item_content(@RequestBody ItemListDO itemListDO) {
+        communiyuService.save_item_content(itemListDO);
+        return ResponseWrapper.success("添加事项清单失败");
     }
 
 }

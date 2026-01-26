@@ -2,6 +2,7 @@ package com.jiaxiang.content.service;
 
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.community.dos.CommunityHonorDO;
+import com.jiaxiang.model.community.dos.ItemListDO;
 import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.model.community.vos.*;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ public interface CommuniyuService {
 
     /**
      * 网格管理
+     *
      * @param communityId 社区id
      * @return 网格管理
      */
@@ -28,6 +30,7 @@ public interface CommuniyuService {
 
     /**
      * 得到员工总数
+     *
      * @return 总数
      */
     Integer getCommitteesMembersCount();
@@ -42,12 +45,14 @@ public interface CommuniyuService {
 
     /**
      * 得到为民服务数量
+     *
      * @return 总数
      */
     Integer getServerPeopleCount();
 
     /**
      * 列出为民服务清单
+     *
      * @param pageNum  当前页
      * @param pageSize 页大小
      * @return 列出为民服务清单
@@ -58,7 +63,7 @@ public interface CommuniyuService {
 
     Integer getMattersCount();
 
-    List<GuideCategoryVO> listMatters(Long communityId,int pageNum, int pageSize);
+    List<GuideCategoryVO> listMatters(Long communityId, int pageNum, int pageSize);
 
     Integer getHonorCount();
 
@@ -72,6 +77,7 @@ public interface CommuniyuService {
 
     /**
      * 根据id查事项清单
+     *
      * @param id
      * @return
      */
@@ -79,6 +85,7 @@ public interface CommuniyuService {
 
     /**
      * 根据id删除事项清单
+     *
      * @param id
      * @return
      */
@@ -113,4 +120,6 @@ public interface CommuniyuService {
     void addProofInfo(Long communityId, ProofDocumentsDTO proofDocumentsDTO);
 
     void deleteProofInfoById(Long id);
+
+    void save_item_content(ItemListDO itemListDO);
 }
