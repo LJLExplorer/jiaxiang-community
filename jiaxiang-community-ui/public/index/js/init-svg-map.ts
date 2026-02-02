@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         value.svg.setAttribute('transform-origin', `${initialCenter.x}px ${initialCenter.y}px`);
 
         value.svg.addEventListener('mouseover', function () {
-            svg.appendChild(this);
+            // svg.appendChild(this);
             this.setAttribute('filter', 'url(#hoverEffects)');
             // this.setAttribute('transform', 'scale(1.1)');
         });
