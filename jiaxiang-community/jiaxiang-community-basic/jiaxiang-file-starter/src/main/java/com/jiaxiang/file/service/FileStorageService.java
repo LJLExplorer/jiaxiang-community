@@ -1,5 +1,6 @@
 package com.jiaxiang.file.service;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -43,4 +44,6 @@ public interface FileStorageService {
      * @return 下载流
      */
     public void downLoadFileToDisk(String fileUrl, String localPath);
+
+    public void downloadByUrl(String fileUrl, HttpServletResponse response);
 }

@@ -6,14 +6,19 @@ import com.jiaxiang.file.service.FileStorageService;
 import io.minio.*;
 import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Import;
+import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -273,6 +278,42 @@ public class MinioFileStorageService implements FileStorageService {
         } catch (Exception e) {
             // 文件不存在或其他异常
             return false;
+        }
+    }
+
+    public void downloadByUrl(String fileUrl, HttpServletResponse response) {
+        String pureUrl = fileUrl.split("\\?")[0]; // 兼容带签名参数的URL
+        String fileName = pureUrl.substring(pureUrl.lastIndexOf('/') + 1);
+
+        // 去掉协议+域名 -> bucket/object
+        String path = pureUrl.replaceFirst("https?://[^/]+/", "");
+        path = URLDecoder.decode(path, StandardCharsets.UTF_8);
+
+        int idx = path.indexOf('/');
+        if (idx <= 0 || idx == path.length() - 1) {
+            throw new IllegalArgumentException("非法文件URL，无法解析 bucket/object: " + fileUrl);
+        }
+        String bucket = path.substring(0, idx);
+        String objectName = path.substring(idx + 1);
+
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/octet-stream");
+            response.setHeader(
+                    "Content-Disposition",
+                    "attachment; filename=\"" + URLEncoder.encode(fileName, StandardCharsets.UTF_8).replace("+", "%20") + "\""
+            );
+
+            try (InputStream in = minioClient.getObject(GetObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(objectName)
+                    .build())) {
+                StreamUtils.copy(in, response.getOutputStream());
+                response.flushBuffer();
+            }
+        } catch (Exception e) {
+            log.error("通过URL下载失败: {}", fileUrl, e);
+            throw new RuntimeException("下载失败");
         }
     }
 }

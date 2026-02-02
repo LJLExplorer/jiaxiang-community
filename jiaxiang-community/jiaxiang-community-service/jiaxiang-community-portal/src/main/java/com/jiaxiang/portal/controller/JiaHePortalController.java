@@ -2,6 +2,7 @@ package com.jiaxiang.portal.controller;
 
 import cn.hutool.core.lang.UUID;
 import com.jiaxiang.common.exception.CustomException;
+import com.jiaxiang.file.service.FileStorageService;
 import com.jiaxiang.model.activity.dtos.ActivityDetailDto;
 import com.jiaxiang.model.common.dtos.ResponseResult;
 import com.jiaxiang.model.common.dtos.ResponseWrapper;
@@ -9,6 +10,7 @@ import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.portal.service.PortalService;
 import com.jiaxiang.utils.AsyncTaskExecutor;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +30,14 @@ public class JiaHePortalController {
 
     private final PortalService portalService;
 
-//    private final AsyncTaskExecutor asyncTaskExecutor;
+    //    private final AsyncTaskExecutor asyncTaskExecutor;
+    private final FileStorageService fileStorageService;
 
 
-    public JiaHePortalController(PortalService portalService, AsyncTaskExecutor asyncTaskExecutor) {
+    public JiaHePortalController(PortalService portalService, AsyncTaskExecutor asyncTaskExecutor, FileStorageService fileStorageService) {
         this.portalService = portalService;
 //        this.asyncTaskExecutor = asyncTaskExecutor;
+        this.fileStorageService = fileStorageService;
     }
 
 
@@ -146,8 +150,13 @@ public class JiaHePortalController {
 
 
     @GetMapping("/list_matters")
-    public ResponseEntity<ResponseResult<?>> listMatters(Long communityId,@RequestParam(defaultValue = "1") Integer pageNum,@RequestParam(defaultValue = "1000") Integer pageSize) {
+    public ResponseEntity<ResponseResult<?>> listMatters(Long communityId, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "1000") Integer pageSize) {
         return portalService.listMatters(communityId, pageNum, pageSize);
+    }
+
+    @GetMapping("/file/download")
+    public void download(@RequestParam("url") String url, HttpServletResponse response) {
+        fileStorageService.downloadByUrl(url, response);
     }
 
     @GetMapping("/community_honor")
