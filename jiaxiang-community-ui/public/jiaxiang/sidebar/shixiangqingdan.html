@@ -326,9 +326,9 @@
                             <p style="font-size: ${randomFontSize2}px; margin: 0;">${items[i].text2}</p>
                             ${(function () {
                     if (items[i].url)
-                        return "<a onclick='event.cancelBubble = true' target=\"_blank\" href='" + items[i].url + "' download='" + items[i].title + "'>点击下载" + items[i].title + "</a>"
+                        return "<a onclick='event.cancelBubble = true' target=\"_blank\" href='" + API_URLS.download(items[i].url) + "' download='" + items[i].title + "'>点击下载" + items[i].title + "</a>"
                     else
-                        return "";
+                        return "<span>暂无下载链接</span>";
                 })()}
                         </div>
                     `;

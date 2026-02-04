@@ -1,4 +1,4 @@
-const prefix = "http://localhost:8083";
+const prefix = "http://1.13.158.205:8001";
 // @ts-ignore
 window.API_URLS = {
     "community_profile": () => prefix + "/api/jiahe/community_profile",
@@ -22,6 +22,7 @@ window.API_URLS = {
         return `${prefix}/api/jiahe/list_community_activities?pageNum=${pageNum}&pageSize=${pageSize}`;
     },
     "community_activity_detail": (id) => `${prefix}/api/jiahe/community_activity_detail?id=${id}`,
+    'download': (url) => `${prefix}/api/jiahe/file/download?url=${url}`
 };
 // @ts-ignore
 // export default window.API_URLS;
