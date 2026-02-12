@@ -5,233 +5,315 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            width: 100vw;
-            height: 100vh;
-        }
-
-        .header {
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 24px;
-            border-radius: 0 0 5px 5px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.3) 50%,
-            rgba(255, 255, 255, 0) 100%);
-            transform: translateX(-100%);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            100% {
-                transform: translateX(100%);
-            }
-        }
-
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-        }
-
-        .container {
-            max-width: 100%;
-            height: 70%;
-            margin: 0 auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
-            height: 80%;
-        }
-
-        .text-item {
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            overflow: hidden;
-            background-color: #fff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 10px;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        .text-container {
-            padding: 0 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            height: 100%;
-        }
-
-        .text-container p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 30px;
-        }
-
-        .pagination button {
-            padding: 8px 16px;
-            margin: 0 5px;
-            border: 1px solid #ddd;
-            background-color: #f8f8f8;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            color: black;
-        }
-
-        .pagination button:hover {
-            background-color: #e9e9e9;
-        }
-
-        .pagination button.active {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
-
-        .page-info {
-            margin: 0 15px;
-            font-size: 14px;
-            color: white;
-        }
-
-        /* 会话框相关样式 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            width: 80%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #000;
-        }
-
-        .close-btn:hover {
-            color: #666;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        .modal-body {
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .modal-footer {
-            margin-top: 20px;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .modal-footer button {
-            padding: 8px 16px;
-            margin-left: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .close-button {
-            background-color: #f44336;
-            color: white;
-        }
-
-        .close-button:hover {
-            background-color: #d32f2f;
-        }
-
-        /* 会话框背景透明动画效果 */
-        .modal-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
-            opacity: 0;
-            z-index: 999;
-            pointer-events: none;
-        }
-    </style>
 </head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .header {
+        /* background: linear-gradient(90deg, #02a85b 0%, #00c3ff 100%); */
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 24px;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .header:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%);
+        transform: translateX(-100%);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+    }
+
+    .container {
+        /* max-width: 1000px; */
+        margin: 0 auto;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .image-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        overflow: hidden;
+        /* background-color: #fff; */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .image-item:hover {
+        transform: scale(1.03);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-item:hover::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.3);
+        z-index: 1;
+    }
+
+    .image-container {
+        position: relative;
+        height: 200px;
+    }
+
+    .image-container img {
+        width: 30%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 5px;
+    }
+
+    .text-container {
+        padding: 10px;
+        /* background-color: rgba(255, 255, 255, 0.9); */
+        position: absolute;
+        right: 100px;
+        top: 0;
+        height: 100%;
+        width: 294px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        color: white;
+        box-sizing: border-box;
+    }
+
+    .text-container h1 {
+        font-size: 1.2rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .text-container p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .arrow-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .arrow {
+        width: 40px;
+        height: 40px;
+        background-color: #333;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        margin: 0 10px;
+        user-select: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .arrow:hover {
+        background-color: #555;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+    .pagination button {
+        padding: 8px 16px;
+        margin: 0 5px;
+        border: 1px solid #ddd;
+        background-color: #f8f8f8;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+        color: black;
+    }
+
+    .pagination button:hover {
+        background-color: #e9e9e9;
+    }
+
+    .pagination button.active {
+        background-color: #333;
+        color: white;
+        border-color: #333;
+    }
+
+    .page-info {
+        margin: 0 15px;
+        font-size: 14px;
+        color: white;
+    }
+
+    /* 对话框样式 */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 60%;
+        max-width: 800px;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+        animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.3s ease;
+    }
+
+    .close-btn:hover {
+        color: #333;
+    }
+
+    .modal-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    .modal-info {
+        margin-bottom: 15px;
+        display: flex;
+    }
+
+    .modal-info img {
+        width: 120px;
+        height: auto;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+
+    .modal-info p {
+        margin: 8px 0;
+        color: #555;
+    }
+
+    .modal-section {
+        margin-top: 20px;
+    }
+
+    .modal-section h3 {
+        color: #444;
+        margin-bottom: 10px;
+    }
+
+    .modal-section ul {
+        padding-left: 20px;
+    }
+
+    .modal-section li {
+        margin-bottom: 8px;
+        color: #666;
+    }
+</style>
 
 <body>
 <div style="width: 100%; height: 100%; overflow: hidden;">
     <div class="header" style="width: 100%; height: 15%;">
-        <h2 style="font-size: 70px;">事项清单</h2>
+        <h2 style="font-size: 70px;">为民服务</h2>
     </div>
     <div class="container">
-        <div class="grid-container" id="itemGrid">
-            <!-- 内容将通过JavaScript动态加载 -->
+        <div class="grid-container" id="imageGrid">
+            <!-- 图片将通过JavaScript动态加载 -->
+        </div>
+
+        <div class="arrow-container">
+            <div class="arrow" id="prevArrow">←</div>
+            <div class="arrow" id="nextArrow">→</div>
         </div>
 
         <div class="pagination">
@@ -243,174 +325,139 @@
             <button class="last-page">最后一页</button>
         </div>
     </div>
-</div>
 
-<!-- 会话框结构 -->
-<div class="modal" id="contentModal">
-    <div class="modal-content">
-        <span class="close-btn" id="closeModal">&times;</span>
-        <h3 class="modal-title" id="modalTitle"></h3>
-        <div class="modal-body" id="modalBody"></div>
-        <div class="modal-footer">
-            <button class="close-button" id="modalCloseButton">关闭</button>
+    <!-- 对话框 -->
+    <div class="modal" id="itemModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div id='modalRenderer'>
+
+            </div>
         </div>
     </div>
-</div>
+    <script type="text/javascript" src="../config/api-urls.js"></script>
+    <script type="text/javascript">
 
-<!-- 动画背景 -->
-<div class="modal-background" id="modalBackground"></div>
+        // 图片数据 - 包含图片URL和对应的文字信息
+        let imageItems = [];
 
-<script type="text/javascript" src="../config/api-urls.js"></script>
-<script type="text/javascript">
+        let itemsPerPage = 4;
+        let currentPage = 1;
+        let totalPages = Math.ceil(imageItems.length / itemsPerPage);
+        let response;
 
-    let items = [];
+        document.addEventListener('DOMContentLoaded', async function () {
+            response = (await (await fetch(API_URLS.list_matters(currentPage, itemsPerPage))).json()).data;
 
-    let itemsPerPage = 4;
-    let currentPage = 1;
-    let totalPages = Math.ceil(items.length / itemsPerPage);
-    let response;
+            // 分页相关变量
+            imageItems = response.records.map(item => {
+                return {
+                    title: item.title,
+                    file: item.content,
+                    url: item.url
+                }
+            });
+            // 分页相关变量
+            let totalPages = Math.ceil(imageItems.length / itemsPerPage);
 
-    document.addEventListener('DOMContentLoaded', async function () {
-        response = (await (await fetch(API_URLS.list_matters(currentPage, itemsPerPage))).json()).data;
+            const imageGrid = document.getElementById('imageGrid');
+            const prevPageBtn = document.querySelector('.prev-page');
+            const nextPageBtn = document.querySelector('.next-page');
+            const firstPageBtn = document.querySelector('.first-page');
+            const lastPageBtn = document.querySelector('.last-page');
+            const currentPageSpan = document.querySelector('.current-page');
+            const totalPagesSpan = document.querySelector('.total-pages');
+            const prevArrow = document.getElementById('prevArrow');
+            const nextArrow = document.getElementById('nextArrow');
+            const modal = document.getElementById('itemModal');
+            const closeModal = document.getElementById('closeModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalRenderer = document.getElementById('modalRenderer');
 
-        // 分页相关变量
-        items = response.records.map(item => {
-            return {
-                title: item.title,
-                text2: "点击进入",
-                color: "btn-green",
-                file: item.content,
-                url: item.url
-            }
-        });
-        let totalPages = Math.ceil(items.length / itemsPerPage);
 
-        const itemGrid = document.getElementById('itemGrid');
-        const prevPageBtn = document.querySelector('.prev-page');
-        const nextPageBtn = document.querySelector('.next-page');
-        const firstPageBtn = document.querySelector('.first-page');
-        const lastPageBtn = document.querySelector('.last-page');
-        const currentPageSpan = document.querySelector('.current-page');
-        const totalPagesSpan = document.querySelector('.total-pages');
+            totalPagesSpan.textContent = totalPages;
 
-        // 会话框相关元素
-        const modal = document.getElementById('contentModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-        const closeModal = document.getElementById('closeModal');
-        const modalCloseButton = document.getElementById('modalCloseButton');
-        const modalBackground = document.getElementById('modalBackground');
+            function displayImages() {
+                imageGrid.innerHTML = '';
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, imageItems.length);
 
-        totalPagesSpan.textContent = totalPages;
+                for (let i = startIndex; i < endIndex; i++) {
+                    const imageItem = document.createElement('div');
+                    imageItem.className = 'image-item';
+                    imageItem.dataset.index = i;
 
-        function displayItems() {
-            itemGrid.innerHTML = '';
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = Math.min(startIndex + itemsPerPage, items.length);
-
-            for (let i = startIndex; i < endIndex; i++) {
-                const item = document.createElement('div');
-                item.className = 'text-item';
-
-                // 随机颜色
-                const randomColor = getRandomColor();
-
-                // 随机字体大小和样式
-                const randomFontSize1 = Math.floor(Math.random() * 5) + 14; // 14-18px
-                const randomFontSize2 = Math.floor(Math.random() * 5) + 12; // 12-16px
-                const fontFamily = ['Arial', 'sans-serif', 'serif', 'cursive'][Math.floor(Math.random() * 4)];
-
-                item.innerHTML = `
-                        <div class="text-container" style="font-family: ${fontFamily};">
-                            <p style="font-size: ${randomFontSize1}px; margin: 0;">${items[i].title}</p>
-                            <p style="font-size: ${randomFontSize2}px; margin: 0;">${items[i].text2}</p>
-                            ${(function () {
-                    if (items[i].url)
-                        return "<a onclick='event.cancelBubble = true' target=\"_blank\" href='" + items[i].url + "' download='" + items[i].title + "'>点击下载" + items[i].title + "</a>"
-                    else
-                        return "";
-                })()}
+                    imageItem.innerHTML = `
+                        <div class="image-container">
+                            <img src="../img/文件图标.jpeg" alt="文档图标">
+                            <div class="text-container">
+                                <h1>${imageItems[i].title}</h1>
+                                <p>点击查看详情</p>
+                                <p>【下载连接】--${(function () {
+                                    if (imageItems[i].url)
+                                        return "<a onclick='event.cancelBubble = true' target=\"_blank\" href='" + API_URLS.download(imageItems[i].url) + "' download='" + imageItems[i].title + "'>点击下载" + imageItems[i].title + "</a>"
+                                    else
+                                        return "<span>暂无下载链接</span>";
+                                })()}</p>
+                            </div>
                         </div>
                     `;
 
-                // 设置随机背景颜色
-                item.style.backgroundColor = randomColor;
-                // 添加一些透明度
-                item.style.opacity = '0.8';
-                // 添加边框
-                item.style.border = '1px solid rgba(0,0,0,0.2)';
+                    // 添加点击事件
+                    imageItem.addEventListener('click', function () {
+                        showModal(i);
+                    });
 
-                itemGrid.appendChild(item);
+                    imageGrid.appendChild(imageItem);
+                }
 
-                // 添加点击事件监听器
-                item.addEventListener('click', function () {
-                    openModal(items[i]);
-                });
+                currentPageSpan.textContent = currentPage;
+
+                // 禁用/启用按钮
+                prevPageBtn.disabled = currentPage === 1;
+                prevArrow.style.opacity = currentPage === 1 ? '0.5' : '1';
+                nextPageBtn.disabled = currentPage === totalPages;
+                nextArrow.style.opacity = currentPage === totalPages ? '0.5' : '1';
             }
 
-            currentPageSpan.textContent = currentPage;
-
-            // 禁用/启用按钮
-            prevPageBtn.disabled = currentPage === 1;
-            nextPageBtn.disabled = currentPage === totalPages;
-        }
-
-        function getRandomColor() {
-            // 生成随机的rgb颜色
-            const r = Math.floor(Math.random() * 100) + 156;
-            const g = Math.floor(Math.random() * 100) + 156;
-            const b = Math.floor(Math.random() * 100) + 156;
-            return `rgb(${r}, ${g}, ${b})`;
-        }
-
-        function goToPage(page) {
-            if (page >= 1 && page <= totalPages) {
-                currentPage = page;
-                displayItems();
+            function showModal(index) {
+                const item = imageItems[index];
+                modalTitle.textContent = item.title;
+                modalRenderer.textContent = item.file;
+                modal.style.display = 'flex';
             }
-        }
 
-        prevPageBtn.addEventListener('click', () => goToPage(currentPage - 1));
-        nextPageBtn.addEventListener('click', () => goToPage(currentPage + 1));
-        firstPageBtn.addEventListener('click', () => goToPage(1));
-        lastPageBtn.addEventListener('click', () => goToPage(totalPages));
-
-        // 会话框事件监听
-        closeModal.addEventListener('click', closeModalFunction);
-        modalCloseButton.addEventListener('click', closeModalFunction);
-
-        // 背景点击关闭
-        modal.addEventListener('click', function (e) {
-            if (e.target === modal) {
-                closeModalFunction();
+            function goToPage(page) {
+                if (page >= 1 && page <= totalPages) {
+                    currentPage = page;
+                    displayImages();
+                }
             }
+
+            prevPageBtn.addEventListener('click', () => goToPage(currentPage - 1));
+            nextPageBtn.addEventListener('click', () => goToPage(currentPage + 1));
+            firstPageBtn.addEventListener('click', () => goToPage(1));
+            lastPageBtn.addEventListener('click', () => goToPage(totalPages));
+            prevArrow.addEventListener('click', () => goToPage(currentPage - 1));
+            nextArrow.addEventListener('click', () => goToPage(currentPage + 1));
+
+            // 关闭模态框
+            closeModal.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            // 点击模态框外部关闭
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // 初始加载
+            displayImages();
         });
-
-        // 初始加载
-        displayItems();
-
-        // 会话框打开函数
-        function openModal(item) {
-            modalTitle.textContent = item.title;
-
-            // 模拟内容加载 - 实际应用中可以从item.file路径加载内容
-            modalBody.innerHTML = `${item.file}`;
-
-            modal.style.display = 'flex';
-            modalBackground.style.opacity = 0.3;
-            modalBackground.style.pointerEvents = 'auto';
-            document.body.style.overflow = 'hidden'; // 防止背景滚动
-        }
-
-        // 会话框关闭函数
-        function closeModalFunction() {
-            modal.style.display = 'none';
-            modalBackground.style.opacity = 0;
-            modalBackground.style.pointerEvents = 'none';
-            document.body.style.overflow = 'auto'; // 恢复背景滚动
-        }
-    });
-</script>
+    </script>
 </body>
 
 </html>

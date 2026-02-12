@@ -405,14 +405,14 @@
                             <img src="${imageItems[i].honorImage}" alt="图片${i + 1}">
                             <div class="text-container">
                                 <h1>${imageItems[i].honor}</h1>
-                                <!--<p>【社区ID】--${imageItems[i].phone}</p>-->
+                                <p>${imageItems[i].honorDetail}</p>
                             </div>
                         </div>
                     `;
 
                     // 添加点击事件
                     imageItem.addEventListener('click', function () {
-                        showModal(i);
+                        // showModal(i);
                     });
 
                     imageGrid.appendChild(imageItem);

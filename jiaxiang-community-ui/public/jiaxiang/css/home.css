@@ -6,8 +6,9 @@
 .content {
     width: 100vw;
     height: 100vh;
-    background: url("../img/一楼大厅.png") no-repeat;
-    background-size: 100% 100%;
+    background: url("../img/嘉和社区背景图片.jpg") no-repeat;
+    background-size: 100% auto;
+    background-position-y: center;
     background-color: rgba(66, 66, 66, 0.493);
     /* z-index: -10; */
 }
