@@ -9,7 +9,9 @@ import com.jiaxiang.model.common.dtos.ResponseWrapper;
 import com.jiaxiang.model.common.enums.AppHttpCodeEnum;
 import com.jiaxiang.model.community.dtos.*;
 import com.jiaxiang.portal.service.PortalService;
+import com.jiaxiang.portal.utils.IpDeviceUtil;
 import com.jiaxiang.utils.AsyncTaskExecutor;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
@@ -93,7 +95,15 @@ public class JiaHePortalController {
      * @return 网格管理
      */
     @GetMapping("/grid_management")
-    public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId) {
+    public ResponseEntity<ResponseResult<?>> listGridManagement(Long communityId, HttpServletRequest request) {
+        // 1. 获取客户端真实IP
+        String clientIp = IpDeviceUtil.getClientIp(request);
+        // 2. 获取设备信息（浏览器、操作系统、终端类型等）
+        String deviceInfo = IpDeviceUtil.getDeviceInfo(request);
+        log.info("客户端ip：{}」", clientIp);
+        log.info("设备信息：{}」", deviceInfo);
+        log.info("设备平台:{}", request.getHeader("sec-ch-ua-platform"));
+        log.info("UserAgent:{}", request.getHeader("User-Agent"));
         return portalService.listGridManagement(communityId);
     }
 
